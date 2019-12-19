@@ -1,0 +1,62 @@
+{
+    "name": "APIs.io",
+    "description": "Find all the APIs you need to build your successful projects. APIs.io is the first search engine for APIs.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/95-apis-io.jpg",
+    "tags": [
+        "api provider",
+        "api service provider",
+        "api tools",
+        "directories",
+        "discovery",
+        "general data",
+        "have api",
+        "search"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apis-io\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "APIs.io",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/95-apis-io.jpg",
+            "humanURL": "http:\/\/apis.io\/",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/apis-io.json"
+                },
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/apis-io-openapi.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "API.json - Authoritative",
+            "url": "http:\/\/apis.io\/apis.json"
+        },
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/product\/api-search"
+        },
+        {
+            "type": "Github",
+            "url": "https:\/\/github.com\/apisio"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/apisio"
+        },
+        {
+            "type": "Website",
+            "url": "http:\/\/apis.io\/"
+        }
+    ]
+}
