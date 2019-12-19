@@ -1,0 +1,68 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "",
+        "title": "APIs.io",
+        "description": "You can use our v1 API to get and add data to APIs.io.",
+        "termsOfService": ""
+    },
+    "servers": [
+        "httpapis.ioapi\/"
+    ],
+    "paths": {
+        "\/apis": {
+            "get": {
+                "summary": "Get APIS",
+                "description": "List all the APIs available",
+                "operationId": "GetAPIs",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "keyword to search for"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields to be returned in results"
+                    }
+                ]
+            },
+            "POST": {
+                "summary": "Add APIs",
+                "description": "Adds an API to APIs.io",
+                "operationId": "AddAPI",
+                "deprecated": 0,
+                "parameters": [
+                    {
+                        "name": "url",
+                        "in": "query",
+                        "description": "The URL of the APIs.json file."
+                    }
+                ]
+            }
+        },
+        "\/search": {
+            "get": {
+                "summary": "Search APIs",
+                "description": "Search for apis",
+                "operationId": "SearchAPIs",
+                "deprecated": 0,
+                "parameters": []
+            }
+        },
+        "\/maintainers": {
+            "get": {
+                "summary": "Get Maintainers",
+                "description": "Returns a list of maintainers",
+                "operationId": "GetMaintainser",
+                "deprecated": 0,
+                "parameters": []
+            }
+        }
+    },
+    "components": {
+        "schemas": []
+    }
+}
