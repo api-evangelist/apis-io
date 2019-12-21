@@ -12,8 +12,8 @@
         "have api",
         "search"
     ],
-    "created": "2019-12-19",
-    "modified": "2019-12-19",
+    "created": "2019-12-20",
+    "modified": "2019-12-20",
     "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apis-io\/master\/apis.json",
     "specificationVersion": "0.14",
     "apis": [
@@ -27,11 +27,11 @@
             "properties": [
                 {
                     "type": "x-openapi",
-                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/apis-io.json"
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/apis-io\/master\/apis-io-openapi.json"
                 },
                 {
                     "type": "x-openapi",
-                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/apis-io-openapi.json"
+                    "url": "http:\/\/kinlane-productions.s3.amazonaws.com\/api-evangelist-site\/company\/openapis\/apis-io.json"
                 }
             ]
         }
@@ -41,6 +41,10 @@
         {
             "type": "API.json - Authoritative",
             "url": "http:\/\/apis.io\/apis.json"
+        },
+        {
+            "type": "APIs.json",
+            "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/apis.json"
         },
         {
             "type": "Crunchbase",
