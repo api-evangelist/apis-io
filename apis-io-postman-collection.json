@@ -1,5 +1,5 @@
 {
-    "id": "4efe3959c9aa118dbf94421d6f5240c9",
+    "id": "916c7b3c543c763cabf719abe20f827d",
     "name": "APIs.io",
     "description": null,
     "auth": null,
@@ -10,7 +10,7 @@
     "folders": [],
     "requests": [
         {
-            "id": "6c74b56c69129ee6a284390983139b27",
+            "id": "258505e9935e463ef82f335918553ec5",
             "name": "Get APIS",
             "url": "httpapis.ioapi\/\/apis",
             "description": "List all the APIs available",
@@ -44,11 +44,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4efe3959c9aa118dbf94421d6f5240c9",
+            "collectionId": "916c7b3c543c763cabf719abe20f827d",
             "rawModeData": ""
         },
         {
-            "id": "515f96386757a82937661eab76eb3521",
+            "id": "de7d18179fdfe3795714a5c730937422",
             "name": "Add APIs",
             "url": "httpapis.ioapi\/\/apis",
             "description": "Adds an API to APIs.io",
@@ -75,11 +75,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4efe3959c9aa118dbf94421d6f5240c9",
+            "collectionId": "916c7b3c543c763cabf719abe20f827d",
             "rawModeData": ""
         },
         {
-            "id": "ea355e9f3d7c39cc02632f9e16fcfd9b",
+            "id": "4678a33d2fa7ef34ef1ec658e163c587",
             "name": "Search APIs",
             "url": "httpapis.ioapi\/\/search",
             "description": "Search for apis",
@@ -98,11 +98,11 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4efe3959c9aa118dbf94421d6f5240c9",
+            "collectionId": "916c7b3c543c763cabf719abe20f827d",
             "rawModeData": ""
         },
         {
-            "id": "746739c1f85c1a539199522b0451b539",
+            "id": "d61bf473007f17d32375691e199c80c4",
             "name": "Get Maintainers",
             "url": "httpapis.ioapi\/\/maintainers",
             "description": "Returns a list of maintainers",
@@ -121,7 +121,7 @@
             "responses": [],
             "currentHelper": null,
             "helperAttributes": null,
-            "collectionId": "4efe3959c9aa118dbf94421d6f5240c9",
+            "collectionId": "916c7b3c543c763cabf719abe20f827d",
             "rawModeData": ""
         }
     ]
