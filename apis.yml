@@ -1,0 +1,57 @@
+aid: apis-io
+name: APIs.io
+description: >-
+  APIs.io is an open source API search engine and directory that uses APIs.json
+  files to discover, index, and catalog APIs across the web, providing a
+  searchable entry point for developers to find public APIs.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - API Aggregation
+  - API Search
+  - API Discovery
+  - API Directory
+  - API Indexing
+  - Search Engine
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
+created: '2026-03-26'
+modified: '2026-03-26'
+specificationVersion: '0.19'
+apis:
+  - aid: apis-io:search-api
+    name: APIs.io Search API
+    description: >-
+      The APIs.io Search API allows you to search for APIs, properties, and
+      maintainers across all indexed APIs.json files. It provides endpoints for
+      keyword search, filtering by property type or maintainer, and submitting
+      new APIs to the index.
+    humanURL: https://developer.apis.io/
+    baseURL: https://search-api.apis.io
+    tags:
+      - API Search
+      - API Discovery
+      - API Indexing
+    properties:
+      - type: Documentation
+        url: https://developer.apis.io/documentation/
+      - type: OpenAPI
+        url: https://developer.apis.io/documentation/
+common:
+  - type: Website
+    url: https://apis.io
+  - type: About
+    url: https://apis.io/about/
+  - type: Blog
+    url: https://apis.io/blog/
+  - type: Developer Portal
+    url: https://developer.apis.io/
+  - type: Developer Blog
+    url: https://developer.apis.io/blog/
+  - type: GitHub Organization
+    url: https://github.com/apis-json
+  - type: GitHub Repository
+    url: https://github.com/apisio/apis.io
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
