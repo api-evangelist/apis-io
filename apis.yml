@@ -8,10 +8,10 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - API Aggregation
-  - API Search
-  - API Discovery
   - API Directory
+  - API Discovery
   - API Indexing
+  - API Search
   - Search Engine
 url: >-
   https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
@@ -29,9 +29,9 @@ apis:
     humanURL: https://developer.apis.io/
     baseURL: https://search-api.apis.io
     tags:
-      - API Search
       - API Discovery
       - API Indexing
+      - API Search
     properties:
       - type: Documentation
         url: https://developer.apis.io/documentation/
