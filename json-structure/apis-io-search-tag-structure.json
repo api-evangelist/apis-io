@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-tag-structure.json",
+  "name": "Tag",
+  "description": "A consistent set of tag to apply to a description"
+}

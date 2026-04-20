@@ -1,0 +1,11 @@
+{
+  "FN": "example-value",
+  "email": "developer@apis.io",
+  "organizationName": "Example API",
+  "adr": "example-value",
+  "tel": "example-value",
+  "X-github": "example-value",
+  "photo": "https://example.com",
+  "vCard": "https://example.com",
+  "url": "https://apis.io/example"
+}

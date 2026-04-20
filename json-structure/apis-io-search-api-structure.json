@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-api-structure.json",
+  "name": "API",
+  "description": "The description of the API",
+  "required": [
+    "name",
+    "description",
+    "image",
+    "baseURL",
+    "humanURL",
+    "properties",
+    "contact"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name",
+      "minLength": 5
+    },
+    "description": {
+      "type": "string",
+      "description": "description of the API",
+      "minLength": 5
+    },
+    "image": {
+      "type": "string",
+      "description": "URL of an image representing the API"
+    },
+    "baseURL": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$",
+      "description": "baseURL"
+    },
+    "humanURL": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$",
+      "description": "humanURL"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "tags to describe the API"
+    },
+    "properties": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Property"
+      },
+      "description": "URLs"
+    },
+    "contact": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Contact"
+      },
+      "description": "Contact to reach if questions about API"
+    },
+    "meta": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/metaInformation"
+      }
+    }
+  },
+  "type": "object"
+}

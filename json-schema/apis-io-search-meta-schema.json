@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-meta-schema.json",
+  "title": "Meta",
+  "description": "Meta schema from APIs.io Search API",
+  "type": "object",
+  "properties": {
+    "search": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "page": {
+      "type": "integer"
+    },
+    "totalPages": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "totalPages",
+    "page",
+    "limit"
+  ]
+}

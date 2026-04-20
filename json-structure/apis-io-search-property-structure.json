@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-property-structure.json",
+  "name": "Property",
+  "description": "A representation of a URL",
+  "required": [
+    "type",
+    "url"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "pattern": "^(Swagger)$|^(RAML)$|^(Blueprint)$|^(WADL)$|^(WSDL)$|^(TermsOfService)$|^(InterfaceLicense)$|^(StatusPage)$|^(Pricing)$|^(Forums)$|^(AlertsTwitterHandle)$|^(X-[A-Za-z0-9\\-]*)$",
+      "enum": [
+        "Swagger",
+        "RAML",
+        "Blueprint",
+        "WADL",
+        "WSDL",
+        "TersmOfService",
+        "InterfaceLicense",
+        "StatusPage",
+        "Pricing",
+        "Forums"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$"
+    }
+  },
+  "type": "object"
+}

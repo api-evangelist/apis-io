@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-schema.json",
+  "title": "APIs",
+  "description": "Listing of APIs in the APIs.json format.",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/API"
+  }
+}

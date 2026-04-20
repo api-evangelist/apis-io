@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-ap-is-structure.json",
+  "name": "APIs",
+  "description": "Listing of APIs in the APIs.json format.",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/API"
+  }
+}

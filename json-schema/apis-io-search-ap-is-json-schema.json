@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json",
+  "title": "APIsJSON",
+  "description": "APIsJSON schema from APIs.io Search API",
+  "type": "object",
+  "required": [
+    "name",
+    "description",
+    "url"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the service described",
+      "minLength": 5
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the service",
+      "minLength": 5
+    },
+    "url": {
+      "type": "string",
+      "description": "URL where the apis.json file will live",
+      "pattern": "^(http)|(https)://(.*)$"
+    },
+    "image": {
+      "type": "string",
+      "description": "Image to represent the API"
+    },
+    "created": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the file was created"
+    },
+    "modified": {
+      "type": "string",
+      "format": "date",
+      "description": "Date when the file was modified"
+    },
+    "specificationVersion": {
+      "type": "string",
+      "description": "APIs.json spec version, latest is 0.18",
+      "enum": [
+        0.18,
+        0.17,
+        0.16,
+        0.15,
+        0.14
+      ]
+    },
+    "apis": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/API"
+      },
+      "description": "All the APIs of this service"
+    },
+    "maintainers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Maintainer"
+      },
+      "description": "Maintainers of the apis.json file"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Tag"
+      },
+      "description": "Tags to describe the service"
+    },
+    "include": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Include"
+      },
+      "description": "Links to other apis.json definitions included in this service."
+    }
+  }
+}

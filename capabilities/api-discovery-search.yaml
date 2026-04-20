@@ -1,0 +1,85 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "APIs.io API Discovery and Search"
+  description: "Workflow capability for searching, discovering, and submitting APIs using the APIs.io search engine. Enables developers and platform engineers to programmatically find APIs by keyword across the full APIs.io index and submit their own APIs for discovery by others. The primary personas are API developers building integrations and API producers wanting their APIs discovered."
+  tags:
+    - API Discovery
+    - API Indexing
+    - API Search
+    - APIs.io
+    - APIs.json
+    - Search Engine
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APIS_IO_API_KEY: APIS_IO_API_KEY
+
+capability:
+  consumes:
+    - import: apis-io-search
+      location: ./shared/search-api.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: api-discovery-search-api
+      description: "Unified REST API for API discovery and submission via APIs.io."
+      resources:
+        - path: /v1/apis
+          name: apis
+          description: "Search and submit APIs in the directory"
+          operations:
+            - method: GET
+              name: search-apis
+              description: "Search for APIs by keyword or phrase"
+              call: "apis-io-search.search-apis"
+              with:
+                search: "rest.search"
+                limit: "rest.limit"
+                page: "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: submit-api
+              description: "Submit a new API to the directory"
+              call: "apis-io-search.add-api"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: api-discovery-search-mcp
+      transport: http
+      description: "MCP server for AI-assisted API discovery and index submission."
+      tools:
+        - name: search-apis
+          description: "Search across the APIs.io directory for APIs matching a keyword or phrase. Returns API names, descriptions, tags, quality scores, and links."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "apis-io-search.search-apis"
+          with:
+            search: "tools.search"
+            limit: "tools.limit"
+            page: "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: submit-api
+          description: "Submit a new API to the APIs.io index by providing a valid APIs.json document. The API will be reviewed and added to the searchable directory."
+          hints:
+            readOnly: false
+            openWorld: false
+          call: "apis-io-search.add-api"
+          with:
+            apis_json: "tools.apis_json"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-search-structure.json",
+  "name": "Search",
+  "description": "An JSON API object with metadata, data, and links.",
+  "type": "object",
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "data": {
+      "$ref": "#/components/schemas/APIs"
+    },
+    "links": {
+      "$ref": "#/components/schemas/Link"
+    }
+  },
+  "required": [
+    "meta",
+    "data",
+    "links"
+  ]
+}

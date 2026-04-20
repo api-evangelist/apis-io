@@ -1,0 +1,21 @@
+{
+  "name": "Example API",
+  "description": "An example API for demonstrating APIs.io",
+  "url": "https://apis.io/example",
+  "image": "example-value",
+  "created": "example-value",
+  "modified": "example-value",
+  "specificationVersion": 0.18,
+  "apis": [
+    "example-value"
+  ],
+  "maintainers": [
+    "example-value"
+  ],
+  "tags": [
+    "payments"
+  ],
+  "include": [
+    "example-value"
+  ]
+}

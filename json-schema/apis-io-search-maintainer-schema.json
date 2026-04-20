@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-maintainer-schema.json",
+  "title": "Maintainer",
+  "description": "The person or organization responsible for maintaining the API.",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name",
+      "minLength": 5
+    }
+  },
+  "additionalProperties": {
+    "type": "string"
+  },
+  "type": "object"
+}

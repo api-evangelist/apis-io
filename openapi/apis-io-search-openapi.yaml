@@ -1,0 +1,555 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Search API
+  description: This is the technical API contract for the search API for the APIs.io search engine.
+  version: 0.1.0
+  contact:
+    name: Kin Lane
+    email: info@apievangelist.com
+servers:
+- url: https://search-api.apis.io
+tags:
+- name: Search
+  description: Search using a cloud search engine.
+- name: APIs
+  description: Index of HTTP application programming interfaces.
+paths:
+  /search/apis:
+    get:
+      operationId: searchAPIs
+      summary: APIs.io Search APIs
+      description: Searching across all APIs by keyword or phrase.
+      parameters:
+      - $ref: "#/components/parameters/Search"
+      - $ref: "#/components/parameters/Limit"
+      - $ref: "#/components/parameters/Page"
+      tags:
+      - Search
+      - APIs
+      responses:
+        "200":
+          description: A successful search.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Search"
+              examples:
+                AddAPIResponse:
+                  $ref: "#/components/examples/SearchResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      summary: APIs.io Submit API
+      description: Submit a valid APIs.json to be included in APIs.io.
+      operationId: addAPI
+      tags:
+      - Search
+      requestBody:
+        description: A valid APIs.json to add API.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/APIsJSON"
+            examples:
+              AddAPIRequest:
+                $ref: "#/components/examples/AddAPIRequest"
+      responses:
+        "201":
+          description: Successful adding of an API.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/APIsJSON"
+              examples:
+                AddAPIResponse:
+                  $ref: "#/components/examples/AddAPIResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  examples:
+    AddAPIRequest:
+      summary: An example of adding an API.
+      value:
+        aid: apis.json
+        name: Example API
+        type: Index
+        description: |-
+          This is an example APIs.json file, demonstrating what is possible with
+          the API discovery specification.
+        image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+        tags:
+        - Application Programming Interface
+        - API
+        created: 2024-05-22
+        modified: 2024-05-22
+        url: http://example.com/apis.json
+        specificationVersion: "0.18"
+        apis:
+        - aid: apis.json:example-api
+          name: Example API
+          description: This provides details about a specific API, telling what is possible.
+          image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+          humanURL: http://example.com
+          baseURL: http://api.example.com
+          tags:
+          - API
+          - Application Programming Interface
+          properties:
+          - type: Documentation
+            url: https://example.com/documentation
+          - type: OpenAPI
+            url: http://example.com/openapi.yml
+        common:
+        - type: Signup
+          url: https://example.com/signup
+        - type: Login
+          url: https://example.com/login
+        - type: Authentication
+          url: http://example.com/authentication
+        maintainers:
+        - FN: Kin Lane
+          X-twitter: apievangelist
+          email: info@apievangelist.com
+    AddAPIResponse:
+      summary: A successful add API response.
+      value:
+        response: The API has been added to the APIs.io index.
+        url: https://github.com/apis-json/artisanal/tree/main/_apis/example-api/apis.md?plain=1
+        issue: https://github.com/apis-json/artisanal/issues/undefined
+    SearchResponse:
+      summary: A successful search response.
+      value:
+        meta:
+          search: AI
+          limit: 50
+          page: 0
+          totalPages: 20
+        data:
+        - name: AssemblyAI API
+          description: Built by AI experts, AssemblyAI’s Speech AI models include accurate speech-to-text for voice data (such as calls, virtual meetings, and podcasts), speaker detection, sentiment 
+            analysis, chapter detection, PII redaction, and more.
+          searchUrl: https://ai.apis.io/apis/assemblyai/apis/
+          apiUrl: https://www.assemblyai.com/docs/
+          indexUrl: https://raw.githubusercontent.com/api-search/artificial-intelligence/main/_apis_/assemblyai/apis.md
+          score: 546
+          tags:
+          - Artificial Intelligence
+          - AI
+        links:
+          self: /search/apis/?search=&page=0&limit=50
+          next: /search/apis/?search=&page=01&limit=50
+          last: /search/apis/?search=&page=20&limit=50
+  parameters:
+    Search:
+      name: search
+      description: The keyword to search by.
+      in: query
+      required: false
+      schema:
+        type: string
+    Limit:
+      name: limit
+      description: The limit of the results.
+      in: query
+      required: false
+      schema:
+        type: string
+    Page:
+      name: page
+      description: The page of the results.
+      in: query
+      required: false
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/bad-request
+            title: Bad Request
+            status: 400
+            detail: The request is invalid or missing required parameters.
+    Conflict:
+      description: Conflict
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/conflict
+            title: Conflict
+            status: 409
+            detail: There is a conflict with an existing resource.
+    Forbidden:
+      description: Forbidden
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/forbidden
+            title: Forbidden
+            status: 403
+            detail: Access is forbidden with the provided credentials.
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/internal-server-error
+            title: Internal Server Error
+            status: 500
+            detail: An unexpected error occurred.
+    NotFound:
+      description: Not Found
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/not-found
+            title: Not Found
+            status: 404
+            detail: The requested resource was not found.
+    TooManyRequests:
+      description: Too Many Requests
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/too-many-requests
+            title: Too Many Requests
+            status: 429
+            detail: You have exceeded the rate limit.
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://example.com/errors/unauthorized
+            title: Unauthorized
+            status: 401
+            detail: You do not have the necessary permissions.
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: x-api-key
+      in: header
+  schemas:
+    Search:
+      type: object
+      description: An JSON API object with metadata, data, and links.
+      properties:
+        meta:
+          $ref: "#/components/schemas/Meta"
+        data:
+          $ref: "#/components/schemas/APIs"
+        links:
+          $ref: "#/components/schemas/Link"
+      required:
+      - meta
+      - data
+      - links
+    Meta:
+      type: object
+      properties:
+        search:
+          type: string
+        type:
+          type: string
+        limit:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+      - totalPages
+      - page
+      - limit
+    Link:
+      type: object
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+        next:
+          type: string
+        last:
+          type: string
+      required:
+      - self
+    AddAPIsJSON:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+          description: URL where the apis.json file will live
+          pattern: ^(http)|(https)://(.*)$
+    APIsJSON:
+      type: object
+      required:
+      - name
+      - description
+      - url
+      properties:
+        name:
+          type: string
+          description: The name of the service described
+          minLength: 5
+        description:
+          type: string
+          description: Description of the service
+          minLength: 5
+        url:
+          type: string
+          description: URL where the apis.json file will live
+          pattern: ^(http)|(https)://(.*)$
+        image:
+          type: string
+          description: Image to represent the API
+        created:
+          type: string
+          format: date
+          description: Date when the file was created
+        modified:
+          type: string
+          format: date
+          description: Date when the file was modified
+        specificationVersion:
+          type: string
+          description: APIs.json spec version, latest is 0.18
+          enum:
+          - 0.18
+          - 0.17
+          - 0.16
+          - 0.15
+          - 0.14
+        apis:
+          type: array
+          items:
+            $ref: "#/components/schemas/API"
+          description: All the APIs of this service
+        maintainers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Maintainer"
+          description: Maintainers of the apis.json file
+        tags:
+          type: array
+          items:
+            $ref: "#/components/schemas/Tag"
+          description: Tags to describe the service
+        include:
+          type: array
+          items:
+            $ref: "#/components/schemas/Include"
+          description: Links to other apis.json definitions included in this service.
+    APIs:
+      type: array
+      description: Listing of APIs in the APIs.json format.
+      items:
+        $ref: "#/components/schemas/API"
+    API:
+      description: The description of the API
+      required:
+      - name
+      - description
+      - image
+      - baseURL
+      - humanURL
+      - properties
+      - contact
+      properties:
+        name:
+          type: string
+          description: name
+          minLength: 5
+        description:
+          type: string
+          description: description of the API
+          minLength: 5
+        image:
+          type: string
+          description: URL of an image representing the API
+        baseURL:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+          description: baseURL
+        humanURL:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+          description: humanURL
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+          description: tags to describe the API
+        properties:
+          type: array
+          items:
+            $ref: "#/components/schemas/Property"
+          description: URLs
+        contact:
+          type: array
+          items:
+            $ref: "#/components/schemas/Contact"
+          description: Contact to reach if questions about API
+        meta:
+          type: array
+          items:
+            $ref: "#/components/schemas/metaInformation"
+    Maintainer:
+      description: The person or organization responsible for maintaining the API.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: name
+          minLength: 5
+      additionalProperties:
+        type: string
+    metaInformation:
+      description: Metadata about the API
+      required:
+      - key
+      - value
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    Contact:
+      description: Information on contacting the API support
+      required:
+      - FN
+      properties:
+        FN:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          format: email
+        organizationName:
+          type: string
+          minLength: 1
+        adr:
+          type: string
+        tel:
+          type: string
+          minLength: 1
+        X-github:
+          type: string
+        photo:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+        vCard:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+        url:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+    Property:
+      description: A representation of a URL
+      required:
+      - type
+      - url
+      properties:
+        type:
+          type: string
+          pattern: ^(Swagger)$|^(RAML)$|^(Blueprint)$|^(WADL)$|^(WSDL)$|^(TermsOfService)$|^(InterfaceLicense)$|^(StatusPage)$|^(Pricing)$|^(Forums)$|^(AlertsTwitterHandle)$|^(X-[A-Za-z0-9\-]*)$
+          enum:
+          - Swagger
+          - RAML
+          - Blueprint
+          - WADL
+          - WSDL
+          - TersmOfService
+          - InterfaceLicense
+          - StatusPage
+          - Pricing
+          - Forums
+        url:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+    Tag:
+      description: A consistent set of tag to apply to a description
+    Include:
+      description: Include other APIs.json file
+      required:
+      - name
+      - url
+      properties:
+        name:
+          type: string
+          minLength: 1
+        url:
+          type: string
+          pattern: ^(http)|(https)://(.*)$
+    Problem:
+      xml:
+        name: problem
+        namespace: urn:ietf:rfc:7807
+      properties:
+        type:
+          type: string
+          description: A URI reference that identifies the problem type
+          example: https://example.com/probs/out-of-credit
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type
+          example: You do not have enough credit.
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem
+          example: Your current balance is 30, but that costs 50.
+        instance:
+          type: string
+          description: A URI reference that identifies the specific occurrence of the problem
+          example: /account/12345/msgs/abc
+        status:
+          type: integer
+          description: The HTTP status code
+          example: 400

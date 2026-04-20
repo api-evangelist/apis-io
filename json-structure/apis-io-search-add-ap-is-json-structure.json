@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-add-ap-is-json-structure.json",
+  "name": "AddAPIsJSON",
+  "description": "AddAPIsJSON schema from APIs.io Search API",
+  "type": "object",
+  "required": [
+    "url"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "URL where the apis.json file will live",
+      "pattern": "^(http)|(https)://(.*)$"
+    }
+  }
+}

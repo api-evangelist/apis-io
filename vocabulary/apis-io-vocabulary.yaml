@@ -1,0 +1,195 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "APIs.io"
+  description: "Vocabulary and taxonomy for the APIs.io search engine platform, covering the Search API operational endpoints and capability workflow dimensions for API discovery and submission."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: apis-io-search
+      version: "0.1.0"
+      baseUrl: https://search-api.apis.io
+      status: active
+      description: "APIs.io Search API for API discovery and submission"
+
+  resources:
+    - name: apis
+      description: "APIs indexed in the directory, searchable by keyword"
+      apis:
+        - apis-io-search
+      actions:
+        - search
+        - submit
+
+  actions:
+    - name: search
+      description: "Search across all indexed APIs by keyword or phrase"
+      httpMethod: GET
+      pattern: read
+
+    - name: submit
+      description: "Submit a new API to the directory by providing an APIs.json document"
+      httpMethod: POST
+      pattern: write
+
+  schemas:
+    core:
+      - name: Search
+        description: "Search response containing meta, data array, and pagination links"
+        keyProperties:
+          - meta
+          - data
+          - links
+
+      - name: Meta
+        description: "Metadata about search results including search term, pagination, and total pages"
+        keyProperties:
+          - search
+          - limit
+          - page
+          - totalPages
+
+      - name: APIsJSON
+        description: "APIs.json format for describing API collections with provider and API metadata"
+        keyProperties:
+          - aid
+          - name
+          - description
+          - apis
+          - common
+          - maintainers
+
+      - name: API
+        description: "Individual API entry within an APIs.json document"
+        keyProperties:
+          - aid
+          - name
+          - humanURL
+          - baseURL
+          - tags
+          - properties
+
+      - name: Property
+        description: "A URL-type property link for an API, such as Documentation, OpenAPI, or Authentication"
+        keyProperties:
+          - type
+          - url
+
+      - name: Contact
+        description: "Contact information for API support and maintainers"
+        keyProperties:
+          - FN
+          - email
+
+  parameters:
+    pagination:
+      - name: limit
+        description: "Maximum number of results to return per page"
+        in: query
+        type: string
+        default: "50"
+
+      - name: page
+        description: "Page number for pagination of results"
+        in: query
+        type: string
+        default: "0"
+
+    filters:
+      - name: search
+        description: "Keyword or phrase to search across indexed APIs"
+        in: query
+        type: string
+
+  enums:
+    property-types:
+      - Documentation
+      - OpenAPI
+      - AsyncAPI
+      - JSONSchema
+      - Authentication
+      - StatusPage
+      - Pricing
+      - TermsOfService
+      - PrivacyPolicy
+      - GettingStarted
+      - SDK
+      - Blog
+      - Support
+
+  authentication:
+    schemes:
+      - type: apiKey
+        in: header
+        name: x-api-key
+        description: "API key obtained from the APIs.io Authentication API by converting a GitHub Personal Access Token"
+        apisUsing:
+          - apis-io-search
+
+capability:
+  workflows:
+    - name: API Discovery and Search
+      file: capabilities/api-discovery-search.yaml
+      description: "Search for APIs in the directory and submit new APIs for indexing"
+      apisCombined:
+        - APIs.io Search API
+      toolCount: 2
+      personas:
+        - API Developer
+        - API Producer
+
+  personas:
+    - id: api-developer
+      name: API Developer
+      description: "A developer searching for APIs to integrate into their applications"
+      workflows:
+        - API Discovery and Search
+
+    - id: api-producer
+      name: API Producer
+      description: "An API owner or provider submitting their API for discovery in the index"
+      workflows:
+        - API Discovery and Search
+
+  domains:
+    - name: API Discovery
+      description: "Finding APIs in the directory by keyword or topic"
+      resources:
+        - apis
+
+    - name: API Submission
+      description: "Submitting new APIs to the directory for indexing and discovery"
+      resources:
+        - apis
+
+  namespaces:
+    - id: apis-io-search
+      type: consumed
+      description: "APIs.io Search API namespace"
+
+    - id: api-discovery-search-api
+      type: rest
+      port: 8080
+      description: "REST API exposure for search workflows"
+
+    - id: api-discovery-search-mcp
+      type: mcp
+      port: 9090
+      description: "MCP server for AI-assisted API discovery and submission"
+
+  binds:
+    - name: APIS_IO_API_KEY
+      description: "API key for the APIs.io Search API, obtained from the Authentication API"
+
+crossReference:
+  - resource: apis
+    operations:
+      - searchAPIs
+      - addAPI
+    workflows:
+      - API Discovery and Search
+    personas:
+      - API Developer
+      - API Producer

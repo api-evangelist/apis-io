@@ -1,0 +1,131 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "APIs.io Search API"
+  description: "Shared capability definition for the APIs.io Search API. Enables searching across all indexed APIs by keyword or phrase, and submitting new APIs.json documents for indexing. Authentication uses API keys obtained from the APIs.io Authentication API."
+  tags:
+    - API Discovery
+    - API Indexing
+    - API Search
+    - APIs.io
+    - APIs.json
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APIS_IO_API_KEY: APIS_IO_API_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: apis-io-search
+      baseUri: https://search-api.apis.io
+      description: "APIs.io Search API for API discovery and submission"
+      authentication:
+        type: apikey
+        key: x-api-key
+        value: "{{APIS_IO_API_KEY}}"
+        placement: header
+      resources:
+        - name: apis
+          path: /search/apis
+          description: "Search and submit APIs in the directory"
+          operations:
+            - name: search-apis
+              method: GET
+              description: "Search across all APIs by keyword or phrase"
+              inputParameters:
+                - name: search
+                  in: query
+                  type: string
+                  required: false
+                  description: "Keyword or phrase to search for"
+                - name: limit
+                  in: query
+                  type: string
+                  required: false
+                  description: "Maximum number of results to return"
+                - name: page
+                  in: query
+                  type: string
+                  required: false
+                  description: "Page number for pagination"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+            - name: add-api
+              method: POST
+              description: "Submit a valid APIs.json to be included in APIs.io"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  apis_json: "{{tools.apis_json}}"
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: apis-io-search-rest
+      resources:
+        - path: /v1/apis
+          name: apis
+          description: "Search and submit APIs"
+          operations:
+            - method: GET
+              name: search-apis
+              description: "Search APIs in the directory"
+              call: "apis-io-search.search-apis"
+              with:
+                search: "rest.search"
+                limit: "rest.limit"
+                page: "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: add-api
+              description: "Submit an API to the directory"
+              call: "apis-io-search.add-api"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: apis-io-search-mcp
+      transport: http
+      tools:
+        - name: search-apis
+          description: "Search across all APIs in the APIs.io directory by keyword or phrase"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "apis-io-search.search-apis"
+          with:
+            search: "tools.search"
+            limit: "tools.limit"
+            page: "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: submit-api
+          description: "Submit a new API to the APIs.io index by providing an APIs.json document"
+          hints:
+            readOnly: false
+            openWorld: false
+          call: "apis-io-search.add-api"
+          with:
+            apis_json: "tools.apis_json"
+          outputParameters:
+            - type: object
+              mapping: "$."

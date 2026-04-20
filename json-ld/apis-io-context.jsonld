@@ -1,0 +1,166 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "apio": "https://apis.io/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Contact": "apio:Contact",
+    "Meta": "apio:Meta",
+    "Link": "apio:Link",
+    "Search": "apio:Search",
+    "Maintainer": "apio:Maintainer",
+    "Property": "apio:Property",
+    "metaInformation": "apio:metaInformation",
+    "Include": "apio:Include",
+    "API": "apio:API",
+    "AddAPIsJSON": "apio:AddAPIsJSON",
+    "APIsJSON": "apio:APIsJSON",
+    "FN": {
+      "@id": "apio:FN",
+      "@type": "xsd:string"
+    },
+    "email": "schema:email",
+    "organizationName": {
+      "@id": "apio:organizationName",
+      "@type": "xsd:string"
+    },
+    "adr": {
+      "@id": "apio:adr",
+      "@type": "xsd:string"
+    },
+    "tel": {
+      "@id": "apio:tel",
+      "@type": "xsd:string"
+    },
+    "X-github": {
+      "@id": "apio:X-github",
+      "@type": "xsd:string"
+    },
+    "photo": {
+      "@id": "apio:photo",
+      "@type": "xsd:string"
+    },
+    "vCard": {
+      "@id": "apio:vCard",
+      "@type": "xsd:string"
+    },
+    "url": "schema:url",
+    "search": {
+      "@id": "apio:search",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "apio:type",
+      "@type": "xsd:string"
+    },
+    "limit": {
+      "@id": "apio:limit",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "apio:page",
+      "@type": "xsd:integer"
+    },
+    "totalPages": {
+      "@id": "apio:totalPages",
+      "@type": "xsd:integer"
+    },
+    "self": {
+      "@id": "apio:self",
+      "@type": "xsd:string"
+    },
+    "first": {
+      "@id": "apio:first",
+      "@type": "xsd:string"
+    },
+    "prev": {
+      "@id": "apio:prev",
+      "@type": "xsd:string"
+    },
+    "next": {
+      "@id": "apio:next",
+      "@type": "xsd:string"
+    },
+    "last": {
+      "@id": "apio:last",
+      "@type": "xsd:string"
+    },
+    "meta": {
+      "@id": "apio:meta",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "apio:data",
+      "@type": "xsd:string"
+    },
+    "links": {
+      "@id": "apio:links",
+      "@type": "xsd:string"
+    },
+    "name": "schema:name",
+    "key": {
+      "@id": "apio:key",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "apio:value",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "image": {
+      "@id": "apio:image",
+      "@type": "xsd:string"
+    },
+    "baseURL": {
+      "@id": "apio:baseURL",
+      "@type": "xsd:string"
+    },
+    "humanURL": {
+      "@id": "apio:humanURL",
+      "@type": "xsd:string"
+    },
+    "tags": {
+      "@id": "apio:tags",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "properties": {
+      "@id": "apio:properties",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "contact": {
+      "@id": "apio:contact",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "created": {
+      "@id": "apio:created",
+      "@type": "xsd:date"
+    },
+    "modified": {
+      "@id": "apio:modified",
+      "@type": "xsd:date"
+    },
+    "specificationVersion": {
+      "@id": "apio:specificationVersion",
+      "@type": "xsd:string"
+    },
+    "apis": {
+      "@id": "apio:apis",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "maintainers": {
+      "@id": "apio:maintainers",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "include": {
+      "@id": "apio:include",
+      "@container": "@set",
+      "@type": "xsd:string"
+    }
+  }
+}

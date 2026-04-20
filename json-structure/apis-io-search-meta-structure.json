@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-meta-structure.json",
+  "name": "Meta",
+  "description": "Meta schema from APIs.io Search API",
+  "type": "object",
+  "properties": {
+    "search": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "int32"
+    },
+    "page": {
+      "type": "int32"
+    },
+    "totalPages": {
+      "type": "int32"
+    }
+  },
+  "required": [
+    "totalPages",
+    "page",
+    "limit"
+  ]
+}

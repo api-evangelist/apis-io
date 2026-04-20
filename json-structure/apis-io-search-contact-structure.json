@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-contact-structure.json",
+  "name": "Contact",
+  "description": "Information on contacting the API support",
+  "required": [
+    "FN"
+  ],
+  "properties": {
+    "FN": {
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "organizationName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adr": {
+      "type": "string"
+    },
+    "tel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "X-github": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$"
+    },
+    "vCard": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$"
+    },
+    "url": {
+      "type": "string",
+      "pattern": "^(http)|(https)://(.*)$"
+    }
+  },
+  "type": "object"
+}

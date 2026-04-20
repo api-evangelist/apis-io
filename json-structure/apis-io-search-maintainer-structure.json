@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-structure/apis-io-search-maintainer-structure.json",
+  "name": "Maintainer",
+  "description": "The person or organization responsible for maintaining the API.",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "name",
+      "minLength": 5
+    }
+  },
+  "additionalProperties": {
+    "type": "string"
+  },
+  "type": "object"
+}
