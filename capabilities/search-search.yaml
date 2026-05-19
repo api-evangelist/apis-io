@@ -1,0 +1,107 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIs.io Search API — Search
+  description: 'APIs.io Search API — Search. 2 operations. Lead operation: APIs.io Search APIs. Self-contained Naftiko capability
+    covering one Apis Io business surface.'
+  tags:
+  - Apis Io
+  - Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIS_IO_API_KEY: APIS_IO_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: search-search
+    baseUri: https://search-api.apis.io
+    description: APIs.io Search API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: search-apis
+      path: /search/apis
+      operations:
+      - name: searchapis
+        method: GET
+        description: APIs.io Search APIs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: addapi
+        method: POST
+        description: APIs.io Submit API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: x-api-key
+      value: '{{env.APIS_IO_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: search-search-rest
+    port: 8080
+    description: REST adapter for APIs.io Search API — Search. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/search/apis
+      name: search-apis
+      description: REST surface for search-apis.
+      operations:
+      - method: GET
+        name: searchapis
+        description: APIs.io Search APIs
+        call: search-search.searchapis
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addapi
+        description: APIs.io Submit API
+        call: search-search.addapi
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: search-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIs.io Search API — Search. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: apis-io-search-apis
+      description: APIs.io Search APIs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: search-search.searchapis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apis-io-submit-api
+      description: APIs.io Submit API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: search-search.addapi
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
