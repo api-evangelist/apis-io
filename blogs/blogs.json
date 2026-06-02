@@ -2,19 +2,27 @@
   "repo": "apis-io",
   "feeds": [
     {
-      "source": "https://apis.io/blog/",
-      "feed_url": "",
+      "source": "https://developer.apis.io/atom.xml",
+      "feed_url": "https://developer.apis.io/atom.xml",
       "title": "",
       "saved": 0,
-      "error": "no_feed"
+      "method": "feed"
     },
     {
-      "source": "https://developer.apis.io/blog/",
+      "source": "https://apis.io/about/",
+      "feed_url": "https://apis.io/about/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
+      "source": "https://developer.apis.io/",
       "feed_url": "https://developer.apis.io/atom.xml",
-      "title": "Developer APIs.io",
-      "saved": 5
+      "title": "",
+      "saved": 0,
+      "method": "discovered"
     }
   ],
   "post_count": 10,
-  "fetched": "2026-05-17T20:48:52Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
