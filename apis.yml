@@ -61,6 +61,21 @@ apis:
   - type: NaftikoCapability
     url: capabilities/search-search.yaml
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/apis-io-compare-keyword-coverage-workflow.yml
+    name: APIs.io Compare Keyword Coverage
+    summary: Run two keyword searches against APIs.io and compare how many APIs the index holds for each term.
+  - url: arazzo/apis-io-paginate-search-results-workflow.yml
+    name: APIs.io Paginate Search Results
+    summary: Read the first page of a keyword search, learn the total page count, then fetch a following page of results.
+  - url: arazzo/apis-io-search-apis-workflow.yml
+    name: APIs.io Search APIs by Keyword
+    summary: Search the APIs.io registry for APIs matching a keyword and branch on whether any results were returned.
+  - url: arazzo/apis-io-submit-and-verify-api-workflow.yml
+    name: APIs.io Submit and Verify API
+    summary: Submit a valid APIs.json to the APIs.io index, then search the registry to confirm the submitted API appears.
 - type: Website
   url: https://apis.io
 - type: About
