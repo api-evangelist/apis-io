@@ -2,6 +2,13 @@
   "repo": "apis-io",
   "feeds": [
     {
+      "source": "https://apis.io/blog/",
+      "feed_url": "https://apis.io/blog/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    },
+    {
       "source": "https://developer.apis.io/atom.xml",
       "feed_url": "https://developer.apis.io/atom.xml",
       "title": "",
@@ -23,6 +30,6 @@
       "method": "discovered"
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-06-01T23:35:02Z"
+  "post_count": 13,
+  "fetched": "2026-06-14T20:42:17Z"
 }
