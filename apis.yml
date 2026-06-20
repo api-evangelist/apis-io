@@ -7,7 +7,7 @@ description: APIs.io is an open source API search engine and directory that uses
   Steven Willmott and supports both API producers (submitting APIs) and API consumers (discovering APIs). APIs.io uses a Spectral-powered
   rating system to evaluate API documentation quality.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - API Aggregation
 - API Directory
