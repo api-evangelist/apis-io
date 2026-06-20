@@ -24,12 +24,12 @@ specificationVersion: '0.19'
 apis:
 - aid: apis-io:search-api
   name: APIs.io Search API
-  description: The APIs.io Search API allows developers to search for APIs across all indexed APIs.json files using keywords
-    or phrases, and to submit new APIs to the index by providing a valid APIs.json document. The API supports pagination,
-    filtering, and returns results with name, description, tags, score, and URLs. Authentication is handled via the separate
-    Authentication API which converts GitHub Personal Access Tokens into API keys.
-  humanURL: https://developer.apis.io/documentation/
-  baseURL: https://search-api.apis.io
+  description: The APIs.io API is a read-only discovery API over the APIs.io catalog. It lets developers and AI agents
+    search and browse APIs, providers, tags, industries, and regions, and select published artifacts (OpenAPI, AsyncAPI,
+    Postman, Arazzo, JSON Schema, JSON-LD, GraphQL, rules, and more), with provider ratings and a unified /search endpoint.
+    Served at https://apis.io/api/v1; the same OpenAPI contract powers the APIs.io MCP server at https://apis.io/mcp.
+  humanURL: https://apis.io/developer/documentation/
+  baseURL: https://apis.io/api/v1
   tags:
   - API Discovery
   - API Indexing
@@ -37,17 +37,25 @@ apis:
   - APIs.json
   properties:
   - type: Documentation
-    url: https://developer.apis.io/documentation/
+    url: https://apis.io/developer/documentation/
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-search-openapi.yaml
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml
+  - type: MCPServer
+    url: https://apis.io/mcp
+    title: APIs.io MCP Server
+  - type: MCPServerCard
+    url: https://apis.io/.well-known/mcp/server-card.json
+  - type: AgentSkill
+    url: https://apis.io/skills/
+    title: APIs.io Agent Skills
   - type: Postman Collection
     url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
-    url: https://developer.apis.io/authentication/
+    url: https://apis.io/developer/authentication/
   - type: RateLimits
-    url: https://developer.apis.io/plans/
+    url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://developer.apis.io/change-log/
+    url: https://apis.io/developer/change-log/
   - type: StatusPage
     url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
@@ -83,28 +91,28 @@ common:
 - type: Blog
   url: https://apis.io/blog/
 - type: DeveloperPortal
-  url: https://developer.apis.io/
+  url: https://apis.io/developer/
 - type: Blog
-  url: https://developer.apis.io/blog/
+  url: https://apis.io/developer/blog/
   title: Developer Blog
 - type: GettingStarted
-  url: https://developer.apis.io/getting-started/
+  url: https://apis.io/developer/getting-started/
 - type: Authentication
-  url: https://developer.apis.io/authentication/
+  url: https://apis.io/developer/authentication/
 - type: Plans
-  url: https://developer.apis.io/plans/
+  url: https://apis.io/developer/plans/
 - type: ChangeLog
-  url: https://developer.apis.io/change-log/
+  url: https://apis.io/developer/change-log/
 - type: ReleaseNotes
-  url: https://developer.apis.io/change-log/
+  url: https://apis.io/developer/change-log/
 - type: Versioning
-  url: https://developer.apis.io/versioning/
+  url: https://apis.io/developer/versioning/
 - type: Support
-  url: https://developer.apis.io/support/
+  url: https://apis.io/developer/support/
 - type: TermsOfService
-  url: https://developer.apis.io/terms-of-service/
+  url: https://apis.io/developer/terms-of-service/
 - type: PrivacyPolicy
-  url: https://developer.apis.io/privacy-policy/
+  url: https://apis.io/developer/privacy-policy/
 - type: GitHubOrganization
   url: https://github.com/api-search
 - type: GitHubRepository

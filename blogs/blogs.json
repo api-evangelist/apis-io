@@ -9,8 +9,8 @@
       "method": "none"
     },
     {
-      "source": "https://developer.apis.io/atom.xml",
-      "feed_url": "https://developer.apis.io/atom.xml",
+      "source": "https://apis.io/developer/atom.xml",
+      "feed_url": "https://apis.io/developer/atom.xml",
       "title": "",
       "saved": 0,
       "method": "feed"
@@ -23,8 +23,8 @@
       "method": "none"
     },
     {
-      "source": "https://developer.apis.io/",
-      "feed_url": "https://developer.apis.io/atom.xml",
+      "source": "https://apis.io/developer/",
+      "feed_url": "https://apis.io/developer/atom.xml",
       "title": "",
       "saved": 0,
       "method": "discovered"

@@ -19,7 +19,7 @@ APIs.io is an open source API search engine and directory that uses APIs.json fi
 ### APIs.io Search API
 The APIs.io Search API allows developers to search for APIs across all indexed APIs.json files using keywords or phrases, and to submit new APIs to the index by providing a valid APIs.json document. The API supports pagination, filtering, and returns results with name, description, tags, score, and URLs. Authentication is handled via the separate Authentication API which converts GitHub Personal Access Tokens into API keys.
 
-**Human URL:** [https://developer.apis.io/documentation/](https://developer.apis.io/documentation/)
+**Human URL:** [https://apis.io/developer/documentation/](https://apis.io/developer/documentation/)
 
 #### Tags:
 
@@ -27,12 +27,12 @@ The APIs.io Search API allows developers to search for APIs across all indexed A
 
 #### Properties
 
-- [Documentation](https://developer.apis.io/documentation/)
+- [Documentation](https://apis.io/developer/documentation/)
 - [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-search-openapi.yaml)
 - [Postman Collection](https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api)
-- [Authentication](https://developer.apis.io/authentication/)
-- [Rate Limits](https://developer.apis.io/plans/)
-- [Change Log](https://developer.apis.io/change-log/)
+- [Authentication](https://apis.io/developer/authentication/)
+- [Rate Limits](https://apis.io/developer/plans/)
+- [Change Log](https://apis.io/developer/change-log/)
 - [Status Page](https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e)
 - [JSONSchema - Search Response Schema](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json)
 - [JSONSchema - APIs.json Schema](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json)
@@ -42,17 +42,17 @@ The APIs.io Search API allows developers to search for APIs across all indexed A
 - [Website](https://apis.io)
 - [About](https://apis.io/about/)
 - [Blog](https://apis.io/blog/)
-- [Developer Portal](https://developer.apis.io/)
-- [Developer Blog](https://developer.apis.io/blog/)
-- [Getting Started](https://developer.apis.io/getting-started/)
-- [Authentication](https://developer.apis.io/authentication/)
-- [Plans](https://developer.apis.io/plans/)
-- [Change Log](https://developer.apis.io/change-log/)
-- [Release Notes](https://developer.apis.io/change-log/)
-- [Versioning](https://developer.apis.io/versioning/)
-- [Support](https://developer.apis.io/support/)
-- [Terms of Service](https://developer.apis.io/terms-of-service/)
-- [Privacy Policy](https://developer.apis.io/privacy-policy/)
+- [Developer Portal](https://apis.io/developer/)
+- [Developer Blog](https://apis.io/developer/blog/)
+- [Getting Started](https://apis.io/developer/getting-started/)
+- [Authentication](https://apis.io/developer/authentication/)
+- [Plans](https://apis.io/developer/plans/)
+- [Change Log](https://apis.io/developer/change-log/)
+- [Release Notes](https://apis.io/developer/change-log/)
+- [Versioning](https://apis.io/developer/versioning/)
+- [Support](https://apis.io/developer/support/)
+- [Terms of Service](https://apis.io/developer/terms-of-service/)
+- [Privacy Policy](https://apis.io/developer/privacy-policy/)
 - [GitHub Organization](https://github.com/api-search)
 - [GitHub Repository](https://github.com/apisio/apis.io)
 - [GitHub Repository - Search API](https://github.com/api-search/apis-io-search)

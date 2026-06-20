@@ -1,0 +1,1866 @@
+openapi: 3.1.0
+info:
+  title: APIs.io API
+  version: 1.0.0-draft
+  summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, and artifacts.
+  description: |
+    A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
+
+    The catalog is assembled from per-provider repositories and exposed here as the
+    **providers**, **apis**, and **tags** resources, a **first-class collection per
+    artifact type** (`/openapis`, `/asyncapis`, `/arazzo`, `/postman`, `/json-schemas`, …),
+    and a unified `/search` endpoint that spans them.
+
+    Design notes:
+    - **Identifiers.** `aid` is the stable id. A provider is `twilio`; an API is
+      `twilio:twilio-accounts-api` (`<provider>:<api-slug>`).
+    - **Artifacts by reference.** API records carry a `properties` list of artifacts
+      (`type` + `url`). By default only references are returned; pass `include=content`
+      to inline an artifact's body.
+    - **Selectable artifacts.** Use `artifact_types` to return only the artifact types
+      you care about (e.g. `OpenAPI,Postman`).
+    - **Open now, key-ready.** v1 is open and read-only. An `ApiKeyAuth` scheme is defined
+      but not enforced, so metering can be added later without a breaking change.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  x-logo:
+    url: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+
+tags:
+  - name: Providers
+    description: Organizations publishing APIs on the network.
+  - name: APIs
+    description: Individual APIs, each owned by a provider and described by artifacts.
+  - name: Tags
+    description: The tag taxonomy, with network-wide ranking metadata.
+  - name: Industries
+    description: Industry verticals grouping providers across the catalog.
+  - name: Regions
+    description: Geographic regions grouping providers across the catalog.
+  - name: Ratings
+    description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
+  - name: Artifact Types
+    description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
+  - name: Search
+    description: Unified cross-resource search.
+
+# Defined but NOT required in v1 (key-ready, see info.description).
+security: []
+
+paths:
+
+  /providers:
+    get:
+      operationId: listProviders
+      tags:
+        - Providers
+      summary: List and filter providers.
+      description: List providers, optionally filtered by free text, tags, or the artifact types they publish.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/ArtifactTypes'
+        - $ref: '#/components/parameters/IndustryFilter'
+        - $ref: '#/components/parameters/RegionFilter'
+        - $ref: '#/components/parameters/BandFilter'
+        - $ref: '#/components/parameters/MinScore'
+        - $ref: '#/components/parameters/MaxScore'
+        - $ref: '#/components/parameters/TrendFilter'
+        - $ref: '#/components/parameters/FacetFilter'
+        - $ref: '#/components/parameters/MinFacet'
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - relevance
+              - name
+              - api_count
+              - created
+              - score
+            default: relevance
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /providers/{slug}:
+    get:
+      operationId: getProvider
+      tags:
+        - Providers
+      summary: Get one provider.
+      description: Returns a single provider by slug, including its provider-wide links, tags, and a summary list of the APIs it publishes.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The provider.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Provider'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /providers/{slug}/apis:
+    get:
+      operationId: listProviderApis
+      tags:
+        - Providers
+        - APIs
+      summary: List the APIs published by a provider.
+      description: Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/ArtifactTypes'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of the provider's APIs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /providers/{slug}/rating:
+    get:
+      operationId: getProviderRating
+      tags:
+        - Ratings
+      summary: One provider's rating.
+      description: Returns the full rating breakdown for a single provider — composite, band, trend, delta, and all six facet scores.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: One provider's rating.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderScore'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis:
+    get:
+      operationId: listApis
+      tags:
+        - APIs
+      summary: List and filter APIs across the network.
+      description: |
+        The core cross-provider discovery endpoint. Filter by free text, one or many tags
+        (`match=any|all`), one or many providers, and/or the artifact types an API must
+        publish. Use `artifact_types` together with `fields=...,properties` to return only
+        the artifacts you want.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/ArtifactTypes'
+        - $ref: '#/components/parameters/IndustryFilter'
+        - $ref: '#/components/parameters/RegionFilter'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/BandFilter'
+        - $ref: '#/components/parameters/MinScore'
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - relevance
+              - name
+              - provider
+              - created
+              - score
+            default: relevance
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of APIs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /apis/{aid}:
+    get:
+      operationId: getApi
+      tags:
+        - APIs
+      summary: Get one API by aid.
+      description: Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`.
+      parameters:
+        - $ref: '#/components/parameters/Aid'
+        - $ref: '#/components/parameters/ArtifactTypes'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The API.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /tags:
+    get:
+      operationId: listTags
+      tags:
+        - Tags
+      summary: List and rank tags.
+      description: |
+        The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,
+        `breadth`, `quality_lift`, `band`). Default sort is by `composite` score.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: band
+          in: query
+          description: Filter by quality band.
+          schema:
+            type: string
+            enum:
+              - strong
+              - healthy
+              - stale
+              - weak
+        - name: min_api_count
+          in: query
+          description: Only tags applied to at least this many APIs.
+          schema:
+            type: integer
+            minimum: 0
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - composite
+              - frequency
+              - breadth
+              - quality_lift
+              - api_count
+              - provider_count
+              - name
+            default: composite
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of tags.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagList'
+
+  /tags/{slug}:
+    get:
+      operationId: getTag
+      tags:
+        - Tags
+      summary: Get one tag, with its linked providers, APIs, and neighbors.
+      description: Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Tag slug (e.g. `messaging`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: The tag.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /industries:
+    get:
+      operationId: listIndustries
+      tags:
+        - Industries
+      summary: List and filter industries.
+      description: The industry taxonomy — verticals grouping providers across the catalog. Filter by free text; sort by provider or API count.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List and filter industries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndustryList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /industries/{slug}:
+    get:
+      operationId: getIndustry
+      tags:
+        - Industries
+      summary: Get one industry, with its ranked providers.
+      description: Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Industrie slug (e.g. `media-entertainment`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Get one industry, with its ranked providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Industry'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /regions:
+    get:
+      operationId: listRegions
+      tags:
+        - Regions
+      summary: List and filter regions.
+      description: The region taxonomy — geographic groupings of providers across the catalog. Filter by free text; sort by provider or API count.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List and filter regions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /regions/{slug}:
+    get:
+      operationId: getRegion
+      tags:
+        - Regions
+      summary: Get one region, with its ranked providers.
+      description: Returns a single region by slug, including its aliases, name patterns, counts, and the member providers ranked by score.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Region slug (e.g. `southeast-asia`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Get one region, with its ranked providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /openapis:
+    get:
+      operationId: listOpenapis
+      tags:
+        - Artifact Types
+      summary: List openapi specifications across the catalog.
+      description: First-class collection of openapi specifications across every provider on the network. Surfaces and normalizes the `OpenAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of openapi specifications with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /asyncapis:
+    get:
+      operationId: listAsyncapis
+      tags:
+        - Artifact Types
+      summary: List asyncapi specifications across the catalog.
+      description: First-class collection of asyncapi specifications across every provider on the network. Surfaces and normalizes the `AsyncAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of asyncapi specifications with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /arazzo:
+    get:
+      operationId: listArazzo
+      tags:
+        - Artifact Types
+      summary: List arazzo workflows across the catalog.
+      description: First-class collection of arazzo workflows across every provider on the network. Surfaces and normalizes the `Arazzo` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of arazzo workflows with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /postman:
+    get:
+      operationId: listPostman
+      tags:
+        - Artifact Types
+      summary: List postman collections across the catalog.
+      description: First-class collection of postman collections across every provider on the network. Surfaces and normalizes the `PostmanCollection` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of postman collections with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /collections:
+    get:
+      operationId: listCollections
+      tags:
+        - Artifact Types
+      summary: List api collections across the catalog.
+      description: First-class collection of api collections across every provider on the network. Surfaces and normalizes the `Collection`, `Collections` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of api collections with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /graphql:
+    get:
+      operationId: listGraphql
+      tags:
+        - Artifact Types
+      summary: List graphql schemas across the catalog.
+      description: First-class collection of graphql schemas across every provider on the network. Surfaces and normalizes the `GraphQL` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of graphql schemas with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /json-schemas:
+    get:
+      operationId: listJsonSchemas
+      tags:
+        - Artifact Types
+      summary: List json schema definitions across the catalog.
+      description: First-class collection of json schema definitions across every provider on the network. Surfaces and normalizes the `JSONSchema` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of json schema definitions with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /json-structures:
+    get:
+      operationId: listJsonStructures
+      tags:
+        - Artifact Types
+      summary: List json structure definitions across the catalog.
+      description: First-class collection of json structure definitions across every provider on the network. Surfaces and normalizes the `JSONStructure` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of json structure definitions with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /json-ld:
+    get:
+      operationId: listJsonLd
+      tags:
+        - Artifact Types
+      summary: List json-ld contexts across the catalog.
+      description: First-class collection of json-ld contexts across every provider on the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of json-ld contexts with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /vocabularies:
+    get:
+      operationId: listVocabularies
+      tags:
+        - Artifact Types
+      summary: List vocabularies across the catalog.
+      description: First-class collection of vocabularies across every provider on the network. Surfaces and normalizes the `Vocabulary` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of vocabularies with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /rules:
+    get:
+      operationId: listRules
+      tags:
+        - Artifact Types
+      summary: List governance rulesets across the catalog.
+      description: First-class collection of governance rulesets across every provider on the network. Surfaces and normalizes the `Rules`, `SpectralRules`, `SpectralRuleset`, `Spectral` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of governance rulesets with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /examples:
+    get:
+      operationId: listExamples
+      tags:
+        - Artifact Types
+      summary: List examples across the catalog.
+      description: First-class collection of examples across every provider on the network. Surfaces and normalizes the `Example`, `Examples`, `CodeExamples` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of examples with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /finops:
+    get:
+      operationId: listFinops
+      tags:
+        - Artifact Types
+      summary: List finops artifacts across the catalog.
+      description: First-class collection of finops artifacts across every provider on the network. Surfaces and normalizes the `FinOps` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of finops artifacts with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /plans:
+    get:
+      operationId: listPlans
+      tags:
+        - Artifact Types
+      summary: List plans across the catalog.
+      description: First-class collection of plans across every provider on the network. Surfaces and normalizes the `Plans` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of plans with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /rate-limits:
+    get:
+      operationId: listRateLimits
+      tags:
+        - Artifact Types
+      summary: List rate limits across the catalog.
+      description: First-class collection of rate limits across every provider on the network. Surfaces and normalizes the `RateLimits` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of rate limits with owning API and provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /ratings:
+    get:
+      operationId: listRatings
+      tags:
+        - Ratings
+      summary: Ranked ratings leaderboard.
+      description: Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores.
+      parameters:
+        - $ref: '#/components/parameters/BandFilter'
+        - $ref: '#/components/parameters/MinScore'
+        - $ref: '#/components/parameters/MaxScore'
+        - $ref: '#/components/parameters/TrendFilter'
+        - $ref: '#/components/parameters/FacetFilter'
+        - $ref: '#/components/parameters/MinFacet'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - name: sort
+          in: query
+          description: Sort order (composite descending by default).
+          schema:
+            type: string
+            enum:
+              - composite
+              - trend
+              - name
+            default: composite
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Ranked ratings leaderboard.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatingList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /ratings/rubric:
+    get:
+      operationId: getRatingRubric
+      tags:
+        - Ratings
+      summary: The rating rubric.
+      description: Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block.
+      responses:
+        '200':
+          description: The rating rubric.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rubric'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /search:
+    get:
+      operationId: search
+      tags:
+        - Search
+      summary: Unified search across apis, providers, tags, and artifacts.
+      description: |
+        The power endpoint. Choose what kind of object to return with `return`
+        (`apis` by default), then constrain with any combination of `q`, `tags`
+        (`match=any|all`), `providers`, and `artifact_types`. Use `fields` for sparse
+        responses and `include=content` to inline artifacts.
+
+        Example — messaging APIs across providers that ship an OpenAPI, returning just the
+        spec and pricing artifacts:
+
+            /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing
+                   &fields=aid,name,provider_slug,properties
+      parameters:
+        - name: return
+          in: query
+          description: The kind of object to return.
+          schema:
+            type: string
+            enum:
+              - apis
+              - providers
+              - tags
+            default: apis
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/ArtifactTypes'
+        - $ref: '#/components/parameters/IndustryFilter'
+        - $ref: '#/components/parameters/RegionFilter'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/BandFilter'
+        - $ref: '#/components/parameters/MinScore'
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - relevance
+              - name
+              - composite
+              - api_count
+              - created
+            default: relevance
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of search results of the requested kind.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+components:
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a breaking change.
+
+  parameters:
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+        - Messaging
+        - Authentication
+      schema:
+        type: array
+        items:
+          type: string
+    Match:
+      name: match
+      in: query
+      description: Whether results must match `any` (default) or `all` of the supplied tags.
+      schema:
+        type: string
+        enum:
+          - any
+          - all
+        default: any
+    Providers:
+      name: providers
+      in: query
+      description: Comma-separated provider slugs to scope results to.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    ArtifactTypes:
+      name: artifact_types
+      in: query
+      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ArtifactType'
+    Include:
+      name: include
+      in: query
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - content
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+    Aid:
+      name: aid
+      in: path
+      required: true
+      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
+      schema:
+        type: string
+        pattern: '^[^:]+:[^:]+$'
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+
+    ArtifactSort:
+      name: sort
+      in: query
+      description: Sort order.
+      schema:
+        type: string
+        enum:
+          - relevance
+          - provider
+          - name
+          - updated
+        default: relevance
+    BandFilter:
+      name: band
+      in: query
+      description: Filter by one or more rating bands.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Band'
+    MinScore:
+      name: min_score
+      in: query
+      description: Minimum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    MaxScore:
+      name: max_score
+      in: query
+      description: Maximum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    TrendFilter:
+      name: trend
+      in: query
+      description: Filter by trend marker.
+      schema:
+        $ref: '#/components/schemas/Trend'
+    FacetFilter:
+      name: facet
+      in: query
+      description: Facet to apply `min_facet` against.
+      schema:
+        $ref: '#/components/schemas/FacetName'
+    MinFacet:
+      name: min_facet
+      in: query
+      description: Minimum score (0–100) for the facet named by `facet`.
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    IndustryFilter:
+      name: industry
+      in: query
+      description: Filter by one or more industry slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+    RegionFilter:
+      name: region
+      in: query
+      description: Filter by one or more region slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+  responses:
+    BadRequest:
+      description: Malformed request (bad parameter value).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/invalid-parameter
+            title: Invalid parameter
+            status: 400
+            detail: "`match` must be one of: any, all."
+            instance: /v1/search
+            parameter: match
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+
+  schemas:
+
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+        page:
+          type: integer
+        limit:
+          type: integer
+        pages:
+          type: integer
+          description: Total number of pages.
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+        - total
+        - page
+        - limit
+        - pages
+
+    Link:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Link/relationship type (e.g. Documentation
+          Website:
+          GitHub:
+          Pricing).:
+        url:
+          type: string
+          format: uri
+        title:
+          type: string
+      required:
+        - type
+        - url
+
+    ArtifactType:
+      type: string
+      description: |
+        The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
+        common are listed here. Unknown values are allowed.
+      examples:
+        - OpenAPI
+        - JSONSchema
+        - Postman
+      enum:
+        - Documentation
+        - OpenAPI
+        - JSONSchema
+        - JSONStructure
+        - JSONLD
+        - Example
+        - GettingStarted
+        - APIReference
+        - Authentication
+        - SDK
+        - GitHubRepository
+        - Reference
+        - Pricing
+        - CodeExamples
+        - Website
+        - RateLimits
+        - Portal
+        - AsyncAPI
+        - Arazzo
+        - GitHub
+        - ChangeLog
+        - SourceCode
+        - Repository
+        - FAQ
+        - SignUp
+        - GraphQL
+        - Plans
+        - Vocabulary
+        - Specification
+        - Tutorials
+        - Sandbox
+        - FinOps
+        - SpectralRules
+        - Console
+        - GitHubOrganization
+        - ReleaseNotes
+        - Support
+        - TermsOfService
+        - Rules
+        - Webhooks
+        - Quickstart
+        - ProductPage
+        - Capabilities
+        - PostmanCollection
+        - Collection
+        - KubernetesCRD
+        - Hub
+        - NaftikoCapability
+      x-extensible-enum: true
+
+    Artifact:
+      type: object
+      description: A machine- or human-readable artifact attached to an API.
+      properties:
+        id:
+          type: string
+          description: Stable artifact id, `aid::type::n`.
+          examples:
+            - 'twilio:twilio-accounts-api::OpenAPI::0'
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        name:
+          type: string
+          description: Optional human label for the artifact.
+        url:
+          type: string
+          format: uri
+          description: Reference to the artifact.
+        # Owning context — populated on cross-catalog artifact results.
+        aid:
+          type: string
+          description: aid of the owning API.
+        provider_slug:
+          type: string
+        provider_name:
+          type: string
+        # Populated only when include=content.
+        content:
+          type: string
+          description: Inlined artifact body. Present only when include=content.
+        content_type:
+          type: string
+          description: Media type of the inlined content (e.g. application/yaml).
+      required:
+        - type
+        - url
+
+    Api:
+      type: object
+      description: An individual API owned by a provider.
+      properties:
+        aid:
+          type: string
+          examples:
+            - 'twilio:twilio-accounts-api'
+        name:
+          type: string
+        description:
+          type: string
+        provider_slug:
+          type: string
+        provider_name:
+          type: string
+        baseURL:
+          type: string
+          format: uri
+        humanURL:
+          type: string
+          format: uri
+          description: Human-facing documentation entry point.
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+          examples:
+            -   - Messaging
+                - Authentication
+        properties:
+          type: array
+          description: The API's artifacts.
+          items:
+            $ref: '#/components/schemas/Artifact'
+        sibling_apis:
+          type: array
+          description: Other APIs published by the same provider.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              slug:
+                type: string
+        overview:
+          type: string
+          description: Narrative overview (markdown).
+      required:
+        - aid
+        - name
+        - provider_slug
+
+    Provider:
+      type: object
+      description: An organization publishing one or more APIs.
+      properties:
+        slug:
+          type: string
+          examples:
+            - twilio
+        name:
+          type: string
+        description:
+          type: string
+        api_count:
+          type: integer
+        image:
+          type: string
+          format: uri
+        created:
+          type: string
+          format: date
+        common:
+          type: array
+          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
+          items:
+            $ref: '#/components/schemas/Link'
+        apis:
+          type: array
+          description: Summary list of the provider's APIs.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              slug:
+                type: string
+              description:
+                type: string
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+          examples:
+            -   - Messaging
+                - Authentication
+        score:
+          $ref: '#/components/schemas/ProviderScore'
+      required:
+        - slug
+        - name
+
+    TagRef:
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+
+    Tag:
+      type: object
+      description: A tag in the taxonomy, with network-wide ranking metadata.
+      properties:
+        slug:
+          type: string
+          examples:
+            - messaging
+        name:
+          type: string
+          examples:
+            - Messaging
+        composite:
+          type: number
+          description: Composite ranking score.
+        band:
+          type: string
+          enum:
+            - strong
+            - healthy
+            - stale
+            - weak
+        frequency:
+          type: number
+        breadth:
+          type: number
+        quality_lift:
+          type: number
+        provider_count:
+          type: integer
+        api_count:
+          type: integer
+        variants:
+          type: array
+          items:
+            type: string
+        neighbors:
+          type: array
+          description: Related tags.
+          items:
+            $ref: '#/components/schemas/TagRef'
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Provider'
+        apis:
+          type: array
+          items:
+            type: object
+            properties:
+              provider:
+                type: string
+              slug:
+                type: string
+              name:
+                type: string
+      required:
+        - slug
+        - name
+
+    ProviderList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Provider'
+      required:
+        - meta
+        - data
+
+    ApiList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+      required:
+        - meta
+        - data
+
+    TagList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+      required:
+        - meta
+        - data
+
+    ArtifactList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artifact'
+      required:
+        - meta
+        - data
+
+    SearchResults:
+      type: object
+      description: |
+        Unified search envelope. `data` holds objects of the kind named by `meta.return`
+        (apis | providers | tags | artifacts).
+      properties:
+        meta:
+          allOf:
+            - $ref: '#/components/schemas/Meta'
+            - type: object
+              properties:
+                return:
+                  type: string
+                  enum:
+                    - apis
+                    - providers
+                    - tags
+                    - artifacts
+        data:
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/Api'
+              - $ref: '#/components/schemas/Provider'
+              - $ref: '#/components/schemas/Tag'
+              - $ref: '#/components/schemas/Artifact'
+      required:
+        - meta
+        - data
+
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - 'https://apis.io/problems/invalid-parameter'
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
+    Trend:
+      type: string
+      description: Week-over-week movement in composite score (±5 thresholds).
+      enum:
+        - rising
+        - flat
+        - falling
+    FacetName:
+      type: string
+      description: One of the six rating facets.
+      enum:
+        - discoverability
+        - contract_quality
+        - governance
+        - operational_transparency
+        - developer_ergonomics
+        - commercial_clarity
+    Facets:
+      type: object
+      description: The six facet scores, each 0–100.
+      properties:
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
+    ProviderScore:
+      type: object
+      description: A provider's rating, rubric v0.3.
+      properties:
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted composite of the six facets.
+          examples:
+            - 66.3
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+        delta:
+          type: number
+          description: Composite change since the previous snapshot.
+          examples:
+            - 0.0
+        previous_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        scored_at:
+          type: string
+          format: date
+        schema_version:
+          type: string
+          examples:
+            - '0.3'
+        facets:
+          $ref: '#/components/schemas/Facets'
+      required:
+        - composite
+        - band
+    RatingEntry:
+      type: object
+      description: A ranked provider in the ratings leaderboard.
+      properties:
+        rank:
+          type: integer
+          description: 1-based position in the filtered, score-sorted list.
+        provider_slug:
+          type: string
+        provider_name:
+          type: string
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+        facets:
+          $ref: '#/components/schemas/Facets'
+      required:
+        - provider_slug
+        - composite
+        - band
+    RatingList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingEntry'
+      required:
+        - meta
+        - data
+    Rubric:
+      type: object
+      description: The rating rubric — bands, facet weights, and trend thresholds.
+      properties:
+        schema_version:
+          type: string
+          examples:
+            - '0.3'
+        bands:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                $ref: '#/components/schemas/Band'
+              min:
+                type: number
+                description: Inclusive lower bound of the composite range.
+              description:
+                type: string
+        facets:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/FacetName'
+              label:
+                type: string
+              weight:
+                type: number
+                description: Share of the composite (the six weights sum to 1.0).
+              description:
+                type: string
+        trending:
+          type: object
+          properties:
+            rising_threshold:
+              type: number
+              examples:
+                - 5
+            falling_threshold:
+              type: number
+              examples:
+                - -5
+    RankedProvider:
+      type: object
+      description: A provider summary as it appears in an industry or region membership list.
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        api_count:
+          type: integer
+        image:
+          type: string
+          format: uri
+        score_band:
+          $ref: '#/components/schemas/Band'
+        score_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+        - slug
+        - name
+    Industry:
+      type: object
+      description: An industry vertical grouping providers across the catalog.
+      properties:
+        slug:
+          type: string
+          examples:
+            - media-entertainment
+        name:
+          type: string
+          examples:
+            - Media & Entertainment
+        short:
+          type: string
+          description: One-line summary.
+        description:
+          type: string
+        aliases:
+          type: array
+          items:
+            type: string
+        provider_count:
+          type: integer
+        api_count:
+          type: integer
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
+          items:
+            $ref: '#/components/schemas/RankedProvider'
+      required:
+        - slug
+        - name
+    Region:
+      type: object
+      description: A geographic region grouping providers across the catalog.
+      properties:
+        slug:
+          type: string
+          examples:
+            - southeast-asia
+        name:
+          type: string
+          examples:
+            - Southeast Asia
+        short:
+          type: string
+          description: One-line summary.
+        description:
+          type: string
+        aliases:
+          type: array
+          items:
+            type: string
+        name_patterns:
+          type: array
+          description: Country/nationality strings used to infer regional membership.
+          items:
+            type: string
+        provider_count:
+          type: integer
+        api_count:
+          type: integer
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
+          items:
+            $ref: '#/components/schemas/RankedProvider'
+      required:
+        - slug
+        - name
+    IndustryList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Industry'
+      required:
+        - meta
+        - data
+    RegionList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+      required:
+        - meta
+        - data
