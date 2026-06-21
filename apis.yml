@@ -43,6 +43,30 @@ apis:
   - type: MCPServer
     url: https://apis.io/mcp
     title: APIs.io MCP Server
+    slug: mcp-server
+    description: >-
+      Read-only MCP server over the APIs.io catalog, served over Streamable HTTP at
+      https://apis.io/mcp. 15 curated tools led by apis_io_search let agents discover APIs,
+      providers, tags, ratings, industries, regions, and published artifacts. Generated from the
+      same OpenAPI contract as the REST API. Keyless free tier; send an X-API-Key header for
+      higher rate limits and the Pro-tier industries/regions/ratings tools.
+    tools:
+      - name: apis_io_search
+        description: "Power tool — find APIs, providers, or tags by free text, tags, provider, artifact type, industry, region, and rating band."
+      - name: find_apis / get_api
+        description: "List/search individual API records, or fetch one by id."
+      - name: find_providers / get_provider
+        description: "List/search API providers, or fetch one provider profile."
+      - name: find_tags / get_tag
+        description: "Browse the tag taxonomy, or fetch APIs/providers for a tag."
+      - name: find_industries / get_industry
+        description: "Browse industry verticals (Pro tier)."
+      - name: find_regions / get_region
+        description: "Browse geographic regions (Pro tier)."
+      - name: find_ratings / get_provider_rating / get_rating_rubric
+        description: "Provider rating bands + the scoring rubric (rubric is free; ratings are Pro)."
+      - name: find_artifacts
+        description: "Fetch artifacts of a given type (OpenAPI, AsyncAPI, Postman, JSON Schema, …) across the catalog."
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkill
