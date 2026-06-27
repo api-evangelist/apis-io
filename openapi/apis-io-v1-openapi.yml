@@ -152,6 +152,8 @@ paths:
   /providers/{slug}/rating:
     get:
       operationId: getProviderRating
+      security:
+        - ApiKeyAuth: []
       tags:
         - Ratings
       summary: One provider's rating.
@@ -314,6 +316,8 @@ paths:
   /industries:
     get:
       operationId: listIndustries
+      security:
+        - ApiKeyAuth: []
       tags:
         - Industries
       summary: List and filter industries.
@@ -345,6 +349,8 @@ paths:
   /industries/{slug}:
     get:
       operationId: getIndustry
+      security:
+        - ApiKeyAuth: []
       tags:
         - Industries
       summary: Get one industry, with its ranked providers.
@@ -369,6 +375,8 @@ paths:
   /regions:
     get:
       operationId: listRegions
+      security:
+        - ApiKeyAuth: []
       tags:
         - Regions
       summary: List and filter regions.
@@ -400,6 +408,8 @@ paths:
   /regions/{slug}:
     get:
       operationId: getRegion
+      security:
+        - ApiKeyAuth: []
       tags:
         - Regions
       summary: Get one region, with its ranked providers.
@@ -799,6 +809,8 @@ paths:
   /ratings:
     get:
       operationId: listRatings
+      security:
+        - ApiKeyAuth: []
       tags:
         - Ratings
       summary: Ranked ratings leaderboard.

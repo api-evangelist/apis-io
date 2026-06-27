@@ -3,33 +3,17 @@
   "feeds": [
     {
       "source": "https://apis.io/blog/",
-      "feed_url": "https://apis.io/blog/",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "feed_url": "",
+      "saved": 5,
+      "method": "agent-scrape"
     },
     {
-      "source": "https://apis.io/developer/atom.xml",
-      "feed_url": "https://apis.io/developer/atom.xml",
-      "title": "",
+      "source": "https://apis.io/developer/blog/",
       "saved": 0,
-      "method": "feed"
-    },
-    {
-      "source": "https://apis.io/about/",
-      "feed_url": "https://apis.io/about/",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://apis.io/developer/",
-      "feed_url": "https://apis.io/developer/atom.xml",
-      "title": "",
-      "saved": 0,
-      "method": "discovered"
+      "error": "HTTP 403 Forbidden"
     }
   ],
-  "post_count": 13,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 21,
+  "fetched": "2026-06-27T12:24:57Z",
+  "agent_pulled": "2026-06-27"
 }

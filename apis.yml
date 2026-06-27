@@ -69,14 +69,14 @@ apis:
         description: "Fetch artifacts of a given type (OpenAPI, AsyncAPI, Postman, JSON Schema, …) across the catalog."
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
-  - type: AgentSkill
+  - type: AgentSkills
     url: https://apis.io/skills/
-  - type: AgentSkill
+  - type: AgentSkills
     url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
-  - type: AgentSkill
+  - type: AgentSkills
     url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
     title: APIs.io Agent Skills
-  - type: Postman Collection
+  - type: PostmanCollection
     url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
@@ -92,9 +92,9 @@ apis:
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
     title: APIs.json Schema
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/search-apis.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/search-search.yaml
 common:
 - type: Arazzo
