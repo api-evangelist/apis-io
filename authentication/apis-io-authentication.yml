@@ -1,0 +1,23 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apis-io-search-openapi.yaml, openapi/apis-io-v1-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: api_key
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  sources:
+  - openapi/apis-io-search-openapi.yaml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a
+    breaking change.
+  sources:
+  - openapi/apis-io-v1-openapi.yml

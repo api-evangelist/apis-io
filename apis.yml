@@ -97,6 +97,10 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/search-search.yaml
 common:
+- type: DomainSecurity
+  url: security/apis-io-domain-security.yml
+- type: Authentication
+  url: authentication/apis-io-authentication.yml
 - type: Arazzo
   url: arazzo/apis-io-compare-keyword-coverage-workflow.yml
   name: APIs.io Compare Keyword Coverage
