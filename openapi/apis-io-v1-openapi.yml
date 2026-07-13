@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.0.0-draft
-  summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, and artifacts.
+  version: 1.1.0
+  summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions — with a free discovery tier and a Pro synthesis tier.
   description: |
     A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
 
@@ -19,8 +19,16 @@ info:
       to inline an artifact's body.
     - **Selectable artifacts.** Use `artifact_types` to return only the artifact types
       you care about (e.g. `OpenAPI,Postman`).
-    - **Open now, key-ready.** v1 is open and read-only. An `ApiKeyAuth` scheme is defined
-      but not enforced, so metering can be added later without a breaking change.
+    - **Free vs. Pro tiers.** Raw discovery — `/search`, `/providers`, `/apis`, `/tags`, and
+      every artifact-type collection (`/openapis`, `/mcp`, `/scopes`, `/examples`, `/schemas`, …)
+      — is **free**. The curated taxonomy dimensions (`/industries`, `/regions`, `/areas`), the
+      rating **data** (`/ratings`, `/providers/{slug}/rating`), and the synthesis composites
+      (`/compare`, `/gaps`, `/changes`, `/stack`) are **Pro**. Each operation declares its tier
+      via `x-tier`; the rubric (`/ratings/rubric`) stays free. Send `X-API-Key` for a paid tier;
+      keyless callers get the free tier. See `x-apis-io` for the full tier / MCP-tool / skill map.
+    - **Also an MCP server + Agent Skills.** Every operation maps 1:1 to an MCP tool at
+      `https://apis.io/mcp` (see each operation's `x-mcp-tool`) and, where one exists, an
+      Agent Skill (`x-agent-skill`). This is the API → MCP → Agent-Skill experience chain.
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -29,6 +37,71 @@ info:
     url: https://creativecommons.org/licenses/by/4.0/
   x-logo:
     url: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
+# Authoritative machine-readable map of the API's DX/AX surface: the tier model, and for every
+# operation its tier, MCP tool, and Agent Skill (where one exists). Rendered by the API Experience
+# tool (experience.apicommons.org) as the API -> MCP -> Agent-Skill journey + a free/paid coverage
+# view. Kept in sync with the deployed gating (lambdas/search/index.mjs GATED set) and MCP tools
+# (lambdas/mcp/index.mjs) in apis-io-aws. Per-operation `x-tier`/`x-mcp-tool`/`x-agent-skill`
+# repeat the relevant row inline; this block is the single source Part B reads.
+x-apis-io:
+  tiers:
+    free:
+      label: Free
+      description: Raw discovery — search, providers, apis, tags, and every artifact-type collection. Keyless.
+    pro:
+      label: Pro
+      description: Curated dimensions (industries/regions/areas), rating data, and synthesis composites. Requires X-API-Key.
+      plans: https://apis.io/developer/plans/
+  mcp:
+    endpoint: https://apis.io/mcp
+    serverCard: https://apis.io/.well-known/mcp/server-card.json
+  agentSkills:
+    index: https://apis.io/.well-known/agent-skills/index.json
+  # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
+  # the coverage view surfaces on purpose).
+  operations:
+    listProviders:    { tier: free, mcpTool: find_providers,      agentSkill: find-api }
+    getProvider:      { tier: free, mcpTool: get_provider,        agentSkill: provider-overview }
+    listProviderApis: { tier: free, mcpTool: get_provider }
+    listApis:         { tier: free, mcpTool: find_apis,           agentSkill: find-api }
+    getApi:           { tier: free, mcpTool: get_api,             agentSkill: explain-artifact }
+    listTags:         { tier: free, mcpTool: find_tags }
+    getTag:           { tier: free, mcpTool: get_tag }
+    listOpenapis:     { tier: free, mcpTool: find_artifacts }
+    listAsyncapis:    { tier: free, mcpTool: find_artifacts }
+    listArazzo:       { tier: free, mcpTool: find_artifacts }
+    listPostman:      { tier: free, mcpTool: find_artifacts }
+    listCollections:  { tier: free, mcpTool: find_artifacts }
+    listGraphql:      { tier: free, mcpTool: find_artifacts }
+    listJsonSchemas:  { tier: free, mcpTool: find_artifacts }
+    listJsonStructures: { tier: free, mcpTool: find_artifacts }
+    listJsonLd:       { tier: free, mcpTool: find_artifacts }
+    listVocabularies: { tier: free, mcpTool: find_artifacts }
+    listRules:        { tier: free, mcpTool: find_artifacts }
+    listExamples:     { tier: free, mcpTool: find_artifacts }
+    listFinops:       { tier: free, mcpTool: find_artifacts }
+    listPlans:        { tier: free, mcpTool: find_artifacts }
+    listRateLimits:   { tier: free, mcpTool: find_artifacts }
+    listChannels:     { tier: free, mcpTool: find_artifacts }
+    listMcpServers:   { tier: free, mcpTool: find_artifacts }
+    listSkills:       { tier: free, mcpTool: find_artifacts }
+    listScopes:       { tier: free, mcpTool: find_artifacts }
+    listSecurity:     { tier: free, mcpTool: find_artifacts }
+    search:           { tier: free, mcpTool: apis_io_search,     agentSkill: find-api }
+    getRatingRubric:  { tier: free, mcpTool: get_rating_rubric }
+    listIndustries:   { tier: pro,  mcpTool: find_industries }
+    getIndustry:      { tier: pro,  mcpTool: get_industry }
+    listRegions:      { tier: pro,  mcpTool: find_regions }
+    getRegion:        { tier: pro,  mcpTool: get_region }
+    listAreas:        { tier: pro,  mcpTool: find_areas }
+    getArea:          { tier: pro,  mcpTool: get_area }
+    listRatings:      { tier: pro,  mcpTool: find_ratings }
+    getProviderRating: { tier: pro, mcpTool: get_provider_rating }
+    compareProviders: { tier: pro,  mcpTool: compare_providers,  agentSkill: design-api-stack }
+    gapAnalysis:      { tier: pro,  mcpTool: gap_analysis }
+    whatsChanged:     { tier: pro,  mcpTool: whats_changed }
+    recommendStack:   { tier: free, mcpTool: recommend_stack,    agentSkill: design-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json. }
 
 servers:
   - url: https://apis.io/api/v1
@@ -45,6 +118,10 @@ tags:
     description: Industry verticals grouping providers across the catalog.
   - name: Regions
     description: Geographic regions grouping providers across the catalog.
+  - name: Areas
+    description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
+  - name: Synthesis
+    description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
   - name: Ratings
     description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
   - name: Artifact Types
@@ -152,6 +229,8 @@ paths:
   /providers/{slug}/rating:
     get:
       operationId: getProviderRating
+      x-tier: pro
+      x-mcp-tool: get_provider_rating
       security:
         - ApiKeyAuth: []
       tags:
@@ -316,6 +395,8 @@ paths:
   /industries:
     get:
       operationId: listIndustries
+      x-tier: pro
+      x-mcp-tool: find_industries
       security:
         - ApiKeyAuth: []
       tags:
@@ -349,6 +430,8 @@ paths:
   /industries/{slug}:
     get:
       operationId: getIndustry
+      x-tier: pro
+      x-mcp-tool: get_industry
       security:
         - ApiKeyAuth: []
       tags:
@@ -375,6 +458,8 @@ paths:
   /regions:
     get:
       operationId: listRegions
+      x-tier: pro
+      x-mcp-tool: find_regions
       security:
         - ApiKeyAuth: []
       tags:
@@ -408,6 +493,8 @@ paths:
   /regions/{slug}:
     get:
       operationId: getRegion
+      x-tier: pro
+      x-mcp-tool: get_region
       security:
         - ApiKeyAuth: []
       tags:
@@ -809,6 +896,8 @@ paths:
   /ratings:
     get:
       operationId: listRatings
+      x-tier: pro
+      x-mcp-tool: find_ratings
       security:
         - ApiKeyAuth: []
       tags:
@@ -920,6 +1009,338 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResults'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  /channels:
+    get:
+      operationId: listChannels
+      x-tier: free
+      x-mcp-tool: find_artifacts
+      tags:
+        - Artifact Types
+      summary: List AsyncAPI event channels across the catalog.
+      description: First-class collection of AsyncAPI event channels across every provider — the finest-grained event/streaming discovery surface. Filter by free text, provider, and tags; `include=content` inlines each channel's spec.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of event channels with owning provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /mcp:
+    get:
+      operationId: listMcpServers
+      x-tier: free
+      x-mcp-tool: find_artifacts
+      tags:
+        - Artifact Types
+      summary: List published MCP servers across the catalog.
+      description: First-class collection of provider MCP servers across the network. Filter by free text, provider, and tags; `include=content` inlines each server's card/manifest.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of MCP servers with owning provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /skills:
+    get:
+      operationId: listSkills
+      x-tier: free
+      x-mcp-tool: find_artifacts
+      tags:
+        - Artifact Types
+      summary: List published Agent Skills across the catalog.
+      description: First-class collection of provider Agent Skills across the network. Filter by free text, provider, and tags; `include=content` inlines each skill.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of Agent Skills with owning provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /scopes:
+    get:
+      operationId: listScopes
+      x-tier: free
+      x-mcp-tool: find_artifacts
+      tags:
+        - Artifact Types
+      summary: List OAuth scope sets across the catalog.
+      description: First-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of OAuth scope sets with owning provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /security:
+    get:
+      operationId: listSecurity
+      x-tier: free
+      x-mcp-tool: find_artifacts
+      tags:
+        - Artifact Types
+      summary: List security scheme definitions across the catalog.
+      description: First-class collection of provider security/auth scheme definitions across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Match'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/ArtifactSort'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of security definitions with owning provider context.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /areas:
+    get:
+      operationId: listAreas
+      x-tier: pro
+      x-mcp-tool: find_areas
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Areas
+      summary: List and filter areas (Pro).
+      description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Filter by free text; sort by provider count. Pro tier.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List and filter areas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AreaList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/UpgradeRequired'
+  /areas/{slug}:
+    get:
+      operationId: getArea
+      x-tier: pro
+      x-mcp-tool: get_area
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Areas
+      summary: Get one area, with its ranked providers (Pro).
+      description: Returns a single area by slug, including its description, site link, counts, and the member providers ranked by score. Pro tier.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Area slug (e.g. `authentication`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Get one area, with its ranked providers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Area'
+        '403':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /compare:
+    get:
+      operationId: compareProviders
+      x-tier: pro
+      x-mcp-tool: compare_providers
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Synthesis
+      summary: Compare providers side by side (Pro).
+      description: Compares 2+ providers — composite/band, per-facet leaders, and an artifact-coverage matrix. Pro tier.
+      parameters:
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs to compare (2+).
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Side-by-side comparison of the requested providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/UpgradeRequired'
+  /gaps:
+    get:
+      operationId: gapAnalysis
+      x-tier: pro
+      x-mcp-tool: gap_analysis
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Synthesis
+      summary: Artifact + score gap analysis for a provider or stack (Pro).
+      description: For each provider — the high-value artifacts it lacks, what its peers commonly publish but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Pro tier.
+      parameters:
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs (1+). Multiple = treat as a stack.
+          schema:
+            type: string
+        - name: min_share
+          in: query
+          description: Peer-share threshold for a gap (0–1, default 0.25).
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Per-provider and stack-level gaps.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/UpgradeRequired'
+  /changes:
+    get:
+      operationId: whatsChanged
+      x-tier: pro
+      x-mcp-tool: whats_changed
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Synthesis
+      summary: What changed in the catalog since a date (Pro).
+      description: Providers added/updated since a date, plus rating movement (up/down) from the latest scoring build. Pro tier.
+      parameters:
+        - name: since
+          in: query
+          required: true
+          description: Cutoff date, YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Catalog changes since the given date.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/UpgradeRequired'
+  /stack:
+    get:
+      operationId: recommendStack
+      x-tier: free
+      x-mcp-tool: recommend_stack
+      x-agent-skill: design-api-stack
+      tags:
+        - Synthesis
+      summary: Design a recommended API stack per capability.
+      description: Decompose a domain into capabilities, then get the best-rated catalog provider per capability assembled into a stack. FREE returns a preview (top pick per capability); PRO returns alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint.
+      parameters:
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
+          schema:
+            type: string
+        - name: region
+          in: query
+          description: Optional region slug to prefer, e.g. `europe`.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A recommended stack (preview for free callers; full for Pro).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
         '400':
           $ref: '#/components/responses/BadRequest'
 
@@ -1141,6 +1562,18 @@ components:
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
 
   schemas:
 
@@ -1873,6 +2306,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+      required:
+        - meta
+        - data
+    Area:
+      type: object
+      description: A curated API Evangelist area — a topic collection with its own scored provider index and dedicated site.
+      properties:
+        slug:
+          type: string
+          examples:
+            - authentication
+        name:
+          type: string
+          examples:
+            - Authentication
+        short:
+          type: string
+          description: One-line summary.
+        description:
+          type: string
+        aliases:
+          type: array
+          items:
+            type: string
+        area_url:
+          type: string
+          description: The area's dedicated site.
+          examples:
+            - https://authentication.apievangelist.com
+        area_host:
+          type: string
+        icon:
+          type: string
+        provider_count:
+          type: integer
+        api_count:
+          type: integer
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-area endpoint; omitted from list responses by default.
+          items:
+            $ref: '#/components/schemas/RankedProvider'
+      required:
+        - slug
+        - name
+    AreaList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Area'
       required:
         - meta
         - data
