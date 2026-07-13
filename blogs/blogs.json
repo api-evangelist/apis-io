@@ -2,18 +2,21 @@
   "repo": "apis-io",
   "feeds": [
     {
-      "source": "https://apis.io/blog/",
-      "feed_url": "",
-      "saved": 5,
-      "method": "agent-scrape"
+      "source": "https://apis.io/about/",
+      "feed_url": "https://apis.io/about/",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     },
     {
-      "source": "https://apis.io/developer/blog/",
+      "source": "https://apis.io/developer/",
+      "feed_url": "https://apis.io/developer/",
+      "title": "",
       "saved": 0,
-      "error": "HTTP 403 Forbidden"
+      "method": "none"
     }
   ],
-  "post_count": 21,
-  "fetched": "2026-06-27T12:24:57Z",
+  "post_count": 34,
+  "fetched": "2026-07-11T11:50:51Z",
   "agent_pulled": "2026-06-27"
 }
