@@ -61,18 +61,22 @@ x-apis-io:
   # The MCP server exposes all three MCP primitives — tools (1:1 with operations below), plus
   # PROMPTS (guided flows) and RESOURCES (attachable context). Prompts/resources are part of the
   # DX/AX equation, so they carry a tier too: free discovery, Pro synthesis.
+  # `uses` = the MCP tools each prompt orchestrates (many-to-many); the tool links the prompt back
+  # to the operation(s) it drives.
   prompts:
-    - { name: find_api,          tier: free, description: "Find an API for a task or use case, ranked with links." }
-    - { name: explain_artifact,  tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it." }
-    - { name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links." }
-    - { name: design_api_stack,  tier: pro,  description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json." }
-    - { name: vendor_shortlist,  tier: pro,  description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs." }
+    - { name: find_api,          tier: free, description: "Find an API for a task or use case, ranked with links.", uses: [apis_io_search] }
+    - { name: explain_artifact,  tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it.", uses: [get_api] }
+    - { name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links.", uses: [get_provider] }
+    - { name: design_api_stack,  tier: pro,  description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.", uses: [find_providers, apis_io_search, find_industries, find_ratings, recommend_stack] }
+    - { name: vendor_shortlist,  tier: pro,  description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs.", uses: [find_providers, apis_io_search, find_ratings, get_provider_rating] }
+  # `operation` = the operationId a resource is backed by (omitted for cross-cutting resources like
+  # the catalog root and llms.txt that map to no single operation).
   resources:
     - { uri: "apis://catalog",                    tier: free, description: "Service root — network-wide artifact counts." }
-    - { uri: "apis://ratings/rubric",             tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds." }
+    - { uri: "apis://ratings/rubric",             tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds.", operation: getRatingRubric }
     - { uri: "apis://llms.txt",                   tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding." }
-    - { uri: "apis://provider/{slug}",            tier: free, description: "One provider's profile — its APIs and links." }
-    - { uri: "apis://provider/{slug}/dossier",    tier: pro,  description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document." }
+    - { uri: "apis://provider/{slug}",            tier: free, description: "One provider's profile — its APIs and links.", operation: getProvider }
+    - { uri: "apis://provider/{slug}/dossier",    tier: pro,  description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document.", operation: getProvider }
   # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
   # the coverage view surfaces on purpose).
   operations:
