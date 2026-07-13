@@ -58,6 +58,21 @@ x-apis-io:
     serverCard: https://apis.io/.well-known/mcp/server-card.json
   agentSkills:
     index: https://apis.io/.well-known/agent-skills/index.json
+  # The MCP server exposes all three MCP primitives — tools (1:1 with operations below), plus
+  # PROMPTS (guided flows) and RESOURCES (attachable context). Prompts/resources are part of the
+  # DX/AX equation, so they carry a tier too: free discovery, Pro synthesis.
+  prompts:
+    - { name: find_api,          tier: free, description: "Find an API for a task or use case, ranked with links." }
+    - { name: explain_artifact,  tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it." }
+    - { name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links." }
+    - { name: design_api_stack,  tier: pro,  description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json." }
+    - { name: vendor_shortlist,  tier: pro,  description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs." }
+  resources:
+    - { uri: "apis://catalog",                    tier: free, description: "Service root — network-wide artifact counts." }
+    - { uri: "apis://ratings/rubric",             tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds." }
+    - { uri: "apis://llms.txt",                   tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding." }
+    - { uri: "apis://provider/{slug}",            tier: free, description: "One provider's profile — its APIs and links." }
+    - { uri: "apis://provider/{slug}/dossier",    tier: pro,  description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document." }
   # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
   # the coverage view surfaces on purpose).
   operations:
