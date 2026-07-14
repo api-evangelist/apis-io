@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.1.0
+  version: 1.2.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions — with a free discovery tier and a Pro synthesis tier.
   description: |
     A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
@@ -69,6 +69,12 @@ x-apis-io:
     - { name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links.", uses: [get_provider] }
     - { name: design_api_stack,  tier: pro,  description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.", uses: [find_providers, apis_io_search, find_industries, find_ratings, recommend_stack] }
     - { name: vendor_shortlist,  tier: pro,  description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs.", uses: [find_providers, apis_io_search, find_ratings, get_provider_rating] }
+    - { name: integrate_provider,     tier: free, description: "Onboard a provider end-to-end: pull the OpenAPI + onboarding, produce first-integration steps.", uses: [get_provider_onboarding, get_provider_artifacts, get_openapi] }
+    - { name: api_readiness_check,    tier: free, description: "Assess whether an API is ready to adopt — artifacts present, rating, what's missing.", uses: [get_api_artifacts, get_provider_rating] }
+    - { name: audit_api_estate,       tier: pro,  description: "PRO — Inventory, score, and gap a set of providers.", uses: [compare_providers, gap_analysis, find_ratings, industry_gap_analysis] }
+    - { name: find_alternatives,      tier: pro,  description: "PRO — Find and compare alternatives to a provider for a migration decision.", uses: [find_similar_providers, compare_providers, get_provider_rating] }
+    - { name: build_agent_toolset,    tier: pro,  description: "PRO — Assemble the providers, MCP servers, and skills an agent needs for a job.", uses: [recommend_stack, find_artifacts, export_stack] }
+    - { name: track_provider_changes, tier: pro,  description: "PRO — Monitor a chosen set of providers for catalog and rating movement.", uses: [whats_changed, find_rating_movers, get_rating_history] }
   # `operation` = the operationId a resource is backed by (omitted for cross-cutting resources like
   # the catalog root and llms.txt that map to no single operation).
   resources:
@@ -77,14 +83,27 @@ x-apis-io:
     - { uri: "apis://llms.txt",                   tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding." }
     - { uri: "apis://provider/{slug}",            tier: free, description: "One provider's profile — its APIs and links.", operation: getProvider }
     - { uri: "apis://provider/{slug}/dossier",    tier: pro,  description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document.", operation: getProvider }
+    - { uri: "apis://provider/{slug}/openapi",    tier: free, description: "The provider's primary OpenAPI, inlined.", operation: getOpenapi }
+    - { uri: "apis://tag/{slug}",                 tier: free, description: "One tag with its linked providers, APIs, and neighbor tags.", operation: getTag }
+    - { uri: "apis://industry/{slug}",            tier: pro,  description: "PRO — an industry vertical with its ranked member providers.", operation: getIndustry }
+    - { uri: "apis://region/{slug}",              tier: pro,  description: "PRO — a region with its ranked member providers.", operation: getRegion }
+    - { uri: "apis://area/{slug}",                tier: pro,  description: "PRO — a curated area with its ranked member providers.", operation: getArea }
+    - { uri: "apis://stack/{capabilities}",       tier: pro,  description: "PRO — a designed capability stack exported as an adoptable APIs.json.", operation: exportStack }
+    - { uri: "apis://changes",                    tier: pro,  description: "PRO — recent catalog changes (last 30 days): additions + rating movement, as a feed.", operation: whatsChanged }
   # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
   # the coverage view surfaces on purpose).
   operations:
     listProviders:    { tier: free, mcpTool: find_providers,      agentSkill: find-api }
-    getProvider:      { tier: free, mcpTool: get_provider,        agentSkill: provider-overview }
-    listProviderApis: { tier: free, mcpTool: get_provider }
+    getProvider:      { tier: free, mcpTool: get_provider,        agentSkill: integrate-provider }
+    listProviderApis: { tier: free, mcpTool: get_provider,        agentSkill: integrate-provider }
+    getProviderArtifacts:  { tier: free, mcpTool: get_provider_artifacts,   agentSkill: integrate-provider }
+    getProviderOnboarding: { tier: free, mcpTool: get_provider_onboarding,  agentSkill: integrate-provider }
+    findSimilarProviders:  { tier: free, mcpTool: find_similar_providers,   agentSkill: shortlist-vendors }
     listApis:         { tier: free, mcpTool: find_apis,           agentSkill: find-api }
-    getApi:           { tier: free, mcpTool: get_api,             agentSkill: explain-artifact }
+    getApi:           { tier: free, mcpTool: get_api,             agentSkill: fetch-api-spec }
+    getApiArtifacts:  { tier: free, mcpTool: get_api_artifacts,   agentSkill: find-api }
+    findSimilarApis:  { tier: free, mcpTool: find_similar_apis,   agentSkill: find-api }
+    getOpenapi:       { tier: free, mcpTool: get_openapi,         agentSkill: integrate-provider }
     listTags:         { tier: free, mcpTool: find_tags }
     getTag:           { tier: free, mcpTool: get_tag }
     listOpenapis:     { tier: free, mcpTool: find_artifacts }
@@ -103,7 +122,7 @@ x-apis-io:
     listPlans:        { tier: free, mcpTool: find_artifacts }
     listRateLimits:   { tier: free, mcpTool: find_artifacts }
     listChannels:     { tier: free, mcpTool: find_artifacts }
-    listMcpServers:   { tier: free, mcpTool: find_artifacts }
+    listMcpServers:   { tier: free, mcpTool: find_artifacts,      agentSkill: discover-mcp-servers }
     listSkills:       { tier: free, mcpTool: find_artifacts }
     listScopes:       { tier: free, mcpTool: find_artifacts }
     listSecurity:     { tier: free, mcpTool: find_artifacts }
@@ -111,16 +130,23 @@ x-apis-io:
     getRatingRubric:  { tier: free, mcpTool: get_rating_rubric }
     listIndustries:   { tier: pro,  mcpTool: find_industries }
     getIndustry:      { tier: pro,  mcpTool: get_industry }
+    getIndustryLeaders: { tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors }
+    industryGapAnalysis: { tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate }
     listRegions:      { tier: pro,  mcpTool: find_regions }
     getRegion:        { tier: pro,  mcpTool: get_region }
+    getRegionLeaders: { tier: pro,  mcpTool: get_region_leaders,  agentSkill: shortlist-vendors }
     listAreas:        { tier: pro,  mcpTool: find_areas }
     getArea:          { tier: pro,  mcpTool: get_area }
+    getAreaLeaders:   { tier: pro,  mcpTool: get_area_leaders,    agentSkill: shortlist-vendors }
     listRatings:      { tier: pro,  mcpTool: find_ratings }
+    findRatingMovers: { tier: pro,  mcpTool: find_rating_movers,  agentSkill: track-api-changes }
     getProviderRating: { tier: pro, mcpTool: get_provider_rating }
-    compareProviders: { tier: pro,  mcpTool: compare_providers,  agentSkill: design-api-stack }
-    gapAnalysis:      { tier: pro,  mcpTool: gap_analysis }
-    whatsChanged:     { tier: pro,  mcpTool: whats_changed }
-    recommendStack:   { tier: free, mcpTool: recommend_stack,    agentSkill: design-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json. }
+    getRatingHistory: { tier: pro,  mcpTool: get_rating_history,  agentSkill: track-api-changes }
+    compareProviders: { tier: pro,  mcpTool: compare_providers,  agentSkill: audit-api-estate }
+    gapAnalysis:      { tier: pro,  mcpTool: gap_analysis,        agentSkill: audit-api-estate }
+    whatsChanged:     { tier: pro,  mcpTool: whats_changed,       agentSkill: track-api-changes }
+    recommendStack:   { tier: free, mcpTool: recommend_stack,    agentSkill: assemble-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json. }
+    exportStack:      { tier: pro,  mcpTool: export_stack,        agentSkill: assemble-api-stack }
 
 servers:
   - url: https://apis.io/api/v1
@@ -1335,7 +1361,7 @@ paths:
       operationId: recommendStack
       x-tier: free
       x-mcp-tool: recommend_stack
-      x-agent-skill: design-api-stack
+      x-agent-skill: assemble-api-stack
       tags:
         - Synthesis
       summary: Design a recommended API stack per capability.
@@ -1355,6 +1381,362 @@ paths:
       responses:
         '200':
           description: A recommended stack (preview for free callers; full for Pro).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+  # ---- Deep discovery & synthesis additions (v1.2) ---------------------------------------------
+  /providers/{slug}/artifacts:
+    get:
+      operationId: getProviderArtifacts
+      x-tier: free
+      x-mcp-tool: get_provider_artifacts
+      x-agent-skill: integrate-provider
+      tags:
+        - Providers
+        - Artifact Types
+      summary: Every artifact a provider publishes.
+      description: Aggregates all artifacts across a provider's APIs — grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type counts. One call instead of composing several.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The provider's artifacts, grouped by type.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /providers/{slug}/onboarding:
+    get:
+      operationId: getProviderOnboarding
+      x-tier: free
+      x-mcp-tool: get_provider_onboarding
+      x-agent-skill: integrate-provider
+      tags:
+        - Providers
+      summary: A provider's getting-started view.
+      description: Assembles website, portal, signup, docs, authentication, base URLs, and first steps from a provider's registered links and API base URLs — a best-effort onboarding descriptor.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The provider's onboarding view.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /providers/{slug}/similar:
+    get:
+      operationId: findSimilarProviders
+      x-tier: free
+      x-mcp-tool: find_similar_providers
+      x-agent-skill: shortlist-vendors
+      tags:
+        - Providers
+      summary: Providers similar to a given one.
+      description: Ranks catalog providers by weighted overlap of tags, industry, region, and artifact coverage — the alternatives to a given provider.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of similar providers, most similar first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /providers/{slug}/rating/history:
+    get:
+      operationId: getRatingHistory
+      x-tier: pro
+      x-mcp-tool: get_rating_history
+      x-agent-skill: track-api-changes
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Ratings
+      summary: A provider's rating movement.
+      description: Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The provider's rating history.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /apis/{aid}/artifacts:
+    get:
+      operationId: getApiArtifacts
+      x-tier: free
+      x-mcp-tool: get_api_artifacts
+      x-agent-skill: find-api
+      tags:
+        - APIs
+        - Artifact Types
+      summary: One API's artifacts, grouped by type.
+      description: Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies.
+      parameters:
+        - $ref: '#/components/parameters/Aid'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The API's artifacts.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /apis/{aid}/similar:
+    get:
+      operationId: findSimilarApis
+      x-tier: free
+      x-mcp-tool: find_similar_apis
+      x-agent-skill: find-api
+      tags:
+        - APIs
+      summary: APIs similar to a given one.
+      description: Ranks catalog APIs by shared tags — "more like this API."
+      parameters:
+        - $ref: '#/components/parameters/Aid'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of similar APIs, most similar first.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiList'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /openapis/{aid}:
+    get:
+      operationId: getOpenapi
+      x-tier: free
+      x-mcp-tool: get_openapi
+      x-agent-skill: integrate-provider
+      tags:
+        - APIs
+        - Artifact Types
+      summary: An API's primary OpenAPI.
+      description: Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body.
+      parameters:
+        - $ref: '#/components/parameters/Aid'
+        - $ref: '#/components/parameters/Include'
+      responses:
+        '200':
+          description: The API's OpenAPI reference (and body when include=content).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /industries/{slug}/leaders:
+    get:
+      operationId: getIndustryLeaders
+      x-tier: pro
+      x-mcp-tool: get_industry_leaders
+      x-agent-skill: shortlist-vendors
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Industries
+      summary: Top-rated providers in an industry.
+      description: Returns the highest-composite-scoring member providers of an industry vertical.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Industry slug (e.g. `financial-services`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of the industry's top providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /regions/{slug}/leaders:
+    get:
+      operationId: getRegionLeaders
+      x-tier: pro
+      x-mcp-tool: get_region_leaders
+      x-agent-skill: shortlist-vendors
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Regions
+      summary: Top-rated providers in a region.
+      description: Returns the highest-composite-scoring member providers of a region.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Region slug (e.g. `europe`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of the region's top providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /areas/{slug}/leaders:
+    get:
+      operationId: getAreaLeaders
+      x-tier: pro
+      x-mcp-tool: get_area_leaders
+      x-agent-skill: shortlist-vendors
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Areas
+      summary: Top-rated providers in a curated area.
+      description: Returns the highest-composite-scoring member providers of a curated API Evangelist area.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Area slug (e.g. `authentication`).
+          schema:
+            type: string
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of the area's top providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /ratings/movers:
+    get:
+      operationId: findRatingMovers
+      x-tier: pro
+      x-mcp-tool: find_rating_movers
+      x-agent-skill: track-api-changes
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Ratings
+      summary: The biggest rating movers.
+      description: Returns the providers whose composite score moved most (up and down) versus the previous scoring build.
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Up and down movers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /gaps/industry/{slug}:
+    get:
+      operationId: industryGapAnalysis
+      x-tier: pro
+      x-mcp-tool: industry_gap_analysis
+      x-agent-skill: audit-api-estate
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Synthesis
+        - Industries
+      summary: Artifact gaps across a whole industry.
+      description: For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Industry slug (e.g. `financial-services`).
+          schema:
+            type: string
+        - name: min_share
+          in: query
+          description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
+          schema:
+            type: number
+      responses:
+        '200':
+          description: The industry's valuable-artifact coverage and gaps.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /stack/export:
+    get:
+      operationId: exportStack
+      x-tier: pro
+      x-mcp-tool: export_stack
+      x-agent-skill: assemble-api-stack
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Synthesis
+      summary: Export a designed stack as APIs.json.
+      description: Given a set of capabilities, returns the designed stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit.
+      parameters:
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
+          schema:
+            type: string
+        - name: region
+          in: query
+          description: Optional region slug to prefer.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The exportable stack.
           content:
             application/json:
               schema:
