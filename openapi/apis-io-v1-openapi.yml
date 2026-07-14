@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.2.0
+  version: 1.2.1
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions — with a free discovery tier and a Pro synthesis tier.
   description: |
     A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
@@ -20,10 +20,11 @@ info:
     - **Selectable artifacts.** Use `artifact_types` to return only the artifact types
       you care about (e.g. `OpenAPI,Postman`).
     - **Free vs. Pro tiers.** Raw discovery — `/search`, `/providers`, `/apis`, `/tags`, and
-      every artifact-type collection (`/openapis`, `/mcp`, `/scopes`, `/examples`, `/schemas`, …)
+      most artifact-type collections (`/openapis`, `/mcp`, `/skills`, `/examples`, `/schemas`, …)
       — is **free**. The curated taxonomy dimensions (`/industries`, `/regions`, `/areas`), the
-      rating **data** (`/ratings`, `/providers/{slug}/rating`), and the synthesis composites
-      (`/compare`, `/gaps`, `/changes`, `/stack`) are **Pro**. Each operation declares its tier
+      rating **data** (`/ratings`, `/providers/{slug}/rating`), the synthesis composites
+      (`/compare`, `/gaps`, `/changes`, `/stack`), and the high-value security artifact collections
+      (`/scopes`, `/security`) are **Pro**. Each operation declares its tier
       via `x-tier`; the rubric (`/ratings/rubric`) stays free. Send `X-API-Key` for a paid tier;
       keyless callers get the free tier. See `x-apis-io` for the full tier / MCP-tool / skill map.
     - **Also an MCP server + Agent Skills.** Every operation maps 1:1 to an MCP tool at
@@ -48,10 +49,10 @@ x-apis-io:
   tiers:
     free:
       label: Free
-      description: Raw discovery — search, providers, apis, tags, and every artifact-type collection. Keyless.
+      description: Raw discovery — search, providers, apis, tags, and most artifact-type collections. Keyless.
     pro:
       label: Pro
-      description: Curated dimensions (industries/regions/areas), rating data, and synthesis composites. Requires X-API-Key.
+      description: Curated dimensions (industries/regions/areas), rating data, synthesis composites, and the scopes/security artifact collections. Requires X-API-Key.
       plans: https://apis.io/developer/plans/
   mcp:
     endpoint: https://apis.io/mcp
@@ -124,8 +125,8 @@ x-apis-io:
     listChannels:     { tier: free, mcpTool: find_artifacts }
     listMcpServers:   { tier: free, mcpTool: find_artifacts,      agentSkill: discover-mcp-servers }
     listSkills:       { tier: free, mcpTool: find_artifacts }
-    listScopes:       { tier: free, mcpTool: find_artifacts }
-    listSecurity:     { tier: free, mcpTool: find_artifacts }
+    listScopes:       { tier: pro,  mcpTool: find_artifacts }
+    listSecurity:     { tier: pro,  mcpTool: find_artifacts }
     search:           { tier: free, mcpTool: apis_io_search,     agentSkill: find-api }
     getRatingRubric:  { tier: free, mcpTool: get_rating_rubric }
     listIndustries:   { tier: pro,  mcpTool: find_industries }
@@ -1141,12 +1142,14 @@ paths:
   /scopes:
     get:
       operationId: listScopes
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: find_artifacts
+      security:
+        - ApiKeyAuth: []
       tags:
         - Artifact Types
       summary: List OAuth scope sets across the catalog.
-      description: First-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.
+      description: PRO — first-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1168,12 +1171,14 @@ paths:
   /security:
     get:
       operationId: listSecurity
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: find_artifacts
+      security:
+        - ApiKeyAuth: []
       tags:
         - Artifact Types
       summary: List security scheme definitions across the catalog.
-      description: First-class collection of provider security/auth scheme definitions across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.
+      description: PRO — first-class collection of provider security/auth scheme definitions (authentication, domain security, VDP, trust center) across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
