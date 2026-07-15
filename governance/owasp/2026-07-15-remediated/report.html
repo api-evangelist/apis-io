@@ -38,6 +38,19 @@ code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em}
 .banner.pass .banner-badge{background:#2da44e}
 .banner.fail{background:rgba(209,36,47,.1);border-color:rgba(209,36,47,.4)}
 .banner.fail .banner-badge{background:var(--error)}
+
+.success-hero{background:var(--panel);border:1px solid rgba(45,164,78,.45);border-radius:12px;box-shadow:var(--shadow);padding:2.75rem 1.5rem 2.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.success-ring{width:78px;height:78px;margin-bottom:.35rem}
+.sh-circle{fill:rgba(45,164,78,.08);stroke:#2da44e;stroke-width:3;opacity:.55}
+.sh-check{stroke:#2da44e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:sh-draw .55s .12s ease forwards}
+@keyframes sh-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.sh-check{animation:none;stroke-dashoffset:0}}
+.success-hero h2{margin:.15rem 0 0;font-size:1.5rem;letter-spacing:-.01em;color:#2da44e}
+html.dark .success-hero h2{color:#3fb950}
+.success-hero p{margin:.1rem 0 .55rem;color:var(--muted);max-width:54ch}
+.sh-scoreline{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.sh-pill{font-size:.8rem;font-weight:600;color:#1a7f37;background:rgba(45,164,78,.12);border:1px solid rgba(45,164,78,.32);border-radius:20px;padding:3px 12px}
+html.dark .sh-pill{color:#3fb950}
 .banner-text{font-size:.95rem}
 
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem}
@@ -130,7 +143,7 @@ code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em}
     <div class="head-top">
       <div class="head-title">
         <h1>APIs.io API — OWASP API Security Top 10 Report</h1>
-        <p class="head-meta">Generated Jul 15, 2026, 8:49 AM · 0 issues across 0 sources</p>
+        <p class="head-meta">Generated Jul 15, 2026, 9:44 AM · 0 issues across 0 sources</p>
       </div>
       <button type="button" id="theme-toggle" class="theme-toggle" title="Toggle light / dark">◐ Theme</button>
     </div>
@@ -162,21 +175,19 @@ code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em}
   </header>
 
   
-
-  <section class="controls" aria-label="Filter findings">
-    <input type="search" id="q" placeholder="Search findings — rule, message, file, path…" aria-label="Search findings">
-    <div class="group-toggle" role="group" aria-label="Group findings by">
-      <span class="ctl-label">Group by</span>
-      <button type="button" class="grp active" data-group="code">Rule</button>
-      <button type="button" class="grp" data-group="file">File</button>
-      <button type="button" class="grp" data-group="severity">Severity</button>
+  <section class="success-hero" role="status" aria-label="All checks passed">
+    <div class="success-ring" aria-hidden="true">
+      <svg viewBox="0 0 52 52" width="78" height="78" role="img">
+        <circle class="sh-circle" cx="26" cy="26" r="24"/>
+        <path class="sh-check" fill="none" d="M15 27l7 7 15-16"/>
+      </svg>
     </div>
-    <div class="sev-chips" role="group" aria-label="Filter by severity">
-      <button type="button" class="chip chip-error on" data-sev="0" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Error<span class="chip-n" data-chip-n="0">0</span></button><button type="button" class="chip chip-warn on" data-sev="1" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Warning<span class="chip-n" data-chip-n="1">0</span></button><button type="button" class="chip chip-info on" data-sev="2" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Info<span class="chip-n" data-chip-n="2">0</span></button><button type="button" class="chip chip-hint on" data-sev="3" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Hint<span class="chip-n" data-chip-n="3">0</span></button>
+    <h2>All clear — passes every check</h2>
+    <p>No issues found. This artifact passed <strong>every rule in the ruleset</strong> — nothing to remediate at any severity.</p>
+    <div class="sh-scoreline">
+      <span class="sh-pill">0 Errors</span><span class="sh-pill">0 Warnings</span><span class="sh-pill">0 Info</span><span class="sh-pill">0 Hints</span>
     </div>
   </section>
-
-  <main id="findings" class="findings" aria-live="polite"></main>
 
   <footer class="report-foot">
     <span>Report by <a href="https://reporter.apicommons.org" target="_blank" rel="noopener">@api-common/spectral-reporter</a>, an <a href="https://apicommons.org/tools/" target="_blank" rel="noopener">API Commons</a> tool.</span>
@@ -236,28 +247,31 @@ code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em}
     }).join('');
   }
 
-  document.getElementById('q').addEventListener('input',function(e){state.q=e.target.value;render();});
-  Array.prototype.forEach.call(document.querySelectorAll('.grp'),function(b){
-    b.addEventListener('click',function(){
-      document.querySelectorAll('.grp').forEach(function(x){x.classList.remove('active');});
-      b.classList.add('active');state.group=b.getAttribute('data-group');render();
+  var qEl=document.getElementById('q'),findingsEl=document.getElementById('findings');
+  if(qEl&&findingsEl){
+    qEl.addEventListener('input',function(e){state.q=e.target.value;render();});
+    Array.prototype.forEach.call(document.querySelectorAll('.grp'),function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('.grp').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');state.group=b.getAttribute('data-group');render();
+      });
     });
-  });
-  Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(b){
-    b.addEventListener('click',function(){
-      var i=+b.getAttribute('data-sev');state.sev[i]=!state.sev[i];
-      b.classList.toggle('on',state.sev[i]);b.setAttribute('aria-pressed',String(state.sev[i]));render();
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(b){
+      b.addEventListener('click',function(){
+        var i=+b.getAttribute('data-sev');state.sev[i]=!state.sev[i];
+        b.classList.toggle('on',state.sev[i]);b.setAttribute('aria-pressed',String(state.sev[i]));render();
+      });
     });
-  });
-  document.getElementById('findings').addEventListener('click',function(e){
-    var row=e.target.closest('.issue');if(row)row.classList.toggle('open');
-  });
-  document.getElementById('findings').addEventListener('keydown',function(e){
-    if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('issue')){e.preventDefault();e.target.classList.toggle('open');}
-  });
+    findingsEl.addEventListener('click',function(e){
+      var row=e.target.closest('.issue');if(row)row.classList.toggle('open');
+    });
+    findingsEl.addEventListener('keydown',function(e){
+      if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('issue')){e.preventDefault();e.target.classList.toggle('open');}
+    });
+    render();
+  }
   var tt=document.getElementById('theme-toggle');
   if(tt)tt.addEventListener('click',function(){document.documentElement.classList.toggle('dark');});
-  render();
 })();</script>
 </body>
 </html>
