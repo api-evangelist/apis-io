@@ -283,8 +283,7 @@ paths:
       operationId: getProviderRating
       x-tier: pro
       x-mcp-tool: get_provider_rating
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Ratings
       summary: One provider's rating.
@@ -458,8 +457,7 @@ paths:
       operationId: listIndustries
       x-tier: pro
       x-mcp-tool: find_industries
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Industries
       summary: List and filter industries.
@@ -494,8 +492,7 @@ paths:
       operationId: getIndustry
       x-tier: pro
       x-mcp-tool: get_industry
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Industries
       summary: Get one industry, with its ranked providers.
@@ -523,8 +520,7 @@ paths:
       operationId: listRegions
       x-tier: pro
       x-mcp-tool: find_regions
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Regions
       summary: List and filter regions.
@@ -559,8 +555,7 @@ paths:
       operationId: getRegion
       x-tier: pro
       x-mcp-tool: get_region
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Regions
       summary: Get one region, with its ranked providers.
@@ -978,8 +973,7 @@ paths:
       operationId: listRatings
       x-tier: pro
       x-mcp-tool: find_ratings
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Ratings
       summary: Ranked ratings leaderboard.
@@ -1186,8 +1180,7 @@ paths:
       operationId: listScopes
       x-tier: pro
       x-mcp-tool: find_artifacts
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Artifact Types
       summary: List OAuth scope sets across the catalog.
@@ -1215,8 +1208,7 @@ paths:
       operationId: listSecurity
       x-tier: pro
       x-mcp-tool: find_artifacts
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Artifact Types
       summary: List security scheme definitions across the catalog.
@@ -1244,8 +1236,7 @@ paths:
       operationId: listAreas
       x-tier: pro
       x-mcp-tool: find_areas
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Areas
       summary: List and filter areas (Pro).
@@ -1282,8 +1273,7 @@ paths:
       operationId: getArea
       x-tier: pro
       x-mcp-tool: get_area
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Areas
       summary: Get one area, with its ranked providers (Pro).
@@ -1313,8 +1303,7 @@ paths:
       operationId: compareProviders
       x-tier: pro
       x-mcp-tool: compare_providers
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Synthesis
       summary: Compare providers side by side (Pro).
@@ -1344,8 +1333,7 @@ paths:
       operationId: gapAnalysis
       x-tier: pro
       x-mcp-tool: gap_analysis
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Synthesis
       summary: Artifact + score gap analysis for a provider or stack (Pro).
@@ -1381,8 +1369,7 @@ paths:
       operationId: whatsChanged
       x-tier: pro
       x-mcp-tool: whats_changed
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Synthesis
       summary: What changed in the catalog since a date (Pro).
@@ -1525,8 +1512,7 @@ paths:
       x-tier: pro
       x-mcp-tool: get_rating_history
       x-agent-skill: track-api-changes
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Ratings
       summary: A provider's rating movement.
@@ -1626,8 +1612,7 @@ paths:
       x-tier: pro
       x-mcp-tool: get_industry_leaders
       x-agent-skill: shortlist-vendors
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Industries
       summary: Top-rated providers in an industry.
@@ -1658,8 +1643,7 @@ paths:
       x-tier: pro
       x-mcp-tool: get_region_leaders
       x-agent-skill: shortlist-vendors
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Regions
       summary: Top-rated providers in a region.
@@ -1690,8 +1674,7 @@ paths:
       x-tier: pro
       x-mcp-tool: get_area_leaders
       x-agent-skill: shortlist-vendors
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Areas
       summary: Top-rated providers in a curated area.
@@ -1722,8 +1705,7 @@ paths:
       x-tier: pro
       x-mcp-tool: find_rating_movers
       x-agent-skill: track-api-changes
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Ratings
       summary: The biggest rating movers.
@@ -1745,8 +1727,7 @@ paths:
       x-tier: pro
       x-mcp-tool: industry_gap_analysis
       x-agent-skill: audit-api-estate
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Synthesis
         - Industries
@@ -1783,8 +1764,7 @@ paths:
       x-tier: pro
       x-mcp-tool: export_stack
       x-agent-skill: assemble-api-stack
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags:
         - Synthesis
       summary: Export a designed stack as APIs.json.
@@ -1821,7 +1801,8 @@ paths:
       summary: Insights overview.
       description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free.
       responses:
-        '200': { description: Insights summary., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Insights summary., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+      security: []
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
@@ -1833,7 +1814,8 @@ paths:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': { description: Dimension cross-section., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Dimension cross-section., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+      security: []
   /insights/adoption:
     get:
       operationId: listInsightAdoption
@@ -1845,11 +1827,12 @@ paths:
         - name: type
           in: query
           description: Which adoption graph to return.
-          schema: { type: string, enum: [service, tool, standard], default: service }
+          schema: {type: string, enum: [service, tool, standard], default: service, maxLength: 1024}
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': { description: Adoption ranking., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Adoption ranking., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+      security: []
   /insights/industries:
     get:
       operationId: listInsightIndustries
@@ -1857,7 +1840,8 @@ paths:
       summary: Industry rollup.
       description: Profiled sectors with company counts. Free.
       responses:
-        '200': { description: Industry rollup., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Industry rollup., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+      security: []
   /insights/companies:
     get:
       operationId: listInsightCompanies
@@ -1870,7 +1854,8 @@ paths:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': { description: Company list., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Company list., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+      security: []
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
@@ -1883,17 +1868,17 @@ paths:
           in: path
           required: true
           description: Company slug (e.g. `citi`).
-          schema: { type: string }
+          schema: {type: string, maxLength: 1024}
       responses:
-        '200': { description: Company profile (preview or full by tier)., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
-        '404': { $ref: '#/components/responses/NotFound' }
+        '200': {description: Company profile (preview or full by tier)., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '404': {$ref: '#/components/responses/NotFound'}
+      security: []
   /insights/company/{slug}/gaps:
     get:
       operationId: getCompanyGaps
       x-tier: pro
       x-mcp-tool: company_gaps
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags: [Insights]
       summary: A company's weakest dimensions.
       description: The lowest-scoring investment dimensions — where a company is thin and a vendor could sell in. Pro.
@@ -1901,17 +1886,16 @@ paths:
         - name: slug
           in: path
           required: true
-          schema: { type: string }
+          schema: {type: string, maxLength: 1024}
       responses:
-        '200': { description: Company gaps., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
-        '403': { description: Requires the Pro or Business tier., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Company gaps., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '403': {description: Requires the Pro or Business tier., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
   /insights/company/{slug}/match:
     get:
       operationId: matchCompanyProviders
       x-tier: pro
       x-mcp-tool: match_providers
-      security:
-        - ApiKeyAuth: []
+      security: []
       tags: [Insights]
       summary: Match providers to a company's stack (the supply↔demand join).
       description: apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro.
@@ -1919,10 +1903,10 @@ paths:
         - name: slug
           in: path
           required: true
-          schema: { type: string }
+          schema: {type: string, maxLength: 1024}
       responses:
-        '200': { description: Matched providers., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
-        '403': { description: Requires the Pro or Business tier., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '200': {description: Matched providers., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '403': {description: Requires the Pro or Business tier., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
 
 components:
 
