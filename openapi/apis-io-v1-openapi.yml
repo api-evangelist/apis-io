@@ -2,7 +2,9 @@ openapi: 3.1.0
 info:
   title: APIs.io API
   version: 1.2.1
-  summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions — with a free discovery tier and a Pro synthesis tier.
+  summary: Read-only discovery API over the APIs.io catalog of providers, APIs,
+    tags, artifacts, and curated dimensions — with a free discovery tier and a
+    Pro synthesis tier.
   description: |
     A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
 
@@ -49,10 +51,13 @@ x-apis-io:
   tiers:
     free:
       label: Free
-      description: Raw discovery — search, providers, apis, tags, and most artifact-type collections. Keyless.
+      description: Raw discovery — search, providers, apis, tags, and most
+        artifact-type collections. Keyless.
     pro:
       label: Pro
-      description: Curated dimensions (industries/regions/areas), rating data, synthesis composites, and the scopes/security artifact collections. Requires X-API-Key.
+      description: Curated dimensions (industries/regions/areas), rating data,
+        synthesis composites, and the scopes/security artifact collections.
+        Requires X-API-Key.
       plans: https://apis.io/developer/plans/
   mcp:
     endpoint: https://apis.io/mcp
@@ -65,89 +70,237 @@ x-apis-io:
   # `uses` = the MCP tools each prompt orchestrates (many-to-many); the tool links the prompt back
   # to the operation(s) it drives.
   prompts:
-    - {name: find_api, tier: free, description: "Find an API for a task or use case, ranked with links.", uses: [apis_io_search]}
-    - {name: explain_artifact, tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it.", uses: [get_api]}
-    - {name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links.", uses: [get_provider]}
-    - {name: design_api_stack, tier: pro, description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.", uses: [find_providers, apis_io_search, find_industries, find_ratings, recommend_stack]}
-    - {name: vendor_shortlist, tier: pro, description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs.", uses: [find_providers, apis_io_search, find_ratings, get_provider_rating]}
-    - {name: integrate_provider, tier: free, description: "Onboard a provider end-to-end: pull the OpenAPI + onboarding, produce first-integration steps.", uses: [get_provider_onboarding, get_provider_artifacts, get_openapi]}
-    - {name: api_readiness_check, tier: free, description: "Assess whether an API is ready to adopt — artifacts present, rating, what's missing.", uses: [get_api_artifacts, get_provider_rating]}
-    - {name: audit_api_estate, tier: pro, description: "PRO — Inventory, score, and gap a set of providers.", uses: [compare_providers, gap_analysis, find_ratings, industry_gap_analysis]}
-    - {name: find_alternatives, tier: pro, description: "PRO — Find and compare alternatives to a provider for a migration decision.", uses: [find_similar_providers, compare_providers, get_provider_rating]}
-    - {name: build_agent_toolset, tier: pro, description: "PRO — Assemble the providers, MCP servers, and skills an agent needs for a job.", uses: [recommend_stack, find_artifacts, export_stack]}
-    - {name: track_provider_changes, tier: pro, description: "PRO — Monitor a chosen set of providers for catalog and rating movement.", uses: [whats_changed, find_rating_movers, get_rating_history]}
+    - {
+        name: find_api,
+        tier: free,
+        description: "Find an API for a task or use case, ranked with links.",
+        uses: [ apis_io_search ]
+      }
+    - {
+        name: explain_artifact,
+        tier: free,
+        description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and
+          how to use it.",
+        uses: [ get_api ]
+      }
+    - {
+        name: provider_overview,
+        tier: free,
+        description: "Summarize what one provider offers — its APIs, artifacts, and links.",
+        uses: [ get_provider ]
+      }
+    - {
+        name: design_api_stack,
+        tier: pro,
+        description: "PRO — Design a recommended API stack for a team, domain, or
+          company, exportable as APIs.json.",
+        uses:
+          [
+            find_providers,
+            apis_io_search,
+            find_industries,
+            find_ratings,
+            recommend_stack
+          ]
+      }
+    - {
+        name: vendor_shortlist,
+        tier: pro,
+        description: "PRO — Build a scored vendor shortlist for one capability, with
+          tradeoffs.",
+        uses: [ find_providers, apis_io_search, find_ratings, get_provider_rating ]
+      }
+    - {
+        name: integrate_provider,
+        tier: free,
+        description: "Onboard a provider end-to-end: pull the OpenAPI + onboarding,
+          produce first-integration steps.",
+        uses: [ get_provider_onboarding, get_provider_artifacts, get_openapi ]
+      }
+    - {
+        name: api_readiness_check,
+        tier: free,
+        description: "Assess whether an API is ready to adopt — artifacts present,
+          rating, what's missing.",
+        uses: [ get_api_artifacts, get_provider_rating ]
+      }
+    - {
+        name: audit_api_estate,
+        tier: pro,
+        description: "PRO — Inventory, score, and gap a set of providers.",
+        uses: [ compare_providers, gap_analysis, find_ratings, industry_gap_analysis ]
+      }
+    - {
+        name: find_alternatives,
+        tier: pro,
+        description: "PRO — Find and compare alternatives to a provider for a migration
+          decision.",
+        uses: [ find_similar_providers, compare_providers, get_provider_rating ]
+      }
+    - {
+        name: build_agent_toolset,
+        tier: pro,
+        description: "PRO — Assemble the providers, MCP servers, and skills an agent
+          needs for a job.",
+        uses: [ recommend_stack, find_artifacts, export_stack ]
+      }
+    - {
+        name: track_provider_changes,
+        tier: pro,
+        description: "PRO — Monitor a chosen set of providers for catalog and rating
+          movement.",
+        uses: [ whats_changed, find_rating_movers, get_rating_history ]
+      }
   # `operation` = the operationId a resource is backed by (omitted for cross-cutting resources like
   # the catalog root and llms.txt that map to no single operation).
   resources:
-    - {uri: "apis://catalog", tier: free, description: "Service root — network-wide artifact counts."}
-    - {uri: "apis://ratings/rubric", tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds.", operation: getRatingRubric}
-    - {uri: "apis://llms.txt", tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding."}
-    - {uri: "apis://provider/{slug}", tier: free, description: "One provider's profile — its APIs and links.", operation: getProvider}
-    - {uri: "apis://provider/{slug}/dossier", tier: pro, description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document.", operation: getProvider}
-    - {uri: "apis://provider/{slug}/openapi", tier: free, description: "The provider's primary OpenAPI, inlined.", operation: getOpenapi}
-    - {uri: "apis://tag/{slug}", tier: free, description: "One tag with its linked providers, APIs, and neighbor tags.", operation: getTag}
-    - {uri: "apis://industry/{slug}", tier: pro, description: "PRO — an industry vertical with its ranked member providers.", operation: getIndustry}
-    - {uri: "apis://region/{slug}", tier: pro, description: "PRO — a region with its ranked member providers.", operation: getRegion}
-    - {uri: "apis://area/{slug}", tier: pro, description: "PRO — a curated area with its ranked member providers.", operation: getArea}
-    - {uri: "apis://stack/{capabilities}", tier: pro, description: "PRO — a designed capability stack exported as an adoptable APIs.json.", operation: exportStack}
-    - {uri: "apis://changes", tier: pro, description: "PRO — recent catalog changes (last 30 days): additions + rating movement, as a feed.", operation: whatsChanged}
+    - {
+        uri: "apis://catalog",
+        tier: free,
+        description: "Service root — network-wide artifact counts."
+      }
+    - {
+        uri: "apis://ratings/rubric",
+        tier: free,
+        description: "The scoring rubric — bands, facet weights, trend thresholds.",
+        operation: getRatingRubric
+      }
+    - {
+        uri: "apis://llms.txt",
+        tier: free,
+        description: "The apis.io llms.txt index — a machine-readable map of the network
+          for grounding."
+      }
+    - {
+        uri: "apis://provider/{slug}",
+        tier: free,
+        description: "One provider's profile — its APIs and links.",
+        operation: getProvider
+      }
+    - {
+        uri: "apis://provider/{slug}/dossier",
+        tier: pro,
+        description: "PRO — the full provider dossier: profile + every API + sampled
+          artifact bodies, as one document.",
+        operation: getProvider
+      }
+    - {
+        uri: "apis://provider/{slug}/openapi",
+        tier: free,
+        description: "The provider's primary OpenAPI, inlined.",
+        operation: getOpenapi
+      }
+    - {
+        uri: "apis://tag/{slug}",
+        tier: free,
+        description: "One tag with its linked providers, APIs, and neighbor tags.",
+        operation: getTag
+      }
+    - {
+        uri: "apis://industry/{slug}",
+        tier: pro,
+        description: "PRO — an industry vertical with its ranked member providers.",
+        operation: getIndustry
+      }
+    - {
+        uri: "apis://region/{slug}",
+        tier: pro,
+        description: "PRO — a region with its ranked member providers.",
+        operation: getRegion
+      }
+    - {
+        uri: "apis://area/{slug}",
+        tier: pro,
+        description: "PRO — a curated area with its ranked member providers.",
+        operation: getArea
+      }
+    - {
+        uri: "apis://stack/{capabilities}",
+        tier: pro,
+        description: "PRO — a designed capability stack exported as an adoptable APIs.json.",
+        operation: exportStack
+      }
+    - {
+        uri: "apis://changes",
+        tier: pro,
+        description: "PRO — recent catalog changes (last 30 days): additions + rating
+          movement, as a feed.",
+        operation: whatsChanged
+      }
   # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
   # the coverage view surfaces on purpose).
   operations:
-    listProviders: {tier: free, mcpTool: find_providers, agentSkill: find-api}
-    getProvider: {tier: free, mcpTool: get_provider, agentSkill: integrate-provider}
-    listProviderApis: {tier: free, mcpTool: get_provider, agentSkill: integrate-provider}
-    getProviderArtifacts: {tier: free, mcpTool: get_provider_artifacts, agentSkill: integrate-provider}
-    getProviderOnboarding: {tier: free, mcpTool: get_provider_onboarding, agentSkill: integrate-provider}
-    findSimilarProviders: {tier: free, mcpTool: find_similar_providers, agentSkill: shortlist-vendors}
-    listApis: {tier: free, mcpTool: find_apis, agentSkill: find-api}
-    getApi: {tier: free, mcpTool: get_api, agentSkill: fetch-api-spec}
-    getApiArtifacts: {tier: free, mcpTool: get_api_artifacts, agentSkill: find-api}
-    findSimilarApis: {tier: free, mcpTool: find_similar_apis, agentSkill: find-api}
-    getOpenapi: {tier: free, mcpTool: get_openapi, agentSkill: integrate-provider}
-    listTags: {tier: free, mcpTool: find_tags}
-    getTag: {tier: free, mcpTool: get_tag}
-    listOpenapis: {tier: free, mcpTool: find_artifacts}
-    listAsyncapis: {tier: free, mcpTool: find_artifacts}
-    listArazzo: {tier: free, mcpTool: find_artifacts}
-    listPostman: {tier: free, mcpTool: find_artifacts}
-    listCollections: {tier: free, mcpTool: find_artifacts}
-    listGraphql: {tier: free, mcpTool: find_artifacts}
-    listJsonSchemas: {tier: free, mcpTool: find_artifacts}
-    listJsonStructures: {tier: free, mcpTool: find_artifacts}
-    listJsonLd: {tier: free, mcpTool: find_artifacts}
-    listVocabularies: {tier: free, mcpTool: find_artifacts}
-    listRules: {tier: free, mcpTool: find_artifacts}
-    listExamples: {tier: free, mcpTool: find_artifacts}
-    listFinops: {tier: free, mcpTool: find_artifacts}
-    listPlans: {tier: free, mcpTool: find_artifacts}
-    listRateLimits: {tier: free, mcpTool: find_artifacts}
-    listChannels: {tier: free, mcpTool: find_artifacts}
-    listMcpServers: {tier: free, mcpTool: find_artifacts, agentSkill: discover-mcp-servers}
-    listSkills: {tier: free, mcpTool: find_artifacts}
-    listScopes: {tier: pro, mcpTool: find_artifacts}
-    listSecurity: {tier: pro, mcpTool: find_artifacts}
-    search: {tier: free, mcpTool: apis_io_search, agentSkill: find-api}
-    getRatingRubric: {tier: free, mcpTool: get_rating_rubric}
-    listIndustries: {tier: pro, mcpTool: find_industries}
-    getIndustry: {tier: pro, mcpTool: get_industry}
-    getIndustryLeaders: {tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors}
-    industryGapAnalysis: {tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate}
-    listRegions: {tier: pro, mcpTool: find_regions}
-    getRegion: {tier: pro, mcpTool: get_region}
-    getRegionLeaders: {tier: pro, mcpTool: get_region_leaders, agentSkill: shortlist-vendors}
-    listAreas: {tier: pro, mcpTool: find_areas}
-    getArea: {tier: pro, mcpTool: get_area}
-    getAreaLeaders: {tier: pro, mcpTool: get_area_leaders, agentSkill: shortlist-vendors}
-    listRatings: {tier: pro, mcpTool: find_ratings}
-    findRatingMovers: {tier: pro, mcpTool: find_rating_movers, agentSkill: track-api-changes}
-    getProviderRating: {tier: pro, mcpTool: get_provider_rating}
-    getRatingHistory: {tier: pro, mcpTool: get_rating_history, agentSkill: track-api-changes}
-    compareProviders: {tier: pro, mcpTool: compare_providers, agentSkill: audit-api-estate}
-    gapAnalysis: {tier: pro, mcpTool: gap_analysis, agentSkill: audit-api-estate}
-    whatsChanged: {tier: pro, mcpTool: whats_changed, agentSkill: track-api-changes}
-    recommendStack: {tier: free, mcpTool: recommend_stack, agentSkill: assemble-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json.}
-    exportStack: {tier: pro, mcpTool: export_stack, agentSkill: assemble-api-stack}
+    listProviders: { tier: free, mcpTool: find_providers, agentSkill: find-api }
+    getProvider: { tier: free, mcpTool: get_provider, agentSkill: integrate-provider }
+    listProviderApis: { tier: free, mcpTool: get_provider, agentSkill: integrate-provider }
+    getProviderArtifacts:
+      {
+        tier: free,
+        mcpTool: get_provider_artifacts,
+        agentSkill: integrate-provider
+      }
+    getProviderOnboarding:
+      {
+        tier: free,
+        mcpTool: get_provider_onboarding,
+        agentSkill: integrate-provider
+      }
+    findSimilarProviders: { tier: free, mcpTool: find_similar_providers, agentSkill: shortlist-vendors }
+    listApis: { tier: free, mcpTool: find_apis, agentSkill: find-api }
+    getApi: { tier: free, mcpTool: get_api, agentSkill: fetch-api-spec }
+    getApiArtifacts: { tier: free, mcpTool: get_api_artifacts, agentSkill: find-api }
+    findSimilarApis: { tier: free, mcpTool: find_similar_apis, agentSkill: find-api }
+    getOpenapi: { tier: free, mcpTool: get_openapi, agentSkill: integrate-provider }
+    listTags: { tier: free, mcpTool: find_tags }
+    getTag: { tier: free, mcpTool: get_tag }
+    listOpenapis: { tier: free, mcpTool: find_artifacts }
+    listAsyncapis: { tier: free, mcpTool: find_artifacts }
+    listArazzo: { tier: free, mcpTool: find_artifacts }
+    listPostman: { tier: free, mcpTool: find_artifacts }
+    listCollections: { tier: free, mcpTool: find_artifacts }
+    listGraphql: { tier: free, mcpTool: find_artifacts }
+    listJsonSchemas: { tier: free, mcpTool: find_artifacts }
+    listJsonStructures: { tier: free, mcpTool: find_artifacts }
+    listJsonLd: { tier: free, mcpTool: find_artifacts }
+    listVocabularies: { tier: free, mcpTool: find_artifacts }
+    listRules: { tier: free, mcpTool: find_artifacts }
+    listExamples: { tier: free, mcpTool: find_artifacts }
+    listFinops: { tier: free, mcpTool: find_artifacts }
+    listPlans: { tier: free, mcpTool: find_artifacts }
+    listRateLimits: { tier: free, mcpTool: find_artifacts }
+    listChannels: { tier: free, mcpTool: find_artifacts }
+    listMcpServers: { tier: free, mcpTool: find_artifacts, agentSkill: discover-mcp-servers }
+    listSkills: { tier: free, mcpTool: find_artifacts }
+    listScopes: { tier: pro, mcpTool: find_artifacts }
+    listSecurity: { tier: pro, mcpTool: find_artifacts }
+    search: { tier: free, mcpTool: apis_io_search, agentSkill: find-api }
+    getRatingRubric: { tier: free, mcpTool: get_rating_rubric }
+    listIndustries: { tier: pro, mcpTool: find_industries }
+    getIndustry: { tier: pro, mcpTool: get_industry }
+    getIndustryLeaders: { tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors }
+    industryGapAnalysis: { tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate }
+    listRegions: { tier: pro, mcpTool: find_regions }
+    getRegion: { tier: pro, mcpTool: get_region }
+    getRegionLeaders: { tier: pro, mcpTool: get_region_leaders, agentSkill: shortlist-vendors }
+    listAreas: { tier: pro, mcpTool: find_areas }
+    getArea: { tier: pro, mcpTool: get_area }
+    getAreaLeaders: { tier: pro, mcpTool: get_area_leaders, agentSkill: shortlist-vendors }
+    listRatings: { tier: pro, mcpTool: find_ratings }
+    findRatingMovers: { tier: pro, mcpTool: find_rating_movers, agentSkill: track-api-changes }
+    getProviderRating: { tier: pro, mcpTool: get_provider_rating }
+    getRatingHistory: { tier: pro, mcpTool: get_rating_history, agentSkill: track-api-changes }
+    compareProviders: { tier: pro, mcpTool: compare_providers, agentSkill: audit-api-estate }
+    gapAnalysis: { tier: pro, mcpTool: gap_analysis, agentSkill: audit-api-estate }
+    whatsChanged: { tier: pro, mcpTool: whats_changed, agentSkill: track-api-changes }
+    recommendStack:
+      {
+        tier: free,
+        mcpTool: recommend_stack,
+        agentSkill: assemble-api-stack,
+        note: Free returns a top-pick preview; Pro returns alternatives + gaps +
+          exportable APIs.json.
+      }
+    exportStack: { tier: pro, mcpTool: export_stack, agentSkill: assemble-api-stack }
 
 servers:
   - url: https://apis.io/api/v1
@@ -165,17 +318,28 @@ tags:
   - name: Regions
     description: Geographic regions grouping providers across the catalog.
   - name: Areas
-    description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
+    description: The API Evangelist areas taxonomy — curated topic collections
+      (authentication, webhooks, payments, …), each a scored provider index with
+      its own site. Pro.
   - name: Synthesis
-    description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+    description: Decision-grade composites over the catalog — provider comparison,
+      gap analysis, catalog change feed, and recommended-stack design. Pro.
   - name: Ratings
-    description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
+    description: The APIs.io API rating system — a 0–100 composite score, five
+      bands, a trend marker, and six weighted facets measuring how complete,
+      governed, and integration-ready each provider's public API surface is.
+      Rubric v0.3.
   - name: Artifact Types
-    description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
+    description: First-class, per-type artifact collections (OpenAPI, AsyncAPI,
+      Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes
+      one artifact type across all providers.
   - name: Search
     description: Unified cross-resource search.
   - name: Insights
-    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 +
+      API providers) build, buy, and hire for around APIs, data, and AI, derived
+      from job postings, press, and engineering blogs. Discovery is free;
+      per-company depth, gaps, and provider matches are Pro.
 
 # Defined but NOT required in v1 (key-ready, see info.description).
 security: []
@@ -188,7 +352,8 @@ paths:
       tags:
         - Providers
       summary: List and filter providers.
-      description: List providers, optionally filtered by free text, tags, or the artifact types they publish.
+      description: List providers, optionally filtered by free text, tags, or the
+        artifact types they publish.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Tags'
@@ -235,7 +400,8 @@ paths:
       tags:
         - Providers
       summary: Get one provider.
-      description: Returns a single provider by slug, including its provider-wide links, tags, and a summary list of the APIs it publishes.
+      description: Returns a single provider by slug, including its provider-wide
+        links, tags, and a summary list of the APIs it publishes.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
         - $ref: '#/components/parameters/Fields'
@@ -257,7 +423,9 @@ paths:
         - Providers
         - APIs
       summary: List the APIs published by a provider.
-      description: Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies.
+      description: Returns a page of the APIs owned by one provider, optionally
+        filtered by tags and required artifact types. Pass `include=content` to
+        inline artifact bodies.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
         - $ref: '#/components/parameters/Tags'
@@ -287,7 +455,8 @@ paths:
       tags:
         - Ratings
       summary: One provider's rating.
-      description: Returns the full rating breakdown for a single provider — composite, band, trend, delta, and all six facet scores.
+      description: Returns the full rating breakdown for a single provider —
+        composite, band, trend, delta, and all six facet scores.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
       responses:
@@ -323,6 +492,7 @@ paths:
         - $ref: '#/components/parameters/MinScore'
         - name: sort
           in: query
+          description: Sort order (relevance by default).
           schema:
             type: string
             enum:
@@ -353,7 +523,8 @@ paths:
       tags:
         - APIs
       summary: Get one API by aid.
-      description: Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`.
+      description: Returns a single API. Pass `include=content` to inline artifact
+        bodies, optionally narrowed by `artifact_types`.
       parameters:
         - $ref: '#/components/parameters/Aid'
         - $ref: '#/components/parameters/ArtifactTypes'
@@ -401,6 +572,7 @@ paths:
             maximum: 1000
         - name: sort
           in: query
+          description: Sort order (composite by default).
           schema:
             type: string
             enum:
@@ -431,7 +603,9 @@ paths:
       tags:
         - Tags
       summary: Get one tag, with its linked providers, APIs, and neighbors.
-      description: Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to.
+      description: Returns a single tag by slug, including its network-wide ranking
+        metadata, name variants, neighbor tags, and the providers and APIs it is
+        applied to.
       parameters:
         - name: slug
           in: path
@@ -461,7 +635,8 @@ paths:
       tags:
         - Industries
       summary: List and filter industries.
-      description: The industry taxonomy — verticals grouping providers across the catalog. Filter by free text; sort by provider or API count.
+      description: The industry taxonomy — verticals grouping providers across the
+        catalog. Filter by free text; sort by provider or API count.
       parameters:
         - $ref: '#/components/parameters/Q'
         - name: sort
@@ -496,7 +671,8 @@ paths:
       tags:
         - Industries
       summary: Get one industry, with its ranked providers.
-      description: Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score.
+      description: Returns a single industry by slug, including its aliases, counts,
+        and the member providers ranked by score.
       parameters:
         - name: slug
           in: path
@@ -524,7 +700,8 @@ paths:
       tags:
         - Regions
       summary: List and filter regions.
-      description: The region taxonomy — geographic groupings of providers across the catalog. Filter by free text; sort by provider or API count.
+      description: The region taxonomy — geographic groupings of providers across the
+        catalog. Filter by free text; sort by provider or API count.
       parameters:
         - $ref: '#/components/parameters/Q'
         - name: sort
@@ -559,7 +736,8 @@ paths:
       tags:
         - Regions
       summary: Get one region, with its ranked providers.
-      description: Returns a single region by slug, including its aliases, name patterns, counts, and the member providers ranked by score.
+      description: Returns a single region by slug, including its aliases, name
+        patterns, counts, and the member providers ranked by score.
       parameters:
         - name: slug
           in: path
@@ -584,7 +762,10 @@ paths:
       tags:
         - Artifact Types
       summary: List openapi specifications across the catalog.
-      description: First-class collection of openapi specifications across every provider on the network. Surfaces and normalizes the `OpenAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of openapi specifications across every
+        provider on the network. Surfaces and normalizes the `OpenAPI` artifact
+        type. Filter by free text, provider, and tags; pass `include=content` to
+        inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -596,7 +777,8 @@ paths:
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of openapi specifications with owning API and provider context.
+          description: A page of openapi specifications with owning API and provider
+            context.
           content:
             application/json:
               schema:
@@ -610,7 +792,10 @@ paths:
       tags:
         - Artifact Types
       summary: List asyncapi specifications across the catalog.
-      description: First-class collection of asyncapi specifications across every provider on the network. Surfaces and normalizes the `AsyncAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of asyncapi specifications across every
+        provider on the network. Surfaces and normalizes the `AsyncAPI` artifact
+        type. Filter by free text, provider, and tags; pass `include=content` to
+        inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -622,7 +807,8 @@ paths:
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of asyncapi specifications with owning API and provider context.
+          description: A page of asyncapi specifications with owning API and provider
+            context.
           content:
             application/json:
               schema:
@@ -636,7 +822,10 @@ paths:
       tags:
         - Artifact Types
       summary: List arazzo workflows across the catalog.
-      description: First-class collection of arazzo workflows across every provider on the network. Surfaces and normalizes the `Arazzo` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of arazzo workflows across every provider on
+        the network. Surfaces and normalizes the `Arazzo` artifact type. Filter
+        by free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -662,7 +851,10 @@ paths:
       tags:
         - Artifact Types
       summary: List postman collections across the catalog.
-      description: First-class collection of postman collections across every provider on the network. Surfaces and normalizes the `PostmanCollection` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of postman collections across every provider
+        on the network. Surfaces and normalizes the `PostmanCollection` artifact
+        type. Filter by free text, provider, and tags; pass `include=content` to
+        inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -688,7 +880,10 @@ paths:
       tags:
         - Artifact Types
       summary: List api collections across the catalog.
-      description: First-class collection of api collections across every provider on the network. Surfaces and normalizes the `Collection`, `Collections` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of api collections across every provider on
+        the network. Surfaces and normalizes the `Collection`, `Collections`
+        artifact types. Filter by free text, provider, and tags; pass
+        `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -714,7 +909,10 @@ paths:
       tags:
         - Artifact Types
       summary: List graphql schemas across the catalog.
-      description: First-class collection of graphql schemas across every provider on the network. Surfaces and normalizes the `GraphQL` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of graphql schemas across every provider on
+        the network. Surfaces and normalizes the `GraphQL` artifact type. Filter
+        by free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -740,7 +938,10 @@ paths:
       tags:
         - Artifact Types
       summary: List json schema definitions across the catalog.
-      description: First-class collection of json schema definitions across every provider on the network. Surfaces and normalizes the `JSONSchema` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of json schema definitions across every
+        provider on the network. Surfaces and normalizes the `JSONSchema`
+        artifact type. Filter by free text, provider, and tags; pass
+        `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -752,7 +953,8 @@ paths:
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of json schema definitions with owning API and provider context.
+          description: A page of json schema definitions with owning API and provider
+            context.
           content:
             application/json:
               schema:
@@ -766,7 +968,10 @@ paths:
       tags:
         - Artifact Types
       summary: List json structure definitions across the catalog.
-      description: First-class collection of json structure definitions across every provider on the network. Surfaces and normalizes the `JSONStructure` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of json structure definitions across every
+        provider on the network. Surfaces and normalizes the `JSONStructure`
+        artifact type. Filter by free text, provider, and tags; pass
+        `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -778,7 +983,8 @@ paths:
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of json structure definitions with owning API and provider context.
+          description: A page of json structure definitions with owning API and provider
+            context.
           content:
             application/json:
               schema:
@@ -792,7 +998,10 @@ paths:
       tags:
         - Artifact Types
       summary: List json-ld contexts across the catalog.
-      description: First-class collection of json-ld contexts across every provider on the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of json-ld contexts across every provider on
+        the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext`
+        artifact types. Filter by free text, provider, and tags; pass
+        `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -818,7 +1027,10 @@ paths:
       tags:
         - Artifact Types
       summary: List vocabularies across the catalog.
-      description: First-class collection of vocabularies across every provider on the network. Surfaces and normalizes the `Vocabulary` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of vocabularies across every provider on the
+        network. Surfaces and normalizes the `Vocabulary` artifact type. Filter
+        by free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -844,7 +1056,10 @@ paths:
       tags:
         - Artifact Types
       summary: List governance rulesets across the catalog.
-      description: First-class collection of governance rulesets across every provider on the network. Surfaces and normalizes the `Rules`, `SpectralRules`, `SpectralRuleset`, `Spectral` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of governance rulesets across every provider
+        on the network. Surfaces and normalizes the `Rules`, `SpectralRules`,
+        `SpectralRuleset`, `Spectral` artifact types. Filter by free text,
+        provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -870,7 +1085,10 @@ paths:
       tags:
         - Artifact Types
       summary: List examples across the catalog.
-      description: First-class collection of examples across every provider on the network. Surfaces and normalizes the `Example`, `Examples`, `CodeExamples` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of examples across every provider on the
+        network. Surfaces and normalizes the `Example`, `Examples`,
+        `CodeExamples` artifact types. Filter by free text, provider, and tags;
+        pass `include=content` to inline each artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -896,7 +1114,10 @@ paths:
       tags:
         - Artifact Types
       summary: List finops artifacts across the catalog.
-      description: First-class collection of finops artifacts across every provider on the network. Surfaces and normalizes the `FinOps` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of finops artifacts across every provider on
+        the network. Surfaces and normalizes the `FinOps` artifact type. Filter
+        by free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -922,7 +1143,10 @@ paths:
       tags:
         - Artifact Types
       summary: List plans across the catalog.
-      description: First-class collection of plans across every provider on the network. Surfaces and normalizes the `Plans` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of plans across every provider on the
+        network. Surfaces and normalizes the `Plans` artifact type. Filter by
+        free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -948,7 +1172,10 @@ paths:
       tags:
         - Artifact Types
       summary: List rate limits across the catalog.
-      description: First-class collection of rate limits across every provider on the network. Surfaces and normalizes the `RateLimits` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
+      description: First-class collection of rate limits across every provider on the
+        network. Surfaces and normalizes the `RateLimits` artifact type. Filter
+        by free text, provider, and tags; pass `include=content` to inline each
+        artifact body.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -977,7 +1204,10 @@ paths:
       tags:
         - Ratings
       summary: Ranked ratings leaderboard.
-      description: Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores.
+      description: Providers ranked by composite score, highest first. Filter by band,
+        score range, trend, or a facet threshold (`facet` + `min_facet`), and
+        scope to providers or tags. Each entry carries rank, composite, band,
+        trend, and the six facet scores.
       parameters:
         - $ref: '#/components/parameters/BandFilter'
         - $ref: '#/components/parameters/MinScore'
@@ -1015,7 +1245,9 @@ paths:
       tags:
         - Ratings
       summary: The rating rubric.
-      description: Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block.
+      description: Returns the versioned rubric behind every score — the five bands
+        and their thresholds, the six facets and their weights, and the trend
+        thresholds. Use it to interpret any `score` block.
       responses:
         '200':
           description: The rating rubric.
@@ -1067,6 +1299,7 @@ paths:
         - $ref: '#/components/parameters/MinScore'
         - name: sort
           in: query
+          description: Sort order (relevance by default).
           schema:
             type: string
             enum:
@@ -1099,7 +1332,10 @@ paths:
       tags:
         - Artifact Types
       summary: List AsyncAPI event channels across the catalog.
-      description: First-class collection of AsyncAPI event channels across every provider — the finest-grained event/streaming discovery surface. Filter by free text, provider, and tags; `include=content` inlines each channel's spec.
+      description: First-class collection of AsyncAPI event channels across every
+        provider — the finest-grained event/streaming discovery surface. Filter
+        by free text, provider, and tags; `include=content` inlines each
+        channel's spec.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1127,7 +1363,9 @@ paths:
       tags:
         - Artifact Types
       summary: List published MCP servers across the catalog.
-      description: First-class collection of provider MCP servers across the network. Filter by free text, provider, and tags; `include=content` inlines each server's card/manifest.
+      description: First-class collection of provider MCP servers across the network.
+        Filter by free text, provider, and tags; `include=content` inlines each
+        server's card/manifest.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1155,7 +1393,9 @@ paths:
       tags:
         - Artifact Types
       summary: List published Agent Skills across the catalog.
-      description: First-class collection of provider Agent Skills across the network. Filter by free text, provider, and tags; `include=content` inlines each skill.
+      description: First-class collection of provider Agent Skills across the network.
+        Filter by free text, provider, and tags; `include=content` inlines each
+        skill.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1184,7 +1424,9 @@ paths:
       tags:
         - Artifact Types
       summary: List OAuth scope sets across the catalog.
-      description: PRO — first-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.
+      description: PRO — first-class collection of OAuth scope definitions across
+        every provider. Filter by free text, provider, and tags;
+        `include=content` inlines each scope set.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1212,7 +1454,10 @@ paths:
       tags:
         - Artifact Types
       summary: List security scheme definitions across the catalog.
-      description: PRO — first-class collection of provider security/auth scheme definitions (authentication, domain security, VDP, trust center) across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.
+      description: PRO — first-class collection of provider security/auth scheme
+        definitions (authentication, domain security, VDP, trust center) across
+        the network. Filter by free text, provider, and tags; `include=content`
+        inlines each definition.
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Providers'
@@ -1240,7 +1485,10 @@ paths:
       tags:
         - Areas
       summary: List and filter areas (Pro).
-      description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Filter by free text; sort by provider count. Pro tier.
+      description: The API Evangelist areas taxonomy — curated topic collections
+        (authentication, webhooks, payments, …), each a scored provider index
+        with its own site. Filter by free text; sort by provider count. Pro
+        tier.
       parameters:
         - $ref: '#/components/parameters/Q'
         - name: sort
@@ -1277,7 +1525,8 @@ paths:
       tags:
         - Areas
       summary: Get one area, with its ranked providers (Pro).
-      description: Returns a single area by slug, including its description, site link, counts, and the member providers ranked by score. Pro tier.
+      description: Returns a single area by slug, including its description, site
+        link, counts, and the member providers ranked by score. Pro tier.
       parameters:
         - name: slug
           in: path
@@ -1307,7 +1556,8 @@ paths:
       tags:
         - Synthesis
       summary: Compare providers side by side (Pro).
-      description: Compares 2+ providers — composite/band, per-facet leaders, and an artifact-coverage matrix. Pro tier.
+      description: Compares 2+ providers — composite/band, per-facet leaders, and an
+        artifact-coverage matrix. Pro tier.
       parameters:
         - name: providers
           in: query
@@ -1337,7 +1587,9 @@ paths:
       tags:
         - Synthesis
       summary: Artifact + score gap analysis for a provider or stack (Pro).
-      description: For each provider — the high-value artifacts it lacks, what its peers commonly publish but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Pro tier.
+      description: For each provider — the high-value artifacts it lacks, what its
+        peers commonly publish but it lacks, and its score vs the peer median —
+        plus stack-level gaps across the set. Pro tier.
       parameters:
         - name: providers
           in: query
@@ -1373,7 +1625,8 @@ paths:
       tags:
         - Synthesis
       summary: What changed in the catalog since a date (Pro).
-      description: Providers added/updated since a date, plus rating movement (up/down) from the latest scoring build. Pro tier.
+      description: Providers added/updated since a date, plus rating movement
+        (up/down) from the latest scoring build. Pro tier.
       parameters:
         - name: since
           in: query
@@ -1405,12 +1658,16 @@ paths:
       tags:
         - Synthesis
       summary: Design a recommended API stack per capability.
-      description: Decompose a domain into capabilities, then get the best-rated catalog provider per capability assembled into a stack. FREE returns a preview (top pick per capability); PRO returns alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint.
+      description: Decompose a domain into capabilities, then get the best-rated
+        catalog provider per capability assembled into a stack. FREE returns a
+        preview (top pick per capability); PRO returns alternatives, per-pick
+        artifact gaps, and an exportable APIs.json + Arazzo hint.
       parameters:
         - name: capabilities
           in: query
           required: true
-          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
+          description: Comma-separated capabilities the stack needs, e.g.
+            `payments,email,identity,observability`.
           schema:
             type: string
             maxLength: 1024
@@ -1431,7 +1688,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 
-  # ---- Deep discovery & synthesis additions (v1.2) ---------------------------------------------
+      # ---- Deep discovery & synthesis additions (v1.2) ---------------------------------------------
       security: []
   /providers/{slug}/artifacts:
     get:
@@ -1443,7 +1700,9 @@ paths:
         - Providers
         - Artifact Types
       summary: Every artifact a provider publishes.
-      description: Aggregates all artifacts across a provider's APIs — grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type counts. One call instead of composing several.
+      description: Aggregates all artifacts across a provider's APIs — grouped by type
+        (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type
+        counts. One call instead of composing several.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
       responses:
@@ -1467,7 +1726,9 @@ paths:
       tags:
         - Providers
       summary: A provider's getting-started view.
-      description: Assembles website, portal, signup, docs, authentication, base URLs, and first steps from a provider's registered links and API base URLs — a best-effort onboarding descriptor.
+      description: Assembles website, portal, signup, docs, authentication, base URLs,
+        and first steps from a provider's registered links and API base URLs — a
+        best-effort onboarding descriptor.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
       responses:
@@ -1491,7 +1752,8 @@ paths:
       tags:
         - Providers
       summary: Providers similar to a given one.
-      description: Ranks catalog providers by weighted overlap of tags, industry, region, and artifact coverage — the alternatives to a given provider.
+      description: Ranks catalog providers by weighted overlap of tags, industry,
+        region, and artifact coverage — the alternatives to a given provider.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
         - $ref: '#/components/parameters/Limit'
@@ -1516,7 +1778,9 @@ paths:
       tags:
         - Ratings
       summary: A provider's rating movement.
-      description: Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series.
+      description: Returns a provider's current score/band/trend and the implied
+        previous-build point. apis.io stores the current score plus
+        week-over-week movement, not a full time series.
       parameters:
         - $ref: '#/components/parameters/ProviderSlug'
       responses:
@@ -1540,7 +1804,8 @@ paths:
         - APIs
         - Artifact Types
       summary: One API's artifacts, grouped by type.
-      description: Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies.
+      description: Returns a single API's registered artifacts grouped by type with
+        per-type counts. Pass `include=content` to inline the bodies.
       parameters:
         - $ref: '#/components/parameters/Aid'
         - $ref: '#/components/parameters/Include'
@@ -1590,7 +1855,8 @@ paths:
         - APIs
         - Artifact Types
       summary: An API's primary OpenAPI.
-      description: Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body.
+      description: Returns the primary OpenAPI reference (url) for one API — the top
+        agent intent. Pass `include=content` to inline the spec body.
       parameters:
         - $ref: '#/components/parameters/Aid'
         - $ref: '#/components/parameters/Include'
@@ -1616,7 +1882,8 @@ paths:
       tags:
         - Industries
       summary: Top-rated providers in an industry.
-      description: Returns the highest-composite-scoring member providers of an industry vertical.
+      description: Returns the highest-composite-scoring member providers of an
+        industry vertical.
       parameters:
         - name: slug
           in: path
@@ -1678,7 +1945,8 @@ paths:
       tags:
         - Areas
       summary: Top-rated providers in a curated area.
-      description: Returns the highest-composite-scoring member providers of a curated API Evangelist area.
+      description: Returns the highest-composite-scoring member providers of a curated
+        API Evangelist area.
       parameters:
         - name: slug
           in: path
@@ -1709,7 +1977,8 @@ paths:
       tags:
         - Ratings
       summary: The biggest rating movers.
-      description: Returns the providers whose composite score moved most (up and down) versus the previous scoring build.
+      description: Returns the providers whose composite score moved most (up and
+        down) versus the previous scoring build.
       parameters:
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -1732,7 +2001,9 @@ paths:
         - Synthesis
         - Industries
       summary: Artifact gaps across a whole industry.
-      description: For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.
+      description: For an industry vertical, reports which valuable artifact types
+        (MCP, Arazzo, Rules, Skills…) most member providers lack — where the
+        vertical is under-served.
       parameters:
         - name: slug
           in: path
@@ -1743,7 +2014,8 @@ paths:
             maxLength: 1024
         - name: min_share
           in: query
-          description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
+          description: Coverage threshold below which a type counts as an industry gap
+            (0–1, default 0.5).
           schema:
             type: number
             maximum: 1000000000
@@ -1768,12 +2040,14 @@ paths:
       tags:
         - Synthesis
       summary: Export a designed stack as APIs.json.
-      description: Given a set of capabilities, returns the designed stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit.
+      description: Given a set of capabilities, returns the designed stack as an
+        adoptable APIs.json document (with an Arazzo hint) the team can commit.
       parameters:
         - name: capabilities
           in: query
           required: true
-          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
+          description: Comma-separated capabilities the stack needs, e.g.
+            `payments,email,identity`.
           schema:
             type: string
             maxLength: 1024
@@ -1797,81 +2071,115 @@ paths:
   /insights:
     get:
       operationId: getInsightsSummary
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Insights overview.
-      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free.
+      description: Company/dimension/adoption counts and the top investment dimensions
+        across the profiled set. Free.
       responses:
-        '200': {description: Insights summary., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Insights summary.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
       security: []
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
       x-mcp-tool: insights_dimensions
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Rank the investment dimensions.
-      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free.
+      description: The 40 tracked technology & organizational dimensions ranked by how
+        many companies show signal. Free.
       parameters:
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': {description: Dimension cross-section., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Dimension cross-section.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
       security: []
   /insights/adoption:
     get:
       operationId: listInsightAdoption
       x-mcp-tool: insights_adoption
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Services / tools / standards by adoption.
       description: Technologies ranked by how many companies adopt them. Free.
       parameters:
         - name: type
           in: query
           description: Which adoption graph to return.
-          schema: {type: string, enum: [service, tool, standard], default: service, maxLength: 1024}
+          schema:
+            {
+              type: string,
+              enum: [ service, tool, standard ],
+              default: service,
+              maxLength: 1024
+            }
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': {description: Adoption ranking., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Adoption ranking.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
       security: []
   /insights/industries:
     get:
       operationId: listInsightIndustries
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Industry rollup.
       description: Profiled sectors with company counts. Free.
       responses:
-        '200': {description: Industry rollup., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Industry rollup.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
       security: []
   /insights/companies:
     get:
       operationId: listInsightCompanies
       x-mcp-tool: find_company_insights
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Browse profiled companies.
-      description: Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields).
+      description: Companies ranked by overall technology-readiness signal; filter by
+        name. Free (top-line fields).
       parameters:
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
-        '200': {description: Company list., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Company list.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
       security: []
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
       x-mcp-tool: get_company_insight
-      tags: [Insights]
+      tags: [ Insights ]
       summary: One company's demand-side profile.
-      description: Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history.
+      description: Free returns a thin preview; Pro returns the full 40-dimension
+        profile, adopted stack, and per-quarter history.
       parameters:
         - name: slug
           in: path
           required: true
           description: Company slug (e.g. `citi`).
-          schema: {type: string, maxLength: 1024}
+          schema: { type: string, maxLength: 1024 }
       responses:
-        '200': {description: Company profile (preview or full by tier)., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
-        '404': {$ref: '#/components/responses/NotFound'}
+        '200':
+          {
+            description: Company profile (preview or full by tier).,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
+        '404': { $ref: '#/components/responses/NotFound' }
       security: []
   /insights/company/{slug}/gaps:
     get:
@@ -1879,34 +2187,54 @@ paths:
       x-tier: pro
       x-mcp-tool: company_gaps
       security: []
-      tags: [Insights]
+      tags: [ Insights ]
       summary: A company's weakest dimensions.
-      description: The lowest-scoring investment dimensions — where a company is thin and a vendor could sell in. Pro.
+      description: The lowest-scoring investment dimensions — where a company is thin
+        and a vendor could sell in. Pro.
       parameters:
         - name: slug
           in: path
           required: true
-          schema: {type: string, maxLength: 1024}
+          description: Company slug (e.g. `citi`).
+          schema: { type: string, maxLength: 1024 }
       responses:
-        '200': {description: Company gaps., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
-        '403': {description: Requires the Pro or Business tier., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Company gaps.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
+        '403':
+          {
+            description: Requires the Pro or Business tier.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
   /insights/company/{slug}/match:
     get:
       operationId: matchCompanyProviders
       x-tier: pro
       x-mcp-tool: match_providers
       security: []
-      tags: [Insights]
+      tags: [ Insights ]
       summary: Match providers to a company's stack (the supply↔demand join).
-      description: apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro.
+      description: apis.io providers whose product appears in a company's adopted
+        stack, ranked by rating. Pro.
       parameters:
         - name: slug
           in: path
           required: true
-          schema: {type: string, maxLength: 1024}
+          description: Company slug (e.g. `citi`).
+          schema: { type: string, maxLength: 1024 }
       responses:
-        '200': {description: Matched providers., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
-        '403': {description: Requires the Pro or Business tier., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
+        '200':
+          {
+            description: Matched providers.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
+        '403':
+          {
+            description: Requires the Pro or Business tier.,
+            content: { application/json: { schema: { type: object, additionalProperties: true } } }
+          }
 
 components:
 
@@ -1915,7 +2243,8 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
-      description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a breaking change.
+      description: Optional in v1. Defined so metering/rate-tiers can be enabled later
+        without a breaking change.
 
   parameters:
     Q:
@@ -1928,7 +2257,8 @@ components:
     Tags:
       name: tags
       in: query
-      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g.
+        Messaging); lowercase slugs (e.g. messaging) are also accepted.
       style: form
       explode: false
       example:
@@ -1966,7 +2296,8 @@ components:
     ArtifactTypes:
       name: artifact_types
       in: query
-      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      description: Comma-separated artifact types. Filters which artifacts are
+        returned and (on list endpoints) which APIs qualify.
       style: form
       explode: false
       schema:
@@ -2147,7 +2478,8 @@ components:
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
     UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for
+        a paid tier.
       content:
         application/problem+json:
           schema:
@@ -2194,7 +2526,8 @@ components:
       properties:
         type:
           type: string
-          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          description: Link/relationship type (e.g. Documentation, Website, GitHub,
+            Pricing).
           maxLength: 1024
         url:
           type: string
@@ -2288,7 +2621,7 @@ components:
           type: string
           format: uri
           description: Reference to the artifact.
-        # Owning context — populated on cross-catalog artifact results.
+          # Owning context — populated on cross-catalog artifact results.
           maxLength: 2048
         aid:
           type: string
@@ -2299,7 +2632,7 @@ components:
           maxLength: 1024
         provider_name:
           type: string
-        # Populated only when include=content.
+          # Populated only when include=content.
           maxLength: 1024
         content:
           type: string
@@ -2350,8 +2683,8 @@ components:
             type: string
             maxLength: 1024
           examples:
-            -   - Messaging
-                - Authentication
+            - - Messaging
+              - Authentication
           maxItems: 1000
         properties:
           type: array
@@ -2436,8 +2769,8 @@ components:
             type: string
             maxLength: 1024
           examples:
-            -   - Messaging
-                - Authentication
+            - - Messaging
+              - Authentication
           maxItems: 1000
         score:
           $ref: '#/components/schemas/ProviderScore'
@@ -2631,7 +2964,8 @@ components:
           type: string
           format: uri
           default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
+          description: A URI identifying the problem type; dereferences to human-readable
+            docs.
           examples:
             - 'https://apis.io/problems/invalid-parameter'
           maxLength: 2048
@@ -2655,11 +2989,13 @@ components:
         instance:
           type: string
           format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
+          description: A URI reference identifying the specific occurrence (typically the
+            request path).
           maxLength: 2048
         parameter:
           type: string
-          description: Extension member — the offending query/path parameter, when applicable.
+          description: Extension member — the offending query/path parameter, when
+            applicable.
           maxLength: 1024
       required:
         - type
@@ -2866,7 +3202,8 @@ components:
               maximum: 1000000000
     RankedProvider:
       type: object
-      description: A provider summary as it appears in an industry or region membership list.
+      description: A provider summary as it appears in an industry or region
+        membership list.
       properties:
         slug:
           type: string
@@ -2928,7 +3265,8 @@ components:
           maximum: 1000
         providers:
           type: array
-          description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
+          description: Member providers, ranked by score. Returned on the single-industry
+            endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
           maxItems: 1000
@@ -2977,7 +3315,8 @@ components:
           maximum: 1000
         providers:
           type: array
-          description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
+          description: Member providers, ranked by score. Returned on the single-region
+            endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
           maxItems: 1000
@@ -3012,7 +3351,8 @@ components:
         - data
     Area:
       type: object
-      description: A curated API Evangelist area — a topic collection with its own scored provider index and dedicated site.
+      description: A curated API Evangelist area — a topic collection with its own
+        scored provider index and dedicated site.
       properties:
         slug:
           type: string
@@ -3058,7 +3398,8 @@ components:
           maximum: 1000
         providers:
           type: array
-          description: Member providers, ranked by score. Returned on the single-area endpoint; omitted from list responses by default.
+          description: Member providers, ranked by score. Returned on the single-area
+            endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
           maxItems: 1000

@@ -1,0 +1,354 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Regions API
+  version: 1.2.1
+  description: |-
+    Geographic regions grouping providers across the catalog.
+
+    This is the Regions surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Regions
+    description: Geographic regions grouping providers across the catalog.
+paths:
+  /regions:
+    get:
+      operationId: listRegions
+      x-tier: pro
+      x-mcp-tool: find_regions
+      security: []
+      tags:
+        - Regions
+      summary: List and filter regions.
+      description: The region taxonomy — geographic groupings of providers across the catalog. Filter by free text; sort by provider or API count.
+      parameters:
+        - $ref: "#/components/parameters/Q"
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: List and filter regions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegionList"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /regions/{slug}:
+    get:
+      operationId: getRegion
+      x-tier: pro
+      x-mcp-tool: get_region
+      security: []
+      tags:
+        - Regions
+      summary: Get one region, with its ranked providers.
+      description: Returns a single region by slug, including its aliases, name patterns, counts, and the member providers ranked by score.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Region slug (e.g. `southeast-asia`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
+      responses:
+        "200":
+          description: Get one region, with its ranked providers.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Region"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /regions/{slug}/leaders:
+    get:
+      operationId: getRegionLeaders
+      x-tier: pro
+      x-mcp-tool: get_region_leaders
+      x-agent-skill: shortlist-vendors
+      security: []
+      tags:
+        - Regions
+      summary: Top-rated providers in a region.
+      description: Returns the highest-composite-scoring member providers of a region.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Region slug (e.g. `europe`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of the region's top providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+components:
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+  responses:
+    BadRequest:
+      description: Malformed request (bad parameter value).
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/invalid-parameter
+            title: Invalid parameter
+            status: 400
+            detail: "`match` must be one of: any, all."
+            instance: /v1/search
+            parameter: match
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+  schemas:
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
+      maxLength: 1024
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+        - total
+        - page
+        - limit
+        - pages
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
+    RankedProvider:
+      type: object
+      description: A provider summary as it appears in an industry or region membership list.
+      properties:
+        slug:
+          type: string
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        api_count:
+          type: integer
+          maximum: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        score_band:
+          $ref: "#/components/schemas/Band"
+        score_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+        - slug
+        - name
+    Region:
+      type: object
+      description: A geographic region grouping providers across the catalog.
+      properties:
+        slug:
+          type: string
+          examples:
+            - southeast-asia
+          maxLength: 1024
+        name:
+          type: string
+          examples:
+            - Southeast Asia
+          maxLength: 1024
+        short:
+          type: string
+          description: One-line summary.
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        aliases:
+          type: array
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        name_patterns:
+          type: array
+          description: Country/nationality strings used to infer regional membership.
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        provider_count:
+          type: integer
+          maximum: 1000
+        api_count:
+          type: integer
+          maximum: 1000
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
+          items:
+            $ref: "#/components/schemas/RankedProvider"
+          maxItems: 1000
+      required:
+        - slug
+        - name
+    RegionList:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/Meta"
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Region"
+          maxItems: 1000
+      required:
+        - meta
+        - data

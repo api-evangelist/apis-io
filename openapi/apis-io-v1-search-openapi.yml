@@ -1,0 +1,775 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Search API
+  version: 1.2.1
+  description: |-
+    Unified cross-resource search.
+
+    This is the Search surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Search
+    description: Unified cross-resource search.
+paths:
+  /search:
+    get:
+      operationId: search
+      tags:
+        - Search
+      summary: Unified search across apis, providers, tags, and artifacts.
+      description: |
+        The power endpoint. Choose what kind of object to return with `return`
+        (`apis` by default), then constrain with any combination of `q`, `tags`
+        (`match=any|all`), `providers`, and `artifact_types`. Use `fields` for sparse
+        responses and `include=content` to inline artifacts.
+
+        Example — messaging APIs across providers that ship an OpenAPI, returning just the
+        spec and pricing artifacts:
+
+            /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing
+                   &fields=aid,name,provider_slug,properties
+      parameters:
+        - name: return
+          in: query
+          description: The kind of object to return.
+          schema:
+            type: string
+            enum:
+              - apis
+              - providers
+              - tags
+            default: apis
+            maxLength: 1024
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/ArtifactTypes"
+        - $ref: "#/components/parameters/IndustryFilter"
+        - $ref: "#/components/parameters/RegionFilter"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/BandFilter"
+        - $ref: "#/components/parameters/MinScore"
+        - name: sort
+          in: query
+          description: Sort order (relevance by default).
+          schema:
+            type: string
+            enum:
+              - relevance
+              - name
+              - composite
+              - api_count
+              - created
+            default: relevance
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: A page of search results of the requested kind.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResults"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+      security: []
+components:
+  parameters:
+    ArtifactTypes:
+      name: artifact_types
+      in: query
+      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/ArtifactType"
+        maxItems: 1000
+    BandFilter:
+      name: band
+      in: query
+      description: Filter by one or more rating bands.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/Band"
+        maxItems: 1000
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Include:
+      name: include
+      in: query
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - content
+          maxLength: 1024
+        maxItems: 1000
+    IndustryFilter:
+      name: industry
+      in: query
+      description: Filter by one or more industry slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Match:
+      name: match
+      in: query
+      description: Whether results must match `any` (default) or `all` of the supplied tags.
+      schema:
+        type: string
+        enum:
+          - any
+          - all
+        default: any
+        maxLength: 1024
+    MinScore:
+      name: min_score
+      in: query
+      description: Minimum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Providers:
+      name: providers
+      in: query
+      description: Comma-separated provider slugs to scope results to.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+    RegionFilter:
+      name: region
+      in: query
+      description: Filter by one or more region slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+        - Messaging
+        - Authentication
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+  responses:
+    BadRequest:
+      description: Malformed request (bad parameter value).
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/invalid-parameter
+            title: Invalid parameter
+            status: 400
+            detail: "`match` must be one of: any, all."
+            instance: /v1/search
+            parameter: match
+  schemas:
+    Api:
+      type: object
+      description: An individual API owned by a provider.
+      properties:
+        aid:
+          type: string
+          examples:
+            - twilio:twilio-accounts-api
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        provider_slug:
+          type: string
+          maxLength: 1024
+        provider_name:
+          type: string
+          maxLength: 1024
+        baseURL:
+          type: string
+          format: uri
+          maxLength: 2048
+        humanURL:
+          type: string
+          format: uri
+          description: Human-facing documentation entry point.
+          maxLength: 2048
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+            maxLength: 1024
+          examples:
+            - - Messaging
+              - Authentication
+          maxItems: 1000
+        properties:
+          type: array
+          description: The API's artifacts.
+          items:
+            $ref: "#/components/schemas/Artifact"
+          maxItems: 1000
+        sibling_apis:
+          type: array
+          description: Other APIs published by the same provider.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+          maxItems: 1000
+        overview:
+          type: string
+          description: Narrative overview (markdown).
+          maxLength: 1024
+      required:
+        - aid
+        - name
+        - provider_slug
+    Artifact:
+      type: object
+      description: A machine- or human-readable artifact attached to an API.
+      properties:
+        id:
+          type: string
+          description: Stable artifact id, `aid::type::n`.
+          examples:
+            - twilio:twilio-accounts-api::OpenAPI::0
+          maxLength: 1024
+        type:
+          $ref: "#/components/schemas/ArtifactType"
+        name:
+          type: string
+          description: Optional human label for the artifact.
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          description: Reference to the artifact.
+          maxLength: 2048
+        aid:
+          type: string
+          description: aid of the owning API.
+          maxLength: 1024
+        provider_slug:
+          type: string
+          maxLength: 1024
+        provider_name:
+          type: string
+          maxLength: 1024
+        content:
+          type: string
+          description: Inlined artifact body. Present only when include=content.
+          maxLength: 20000
+        content_type:
+          type: string
+          description: Media type of the inlined content (e.g. application/yaml).
+          maxLength: 20000
+      required:
+        - type
+        - url
+    ArtifactType:
+      type: string
+      description: |
+        The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
+        common are listed here. Unknown values are allowed.
+      examples:
+        - OpenAPI
+        - JSONSchema
+        - Postman
+      enum:
+        - Documentation
+        - OpenAPI
+        - JSONSchema
+        - JSONStructure
+        - JSONLD
+        - Example
+        - GettingStarted
+        - APIReference
+        - Authentication
+        - SDK
+        - GitHubRepository
+        - Reference
+        - Pricing
+        - CodeExamples
+        - Website
+        - RateLimits
+        - Portal
+        - AsyncAPI
+        - Arazzo
+        - GitHub
+        - ChangeLog
+        - SourceCode
+        - Repository
+        - FAQ
+        - SignUp
+        - GraphQL
+        - Plans
+        - Vocabulary
+        - Specification
+        - Tutorials
+        - Sandbox
+        - FinOps
+        - SpectralRules
+        - Console
+        - GitHubOrganization
+        - ReleaseNotes
+        - Support
+        - TermsOfService
+        - Rules
+        - Webhooks
+        - Quickstart
+        - ProductPage
+        - Capabilities
+        - PostmanCollection
+        - Collection
+        - KubernetesCRD
+        - Hub
+        - NaftikoCapability
+      x-extensible-enum: true
+      maxLength: 1024
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
+      maxLength: 1024
+    Facets:
+      type: object
+      description: The six facet scores, each 0–100.
+      properties:
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
+    Link:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          maxLength: 2048
+        title:
+          type: string
+          maxLength: 1024
+      required:
+        - type
+        - url
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+        - total
+        - page
+        - limit
+        - pages
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
+    Provider:
+      type: object
+      description: An organization publishing one or more APIs.
+      properties:
+        slug:
+          type: string
+          examples:
+            - twilio
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        api_count:
+          type: integer
+          maximum: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        created:
+          type: string
+          format: date
+          maxLength: 10
+        common:
+          type: array
+          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
+          items:
+            $ref: "#/components/schemas/Link"
+          maxItems: 1000
+        apis:
+          type: array
+          description: Summary list of the provider's APIs.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+              description:
+                type: string
+                maxLength: 20000
+          maxItems: 1000
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+            maxLength: 1024
+          examples:
+            - - Messaging
+              - Authentication
+          maxItems: 1000
+        score:
+          $ref: "#/components/schemas/ProviderScore"
+      required:
+        - slug
+        - name
+    ProviderScore:
+      type: object
+      description: A provider's rating, rubric v0.3.
+      properties:
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted composite of the six facets.
+          examples:
+            - 66.3
+        band:
+          $ref: "#/components/schemas/Band"
+        trend:
+          $ref: "#/components/schemas/Trend"
+        delta:
+          type: number
+          description: Composite change since the previous snapshot.
+          examples:
+            - 0
+          maximum: 1000000000
+        previous_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        scored_at:
+          type: string
+          format: date
+          maxLength: 10
+        schema_version:
+          type: string
+          examples:
+            - "0.3"
+          maxLength: 1024
+        facets:
+          $ref: "#/components/schemas/Facets"
+      required:
+        - composite
+        - band
+    SearchResults:
+      type: object
+      description: |
+        Unified search envelope. `data` holds objects of the kind named by `meta.return`
+        (apis | providers | tags | artifacts).
+      properties:
+        meta:
+          allOf:
+            - $ref: "#/components/schemas/Meta"
+            - type: object
+              properties:
+                return:
+                  type: string
+                  enum:
+                    - apis
+                    - providers
+                    - tags
+                    - artifacts
+                  maxLength: 1024
+        data:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Api"
+              - $ref: "#/components/schemas/Provider"
+              - $ref: "#/components/schemas/Tag"
+              - $ref: "#/components/schemas/Artifact"
+          maxItems: 1000
+      required:
+        - meta
+        - data
+    Tag:
+      type: object
+      description: A tag in the taxonomy, with network-wide ranking metadata.
+      properties:
+        slug:
+          type: string
+          examples:
+            - messaging
+          maxLength: 1024
+        name:
+          type: string
+          examples:
+            - Messaging
+          maxLength: 1024
+        composite:
+          type: number
+          description: Composite ranking score.
+          maximum: 1000000000
+        band:
+          type: string
+          enum:
+            - strong
+            - healthy
+            - stale
+            - weak
+          maxLength: 1024
+        frequency:
+          type: number
+          maximum: 1000000000
+        breadth:
+          type: number
+          maximum: 1000000000
+        quality_lift:
+          type: number
+          maximum: 1000000000
+        provider_count:
+          type: integer
+          maximum: 1000
+        api_count:
+          type: integer
+          maximum: 1000
+        variants:
+          type: array
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        neighbors:
+          type: array
+          description: Related tags.
+          items:
+            $ref: "#/components/schemas/TagRef"
+          maxItems: 1000
+        providers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Provider"
+          maxItems: 1000
+        apis:
+          type: array
+          items:
+            type: object
+            properties:
+              provider:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+              name:
+                type: string
+                maxLength: 1024
+          maxItems: 1000
+      required:
+        - slug
+        - name
+    TagRef:
+      type: object
+      properties:
+        slug:
+          type: string
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+    Trend:
+      type: string
+      description: Week-over-week movement in composite score (±5 thresholds).
+      enum:
+        - rising
+        - flat
+        - falling
+      maxLength: 1024

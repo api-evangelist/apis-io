@@ -1,0 +1,320 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Synthesis API
+  version: 1.2.1
+  description: |-
+    Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+
+    This is the Synthesis surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Synthesis
+    description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+paths:
+  /compare:
+    get:
+      operationId: compareProviders
+      x-tier: pro
+      x-mcp-tool: compare_providers
+      security: []
+      tags:
+        - Synthesis
+      summary: Compare providers side by side (Pro).
+      description: Compares 2+ providers — composite/band, per-facet leaders, and an artifact-coverage matrix. Pro tier.
+      parameters:
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs to compare (2+).
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: Side-by-side comparison of the requested providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/UpgradeRequired"
+  /gaps:
+    get:
+      operationId: gapAnalysis
+      x-tier: pro
+      x-mcp-tool: gap_analysis
+      security: []
+      tags:
+        - Synthesis
+      summary: Artifact + score gap analysis for a provider or stack (Pro).
+      description: For each provider — the high-value artifacts it lacks, what its peers commonly publish but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Pro tier.
+      parameters:
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs (1+). Multiple = treat as a stack.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: min_share
+          in: query
+          description: Peer-share threshold for a gap (0–1, default 0.25).
+          schema:
+            type: number
+            maximum: 1000000000
+      responses:
+        "200":
+          description: Per-provider and stack-level gaps.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/UpgradeRequired"
+  /changes:
+    get:
+      operationId: whatsChanged
+      x-tier: pro
+      x-mcp-tool: whats_changed
+      security: []
+      tags:
+        - Synthesis
+      summary: What changed in the catalog since a date (Pro).
+      description: Providers added/updated since a date, plus rating movement (up/down) from the latest scoring build. Pro tier.
+      parameters:
+        - name: since
+          in: query
+          required: true
+          description: Cutoff date, YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+            maxLength: 10
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Catalog changes since the given date.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/UpgradeRequired"
+  /stack:
+    get:
+      operationId: recommendStack
+      x-tier: free
+      x-mcp-tool: recommend_stack
+      x-agent-skill: assemble-api-stack
+      tags:
+        - Synthesis
+      summary: Design a recommended API stack per capability.
+      description: Decompose a domain into capabilities, then get the best-rated catalog provider per capability assembled into a stack. FREE returns a preview (top pick per capability); PRO returns alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint.
+      parameters:
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: region
+          in: query
+          description: Optional region slug to prefer, e.g. `europe`.
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: A recommended stack (preview for free callers; full for Pro).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+      security: []
+  /gaps/industry/{slug}:
+    get:
+      operationId: industryGapAnalysis
+      x-tier: pro
+      x-mcp-tool: industry_gap_analysis
+      x-agent-skill: audit-api-estate
+      security: []
+      tags:
+        - Synthesis
+      summary: Artifact gaps across a whole industry.
+      description: For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Industry slug (e.g. `financial-services`).
+          schema:
+            type: string
+            maxLength: 1024
+        - name: min_share
+          in: query
+          description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
+          schema:
+            type: number
+            maximum: 1000000000
+      responses:
+        "200":
+          description: The industry's valuable-artifact coverage and gaps.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /stack/export:
+    get:
+      operationId: exportStack
+      x-tier: pro
+      x-mcp-tool: export_stack
+      x-agent-skill: assemble-api-stack
+      security: []
+      tags:
+        - Synthesis
+      summary: Export a designed stack as APIs.json.
+      description: Given a set of capabilities, returns the designed stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit.
+      parameters:
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: region
+          in: query
+          description: Optional region slug to prefer.
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: The exportable stack.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          $ref: "#/components/responses/BadRequest"
+components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+  responses:
+    BadRequest:
+      description: Malformed request (bad parameter value).
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/invalid-parameter
+            title: Invalid parameter
+            status: 400
+            detail: "`match` must be one of: any, all."
+            instance: /v1/search
+            parameter: match
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
+  schemas:
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true

@@ -1,0 +1,79 @@
+[
+  {
+    "tag": "Providers",
+    "slug": "providers",
+    "file": "openapi/apis-io-v1-providers-openapi.yml",
+    "operations": 6,
+    "schemas": 14
+  },
+  {
+    "tag": "APIs",
+    "slug": "apis",
+    "file": "openapi/apis-io-v1-apis-openapi.yml",
+    "operations": 5,
+    "schemas": 7
+  },
+  {
+    "tag": "Tags",
+    "slug": "tags",
+    "file": "openapi/apis-io-v1-tags-openapi.yml",
+    "operations": 2,
+    "schemas": 11
+  },
+  {
+    "tag": "Industries",
+    "slug": "industries",
+    "file": "openapi/apis-io-v1-industries-openapi.yml",
+    "operations": 3,
+    "schemas": 6
+  },
+  {
+    "tag": "Regions",
+    "slug": "regions",
+    "file": "openapi/apis-io-v1-regions-openapi.yml",
+    "operations": 3,
+    "schemas": 6
+  },
+  {
+    "tag": "Areas",
+    "slug": "areas",
+    "file": "openapi/apis-io-v1-areas-openapi.yml",
+    "operations": 3,
+    "schemas": 6
+  },
+  {
+    "tag": "Synthesis",
+    "slug": "synthesis",
+    "file": "openapi/apis-io-v1-synthesis-openapi.yml",
+    "operations": 6,
+    "schemas": 1
+  },
+  {
+    "tag": "Ratings",
+    "slug": "ratings",
+    "file": "openapi/apis-io-v1-ratings-openapi.yml",
+    "operations": 5,
+    "schemas": 10
+  },
+  {
+    "tag": "Artifact Types",
+    "slug": "artifact-types",
+    "file": "openapi/apis-io-v1-artifact-types-openapi.yml",
+    "operations": 20,
+    "schemas": 5
+  },
+  {
+    "tag": "Search",
+    "slug": "search",
+    "file": "openapi/apis-io-v1-search-openapi.yml",
+    "operations": 1,
+    "schemas": 14
+  },
+  {
+    "tag": "Insights",
+    "slug": "insights",
+    "file": "openapi/apis-io-v1-insights-openapi.yml",
+    "operations": 8,
+    "schemas": 1
+  }
+]

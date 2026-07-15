@@ -1,0 +1,305 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Insights API
+  version: 1.2.1
+  description: |-
+    Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+
+    This is the Insights surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Insights
+    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+paths:
+  /insights:
+    get:
+      operationId: getInsightsSummary
+      tags:
+        - Insights
+      summary: Insights overview.
+      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free.
+      responses:
+        "200":
+          description: Insights summary.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security: []
+  /insights/dimensions:
+    get:
+      operationId: listInsightDimensions
+      x-mcp-tool: insights_dimensions
+      tags:
+        - Insights
+      summary: Rank the investment dimensions.
+      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free.
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Dimension cross-section.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security: []
+  /insights/adoption:
+    get:
+      operationId: listInsightAdoption
+      x-mcp-tool: insights_adoption
+      tags:
+        - Insights
+      summary: Services / tools / standards by adoption.
+      description: Technologies ranked by how many companies adopt them. Free.
+      parameters:
+        - name: type
+          in: query
+          description: Which adoption graph to return.
+          schema:
+            type: string
+            enum:
+              - service
+              - tool
+              - standard
+            default: service
+            maxLength: 1024
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Adoption ranking.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security: []
+  /insights/industries:
+    get:
+      operationId: listInsightIndustries
+      tags:
+        - Insights
+      summary: Industry rollup.
+      description: Profiled sectors with company counts. Free.
+      responses:
+        "200":
+          description: Industry rollup.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security: []
+  /insights/companies:
+    get:
+      operationId: listInsightCompanies
+      x-mcp-tool: find_company_insights
+      tags:
+        - Insights
+      summary: Browse profiled companies.
+      description: Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields).
+      parameters:
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+      responses:
+        "200":
+          description: Company list.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      security: []
+  /insights/company/{slug}:
+    get:
+      operationId: getCompanyInsight
+      x-mcp-tool: get_company_insight
+      tags:
+        - Insights
+      summary: One company's demand-side profile.
+      description: Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Company slug (e.g. `citi`).
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: Company profile (preview or full by tier).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+      security: []
+  /insights/company/{slug}/gaps:
+    get:
+      operationId: getCompanyGaps
+      x-tier: pro
+      x-mcp-tool: company_gaps
+      security: []
+      tags:
+        - Insights
+      summary: A company's weakest dimensions.
+      description: The lowest-scoring investment dimensions — where a company is thin and a vendor could sell in. Pro.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Company slug (e.g. `citi`).
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: Company gaps.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "403":
+          description: Requires the Pro or Business tier.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /insights/company/{slug}/match:
+    get:
+      operationId: matchCompanyProviders
+      x-tier: pro
+      x-mcp-tool: match_providers
+      security: []
+      tags:
+        - Insights
+      summary: Match providers to a company's stack (the supply↔demand join).
+      description: apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          description: Company slug (e.g. `citi`).
+          schema:
+            type: string
+            maxLength: 1024
+      responses:
+        "200":
+          description: Matched providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "403":
+          description: Requires the Pro or Business tier.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+  schemas:
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true

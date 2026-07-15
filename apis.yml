@@ -1,72 +1,301 @@
 aid: apis-io
 name: APIs.io
-description: APIs.io is an open source API search engine and directory that uses APIs.json files to discover, index, and catalog
-  APIs across the web. Built on the APIs.json specification, it provides a searchable entry point for developers to find public
-  APIs by keyword, resource, action, persona, domain, and schema. The platform indexes 779 providers, 3,188 APIs, 587 capabilities,
-  36,602 schemas, 49 event specs, 2,078 vocabularies, and 450 rulesets. It is maintained by Kin Lane, Nicolas Grenier, and
-  Steven Willmott and supports both API producers (submitting APIs) and API consumers (discovering APIs). APIs.io uses a Spectral-powered
-  rating system to evaluate API documentation quality.
+description: APIs.io is an open source API search engine and directory that uses APIs.json files to discover, index, and
+  catalog APIs across the web. Built on the APIs.json specification, it provides a searchable entry point for developers
+  to find public APIs by keyword, resource, action, persona, domain, and schema. The platform indexes 779 providers,
+  3,188 APIs, 587 capabilities, 36,602 schemas, 49 event specs, 2,078 vocabularies, and 450 rulesets. It is maintained
+  by Kin Lane, Nicolas Grenier, and Steven Willmott and supports both API producers (submitting APIs) and API consumers
+  (discovering APIs). APIs.io uses a Spectral-powered rating system to evaluate API documentation quality.
 type: Index
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
-- API Aggregation
-- API Directory
-- API Discovery
-- API Indexing
-- API Rating
-- API Search
-- APIs.json
-- Search Engine
-url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
-created: '2026-03-26'
-modified: '2026-05-19'
-specificationVersion: '0.19'
-apis:
-- aid: apis-io:search-api
-  name: APIs.io Search API
-  description: The APIs.io API is a read-only discovery API over the APIs.io catalog. It lets developers and AI agents
-    search and browse APIs, providers, tags, industries, and regions, and select published artifacts (OpenAPI, AsyncAPI,
-    Postman, Arazzo, JSON Schema, JSON-LD, GraphQL, rules, and more), with provider ratings and a unified /search endpoint.
-    Served at https://apis.io/api/v1; the same OpenAPI contract powers the APIs.io MCP server at https://apis.io/mcp.
-  humanURL: https://apis.io/developer/documentation/
-  baseURL: https://apis.io/api/v1
-  tags:
+  - API Aggregation
+  - API Directory
   - API Discovery
   - API Indexing
+  - API Rating
   - API Search
   - APIs.json
-  properties:
+  - Search Engine
+url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
+created: 2026-03-26
+modified: 2026-07-15
+specificationVersion: "0.21"
+apis:
+  - aid: apis-io:providers
+    name: APIs.io Providers API
+    description: Organizations publishing APIs on the network. 6 operations of the APIs.io API, split out by tag so this
+      surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: &a1
+      - API Discovery
+      - API Indexing
+      - API Search
+      - APIs.json
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-providers-openapi.yml
+  - aid: apis-io:apis
+    name: APIs.io APIs API
+    description: Individual APIs, each owned by a provider and described by artifacts. 5 operations of the APIs.io API,
+      split out by tag so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-apis-openapi.yml
+  - aid: apis-io:tags
+    name: APIs.io Tags API
+    description: The tag taxonomy, with network-wide ranking metadata. 2 operations of the APIs.io API, split out by tag so
+      this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-tags-openapi.yml
+  - aid: apis-io:industries
+    name: APIs.io Industries API
+    description: Industry verticals grouping providers across the catalog. 3 operations of the APIs.io API, split out by tag
+      so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-industries-openapi.yml
+  - aid: apis-io:regions
+    name: APIs.io Regions API
+    description: Geographic regions grouping providers across the catalog. 3 operations of the APIs.io API, split out by tag
+      so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-regions-openapi.yml
+  - aid: apis-io:areas
+    name: APIs.io Areas API
+    description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each
+      a scored provider index with its own site. Pro. 3 operations of the APIs.io API, split out by tag so this surface
+      is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-areas-openapi.yml
+  - aid: apis-io:synthesis
+    name: APIs.io Synthesis API
+    description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and
+      recommended-stack design. Pro. 6 operations of the APIs.io API, split out by tag so this surface is documented,
+      rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-synthesis-openapi.yml
+  - aid: apis-io:ratings
+    name: APIs.io Ratings API
+    description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted
+      facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
+      5 operations of the APIs.io API, split out by tag so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-ratings-openapi.yml
+  - aid: apis-io:artifact-types
+    name: APIs.io Artifact Types API
+    description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more).
+      Each path filters and normalizes one artifact type across all providers. 20 operations of the APIs.io API, split
+      out by tag so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-artifact-types-openapi.yml
+  - aid: apis-io:search
+    name: APIs.io Search API
+    description: Unified cross-resource search. 1 operation of the APIs.io API, split out by tag so this surface is
+      documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-search-openapi.yml
+  - aid: apis-io:insights
+    name: APIs.io Insights API
+    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for
+      around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company
+      depth, gaps, and provider matches are Pro. 8 operations of the APIs.io API, split out by tag so this surface is
+      documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-insights-openapi.yml
+common:
+  - type: AgenticAccess
+    url: agentic-access/apis-io-agentic-access.yml
+  - type: DomainSecurity
+    url: security/apis-io-domain-security.yml
+  - type: Authentication
+    url: authentication/apis-io-authentication.yml
+  - type: Arazzo
+    url: arazzo/apis-io-compare-keyword-coverage-workflow.yml
+    name: APIs.io Compare Keyword Coverage
+  - type: Arazzo
+    url: arazzo/apis-io-paginate-search-results-workflow.yml
+    name: APIs.io Paginate Search Results
+  - type: Arazzo
+    url: arazzo/apis-io-search-apis-workflow.yml
+    name: APIs.io Search APIs by Keyword
+  - type: Arazzo
+    url: arazzo/apis-io-submit-and-verify-api-workflow.yml
+    name: APIs.io Submit and Verify API
+  - type: Website
+    url: https://apis.io
+  - type: About
+    url: https://apis.io/about/
+  - type: Blog
+    url: https://apis.io/blog/
+  - type: DeveloperPortal
+    url: https://apis.io/developer/
+  - type: Blog
+    url: https://apis.io/developer/blog/
+    title: Developer Blog
+  - type: GettingStarted
+    url: https://apis.io/developer/getting-started/
+  - type: Authentication
+    url: https://apis.io/developer/authentication/
+  - type: Plans
+    url: https://apis.io/developer/plans/
+  - type: ChangeLog
+    url: https://apis.io/developer/change-log/
+  - type: ReleaseNotes
+    url: https://apis.io/developer/change-log/
+  - type: Versioning
+    url: https://apis.io/developer/versioning/
+  - type: Support
+    url: https://apis.io/developer/support/
+  - type: TermsOfService
+    url: https://apis.io/developer/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://apis.io/developer/privacy-policy/
+  - type: GitHubOrganization
+    url: https://github.com/api-search
+  - type: GitHubRepository
+    url: https://github.com/apisio/apis.io
+  - type: GitHubRepository
+    url: https://github.com/api-search/apis-io-search
+    title: Search API
+  - type: GitHubRepository
+    url: https://github.com/api-search/apis-io-engine
+    title: Search Engine
+  - type: GitHubRepository
+    url: https://github.com/api-search/apis-io-authentication
+    title: Authentication API
+  - type: GitHubRepository
+    url: https://github.com/api-search/apis-io-ratings
+    title: Ratings API
+  - type: SpectralRules
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/vocabulary/apis-io-vocabulary.yaml
+  - type: Features
+    data:
+      - name: API Search
+        description: Full-text search across 3,000+ indexed APIs by keyword, resource, action, persona, domain, and schema using
+          a cloud search engine.
+      - name: APIs.json Indexing
+        description: Automatically indexes APIs.json files submitted by API producers to build a comprehensive, machine-readable
+          catalog of API operations.
+      - name: API Submission
+        description: API producers can submit their APIs to the index by providing a valid APIs.json document via the Search API
+          POST endpoint or GitHub issues.
+      - name: Spectral API Ratings
+        description: Spectral-powered quality rating system that evaluates API documentation completeness and scores APIs to
+          help consumers identify high-quality APIs.
+      - name: Microservice Architecture
+        description: Built as a set of microservices including Search, Engine, Authentication, Publishing, Tags, Rules,
+          Properties, Maintainers, and Ratings APIs.
+      - name: Topic Search Nodes
+        description: Specialized search nodes for domain-specific API discovery including AI, Healthcare, Banking, Payments,
+          Weather, CRM, Cloud, and many more topic areas.
+      - name: Open Source
+        description: The platform is open source, licensed under Apache-2.0, with all microservice APIs available on GitHub
+          under the api-search organization.
+  - type: UseCases
+    data:
+      - name: API Discovery
+        description: Developers can search for APIs relevant to their project by keyword, discovering APIs across thousands of
+          providers without knowing where to look.
+      - name: API Submission
+        description: API producers can submit their APIs.json files to ensure their APIs are discoverable in the index and
+          properly cataloged with metadata.
+      - name: Quality Assessment
+        description: Development teams use the Spectral ratings system to identify high-quality APIs and avoid poorly documented
+          or unmaintained options.
+      - name: Catalog Building
+        description: Platform teams use APIs.io as a reference implementation for building their own internal API catalogs using
+          the APIs.json format.
+      - name: Domain-Specific Search
+        description: Developers searching for APIs in specific domains (healthcare, finance, AI) can use topic-specific search
+          nodes for more targeted discovery.
+  - type: Integrations
+    data:
+      - name: APIs.json
+        description: Core integration with the APIs.json specification for machine-readable API description and discovery across
+          the web.
+      - name: OpenAPI
+        description: APIs indexed in APIs.io reference OpenAPI specifications as a key property, linking consumers to technical
+          API contracts.
+      - name: Spectral
+        description: Spectral ruleset integration powers the APIs.io rating system, evaluating API documentation quality against
+          standardized rules.
+      - name: GitHub
+        description: GitHub integration for API submission via issues, source of truth for indexed APIs.json files, and
+          authentication via Personal Access Tokens.
+      - name: Postman
+        description: Postman public workspace integration for running and testing the APIs.io Search API via pre-built collections.
+      - name: AWS API Gateway
+        description: The APIs.io Search API is deployed and managed through AWS API Gateway for scalable, managed API access.
   - type: Documentation
     url: https://apis.io/developer/documentation/
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml
   - type: MCPServer
     url: https://apis.io/mcp
     title: APIs.io MCP Server
     slug: mcp-server
-    description: >-
-      Read-only MCP server over the APIs.io catalog, served over Streamable HTTP at
-      https://apis.io/mcp. 15 curated tools led by apis_io_search let agents discover APIs,
-      providers, tags, ratings, industries, regions, and published artifacts. Generated from the
-      same OpenAPI contract as the REST API. Keyless free tier; send an X-API-Key header for
-      higher rate limits and the Pro-tier industries/regions/ratings tools.
+    description: Read-only MCP server over the APIs.io catalog, served over Streamable HTTP at https://apis.io/mcp. 15
+      curated tools led by apis_io_search let agents discover APIs, providers, tags, ratings, industries, regions, and
+      published artifacts. Generated from the same OpenAPI contract as the REST API. Keyless free tier; send an
+      X-API-Key header for higher rate limits and the Pro-tier industries/regions/ratings tools.
     tools:
       - name: apis_io_search
-        description: "Power tool — find APIs, providers, or tags by free text, tags, provider, artifact type, industry, region, and rating band."
+        description: Power tool — find APIs, providers, or tags by free text, tags, provider, artifact type, industry, region,
+          and rating band.
       - name: find_apis / get_api
-        description: "List/search individual API records, or fetch one by id."
+        description: List/search individual API records, or fetch one by id.
       - name: find_providers / get_provider
-        description: "List/search API providers, or fetch one provider profile."
+        description: List/search API providers, or fetch one provider profile.
       - name: find_tags / get_tag
-        description: "Browse the tag taxonomy, or fetch APIs/providers for a tag."
+        description: Browse the tag taxonomy, or fetch APIs/providers for a tag.
       - name: find_industries / get_industry
-        description: "Browse industry verticals (Pro tier)."
+        description: Browse industry verticals (Pro tier).
       - name: find_regions / get_region
-        description: "Browse geographic regions (Pro tier)."
+        description: Browse geographic regions (Pro tier).
       - name: find_ratings / get_provider_rating / get_rating_rubric
-        description: "Provider rating bands + the scoring rubric (rubric is free; ratings are Pro)."
+        description: Provider rating bands + the scoring rubric (rubric is free; ratings are Pro).
       - name: find_artifacts
-        description: "Fetch artifacts of a given type (OpenAPI, AsyncAPI, Postman, JSON Schema, …) across the catalog."
+        description: Fetch artifacts of a given type (OpenAPI, AsyncAPI, Postman, JSON Schema, …) across the catalog.
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -78,150 +307,16 @@ apis:
     title: APIs.io Agent Skills
   - type: PostmanCollection
     url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
-  - type: Authentication
-    url: https://apis.io/developer/authentication/
-  - type: RateLimits
-    url: https://apis.io/developer/plans/
-  - type: ChangeLog
-    url: https://apis.io/developer/change-log/
   - type: StatusPage
     url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+  - type: RateLimits
+    url: https://apis.io/developer/plans/
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
     title: Search Response Schema
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
     title: APIs.json Schema
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
-common:
-- type: AgenticAccess
-  url: agentic-access/apis-io-agentic-access.yml
-- type: DomainSecurity
-  url: security/apis-io-domain-security.yml
-- type: Authentication
-  url: authentication/apis-io-authentication.yml
-- type: Arazzo
-  url: arazzo/apis-io-compare-keyword-coverage-workflow.yml
-  name: APIs.io Compare Keyword Coverage
-- type: Arazzo
-  url: arazzo/apis-io-paginate-search-results-workflow.yml
-  name: APIs.io Paginate Search Results
-- type: Arazzo
-  url: arazzo/apis-io-search-apis-workflow.yml
-  name: APIs.io Search APIs by Keyword
-- type: Arazzo
-  url: arazzo/apis-io-submit-and-verify-api-workflow.yml
-  name: APIs.io Submit and Verify API
-- type: Website
-  url: https://apis.io
-- type: About
-  url: https://apis.io/about/
-- type: Blog
-  url: https://apis.io/blog/
-- type: DeveloperPortal
-  url: https://apis.io/developer/
-- type: Blog
-  url: https://apis.io/developer/blog/
-  title: Developer Blog
-- type: GettingStarted
-  url: https://apis.io/developer/getting-started/
-- type: Authentication
-  url: https://apis.io/developer/authentication/
-- type: Plans
-  url: https://apis.io/developer/plans/
-- type: ChangeLog
-  url: https://apis.io/developer/change-log/
-- type: ReleaseNotes
-  url: https://apis.io/developer/change-log/
-- type: Versioning
-  url: https://apis.io/developer/versioning/
-- type: Support
-  url: https://apis.io/developer/support/
-- type: TermsOfService
-  url: https://apis.io/developer/terms-of-service/
-- type: PrivacyPolicy
-  url: https://apis.io/developer/privacy-policy/
-- type: GitHubOrganization
-  url: https://github.com/api-search
-- type: GitHubRepository
-  url: https://github.com/apisio/apis.io
-- type: GitHubRepository
-  url: https://github.com/api-search/apis-io-search
-  title: Search API
-- type: GitHubRepository
-  url: https://github.com/api-search/apis-io-engine
-  title: Search Engine
-- type: GitHubRepository
-  url: https://github.com/api-search/apis-io-authentication
-  title: Authentication API
-- type: GitHubRepository
-  url: https://github.com/api-search/apis-io-ratings
-  title: Ratings API
-- type: SpectralRules
-  url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
-- type: Vocabulary
-  url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/vocabulary/apis-io-vocabulary.yaml
-- type: Features
-  data:
-  - name: API Search
-    description: Full-text search across 3,000+ indexed APIs by keyword, resource, action, persona, domain, and schema using
-      a cloud search engine.
-  - name: APIs.json Indexing
-    description: Automatically indexes APIs.json files submitted by API producers to build a comprehensive, machine-readable
-      catalog of API operations.
-  - name: API Submission
-    description: API producers can submit their APIs to the index by providing a valid APIs.json document via the Search API
-      POST endpoint or GitHub issues.
-  - name: Spectral API Ratings
-    description: Spectral-powered quality rating system that evaluates API documentation completeness and scores APIs to help
-      consumers identify high-quality APIs.
-  - name: Microservice Architecture
-    description: Built as a set of microservices including Search, Engine, Authentication, Publishing, Tags, Rules, Properties,
-      Maintainers, and Ratings APIs.
-  - name: Topic Search Nodes
-    description: Specialized search nodes for domain-specific API discovery including AI, Healthcare, Banking, Payments, Weather,
-      CRM, Cloud, and many more topic areas.
-  - name: Open Source
-    description: The platform is open source, licensed under Apache-2.0, with all microservice APIs available on GitHub under
-      the api-search organization.
-- type: UseCases
-  data:
-  - name: API Discovery
-    description: Developers can search for APIs relevant to their project by keyword, discovering APIs across thousands of
-      providers without knowing where to look.
-  - name: API Submission
-    description: API producers can submit their APIs.json files to ensure their APIs are discoverable in the index and properly
-      cataloged with metadata.
-  - name: Quality Assessment
-    description: Development teams use the Spectral ratings system to identify high-quality APIs and avoid poorly documented
-      or unmaintained options.
-  - name: Catalog Building
-    description: Platform teams use APIs.io as a reference implementation for building their own internal API catalogs using
-      the APIs.json format.
-  - name: Domain-Specific Search
-    description: Developers searching for APIs in specific domains (healthcare, finance, AI) can use topic-specific search
-      nodes for more targeted discovery.
-- type: Integrations
-  data:
-  - name: APIs.json
-    description: Core integration with the APIs.json specification for machine-readable API description and discovery across
-      the web.
-  - name: OpenAPI
-    description: APIs indexed in APIs.io reference OpenAPI specifications as a key property, linking consumers to technical
-      API contracts.
-  - name: Spectral
-    description: Spectral ruleset integration powers the APIs.io rating system, evaluating API documentation quality against
-      standardized rules.
-  - name: GitHub
-    description: GitHub integration for API submission via issues, source of truth for indexed APIs.json files, and authentication
-      via Personal Access Tokens.
-  - name: Postman
-    description: Postman public workspace integration for running and testing the APIs.io Search API via pre-built collections.
-  - name: AWS API Gateway
-    description: The APIs.io Search API is deployed and managed through AWS API Gateway for scalable, managed API access.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

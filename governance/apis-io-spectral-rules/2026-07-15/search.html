@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en" class="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="@api-common/spectral-reporter">
+<title>APIs.io Search API — Governance</title>
+<style>
+:root{
+  --bg:#f6f7f9;--panel:#fff;--line:#e2e5ea;--fg:#1c2128;--muted:#616a75;
+  --accent:#ffc107;--head:#101418;--code:#f0f2f5;--shadow:0 1px 3px rgba(0,0,0,.08);
+  --error:#d1242f;--warn:#9a6700;--info:#0969da;--hint:#616a75;
+}
+html.dark{
+  --bg:#1e1e1e;--panel:#252526;--line:#3a3a3a;--fg:#e6e6e6;--muted:#9aa0a6;
+  --head:#181a1c;--code:#2b2b2b;--shadow:0 1px 3px rgba(0,0,0,.5);
+  --error:#f14c4c;--warn:#e3b341;--info:#3794ff;--hint:#9aa0a6;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5}
+a{color:var(--info);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:.85em}
+.wrap{max-width:1040px;margin:0 auto;padding:1.5rem 1.25rem 3rem}
+:focus-visible{outline:2px solid var(--info);outline-offset:2px}
+
+.report-head{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1.25rem 1.35rem;box-shadow:var(--shadow);margin-bottom:1.25rem}
+.head-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+.head-title h1{margin:0;font-size:1.5rem;letter-spacing:-.01em}
+.head-meta{margin:.35rem 0 0;color:var(--muted);font-size:.9rem}
+.theme-toggle{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:5px 11px;font-size:.82rem;cursor:pointer}
+.theme-toggle:hover{border-color:var(--info);color:var(--fg)}
+
+.banner{display:flex;align-items:center;gap:.75rem;border-radius:9px;padding:.7rem .9rem;margin:1rem 0 1.1rem;border:1px solid transparent}
+.banner-badge{font-weight:800;letter-spacing:.06em;font-size:.78rem;padding:3px 9px;border-radius:5px;color:#fff}
+.banner.pass{background:rgba(45,164,78,.1);border-color:rgba(45,164,78,.4)}
+.banner.pass .banner-badge{background:#2da44e}
+.banner.fail{background:rgba(209,36,47,.1);border-color:rgba(209,36,47,.4)}
+.banner.fail .banner-badge{background:var(--error)}
+
+.success-hero{background:var(--panel);border:1px solid rgba(45,164,78,.45);border-radius:12px;box-shadow:var(--shadow);padding:2.75rem 1.5rem 2.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.success-ring{width:78px;height:78px;margin-bottom:.35rem}
+.sh-circle{fill:rgba(45,164,78,.08);stroke:#2da44e;stroke-width:3;opacity:.55}
+.sh-check{stroke:#2da44e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40;animation:sh-draw .55s .12s ease forwards}
+@keyframes sh-draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.sh-check{animation:none;stroke-dashoffset:0}}
+.success-hero h2{margin:.15rem 0 0;font-size:1.5rem;letter-spacing:-.01em;color:#2da44e}
+html.dark .success-hero h2{color:#3fb950}
+.success-hero p{margin:.1rem 0 .55rem;color:var(--muted);max-width:54ch}
+.sh-scoreline{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center}
+.sh-pill{font-size:.8rem;font-weight:600;color:#1a7f37;background:rgba(45,164,78,.12);border:1px solid rgba(45,164,78,.32);border-radius:20px;padding:3px 12px}
+html.dark .sh-pill{color:#3fb950}
+.banner-text{font-size:.95rem}
+
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:.1rem;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:.7rem .85rem;position:relative}
+.tile-dot{width:10px;height:10px;border-radius:50%;position:absolute;top:.8rem;right:.8rem}
+.tile-num{font-size:1.7rem;font-weight:700;line-height:1}
+.tile-label{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.tile-error .tile-dot{background:var(--error)} .tile-error .tile-num{color:var(--error)}
+.tile-warn .tile-dot{background:var(--warn)} .tile-warn .tile-num{color:var(--warn)}
+.tile-info .tile-dot{background:var(--info)} .tile-info .tile-num{color:var(--info)}
+.tile-hint .tile-dot{background:var(--hint)} .tile-hint .tile-num{color:var(--hint)}
+
+.compliance{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.25rem;box-shadow:var(--shadow);margin-bottom:1.25rem}
+.comp-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:.7rem}
+.comp-head h2{margin:0;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.comp-overall{display:flex;align-items:baseline;gap:.5rem}
+.comp-overall-num{font-size:1.5rem;font-weight:800;color:#2da44e;font-variant-numeric:tabular-nums}
+.comp-overall-label{color:var(--muted);font-size:.85rem}
+.comp-rows{display:flex;flex-direction:column;gap:.4rem}
+.comp-row{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px 62px;gap:.6rem;align-items:center}
+.comp-key{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--fg)}
+.comp-bar{background:var(--code);border-radius:4px;height:9px;overflow:hidden}
+.comp-bar span{display:block;height:100%;border-radius:4px}
+.comp-good span{background:#2da44e} .comp-ok span{background:var(--warn)} .comp-low span{background:var(--error)}
+.comp-pct{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;font-size:.85rem}
+.comp-frac{text-align:right;color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+@media(max-width:560px){.comp-row{grid-template-columns:minmax(0,1fr) 44px}.comp-bar,.comp-frac{display:none}}
+.rankings{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.rank-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;box-shadow:var(--shadow);min-width:0}
+.rank-card h2{margin:0 0 .7rem;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.rank-row{display:grid;grid-template-columns:minmax(0,1fr) 90px 28px;gap:.6rem;align-items:center;margin:.35rem 0}
+.rank-key{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--fg)}
+.rank-bar{background:var(--code);border-radius:4px;height:9px;overflow:hidden}
+.rank-bar span{display:block;height:100%;border-radius:4px}
+.rank-total{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted);font-size:.85rem}
+.empty{color:var(--muted);font-size:.88rem;margin:.2rem 0}
+
+.controls{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:1rem}
+#q{flex:1 1 240px;min-width:0;background:var(--panel);border:1px solid var(--line);color:var(--fg);border-radius:8px;padding:.55rem .8rem;font-size:.92rem}
+#q:focus{outline:none;border-color:var(--info)}
+.ctl-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:.15rem}
+.group-toggle{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);border-radius:8px;padding:.2rem .35rem;background:var(--panel)}
+.grp{background:transparent;border:none;color:var(--muted);border-radius:5px;padding:4px 10px;font-size:.85rem;cursor:pointer;font-weight:600}
+.grp.active{background:var(--accent);color:#1e1e1e}
+.sev-chips{display:inline-flex;flex-wrap:wrap;gap:.4rem}
+.chip{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:3px 10px;font-size:.82rem;cursor:pointer;font-weight:600}
+.chip-dot{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.55}
+.chip-error{--c:var(--error)} .chip-warn{--c:var(--warn)} .chip-info{--c:var(--info)} .chip-hint{--c:var(--hint)}
+.chip.on{color:var(--fg);border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c)}
+.chip.on .chip-dot{background:var(--c);opacity:1}
+.chip-n{background:var(--code);border-radius:999px;padding:0 6px;font-size:.72rem}
+
+.findings{display:flex;flex-direction:column;gap:.9rem}
+.group{background:var(--panel);border:1px solid var(--line);border-radius:11px;box-shadow:var(--shadow);overflow:hidden}
+.group>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.6rem;padding:.7rem .95rem;user-select:none;font-weight:600}
+.group>summary::-webkit-details-marker{display:none}
+.group>summary::before{content:'▸';color:var(--muted);font-size:.8rem;transition:transform .12s ease}
+.group[open]>summary::before{transform:rotate(90deg)}
+.group>summary:hover{background:var(--bg)}
+.group-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.group-count{color:var(--muted);font-size:.8rem;font-weight:600}
+.g-sev{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+
+.issue{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.6rem;align-items:baseline;padding:.55rem .95rem;border-top:1px solid var(--line);cursor:pointer}
+.issue:hover{background:var(--bg)}
+.sev-chip{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:4px;color:#fff;white-space:nowrap}
+.sev-0{background:var(--error)} .sev-1{background:var(--warn);color:#111} .sev-2{background:var(--info)} .sev-3{background:var(--hint)}
+.issue-main{min-width:0}
+.issue-msg{color:var(--fg)}
+.issue-rule{font-size:.78rem;color:var(--muted)}
+.issue-rule code{color:var(--info)}
+.issue-loc{text-align:right;color:var(--muted);font-size:.78rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.issue-path{grid-column:1 / -1;margin:.35rem 0 .1rem;padding:.5rem .7rem;background:var(--code);border-radius:6px;font-size:.8rem;color:var(--muted);word-break:break-word;display:none}
+.issue.open .issue-path{display:block}
+.issue-path b{color:var(--fg)}
+.no-match{color:var(--muted);text-align:center;padding:2rem;background:var(--panel);border:1px dashed var(--line);border-radius:11px}
+
+.report-foot{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;display:flex;flex-direction:column;gap:.25rem}
+
+@media(max-width:720px){
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .rankings{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="report-head">
+    <div class="head-top">
+      <div class="head-title">
+        <h1>APIs.io Search API — Governance</h1>
+        <p class="head-meta">Generated Jul 15, 2026, 8:57 PM · 85 issues across 1 source</p>
+      </div>
+      <button type="button" id="theme-toggle" class="theme-toggle" title="Toggle light / dark">◐ Theme</button>
+    </div>
+    <div class="banner pass" role="status">
+         <span class="banner-badge">PASS</span>
+         <span class="banner-text">No errors. 85 non-blocking findings to review.</span>
+       </div>
+    <div class="tiles" role="list" aria-label="Findings by severity">
+      <div class="tile tile-error" role="listitem">
+        <span class="tile-dot" aria-hidden="true"></span>
+        <span class="tile-num">0</span>
+        <span class="tile-label">Errors</span>
+      </div>
+      <div class="tile tile-warn" role="listitem">
+        <span class="tile-dot" aria-hidden="true"></span>
+        <span class="tile-num">5</span>
+        <span class="tile-label">Warnings</span>
+      </div>
+      <div class="tile tile-info" role="listitem">
+        <span class="tile-dot" aria-hidden="true"></span>
+        <span class="tile-num">80</span>
+        <span class="tile-label">Info</span>
+      </div>
+      <div class="tile tile-hint" role="listitem">
+        <span class="tile-dot" aria-hidden="true"></span>
+        <span class="tile-num">0</span>
+        <span class="tile-label">Hints</span>
+      </div></div>
+  </header>
+
+  
+  <section class="rankings">
+    <div class="rank-card">
+      <h2>Top offending rules</h2>
+      
+        <div class="rank-row">
+          <code class="rank-key" title="examples-on-schemas">examples-on-schemas</code>
+          <div class="rank-bar"><span style="width:88%;background:#3794ff"></span></div>
+          <span class="rank-total">75</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="schema-properties-casing">schema-properties-casing</code>
+          <div class="rank-bar"><span style="width:2%;background:#e3b341"></span></div>
+          <span class="rank-total">2</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="schema-properties-snake-case">schema-properties-snake-case</code>
+          <div class="rank-bar"><span style="width:2%;background:#3794ff"></span></div>
+          <span class="rank-total">2</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="schema-description-recommended">schema-description-recommended</code>
+          <div class="rank-bar"><span style="width:2%;background:#3794ff"></span></div>
+          <span class="rank-total">2</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="operation-summary-prefix">operation-summary-prefix</code>
+          <div class="rank-bar"><span style="width:1%;background:#e3b341"></span></div>
+          <span class="rank-total">1</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="response-401-recommended">response-401-recommended</code>
+          <div class="rank-bar"><span style="width:1%;background:#e3b341"></span></div>
+          <span class="rank-total">1</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="response-500-recommended">response-500-recommended</code>
+          <div class="rank-bar"><span style="width:1%;background:#e3b341"></span></div>
+          <span class="rank-total">1</span>
+        </div>
+        <div class="rank-row">
+          <code class="rank-key" title="components-security-schemes-defined">components-security-schemes-defined</code>
+          <div class="rank-bar"><span style="width:1%;background:#3794ff"></span></div>
+          <span class="rank-total">1</span>
+        </div>
+    </div>
+    <div class="rank-card">
+      <h2>Top offending files</h2>
+      
+        <div class="rank-row">
+          <code class="rank-key" title="document">document</code>
+          <div class="rank-bar"><span style="width:100%;background:#e3b341"></span></div>
+          <span class="rank-total">85</span>
+        </div>
+    </div>
+  </section>
+
+  <section class="controls" aria-label="Filter findings">
+    <input type="search" id="q" placeholder="Search findings — rule, message, file, path…" aria-label="Search findings">
+    <div class="group-toggle" role="group" aria-label="Group findings by">
+      <span class="ctl-label">Group by</span>
+      <button type="button" class="grp active" data-group="code">Rule</button>
+      <button type="button" class="grp" data-group="file">File</button>
+      <button type="button" class="grp" data-group="severity">Severity</button>
+    </div>
+    <div class="sev-chips" role="group" aria-label="Filter by severity">
+      <button type="button" class="chip chip-error on" data-sev="0" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Error<span class="chip-n" data-chip-n="0">0</span></button><button type="button" class="chip chip-warn on" data-sev="1" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Warning<span class="chip-n" data-chip-n="1">5</span></button><button type="button" class="chip chip-info on" data-sev="2" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Info<span class="chip-n" data-chip-n="2">80</span></button><button type="button" class="chip chip-hint on" data-sev="3" aria-pressed="true"><span class="chip-dot" aria-hidden="true"></span>Hint<span class="chip-n" data-chip-n="3">0</span></button>
+    </div>
+  </section>
+
+  <main id="findings" class="findings" aria-live="polite"></main>
+
+  <footer class="report-foot">
+    <span>Report by <a href="https://reporter.apicommons.org" target="_blank" rel="noopener">@api-common/spectral-reporter</a>, an <a href="https://apicommons.org/tools/" target="_blank" rel="noopener">API Commons</a> tool.</span>
+    <span>Powered by <a href="https://github.com/stoplightio/spectral" target="_blank" rel="noopener">Spectral</a>. Governance help from <a href="https://apievangelist.com/services/" target="_blank" rel="noopener">API Evangelist</a>.</span>
+  </footer>
+</div>
+<noscript><p style="padding:1rem;color:#f14c4c">This interactive report needs JavaScript to filter and group findings. The full data is embedded below regardless.</p></noscript>
+<script id="data" type="application/json">{"issues":[{"code":"operation-summary-prefix","message":"Operation summaries should start with \"APIs.io\"","severity":1,"source":"document","file":"document","line":26,"character":15,"path":["paths","/search","get","summary"],"pathStr":"paths › /search › get › summary"},{"code":"response-401-recommended","message":"Operations should include a 401 Unauthorized response","severity":1,"source":"document","file":"document","line":76,"character":16,"path":["paths","/search","get","responses"],"pathStr":"paths › /search › get › responses"},{"code":"response-500-recommended","message":"Operations should include a 500 Internal Server Error response","severity":1,"source":"document","file":"document","line":76,"character":16,"path":["paths","/search","get","responses"],"pathStr":"paths › /search › get › responses"},{"code":"components-security-schemes-defined","message":"Security schemes should be defined in components","severity":2,"source":"document","file":"document","line":86,"character":11,"path":["components"],"pathStr":"components"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":250,"character":12,"path":["components","schemas","Api","properties","aid"],"pathStr":"components › schemas › Api › properties › aid"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":255,"character":13,"path":["components","schemas","Api","properties","name"],"pathStr":"components › schemas › Api › properties › name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":258,"character":20,"path":["components","schemas","Api","properties","description"],"pathStr":"components › schemas › Api › properties › description"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":261,"character":22,"path":["components","schemas","Api","properties","provider_slug"],"pathStr":"components › schemas › Api › properties › provider_slug"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":264,"character":22,"path":["components","schemas","Api","properties","provider_name"],"pathStr":"components › schemas › Api › properties › provider_name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":267,"character":16,"path":["components","schemas","Api","properties","baseURL"],"pathStr":"components › schemas › Api › properties › baseURL"},{"code":"schema-properties-casing","message":"Schema properties should be snake_case (the dominant convention in this API).","severity":1,"source":"document","file":"document","line":267,"character":16,"path":["components","schemas","Api","properties","baseURL"],"pathStr":"components › schemas › Api › properties › baseURL"},{"code":"schema-properties-snake-case","message":"Schema property names should use snake_case","severity":2,"source":"document","file":"document","line":267,"character":16,"path":["components","schemas","Api","properties","baseURL"],"pathStr":"components › schemas › Api › properties › baseURL"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":271,"character":17,"path":["components","schemas","Api","properties","humanURL"],"pathStr":"components › schemas › Api › properties › humanURL"},{"code":"schema-properties-casing","message":"Schema properties should be snake_case (the dominant convention in this API).","severity":1,"source":"document","file":"document","line":271,"character":17,"path":["components","schemas","Api","properties","humanURL"],"pathStr":"components › schemas › Api › properties › humanURL"},{"code":"schema-properties-snake-case","message":"Schema property names should use snake_case","severity":2,"source":"document","file":"document","line":271,"character":17,"path":["components","schemas","Api","properties","humanURL"],"pathStr":"components › schemas › Api › properties › humanURL"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":276,"character":13,"path":["components","schemas","Api","properties","tags"],"pathStr":"components › schemas › Api › properties › tags"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":286,"character":19,"path":["components","schemas","Api","properties","properties"],"pathStr":"components › schemas › Api › properties › properties"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":292,"character":21,"path":["components","schemas","Api","properties","sibling_apis"],"pathStr":"components › schemas › Api › properties › sibling_apis"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":305,"character":17,"path":["components","schemas","Api","properties","overview"],"pathStr":"components › schemas › Api › properties › overview"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":317,"character":11,"path":["components","schemas","Artifact","properties","id"],"pathStr":"components › schemas › Artifact › properties › id"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":325,"character":13,"path":["components","schemas","Artifact","properties","name"],"pathStr":"components › schemas › Artifact › properties › name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":329,"character":12,"path":["components","schemas","Artifact","properties","url"],"pathStr":"components › schemas › Artifact › properties › url"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":334,"character":12,"path":["components","schemas","Artifact","properties","aid"],"pathStr":"components › schemas › Artifact › properties › aid"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":338,"character":22,"path":["components","schemas","Artifact","properties","provider_slug"],"pathStr":"components › schemas › Artifact › properties › provider_slug"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":341,"character":22,"path":["components","schemas","Artifact","properties","provider_name"],"pathStr":"components › schemas › Artifact › properties › provider_name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":344,"character":16,"path":["components","schemas","Artifact","properties","content"],"pathStr":"components › schemas › Artifact › properties › content"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":348,"character":21,"path":["components","schemas","Artifact","properties","content_type"],"pathStr":"components › schemas › Artifact › properties › content_type"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":355,"character":17,"path":["components","schemas","ArtifactType"],"pathStr":"components › schemas › ArtifactType"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":415,"character":9,"path":["components","schemas","Band"],"pathStr":"components › schemas › Band"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":425,"character":11,"path":["components","schemas","Facets"],"pathStr":"components › schemas › Facets"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":429,"character":24,"path":["components","schemas","Facets","properties","discoverability"],"pathStr":"components › schemas › Facets › properties › discoverability"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":434,"character":25,"path":["components","schemas","Facets","properties","contract_quality"],"pathStr":"components › schemas › Facets › properties › contract_quality"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":439,"character":19,"path":["components","schemas","Facets","properties","governance"],"pathStr":"components › schemas › Facets › properties › governance"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":444,"character":33,"path":["components","schemas","Facets","properties","operational_transparency"],"pathStr":"components › schemas › Facets › properties › operational_transparency"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":449,"character":29,"path":["components","schemas","Facets","properties","developer_ergonomics"],"pathStr":"components › schemas › Facets › properties › developer_ergonomics"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":454,"character":27,"path":["components","schemas","Facets","properties","commercial_clarity"],"pathStr":"components › schemas › Facets › properties › commercial_clarity"},{"code":"schema-description-recommended","message":"Component schemas should have descriptions","severity":2,"source":"document","file":"document","line":459,"character":9,"path":["components","schemas","Link"],"pathStr":"components › schemas › Link"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":462,"character":13,"path":["components","schemas","Link","properties","type"],"pathStr":"components › schemas › Link › properties › type"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":466,"character":12,"path":["components","schemas","Link","properties","url"],"pathStr":"components › schemas › Link › properties › url"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":470,"character":14,"path":["components","schemas","Link","properties","title"],"pathStr":"components › schemas › Link › properties › title"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":480,"character":14,"path":["components","schemas","Meta","properties","total"],"pathStr":"components › schemas › Meta › properties › total"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":484,"character":13,"path":["components","schemas","Meta","properties","page"],"pathStr":"components › schemas › Meta › properties › page"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":487,"character":14,"path":["components","schemas","Meta","properties","limit"],"pathStr":"components › schemas › Meta › properties › limit"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":490,"character":14,"path":["components","schemas","Meta","properties","pages"],"pathStr":"components › schemas › Meta › properties › pages"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":494,"character":14,"path":["components","schemas","Meta","properties","query"],"pathStr":"components › schemas › Meta › properties › query"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":510,"character":13,"path":["components","schemas","Problem","properties","type"],"pathStr":"components › schemas › Problem › properties › type"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":518,"character":14,"path":["components","schemas","Problem","properties","title"],"pathStr":"components › schemas › Problem › properties › title"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":524,"character":15,"path":["components","schemas","Problem","properties","status"],"pathStr":"components › schemas › Problem › properties › status"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":531,"character":15,"path":["components","schemas","Problem","properties","detail"],"pathStr":"components › schemas › Problem › properties › detail"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":535,"character":17,"path":["components","schemas","Problem","properties","instance"],"pathStr":"components › schemas › Problem › properties › instance"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":540,"character":18,"path":["components","schemas","Problem","properties","parameter"],"pathStr":"components › schemas › Problem › properties › parameter"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":553,"character":13,"path":["components","schemas","Provider","properties","slug"],"pathStr":"components › schemas › Provider › properties › slug"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":558,"character":13,"path":["components","schemas","Provider","properties","name"],"pathStr":"components › schemas › Provider › properties › name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":561,"character":20,"path":["components","schemas","Provider","properties","description"],"pathStr":"components › schemas › Provider › properties › description"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":564,"character":18,"path":["components","schemas","Provider","properties","api_count"],"pathStr":"components › schemas › Provider › properties › api_count"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":567,"character":14,"path":["components","schemas","Provider","properties","image"],"pathStr":"components › schemas › Provider › properties › image"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":571,"character":16,"path":["components","schemas","Provider","properties","created"],"pathStr":"components › schemas › Provider › properties › created"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":575,"character":15,"path":["components","schemas","Provider","properties","common"],"pathStr":"components › schemas › Provider › properties › common"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":581,"character":13,"path":["components","schemas","Provider","properties","apis"],"pathStr":"components › schemas › Provider › properties › apis"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":597,"character":13,"path":["components","schemas","Provider","properties","tags"],"pathStr":"components › schemas › Provider › properties › tags"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":612,"character":18,"path":["components","schemas","ProviderScore"],"pathStr":"components › schemas › ProviderScore"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":616,"character":18,"path":["components","schemas","ProviderScore","properties","composite"],"pathStr":"components › schemas › ProviderScore › properties › composite"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":627,"character":14,"path":["components","schemas","ProviderScore","properties","delta"],"pathStr":"components › schemas › ProviderScore › properties › delta"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":633,"character":27,"path":["components","schemas","ProviderScore","properties","previous_composite"],"pathStr":"components › schemas › ProviderScore › properties › previous_composite"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":637,"character":18,"path":["components","schemas","ProviderScore","properties","scored_at"],"pathStr":"components › schemas › ProviderScore › properties › scored_at"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":641,"character":23,"path":["components","schemas","ProviderScore","properties","schema_version"],"pathStr":"components › schemas › ProviderScore › properties › schema_version"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":657,"character":13,"path":["components","schemas","SearchResults","properties","meta"],"pathStr":"components › schemas › SearchResults › properties › meta"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":670,"character":13,"path":["components","schemas","SearchResults","properties","data"],"pathStr":"components › schemas › SearchResults › properties › data"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":686,"character":13,"path":["components","schemas","Tag","properties","slug"],"pathStr":"components › schemas › Tag › properties › slug"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":691,"character":13,"path":["components","schemas","Tag","properties","name"],"pathStr":"components › schemas › Tag › properties › name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":696,"character":18,"path":["components","schemas","Tag","properties","composite"],"pathStr":"components › schemas › Tag › properties › composite"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":700,"character":13,"path":["components","schemas","Tag","properties","band"],"pathStr":"components › schemas › Tag › properties › band"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":708,"character":18,"path":["components","schemas","Tag","properties","frequency"],"pathStr":"components › schemas › Tag › properties › frequency"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":711,"character":16,"path":["components","schemas","Tag","properties","breadth"],"pathStr":"components › schemas › Tag › properties › breadth"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":714,"character":21,"path":["components","schemas","Tag","properties","quality_lift"],"pathStr":"components › schemas › Tag › properties › quality_lift"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":717,"character":23,"path":["components","schemas","Tag","properties","provider_count"],"pathStr":"components › schemas › Tag › properties › provider_count"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":720,"character":18,"path":["components","schemas","Tag","properties","api_count"],"pathStr":"components › schemas › Tag › properties › api_count"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":723,"character":17,"path":["components","schemas","Tag","properties","variants"],"pathStr":"components › schemas › Tag › properties › variants"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":729,"character":18,"path":["components","schemas","Tag","properties","neighbors"],"pathStr":"components › schemas › Tag › properties › neighbors"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":735,"character":18,"path":["components","schemas","Tag","properties","providers"],"pathStr":"components › schemas › Tag › properties › providers"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":740,"character":13,"path":["components","schemas","Tag","properties","apis"],"pathStr":"components › schemas › Tag › properties › apis"},{"code":"schema-description-recommended","message":"Component schemas should have descriptions","severity":2,"source":"document","file":"document","line":758,"character":11,"path":["components","schemas","TagRef"],"pathStr":"components › schemas › TagRef"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":761,"character":13,"path":["components","schemas","TagRef","properties","slug"],"pathStr":"components › schemas › TagRef › properties › slug"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":764,"character":13,"path":["components","schemas","TagRef","properties","name"],"pathStr":"components › schemas › TagRef › properties › name"},{"code":"examples-on-schemas","message":"Schema properties should include examples","severity":2,"source":"document","file":"document","line":767,"character":10,"path":["components","schemas","Trend"],"pathStr":"components › schemas › Trend"}],"severities":[{"i":0,"key":"error","label":"Errors","one":"Error","color":"#f14c4c","on":"#5a1a1a"},{"i":1,"key":"warn","label":"Warnings","one":"Warning","color":"#e3b341","on":"#4a3a10"},{"i":2,"key":"info","label":"Info","one":"Info","color":"#3794ff","on":"#12335a"},{"i":3,"key":"hint","label":"Hints","one":"Hint","color":"#9aa0a6","on":"#2b2e31"}]}</script>
+<script>(function(){
+  var data=JSON.parse(document.getElementById('data').textContent);
+  var issues=data.issues, SEV=data.severities;
+  var sevKey={},sevOne={};SEV.forEach(function(s){sevKey[s.i]=s.key;sevOne[s.i]=s.one;});
+  var state={group:'code',q:'',sev:{0:true,1:true,2:true,3:true}};
+  var esc=function(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
+
+  function match(it){
+    if(!state.sev[it.severity])return false;
+    if(state.q){
+      var q=state.q.toLowerCase();
+      var hay=(it.code+' '+it.message+' '+it.file+' '+it.pathStr).toLowerCase();
+      if(hay.indexOf(q)<0)return false;
+    }
+    return true;
+  }
+  function keyOf(it){
+    if(state.group==='file')return it.file;
+    if(state.group==='severity')return sevOne[it.severity]+'s';
+    return it.code;
+  }
+  function issueRow(it){
+    var loc=(it.line!=null?('Ln '+(it.line+1)+(it.character!=null?':'+(it.character+1):'')):'');
+    return '<div class="issue" tabindex="0"><span class="sev-chip sev-'+it.severity+'">'+esc(sevKey[it.severity])+'</span>'
+      +'<div class="issue-main"><div class="issue-msg">'+esc(it.message)+'</div>'
+      +'<div class="issue-rule"><code>'+esc(it.code)+'</code> · '+esc(it.file)+'</div></div>'
+      +'<span class="issue-loc">'+esc(loc)+'</span>'
+      +'<div class="issue-path"><b>path</b> · '+esc(it.pathStr)+(it.source?'  —  <b>source</b> '+esc(it.source):'')+'</div></div>';
+  }
+  function render(){
+    var host=document.getElementById('findings');
+    var shown=issues.filter(match);
+    if(!shown.length){host.innerHTML='<div class="no-match">No findings match the current search and filters.</div>';return;}
+    var groups={},order=[];
+    shown.forEach(function(it){var k=keyOf(it);if(!groups[k]){groups[k]=[];order.push(k);}groups[k].push(it);});
+    // worst severity first, then largest group
+    order.sort(function(a,b){
+      var wa=Math.min.apply(null,groups[a].map(function(x){return x.severity;}));
+      var wb=Math.min.apply(null,groups[b].map(function(x){return x.severity;}));
+      return wa-wb || groups[b].length-groups[a].length;
+    });
+    host.innerHTML=order.map(function(k){
+      var g=groups[k];
+      var worst=Math.min.apply(null,g.map(function(x){return x.severity;}));
+      var color=SEV.filter(function(s){return s.i===worst;})[0].color;
+      return '<details class="group" open><summary><span class="g-sev" style="background:'+color+'"></span>'
+        +'<span class="group-title">'+esc(k)+'</span><span class="group-count">'+g.length+'</span></summary>'
+        +g.map(issueRow).join('')+'</details>';
+    }).join('');
+  }
+
+  var qEl=document.getElementById('q'),findingsEl=document.getElementById('findings');
+  if(qEl&&findingsEl){
+    qEl.addEventListener('input',function(e){state.q=e.target.value;render();});
+    Array.prototype.forEach.call(document.querySelectorAll('.grp'),function(b){
+      b.addEventListener('click',function(){
+        document.querySelectorAll('.grp').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');state.group=b.getAttribute('data-group');render();
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'),function(b){
+      b.addEventListener('click',function(){
+        var i=+b.getAttribute('data-sev');state.sev[i]=!state.sev[i];
+        b.classList.toggle('on',state.sev[i]);b.setAttribute('aria-pressed',String(state.sev[i]));render();
+      });
+    });
+    findingsEl.addEventListener('click',function(e){
+      var row=e.target.closest('.issue');if(row)row.classList.toggle('open');
+    });
+    findingsEl.addEventListener('keydown',function(e){
+      if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('issue')){e.preventDefault();e.target.classList.toggle('open');}
+    });
+    render();
+  }
+  var tt=document.getElementById('theme-toggle');
+  if(tt)tt.addEventListener('click',function(){document.documentElement.classList.toggle('dark');});
+})();</script>
+</body>
+</html>

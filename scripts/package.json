@@ -1,0 +1,7 @@
+{
+  "name": "apis-io-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Maintenance scripts for the APIs.io provider artifacts (per-tag OpenAPI split, governance runs).",
+  "dependencies": { "yaml": "^2.6.1" }
+}
