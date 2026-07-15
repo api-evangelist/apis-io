@@ -58,8 +58,18 @@ doc.apis = manifest.map((m) => ({
   humanURL: old.humanURL,
   baseURL: old.baseURL,
   tags: old.tags,
-  properties: [{ type: 'OpenAPI', url: `${RAW}/${m.file}` }],
+  // Each surface points at its own contract AND the ruleset it is governed by, so
+  // "what rules apply to this API?" is answerable from the index without reading a README.
+  properties: [
+    { type: 'OpenAPI', url: `${RAW}/${m.file}` },
+    { type: 'SpectralRules', url: `${RAW}/rules/apis-io-spectral-rules.yml` },
+  ],
 }));
+
+// Make the governance run itself discoverable from the index rather than only on disk.
+if (!doc.common.some((p) => p.type === 'X-GovernanceReport')) {
+  doc.common.push({ type: 'X-GovernanceReport', url: `${RAW}/governance/README.md`, name: 'Governance runs, reports, and rule coverage' });
+}
 
 writeFileSync(join(ROOT, 'apis.yml'), stringify(doc, { lineWidth: 120 }));
 

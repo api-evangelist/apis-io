@@ -93,6 +93,27 @@ The APIs.io Search API allows developers to search for APIs across all indexed A
 | Postman | Postman public workspace integration for running and testing the APIs.io Search API via pre-built collections. |
 | AWS API Gateway | The APIs.io Search API is deployed and managed through AWS API Gateway for scalable, managed API access. |
 
+## Governance
+
+APIs.io is governed by the hosted [API Evangelist Governance
+API](https://developer.apievangelist.com/governance/index) — the same free, keyless service
+anyone else can call. We run our own tools on our own APIs.
+
+- **The rules** — [`rules/apis-io-spectral-rules.yml`](rules/apis-io-spectral-rules.yml) is
+  the ruleset APIs.io owns and gates on (extends `spectral:oas`);
+  [`rules/apis-io-jsonschema-spectral-rules.yml`](rules/apis-io-jsonschema-spectral-rules.yml)
+  covers JSON Schema. Each API in `apis.yml` links its ruleset as a `SpectralRules` property.
+- **The runs, reports, and rule coverage** — **[`governance/README.md`](governance/README.md)**
+  is the always-current index: what ran, what it found, per-API scores, and a link to every
+  HTML report and JSON payload. Regenerated on every run.
+
+```bash
+node scripts/split-openapi.mjs                                       # source contract -> per-tag specs
+node scripts/govern.mjs --ruleset rules/apis-io-spectral-rules.yml   # lint + coverage + score
+```
+
+Both endpoints are free and keyless — checking an API costs nothing.
+
 ## Artifacts
 
 Machine-readable API specifications organized by format.

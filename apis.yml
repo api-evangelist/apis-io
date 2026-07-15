@@ -36,6 +36,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-providers-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:apis
     name: APIs.io APIs API
     description: Individual APIs, each owned by a provider and described by artifacts. 5 operations of the APIs.io API,
@@ -46,6 +48,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-apis-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:tags
     name: APIs.io Tags API
     description: The tag taxonomy, with network-wide ranking metadata. 2 operations of the APIs.io API, split out by tag so
@@ -56,6 +60,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-tags-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:industries
     name: APIs.io Industries API
     description: Industry verticals grouping providers across the catalog. 3 operations of the APIs.io API, split out by tag
@@ -66,6 +72,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-industries-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:regions
     name: APIs.io Regions API
     description: Geographic regions grouping providers across the catalog. 3 operations of the APIs.io API, split out by tag
@@ -76,6 +84,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-regions-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:areas
     name: APIs.io Areas API
     description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each
@@ -87,6 +97,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-areas-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:synthesis
     name: APIs.io Synthesis API
     description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and
@@ -98,6 +110,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-synthesis-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:ratings
     name: APIs.io Ratings API
     description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted
@@ -109,6 +123,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-ratings-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:artifact-types
     name: APIs.io Artifact Types API
     description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more).
@@ -120,6 +136,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-artifact-types-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:search
     name: APIs.io Search API
     description: Unified cross-resource search. 1 operation of the APIs.io API, split out by tag so this surface is
@@ -130,6 +148,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-search-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:insights
     name: APIs.io Insights API
     description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for
@@ -142,6 +162,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-insights-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
   - aid: apis-io:submit
     name: APIs.io Submit API
     description: Adding an API to the network — discover a target's public artifacts, then submit it for review. 2
@@ -152,6 +174,8 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-submit-openapi.yml
+      - type: SpectralRules
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
 common:
   - type: AgenticAccess
     url: agentic-access/apis-io-agentic-access.yml
@@ -327,6 +351,9 @@ common:
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
     title: APIs.json Schema
+  - type: X-GovernanceReport
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/governance/README.md
+    name: Governance runs, reports, and rule coverage
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
