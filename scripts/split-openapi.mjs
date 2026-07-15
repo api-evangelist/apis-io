@@ -128,10 +128,10 @@ const manifest = [];
 for (const tag of doc.tags ?? []) {
   const spec = specForTag(tag);
   if (!spec) { console.warn(`  ! no operations for tag "${tag.name}" — skipped`); continue; }
-  // Named for the contract they are split FROM (apis-io-v1-openapi.yml). This states the
-  // lineage and, critically, avoids colliding with the unrelated legacy
-  // apis-io-search-openapi.yaml, a different API (dead search-api.apis.io host) that four
-  // Arazzo workflows still reference.
+  // Named for the contract they are split FROM (apis-io-v1-openapi.yml), so the lineage is
+  // stated in the filename. (This also kept them clear of the legacy
+  // apis-io-search-openapi.yaml — a different API on the long-dead search-api.apis.io host —
+  // which has since been retired and its Arazzo workflows repointed at v1.)
   const slug = kebab(tag.name);
   const file = join(OUT_DIR, `apis-io-v1-${slug}-openapi.yml`);
   const out = stringify(spec, { lineWidth: 0 });

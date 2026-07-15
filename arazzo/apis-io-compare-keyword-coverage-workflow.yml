@@ -1,7 +1,8 @@
 arazzo: 1.0.1
 info:
   title: APIs.io Compare Keyword Coverage
-  summary: Run two keyword searches against APIs.io and compare how many APIs the index holds for each term.
+  summary: Run two keyword searches against APIs.io and compare how many APIs the
+    index holds for each term.
   description: >-
     A landscape-sizing flow for the APIs.io registry. The workflow searches the
     index for a primary keyword and an alternate keyword, captures the total
@@ -12,96 +13,99 @@ info:
     comparison is self-describing.
   version: 1.0.0
 sourceDescriptions:
-- name: apisIoSearchApi
-  url: ../openapi/apis-io-search-openapi.yaml
-  type: openapi
+  - name: apisIoApi
+    url: ../openapi/apis-io-v1-search-openapi.yml
+    type: openapi
 workflows:
-- workflowId: compare-keyword-coverage
-  summary: Compare APIs.io index coverage between two keywords by total page count.
-  description: >-
-    Searches the APIs.io index for a primary and an alternate keyword, reads the
-    total page count for each, and branches on which keyword returns more pages
-    of results.
-  inputs:
-    type: object
-    required:
-    - primaryKeyword
-    - alternateKeyword
-    - apiKey
-    properties:
-      primaryKeyword:
-        type: string
-        description: The first keyword to size coverage for.
-      alternateKeyword:
-        type: string
-        description: The second keyword to compare against the first.
-      limit:
-        type: string
-        description: The number of results to return per page.
-        default: "50"
-      apiKey:
-        type: string
-        description: The APIs.io API key sent in the x-api-key header.
-  steps:
-  - stepId: searchPrimary
+  - workflowId: compare-keyword-coverage
+    summary: Compare APIs.io index coverage between two keywords by total page count.
     description: >-
-      Search the index for the primary keyword and read the total page count and
-      top match.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.primaryKeyword
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
+      Searches the APIs.io index for a primary and an alternate keyword, reads
+      the total page count for each, and branches on which keyword returns more
+      pages of results.
+    inputs:
+      type: object
+      required:
+        - primaryKeyword
+        - alternateKeyword
+        - apiKey
+      properties:
+        primaryKeyword:
+          type: string
+          description: The first keyword to size coverage for.
+        alternateKeyword:
+          type: string
+          description: The second keyword to compare against the first.
+        limit:
+          type: string
+          description: The number of results to return per page.
+          default: "50"
+        apiKey:
+          type: string
+          description: The APIs.io API key sent in the x-api-key header.
+    steps:
+      - stepId: searchPrimary
+        description: >-
+          Search the index for the primary keyword and read the total page count
+          and top match.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.primaryKeyword
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          primaryTotalPages: $response.body#/meta/pages
+          primaryTopApi: $response.body#/data/0/name
+          primaryResults: $response.body#/data
+      - stepId: searchAlternate
+        description: >-
+          Search the index for the alternate keyword and read its total page
+          count and top match, then branch on which keyword has broader
+          coverage.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.alternateKeyword
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          alternateTotalPages: $response.body#/meta/pages
+          alternateTopApi: $response.body#/data/0/name
+          alternateResults: $response.body#/data
+        onSuccess:
+          - name: primaryBroader
+            type: end
+            criteria:
+              - condition: $steps.searchPrimary.outputs.primaryTotalPages >=
+                  $response.body#/meta/totalPages
+          - name: alternateBroader
+            type: end
+            criteria:
+              - condition: $steps.searchPrimary.outputs.primaryTotalPages <
+                  $response.body#/meta/totalPages
     outputs:
-      primaryTotalPages: $response.body#/meta/totalPages
-      primaryTopApi: $response.body#/data/0/name
-      primaryResults: $response.body#/data
-  - stepId: searchAlternate
-    description: >-
-      Search the index for the alternate keyword and read its total page count
-      and top match, then branch on which keyword has broader coverage.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.alternateKeyword
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
-    outputs:
-      alternateTotalPages: $response.body#/meta/totalPages
-      alternateTopApi: $response.body#/data/0/name
-      alternateResults: $response.body#/data
-    onSuccess:
-    - name: primaryBroader
-      type: end
-      criteria:
-      - condition: $steps.searchPrimary.outputs.primaryTotalPages >= $response.body#/meta/totalPages
-    - name: alternateBroader
-      type: end
-      criteria:
-      - condition: $steps.searchPrimary.outputs.primaryTotalPages < $response.body#/meta/totalPages
-  outputs:
-    primaryTotalPages: $steps.searchPrimary.outputs.primaryTotalPages
-    primaryTopApi: $steps.searchPrimary.outputs.primaryTopApi
-    alternateTotalPages: $steps.searchAlternate.outputs.alternateTotalPages
-    alternateTopApi: $steps.searchAlternate.outputs.alternateTopApi
+      primaryTotalPages: $steps.searchPrimary.outputs.primaryTotalPages
+      primaryTopApi: $steps.searchPrimary.outputs.primaryTopApi
+      alternateTotalPages: $steps.searchAlternate.outputs.alternateTotalPages
+      alternateTopApi: $steps.searchAlternate.outputs.alternateTopApi

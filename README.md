@@ -28,7 +28,7 @@ The APIs.io Search API allows developers to search for APIs across all indexed A
 #### Properties
 
 - [Documentation](https://apis.io/developer/documentation/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-search-openapi.yaml)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml)
 - [Postman Collection](https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api)
 - [Authentication](https://apis.io/developer/authentication/)
 - [Rate Limits](https://apis.io/developer/plans/)
@@ -99,7 +99,7 @@ Machine-readable API specifications organized by format.
 
 ### OpenAPI
 
-- [APIs.io Search API](openapi/apis-io-search-openapi.yaml)
+- [APIs.io API](openapi/apis-io-v1-openapi.yml) — the full contract, split by tag into `openapi/apis-io-v1-*-openapi.yml` and indexed as one API each in `apis.yml`
 
 ### JSON Schema
 

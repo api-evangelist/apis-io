@@ -1,7 +1,8 @@
 arazzo: 1.0.1
 info:
   title: APIs.io Paginate Search Results
-  summary: Read the first page of a keyword search, learn the total page count, then fetch a following page of results.
+  summary: Read the first page of a keyword search, learn the total page count,
+    then fetch a following page of results.
   description: >-
     The APIs.io search response carries pagination metadata — the total number
     of pages plus self, next, and last links. This workflow walks that
@@ -12,95 +13,96 @@ info:
     header, so the flow is self-describing.
   version: 1.0.0
 sourceDescriptions:
-- name: apisIoSearchApi
-  url: ../openapi/apis-io-search-openapi.yaml
-  type: openapi
+  - name: apisIoApi
+    url: ../openapi/apis-io-v1-search-openapi.yml
+    type: openapi
 workflows:
-- workflowId: paginate-search-results
-  summary: Page through APIs.io keyword search results using the response page metadata.
-  description: >-
-    Fetches the first page of a keyword search to learn the total page count and
-    the next-page link, then conditionally retrieves the next page of results
-    when more than one page exists.
-  inputs:
-    type: object
-    required:
-    - search
-    - apiKey
-    properties:
-      search:
-        type: string
-        description: The keyword or phrase to search the APIs.io index by.
-      limit:
-        type: string
-        description: The number of results to return per page.
-        default: "50"
-      apiKey:
-        type: string
-        description: The APIs.io API key sent in the x-api-key header.
-  steps:
-  - stepId: firstPage
+  - workflowId: paginate-search-results
+    summary: Page through APIs.io keyword search results using the response page
+      metadata.
     description: >-
-      Fetch the first page of results for the keyword and read the total page
-      count and the next-page link from the response metadata.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.search
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
+      Fetches the first page of a keyword search to learn the total page count
+      and the next-page link, then conditionally retrieves the next page of
+      results when more than one page exists.
+    inputs:
+      type: object
+      required:
+        - search
+        - apiKey
+      properties:
+        search:
+          type: string
+          description: The keyword or phrase to search the APIs.io index by.
+        limit:
+          type: string
+          description: The number of results to return per page.
+          default: "50"
+        apiKey:
+          type: string
+          description: The APIs.io API key sent in the x-api-key header.
+    steps:
+      - stepId: firstPage
+        description: >-
+          Fetch the first page of results for the keyword and read the total
+          page count and the next-page link from the response metadata.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.search
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          firstPageResults: $response.body#/data
+          totalPages: $response.body#/meta/pages
+          nextLink: $response.body#/links/next
+        onSuccess:
+          - name: morePages
+            type: goto
+            stepId: nextPage
+            criteria:
+              - context: $response.body
+                condition: $.meta.totalPages > 1
+                type: jsonpath
+          - name: singlePage
+            type: end
+            criteria:
+              - context: $response.body
+                condition: $.meta.totalPages <= 1
+                type: jsonpath
+      - stepId: nextPage
+        description: >-
+          Fetch the second page of results for the same keyword so results can
+          be accumulated beyond the first page.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.search
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "1"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          nextPageResults: $response.body#/data
+          currentPage: $response.body#/meta/page
     outputs:
-      firstPageResults: $response.body#/data
-      totalPages: $response.body#/meta/totalPages
-      nextLink: $response.body#/links/next
-    onSuccess:
-    - name: morePages
-      type: goto
-      stepId: nextPage
-      criteria:
-      - context: $response.body
-        condition: $.meta.totalPages > 1
-        type: jsonpath
-    - name: singlePage
-      type: end
-      criteria:
-      - context: $response.body
-        condition: $.meta.totalPages <= 1
-        type: jsonpath
-  - stepId: nextPage
-    description: >-
-      Fetch the second page of results for the same keyword so results can be
-      accumulated beyond the first page.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.search
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "1"
-    successCriteria:
-    - condition: $statusCode == 200
-    outputs:
-      nextPageResults: $response.body#/data
-      currentPage: $response.body#/meta/page
-  outputs:
-    firstPageResults: $steps.firstPage.outputs.firstPageResults
-    nextPageResults: $steps.nextPage.outputs.nextPageResults
-    totalPages: $steps.firstPage.outputs.totalPages
+      firstPageResults: $steps.firstPage.outputs.firstPageResults
+      nextPageResults: $steps.nextPage.outputs.nextPageResults
+      totalPages: $steps.firstPage.outputs.totalPages

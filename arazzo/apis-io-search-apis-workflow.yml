@@ -1,7 +1,8 @@
 arazzo: 1.0.1
 info:
   title: APIs.io Search APIs by Keyword
-  summary: Search the APIs.io registry for APIs matching a keyword and branch on whether any results were returned.
+  summary: Search the APIs.io registry for APIs matching a keyword and branch on
+    whether any results were returned.
   description: >-
     The core discovery flow for the APIs.io search engine. The workflow issues a
     single keyword search against the registry and then branches on the shape of
@@ -13,131 +14,132 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: apisIoSearchApi
-  url: ../openapi/apis-io-search-openapi.yaml
-  type: openapi
+  - name: apisIoApi
+    url: ../openapi/apis-io-v1-search-openapi.yml
+    type: openapi
 workflows:
-- workflowId: search-apis-by-keyword
-  summary: Search APIs.io for a keyword and branch on whether any APIs matched.
-  description: >-
-    Runs a keyword search against the APIs.io index, capturing the result data,
-    pagination metadata, and the first matched API. Branches to a hit path when
-    at least one API is returned and to a miss path when the result set is empty.
-  inputs:
-    type: object
-    required:
-    - search
-    - apiKey
-    properties:
-      search:
-        type: string
-        description: The keyword or phrase to search the APIs.io index by.
-      limit:
-        type: string
-        description: The maximum number of results to return on the page.
-        default: "50"
-      page:
-        type: string
-        description: The zero-based page of results to return.
-        default: "0"
-      apiKey:
-        type: string
-        description: The APIs.io API key sent in the x-api-key header.
-  steps:
-  - stepId: runSearch
+  - workflowId: search-apis-by-keyword
+    summary: Search APIs.io for a keyword and branch on whether any APIs matched.
     description: >-
-      Search across all indexed APIs by the supplied keyword, returning a page
-      of matches along with the result metadata and pagination links.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.search
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: $inputs.page
-    successCriteria:
-    - condition: $statusCode == 200
+      Runs a keyword search against the APIs.io index, capturing the result
+      data, pagination metadata, and the first matched API. Branches to a hit
+      path when at least one API is returned and to a miss path when the result
+      set is empty.
+    inputs:
+      type: object
+      required:
+        - search
+        - apiKey
+      properties:
+        search:
+          type: string
+          description: The keyword or phrase to search the APIs.io index by.
+        limit:
+          type: string
+          description: The maximum number of results to return on the page.
+          default: "50"
+        page:
+          type: string
+          description: The zero-based page of results to return.
+          default: "0"
+        apiKey:
+          type: string
+          description: The APIs.io API key sent in the x-api-key header.
+    steps:
+      - stepId: runSearch
+        description: >-
+          Search across all indexed APIs by the supplied keyword, returning a
+          page of matches along with the result metadata and pagination links.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.search
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: $inputs.page
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          results: $response.body#/data
+          totalPages: $response.body#/meta/pages
+          firstApiName: $response.body#/data/0/name
+          firstApiSearchUrl: $response.body#/data/0/humanURL
+          firstApiIndexUrl: $response.body#/data/0/baseURL
+        onSuccess:
+          - name: hasResults
+            type: goto
+            stepId: reportMatch
+            criteria:
+              - context: $response.body
+                condition: $.data.length > 0
+                type: jsonpath
+          - name: noResults
+            type: goto
+            stepId: reportEmpty
+            criteria:
+              - context: $response.body
+                condition: $.data.length == 0
+                type: jsonpath
+      - stepId: reportMatch
+        description: >-
+          Confirm the top match by re-reading the first page of the same keyword
+          search so the matched API and its source URLs can be returned to the
+          caller.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.search
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          topApiName: $response.body#/data/0/name
+          topApiSearchUrl: $response.body#/data/0/humanURL
+          topApiApiUrl: $response.body#/data/0/apiUrl
+          topApiScore: $response.body#/data/0/score
+        onSuccess:
+          - name: done
+            type: end
+      - stepId: reportEmpty
+        description: >-
+          Re-run the search confirming the empty result set so the caller can be
+          told no APIs matched the keyword and prompt for a new search term.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.search
+          - name: limit
+            in: query
+            value: $inputs.limit
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          emptySearchTerm: $response.body#/meta/search
     outputs:
-      results: $response.body#/data
-      totalPages: $response.body#/meta/totalPages
-      firstApiName: $response.body#/data/0/name
-      firstApiSearchUrl: $response.body#/data/0/searchUrl
-      firstApiIndexUrl: $response.body#/data/0/indexUrl
-    onSuccess:
-    - name: hasResults
-      type: goto
-      stepId: reportMatch
-      criteria:
-      - context: $response.body
-        condition: $.data.length > 0
-        type: jsonpath
-    - name: noResults
-      type: goto
-      stepId: reportEmpty
-      criteria:
-      - context: $response.body
-        condition: $.data.length == 0
-        type: jsonpath
-  - stepId: reportMatch
-    description: >-
-      Confirm the top match by re-reading the first page of the same keyword
-      search so the matched API and its source URLs can be returned to the
-      caller.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.search
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
-    outputs:
-      topApiName: $response.body#/data/0/name
-      topApiSearchUrl: $response.body#/data/0/searchUrl
-      topApiApiUrl: $response.body#/data/0/apiUrl
-      topApiScore: $response.body#/data/0/score
-    onSuccess:
-    - name: done
-      type: end
-  - stepId: reportEmpty
-    description: >-
-      Re-run the search confirming the empty result set so the caller can be
-      told no APIs matched the keyword and prompt for a new search term.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.search
-    - name: limit
-      in: query
-      value: $inputs.limit
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
-    outputs:
-      emptySearchTerm: $response.body#/meta/search
-  outputs:
-    results: $steps.runSearch.outputs.results
-    totalPages: $steps.runSearch.outputs.totalPages
-    topApiName: $steps.reportMatch.outputs.topApiName
-    topApiSearchUrl: $steps.reportMatch.outputs.topApiSearchUrl
+      results: $steps.runSearch.outputs.results
+      totalPages: $steps.runSearch.outputs.totalPages
+      topApiName: $steps.reportMatch.outputs.topApiName
+      topApiSearchUrl: $steps.reportMatch.outputs.topApiSearchUrl

@@ -1,6 +1,6 @@
 generated: '2026-07-11'
 method: derived
-source: openapi/apis-io-search-openapi.yaml, openapi/apis-io-v1-openapi.yml
+source: openapi/apis-io-v1-openapi.yml
 summary:
   types:
   - apiKey
@@ -12,7 +12,6 @@ schemes:
   in: header
   parameter: x-api-key
   sources:
-  - openapi/apis-io-search-openapi.yaml
 - name: ApiKeyAuth
   type: apiKey
   in: header

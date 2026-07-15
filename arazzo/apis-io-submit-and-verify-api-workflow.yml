@@ -1,117 +1,124 @@
 arazzo: 1.0.1
 info:
   title: APIs.io Submit and Verify API
-  summary: Submit a valid APIs.json to the APIs.io index, then search the registry to confirm the submitted API appears.
+  summary: Submit a valid APIs.json to the APIs.io index, then search the registry
+    to confirm the submitted API appears.
   description: >-
     The complete contribution loop for APIs.io. The workflow submits a valid
     APIs.json document so the API is added to the index, then runs a keyword
     search for the submitted API name to confirm it has been ingested, branching
-    on whether the freshly submitted API is discoverable yet. Both the submit and
-    the verifying search inline their full request, including the required API
-    key header, so the round trip can be read end to end without opening the
+    on whether the freshly submitted API is discoverable yet. Both the submit
+    and the verifying search inline their full request, including the required
+    API key header, so the round trip can be read end to end without opening the
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apisIoSearchApi
-  url: ../openapi/apis-io-search-openapi.yaml
-  type: openapi
+  - name: apisIoApi
+    url: ../openapi/apis-io-v1-search-openapi.yml
+    type: openapi
+  - name: apisIoSubmitApi
+    url: ../openapi/apis-io-v1-submit-openapi.yml
+    type: openapi
 workflows:
-- workflowId: submit-and-verify-api
-  summary: Add an APIs.json to APIs.io and confirm the new API is searchable.
-  description: >-
-    Posts a valid APIs.json to the APIs.io index and captures the confirmation
-    URL, then searches the registry by the submitted name and branches on
-    whether the API is already discoverable in the index.
-  inputs:
-    type: object
-    required:
-    - name
-    - description
-    - url
-    - apiKey
-    properties:
-      name:
-        type: string
-        description: The name of the service described by the APIs.json (min length 5).
-      description:
-        type: string
-        description: A description of the service (min length 5).
-      url:
-        type: string
-        description: The URL where the apis.json file lives (http or https).
-      image:
-        type: string
-        description: An optional image URL representing the API.
-      specificationVersion:
-        type: string
-        description: The APIs.json specification version, latest is 0.18.
-        default: "0.18"
-      apiKey:
-        type: string
-        description: The APIs.io API key sent in the x-api-key header.
-  steps:
-  - stepId: submitApi
+  - workflowId: submit-and-verify-api
+    summary: Add an APIs.json to APIs.io and confirm the new API is searchable.
     description: >-
-      Submit the APIs.json document to add the service to the APIs.io index,
-      capturing the confirmation response and the URL of the indexed entry.
-    operationId: addAPI
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    requestBody:
-      contentType: application/json
-      payload:
-        name: $inputs.name
-        description: $inputs.description
-        url: $inputs.url
-        image: $inputs.image
-        specificationVersion: $inputs.specificationVersion
-    successCriteria:
-    - condition: $statusCode == 201
+      Posts a valid APIs.json to the APIs.io index and captures the confirmation
+      URL, then searches the registry by the submitted name and branches on
+      whether the API is already discoverable in the index.
+    inputs:
+      type: object
+      required:
+        - name
+        - description
+        - url
+        - apiKey
+      properties:
+        name:
+          type: string
+          description: The name of the service described by the APIs.json (min length 5).
+        description:
+          type: string
+          description: A description of the service (min length 5).
+        url:
+          type: string
+          description: The URL where the apis.json file lives (http or https).
+        image:
+          type: string
+          description: An optional image URL representing the API.
+        specificationVersion:
+          type: string
+          description: The APIs.json specification version, latest is 0.18.
+          default: "0.18"
+        apiKey:
+          type: string
+          description: The APIs.io API key sent in the x-api-key header.
+    steps:
+      - stepId: submitApi
+        description: >-
+          Submit the APIs.json document to add the service to the APIs.io index,
+          capturing the confirmation response and the URL of the indexed entry.
+        operationId: submitApi
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+        requestBody:
+          contentType: application/json
+          payload:
+            name: $inputs.name
+            url: $inputs.url
+            apisjson:
+              name: $inputs.name
+              description: $inputs.description
+              url: $inputs.url
+              image: $inputs.image
+              specificationVersion: $inputs.specificationVersion
+        successCriteria:
+          - condition: $statusCode == 201
+        outputs:
+          submitResponse: $response.body#/message
+          indexedUrl: $response.body#/url
+          issueUrl: $response.body#/issueUrl
+      - stepId: verifyIndexed
+        description: >-
+          Search the APIs.io index for the submitted service name to confirm it
+          has been ingested, then branch on whether it is already discoverable.
+        operationId: search
+        parameters:
+          - name: x-api-key
+            in: header
+            value: $inputs.apiKey
+          - name: q
+            in: query
+            value: $inputs.name
+          - name: limit
+            in: query
+            value: "50"
+          - name: page
+            in: query
+            value: "0"
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          matches: $response.body#/data
+          matchCount: $response.body#/meta/pages
+          firstMatchName: $response.body#/data/0/name
+        onSuccess:
+          - name: discoverable
+            type: end
+            criteria:
+              - context: $response.body
+                condition: $.data.length > 0
+                type: jsonpath
+          - name: notYetIndexed
+            type: end
+            criteria:
+              - context: $response.body
+                condition: $.data.length == 0
+                type: jsonpath
     outputs:
-      submitResponse: $response.body#/response
-      indexedUrl: $response.body#/url
-      issueUrl: $response.body#/issue
-  - stepId: verifyIndexed
-    description: >-
-      Search the APIs.io index for the submitted service name to confirm it has
-      been ingested, then branch on whether it is already discoverable.
-    operationId: searchAPIs
-    parameters:
-    - name: x-api-key
-      in: header
-      value: $inputs.apiKey
-    - name: search
-      in: query
-      value: $inputs.name
-    - name: limit
-      in: query
-      value: "50"
-    - name: page
-      in: query
-      value: "0"
-    successCriteria:
-    - condition: $statusCode == 200
-    outputs:
-      matches: $response.body#/data
-      matchCount: $response.body#/meta/totalPages
-      firstMatchName: $response.body#/data/0/name
-    onSuccess:
-    - name: discoverable
-      type: end
-      criteria:
-      - context: $response.body
-        condition: $.data.length > 0
-        type: jsonpath
-    - name: notYetIndexed
-      type: end
-      criteria:
-      - context: $response.body
-        condition: $.data.length == 0
-        type: jsonpath
-  outputs:
-    indexedUrl: $steps.submitApi.outputs.indexedUrl
-    issueUrl: $steps.submitApi.outputs.issueUrl
-    matches: $steps.verifyIndexed.outputs.matches
-    firstMatchName: $steps.verifyIndexed.outputs.firstMatchName
+      indexedUrl: $steps.submitApi.outputs.indexedUrl
+      issueUrl: $steps.submitApi.outputs.issueUrl
+      matches: $steps.verifyIndexed.outputs.matches
+      firstMatchName: $steps.verifyIndexed.outputs.firstMatchName
