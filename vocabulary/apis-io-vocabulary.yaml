@@ -2,15 +2,17 @@ vocabulary: "1.0.0"
 
 info:
   provider: "APIs.io"
-  description: "Vocabulary and taxonomy for the APIs.io search engine platform, covering the Search API operational endpoints and capability workflow dimensions for API discovery and submission."
+  description: "Vocabulary and taxonomy for the APIs.io search engine platform,
+    covering the Search API operational endpoints and capability workflow
+    dimensions for API discovery and submission."
   created: "2026-04-19"
   modified: "2026-04-19"
 
 operational:
   apis:
     - namespace: apis-io-search
-      version: "0.1.0"
-      baseUrl: https://search-api.apis.io
+      version: "1.2.1"
+      baseUrl: https://apis.io/api/v1
       status: active
       description: "APIs.io Search API for API discovery and submission"
 
@@ -44,7 +46,8 @@ operational:
           - links
 
       - name: Meta
-        description: "Metadata about search results including search term, pagination, and total pages"
+        description: "Metadata about search results including search term, pagination,
+          and total pages"
         keyProperties:
           - search
           - limit
@@ -52,7 +55,8 @@ operational:
           - totalPages
 
       - name: APIsJSON
-        description: "APIs.json format for describing API collections with provider and API metadata"
+        description: "APIs.json format for describing API collections with provider and
+          API metadata"
         keyProperties:
           - aid
           - name
@@ -72,7 +76,8 @@ operational:
           - properties
 
       - name: Property
-        description: "A URL-type property link for an API, such as Documentation, OpenAPI, or Authentication"
+        description: "A URL-type property link for an API, such as Documentation,
+          OpenAPI, or Authentication"
         keyProperties:
           - type
           - url
@@ -124,7 +129,8 @@ operational:
       - type: apiKey
         in: header
         name: x-api-key
-        description: "API key obtained from the APIs.io Authentication API by converting a GitHub Personal Access Token"
+        description: "API key obtained from the APIs.io Authentication API by converting
+          a GitHub Personal Access Token"
         apisUsing:
           - apis-io-search
 
@@ -149,7 +155,8 @@ capability:
 
     - id: api-producer
       name: API Producer
-      description: "An API owner or provider submitting their API for discovery in the index"
+      description: "An API owner or provider submitting their API for discovery in the
+        index"
       workflows:
         - API Discovery and Search
 
@@ -181,7 +188,8 @@ capability:
 
   binds:
     - name: APIS_IO_API_KEY
-      description: "API key for the APIs.io Search API, obtained from the Authentication API"
+      description: "API key for the APIs.io Search API, obtained from the
+        Authentication API"
 
 crossReference:
   - resource: apis

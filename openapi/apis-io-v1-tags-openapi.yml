@@ -5,7 +5,7 @@ info:
   description: |-
     The tag taxonomy, with network-wide ranking metadata.
 
-    This is the Tags surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+    This is the Tags surface of the [APIs.io API](https://apis.io/api/v1) — one of 12 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   contact:
     name: API Evangelist
     url: https://apis.io

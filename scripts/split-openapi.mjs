@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Split the monolithic APIs.io OpenAPI into one SELF-CONTAINED OpenAPI per tag.
 //
-// The single 62-operation contract made for one undifferentiated blob of docs and
+// The single monolithic contract made for one undifferentiated blob of docs and
 // one undifferentiated governance report. One spec per tag means each surface is
 // documented, indexed in apis.yml, linted, and scored on its own terms.
 //
@@ -72,8 +72,8 @@ function neededSchemes(ops) {
 
 // An operation's PRIMARY tag is its first — that is its one home. Five operations
 // carry two tags (e.g. GET /providers/{slug}/apis is both Providers and APIs); routing
-// each to its primary keeps every operation in exactly one spec, so the eleven specs
-// partition the 62 operations rather than double-counting them in reports. The output
+// each to its primary keeps every operation in exactly one spec, so the per-tag specs
+// partition the operations rather than double-counting them in reports. The output
 // op's tags are trimmed to that primary so no spec references a tag it doesn't declare.
 const primaryTag = (op) => (op.tags ?? [])[0];
 
@@ -109,7 +109,7 @@ const specForTag = (tag) => {
     info: {
       title: `APIs.io ${tag.name} API`,
       version: doc.info.version,
-      description: `${tag.description}\n\nThis is the ${tag.name} surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.`,
+      description: `${tag.description}\n\nThis is the ${tag.name} surface of the [APIs.io API](https://apis.io/api/v1) — one of ${(doc.tags ?? []).length} contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.`,
       ...(doc.info.contact ? { contact: doc.info.contact } : {}),
       ...(doc.info.license ? { license: doc.info.license } : {}),
       ...(doc.info.termsOfService ? { termsOfService: doc.info.termsOfService } : {}),
@@ -128,10 +128,8 @@ const manifest = [];
 for (const tag of doc.tags ?? []) {
   const spec = specForTag(tag);
   if (!spec) { console.warn(`  ! no operations for tag "${tag.name}" — skipped`); continue; }
-  // Named for the contract they are split FROM (apis-io-v1-openapi.yml), so the lineage is
-  // stated in the filename. (This also kept them clear of the legacy
-  // apis-io-search-openapi.yaml — a different API on the long-dead search-api.apis.io host —
-  // which has since been retired and its Arazzo workflows repointed at v1.)
+  // Named for the contract they are split FROM (apis-io-v1-openapi.yml), so each file states
+  // its lineage.
   const slug = kebab(tag.name);
   const file = join(OUT_DIR, `apis-io-v1-${slug}-openapi.yml`);
   const out = stringify(spec, { lineWidth: 0 });
@@ -154,7 +152,7 @@ if (CHECK) {
 } else {
   writeFileSync(join(OUT_DIR, 'split-manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   const totalOps = manifest.reduce((n, m) => n + m.operations, 0);
-  // The eleven specs must PARTITION the source: every operation lands in exactly one.
+  // The per-tag specs must PARTITION the source: every operation lands in exactly one.
   // If these ever diverge the split is silently lying and every report built on it is wrong.
   const sourceOps = Object.values(doc.paths ?? {})
     .reduce((n, i) => n + Object.keys(i).filter((k) => METHODS.includes(k)).length, 0);

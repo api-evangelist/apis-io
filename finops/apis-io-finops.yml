@@ -116,7 +116,7 @@ meters:
       - tier
 apis:
   - name: APIs.io Search API
-    baseURL: https://search-api.apis.io
+    baseURL: https://apis.io/api/v1
     tags:
       - API Discovery
       - API Indexing

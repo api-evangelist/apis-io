@@ -5,7 +5,7 @@ info:
   description: |-
     Organizations publishing APIs on the network.
 
-    This is the Providers surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+    This is the Providers surface of the [APIs.io API](https://apis.io/api/v1) — one of 12 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   contact:
     name: API Evangelist
     url: https://apis.io

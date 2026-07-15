@@ -5,7 +5,7 @@ info:
   description: |-
     First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
 
-    This is the Artifact Types surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+    This is the Artifact Types surface of the [APIs.io API](https://apis.io/api/v1) — one of 12 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   contact:
     name: API Evangelist
     url: https://apis.io

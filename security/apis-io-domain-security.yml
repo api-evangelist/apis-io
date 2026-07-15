@@ -2,16 +2,14 @@ generated: '2026-07-11'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
-- host: apis.io
-  https: true
-  tls_version: TLSv1.3
-  cert_expires: Jan  3 23:59:59 2027 GMT
-  hsts: false
-- host: search-api.apis.io
-  https: false
+  - host: apis.io
+    https: true
+    tls_version: TLSv1.3
+    cert_expires: Jan  3 23:59:59 2027 GMT
+    hsts: false
 domains:
-- domain: apis.io
-  dnssec: false
-  caa: []
-  spf: true
-  dmarc: false
+  - domain: apis.io
+    dnssec: false
+    caa: []
+    spf: true
+    dmarc: false

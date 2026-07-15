@@ -33,7 +33,7 @@ plans:
         timeFrame: month
         geo: global
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: '0.00'
         userMultiplied: false
@@ -46,7 +46,7 @@ plans:
         timeFrame: minute
         geo: global
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: '0.00'
         userMultiplied: false
@@ -70,7 +70,7 @@ plans:
         timeFrame: month
         geo: global
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: TBD
         userMultiplied: false
@@ -83,7 +83,7 @@ plans:
         timeFrame: minute
         geo: global
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: '0.00'
         userMultiplied: false
@@ -96,7 +96,7 @@ plans:
         timeFrame: month
         geo: global
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1000
         price: TBD
         userMultiplied: false
@@ -121,7 +121,7 @@ plans:
         timeFrame: month
         geo: configurable
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: custom
         userMultiplied: false
@@ -134,7 +134,7 @@ plans:
         timeFrame: minute
         geo: configurable
         domains:
-          - https://search-api.apis.io
+          - https://apis.io/api/v1
         unit: 1
         price: custom
         userMultiplied: false

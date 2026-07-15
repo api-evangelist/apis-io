@@ -5,7 +5,7 @@ info:
   description: |-
     Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
 
-    This is the Insights surface of the [APIs.io API](https://apis.io/api/v1) — one of eleven contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+    This is the Insights surface of the [APIs.io API](https://apis.io/api/v1) — one of 12 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   contact:
     name: API Evangelist
     url: https://apis.io
