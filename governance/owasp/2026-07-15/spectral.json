@@ -1,0 +1,4962 @@
+[
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 183,
+				"character": 8
+			},
+			"end": {
+				"line": 225,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/providers",
+			"get",
+			"parameters",
+			"12",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 205,
+				"character": 17
+			},
+			"end": {
+				"line": 213,
+				"character": 30
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers/{slug}",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 228,
+				"character": 8
+			},
+			"end": {
+				"line": 245,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers/{slug}/apis",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 248,
+				"character": 8
+			},
+			"end": {
+				"line": 272,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/apis",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 297,
+				"character": 8
+			},
+			"end": {
+				"line": 340,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/apis",
+			"get",
+			"parameters",
+			"10",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 320,
+				"character": 17
+			},
+			"end": {
+				"line": 328,
+				"character": 30
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/apis/{aid}",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 343,
+				"character": 8
+			},
+			"end": {
+				"line": 362,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/tags",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 365,
+				"character": 8
+			},
+			"end": {
+				"line": 413,
+				"character": 52
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/tags",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 378,
+				"character": 17
+			},
+			"end": {
+				"line": 384,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"paths",
+			"/tags",
+			"get",
+			"parameters",
+			"2",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 388,
+				"character": 17
+			},
+			"end": {
+				"line": 390,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/tags",
+			"get",
+			"parameters",
+			"3",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 393,
+				"character": 17
+			},
+			"end": {
+				"line": 403,
+				"character": 30
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/tags/{slug}",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 416,
+				"character": 8
+			},
+			"end": {
+				"line": 438,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/tags/{slug}",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 427,
+				"character": 17
+			},
+			"end": {
+				"line": 428,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/industries",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 456,
+				"character": 17
+			},
+			"end": {
+				"line": 462,
+				"character": 35
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/industries/{slug}",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 491,
+				"character": 17
+			},
+			"end": {
+				"line": 492,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/regions",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 519,
+				"character": 17
+			},
+			"end": {
+				"line": 525,
+				"character": 35
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/regions/{slug}",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 554,
+				"character": 17
+			},
+			"end": {
+				"line": 555,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/openapis",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 567,
+				"character": 8
+			},
+			"end": {
+				"line": 590,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/asyncapis",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 592,
+				"character": 8
+			},
+			"end": {
+				"line": 615,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/arazzo",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 617,
+				"character": 8
+			},
+			"end": {
+				"line": 640,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/postman",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 642,
+				"character": 8
+			},
+			"end": {
+				"line": 665,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/collections",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 667,
+				"character": 8
+			},
+			"end": {
+				"line": 690,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/graphql",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 692,
+				"character": 8
+			},
+			"end": {
+				"line": 715,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/json-schemas",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 717,
+				"character": 8
+			},
+			"end": {
+				"line": 740,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/json-structures",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 742,
+				"character": 8
+			},
+			"end": {
+				"line": 765,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/json-ld",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 767,
+				"character": 8
+			},
+			"end": {
+				"line": 790,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/vocabularies",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 792,
+				"character": 8
+			},
+			"end": {
+				"line": 815,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/rules",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 817,
+				"character": 8
+			},
+			"end": {
+				"line": 840,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/examples",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 842,
+				"character": 8
+			},
+			"end": {
+				"line": 865,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/finops",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 867,
+				"character": 8
+			},
+			"end": {
+				"line": 890,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/plans",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 892,
+				"character": 8
+			},
+			"end": {
+				"line": 915,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/rate-limits",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 917,
+				"character": 8
+			},
+			"end": {
+				"line": 940,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/ratings",
+			"get",
+			"parameters",
+			"8",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 964,
+				"character": 17
+			},
+			"end": {
+				"line": 970,
+				"character": 30
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/ratings/rubric",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 983,
+				"character": 8
+			},
+			"end": {
+				"line": 997,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/search",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 999,
+				"character": 8
+			},
+			"end": {
+				"line": 1058,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/search",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1019,
+				"character": 17
+			},
+			"end": {
+				"line": 1025,
+				"character": 25
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/search",
+			"get",
+			"parameters",
+			"11",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1038,
+				"character": 17
+			},
+			"end": {
+				"line": 1046,
+				"character": 30
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/channels",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1061,
+				"character": 8
+			},
+			"end": {
+				"line": 1086,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/mcp",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1088,
+				"character": 8
+			},
+			"end": {
+				"line": 1113,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/skills",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1115,
+				"character": 8
+			},
+			"end": {
+				"line": 1140,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/areas",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1215,
+				"character": 17
+			},
+			"end": {
+				"line": 1221,
+				"character": 35
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/areas/{slug}",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1252,
+				"character": 17
+			},
+			"end": {
+				"line": 1253,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/compare",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1282,
+				"character": 17
+			},
+			"end": {
+				"line": 1283,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/gaps",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1312,
+				"character": 17
+			},
+			"end": {
+				"line": 1313,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"paths",
+			"/gaps",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1317,
+				"character": 17
+			},
+			"end": {
+				"line": 1318,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/changes",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1347,
+				"character": 17
+			},
+			"end": {
+				"line": 1349,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/stack",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1364,
+				"character": 8
+			},
+			"end": {
+				"line": 1394,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/stack",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1378,
+				"character": 17
+			},
+			"end": {
+				"line": 1379,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/stack",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1383,
+				"character": 17
+			},
+			"end": {
+				"line": 1384,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers/{slug}/artifacts",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1398,
+				"character": 8
+			},
+			"end": {
+				"line": 1419,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers/{slug}/onboarding",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1422,
+				"character": 8
+			},
+			"end": {
+				"line": 1442,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/providers/{slug}/similar",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1445,
+				"character": 8
+			},
+			"end": {
+				"line": 1465,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/apis/{aid}/artifacts",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1493,
+				"character": 8
+			},
+			"end": {
+				"line": 1515,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/apis/{aid}/similar",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1518,
+				"character": 8
+			},
+			"end": {
+				"line": 1538,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api1-bola-operation-security-defined",
+		"path": [
+			"paths",
+			"/openapis/{aid}",
+			"get"
+		],
+		"message": "API1 (BOLA): operation must declare a `security` requirement so per-object authorization can be enforced.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1541,
+				"character": 8
+			},
+			"end": {
+				"line": 1563,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/industries/{slug}/leaders",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1582,
+				"character": 17
+			},
+			"end": {
+				"line": 1583,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/regions/{slug}/leaders",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1613,
+				"character": 17
+			},
+			"end": {
+				"line": 1614,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/areas/{slug}/leaders",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1644,
+				"character": 17
+			},
+			"end": {
+				"line": 1645,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/gaps/industry/{slug}",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1699,
+				"character": 17
+			},
+			"end": {
+				"line": 1700,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"paths",
+			"/gaps/industry/{slug}",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1704,
+				"character": 17
+			},
+			"end": {
+				"line": 1705,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/stack/export",
+			"get",
+			"parameters",
+			"0",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1734,
+				"character": 17
+			},
+			"end": {
+				"line": 1735,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"paths",
+			"/stack/export",
+			"get",
+			"parameters",
+			"1",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1739,
+				"character": 17
+			},
+			"end": {
+				"line": 1740,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Q",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1766,
+				"character": 13
+			},
+			"end": {
+				"line": 1767,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"Tags",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1777,
+				"character": 13
+			},
+			"end": {
+				"line": 1780,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Tags",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1779,
+				"character": 14
+			},
+			"end": {
+				"line": 1780,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Match",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1785,
+				"character": 13
+			},
+			"end": {
+				"line": 1790,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"Providers",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1797,
+				"character": 13
+			},
+			"end": {
+				"line": 1800,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Providers",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1799,
+				"character": 14
+			},
+			"end": {
+				"line": 1800,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"ArtifactTypes",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1807,
+				"character": 13
+			},
+			"end": {
+				"line": 1810,
+				"character": 51
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"Include",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1817,
+				"character": 13
+			},
+			"end": {
+				"line": 1822,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Include",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1819,
+				"character": 14
+			},
+			"end": {
+				"line": 1822,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"Fields",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1829,
+				"character": 13
+			},
+			"end": {
+				"line": 1832,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Fields",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1831,
+				"character": 14
+			},
+			"end": {
+				"line": 1832,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"ProviderSlug",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1838,
+				"character": 13
+			},
+			"end": {
+				"line": 1839,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"Aid",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1845,
+				"character": 13
+			},
+			"end": {
+				"line": 1847,
+				"character": 32
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"parameters",
+			"Page",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1852,
+				"character": 13
+			},
+			"end": {
+				"line": 1855,
+				"character": 18
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"ArtifactSort",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1870,
+				"character": 13
+			},
+			"end": {
+				"line": 1877,
+				"character": 26
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"BandFilter",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1884,
+				"character": 13
+			},
+			"end": {
+				"line": 1887,
+				"character": 43
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"IndustryFilter",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1930,
+				"character": 13
+			},
+			"end": {
+				"line": 1933,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"IndustryFilter",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1932,
+				"character": 14
+			},
+			"end": {
+				"line": 1933,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"parameters",
+			"RegionFilter",
+			"schema"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 1940,
+				"character": 13
+			},
+			"end": {
+				"line": 1943,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"parameters",
+			"RegionFilter",
+			"schema",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1942,
+				"character": 14
+			},
+			"end": {
+				"line": 1943,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Meta",
+			"properties",
+			"total"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1989,
+				"character": 14
+			},
+			"end": {
+				"line": 1991,
+				"character": 61
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Meta",
+			"properties",
+			"page"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1992,
+				"character": 13
+			},
+			"end": {
+				"line": 1993,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Meta",
+			"properties",
+			"limit"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1994,
+				"character": 14
+			},
+			"end": {
+				"line": 1995,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Meta",
+			"properties",
+			"pages"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 1996,
+				"character": 14
+			},
+			"end": {
+				"line": 1998,
+				"character": 45
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Link",
+			"properties",
+			"type"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2012,
+				"character": 13
+			},
+			"end": {
+				"line": 2014,
+				"character": 93
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Link",
+			"properties",
+			"url"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2015,
+				"character": 12
+			},
+			"end": {
+				"line": 2017,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Link",
+			"properties",
+			"title"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2018,
+				"character": 14
+			},
+			"end": {
+				"line": 2019,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"ArtifactType"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2024,
+				"character": 17
+			},
+			"end": {
+				"line": 2082,
+				"character": 29
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"id"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2088,
+				"character": 11
+			},
+			"end": {
+				"line": 2092,
+				"character": 54
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2095,
+				"character": 13
+			},
+			"end": {
+				"line": 2097,
+				"character": 61
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"url"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2098,
+				"character": 12
+			},
+			"end": {
+				"line": 2101,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"aid"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2103,
+				"character": 12
+			},
+			"end": {
+				"line": 2105,
+				"character": 45
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"provider_slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2106,
+				"character": 22
+			},
+			"end": {
+				"line": 2107,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"provider_name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2108,
+				"character": 22
+			},
+			"end": {
+				"line": 2109,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"content"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2111,
+				"character": 16
+			},
+			"end": {
+				"line": 2113,
+				"character": 80
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Artifact",
+			"properties",
+			"content_type"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2114,
+				"character": 21
+			},
+			"end": {
+				"line": 2116,
+				"character": 81
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"aid"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2125,
+				"character": 12
+			},
+			"end": {
+				"line": 2128,
+				"character": 42
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2129,
+				"character": 13
+			},
+			"end": {
+				"line": 2130,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2131,
+				"character": 20
+			},
+			"end": {
+				"line": 2132,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"provider_slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2133,
+				"character": 22
+			},
+			"end": {
+				"line": 2134,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"provider_name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2135,
+				"character": 22
+			},
+			"end": {
+				"line": 2136,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"baseURL"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2137,
+				"character": 16
+			},
+			"end": {
+				"line": 2139,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"humanURL"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2140,
+				"character": 17
+			},
+			"end": {
+				"line": 2143,
+				"character": 62
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"tags"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2144,
+				"character": 13
+			},
+			"end": {
+				"line": 2151,
+				"character": 32
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"tags",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2147,
+				"character": 16
+			},
+			"end": {
+				"line": 2148,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"properties"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2152,
+				"character": 19
+			},
+			"end": {
+				"line": 2156,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"sibling_apis"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2157,
+				"character": 21
+			},
+			"end": {
+				"line": 2166,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"sibling_apis",
+			"items",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2163,
+				"character": 19
+			},
+			"end": {
+				"line": 2164,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"sibling_apis",
+			"items",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2165,
+				"character": 19
+			},
+			"end": {
+				"line": 2166,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Api",
+			"properties",
+			"overview"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2167,
+				"character": 17
+			},
+			"end": {
+				"line": 2169,
+				"character": 53
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2179,
+				"character": 13
+			},
+			"end": {
+				"line": 2182,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2183,
+				"character": 13
+			},
+			"end": {
+				"line": 2184,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2185,
+				"character": 20
+			},
+			"end": {
+				"line": 2186,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2187,
+				"character": 18
+			},
+			"end": {
+				"line": 2188,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"image"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2189,
+				"character": 14
+			},
+			"end": {
+				"line": 2191,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"created"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2192,
+				"character": 16
+			},
+			"end": {
+				"line": 2194,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"common"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2195,
+				"character": 15
+			},
+			"end": {
+				"line": 2199,
+				"character": 45
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"apis"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2200,
+				"character": 13
+			},
+			"end": {
+				"line": 2211,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2206,
+				"character": 19
+			},
+			"end": {
+				"line": 2207,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2208,
+				"character": 19
+			},
+			"end": {
+				"line": 2209,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2210,
+				"character": 26
+			},
+			"end": {
+				"line": 2211,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"tags"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2212,
+				"character": 13
+			},
+			"end": {
+				"line": 2219,
+				"character": 32
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Provider",
+			"properties",
+			"tags",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2215,
+				"character": 16
+			},
+			"end": {
+				"line": 2216,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"TagRef",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2229,
+				"character": 13
+			},
+			"end": {
+				"line": 2230,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"TagRef",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2231,
+				"character": 13
+			},
+			"end": {
+				"line": 2232,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2238,
+				"character": 13
+			},
+			"end": {
+				"line": 2241,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2242,
+				"character": 13
+			},
+			"end": {
+				"line": 2245,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"composite"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2246,
+				"character": 18
+			},
+			"end": {
+				"line": 2248,
+				"character": 47
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"band"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2249,
+				"character": 13
+			},
+			"end": {
+				"line": 2255,
+				"character": 18
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"frequency"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2256,
+				"character": 18
+			},
+			"end": {
+				"line": 2257,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"breadth"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2258,
+				"character": 16
+			},
+			"end": {
+				"line": 2259,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"quality_lift"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2260,
+				"character": 21
+			},
+			"end": {
+				"line": 2261,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"provider_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2262,
+				"character": 23
+			},
+			"end": {
+				"line": 2263,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2264,
+				"character": 18
+			},
+			"end": {
+				"line": 2265,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"variants"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2266,
+				"character": 17
+			},
+			"end": {
+				"line": 2269,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"variants",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2268,
+				"character": 16
+			},
+			"end": {
+				"line": 2269,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"neighbors"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2270,
+				"character": 18
+			},
+			"end": {
+				"line": 2274,
+				"character": 47
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"providers"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2275,
+				"character": 18
+			},
+			"end": {
+				"line": 2278,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"apis"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2279,
+				"character": 13
+			},
+			"end": {
+				"line": 2289,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"provider"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2284,
+				"character": 23
+			},
+			"end": {
+				"line": 2285,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2286,
+				"character": 19
+			},
+			"end": {
+				"line": 2287,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Tag",
+			"properties",
+			"apis",
+			"items",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2288,
+				"character": 19
+			},
+			"end": {
+				"line": 2289,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"ProviderList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2299,
+				"character": 13
+			},
+			"end": {
+				"line": 2302,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"ApiList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2312,
+				"character": 13
+			},
+			"end": {
+				"line": 2315,
+				"character": 44
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"TagList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2325,
+				"character": 13
+			},
+			"end": {
+				"line": 2328,
+				"character": 44
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"ArtifactList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2338,
+				"character": 13
+			},
+			"end": {
+				"line": 2341,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"SearchResults",
+			"properties",
+			"meta",
+			"allOf",
+			"1",
+			"properties",
+			"return"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2357,
+				"character": 23
+			},
+			"end": {
+				"line": 2363,
+				"character": 31
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"SearchResults",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2364,
+				"character": 13
+			},
+			"end": {
+				"line": 2371,
+				"character": 53
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Problem",
+			"properties",
+			"type"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2383,
+				"character": 13
+			},
+			"end": {
+				"line": 2389,
+				"character": 58
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Problem",
+			"properties",
+			"title"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2390,
+				"character": 14
+			},
+			"end": {
+				"line": 2394,
+				"character": 31
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Problem",
+			"properties",
+			"detail"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2402,
+				"character": 15
+			},
+			"end": {
+				"line": 2404,
+				"character": 80
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Problem",
+			"properties",
+			"instance"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2405,
+				"character": 17
+			},
+			"end": {
+				"line": 2408,
+				"character": 104
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Problem",
+			"properties",
+			"parameter"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2409,
+				"character": 18
+			},
+			"end": {
+				"line": 2411,
+				"character": 94
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Band"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2417,
+				"character": 9
+			},
+			"end": {
+				"line": 2425,
+				"character": 17
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Trend"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2426,
+				"character": 10
+			},
+			"end": {
+				"line": 2432,
+				"character": 17
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"FacetName"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2433,
+				"character": 14
+			},
+			"end": {
+				"line": 2442,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"ProviderScore",
+			"properties",
+			"delta"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2492,
+				"character": 14
+			},
+			"end": {
+				"line": 2496,
+				"character": 17
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"ProviderScore",
+			"properties",
+			"scored_at"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2501,
+				"character": 18
+			},
+			"end": {
+				"line": 2503,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"ProviderScore",
+			"properties",
+			"schema_version"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2504,
+				"character": 23
+			},
+			"end": {
+				"line": 2507,
+				"character": 19
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"RatingEntry",
+			"properties",
+			"rank"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2517,
+				"character": 13
+			},
+			"end": {
+				"line": 2519,
+				"character": 75
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RatingEntry",
+			"properties",
+			"provider_slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2520,
+				"character": 22
+			},
+			"end": {
+				"line": 2521,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RatingEntry",
+			"properties",
+			"provider_name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2522,
+				"character": 22
+			},
+			"end": {
+				"line": 2523,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"RatingList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2543,
+				"character": 13
+			},
+			"end": {
+				"line": 2546,
+				"character": 52
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"schema_version"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2554,
+				"character": 23
+			},
+			"end": {
+				"line": 2557,
+				"character": 19
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"bands"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2558,
+				"character": 14
+			},
+			"end": {
+				"line": 2569,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"bands",
+			"items",
+			"properties",
+			"min"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2565,
+				"character": 18
+			},
+			"end": {
+				"line": 2567,
+				"character": 74
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"bands",
+			"items",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2568,
+				"character": 26
+			},
+			"end": {
+				"line": 2569,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"facets"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2570,
+				"character": 15
+			},
+			"end": {
+				"line": 2583,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"facets",
+			"items",
+			"properties",
+			"label"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2577,
+				"character": 20
+			},
+			"end": {
+				"line": 2578,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"facets",
+			"items",
+			"properties",
+			"weight"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2579,
+				"character": 21
+			},
+			"end": {
+				"line": 2581,
+				"character": 81
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"facets",
+			"items",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2582,
+				"character": 26
+			},
+			"end": {
+				"line": 2583,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"trending",
+			"properties",
+			"rising_threshold"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2587,
+				"character": 29
+			},
+			"end": {
+				"line": 2590,
+				"character": 19
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Rubric",
+			"properties",
+			"trending",
+			"properties",
+			"falling_threshold"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2591,
+				"character": 30
+			},
+			"end": {
+				"line": 2594,
+				"character": 20
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RankedProvider",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2599,
+				"character": 13
+			},
+			"end": {
+				"line": 2600,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RankedProvider",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2601,
+				"character": 13
+			},
+			"end": {
+				"line": 2602,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RankedProvider",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2603,
+				"character": 20
+			},
+			"end": {
+				"line": 2604,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"RankedProvider",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2605,
+				"character": 18
+			},
+			"end": {
+				"line": 2606,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"RankedProvider",
+			"properties",
+			"image"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2607,
+				"character": 14
+			},
+			"end": {
+				"line": 2609,
+				"character": 21
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2623,
+				"character": 13
+			},
+			"end": {
+				"line": 2626,
+				"character": 33
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2627,
+				"character": 13
+			},
+			"end": {
+				"line": 2630,
+				"character": 35
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"short"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2631,
+				"character": 14
+			},
+			"end": {
+				"line": 2633,
+				"character": 40
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2634,
+				"character": 20
+			},
+			"end": {
+				"line": 2635,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"aliases"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2636,
+				"character": 16
+			},
+			"end": {
+				"line": 2639,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"aliases",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2638,
+				"character": 16
+			},
+			"end": {
+				"line": 2639,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"provider_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2640,
+				"character": 23
+			},
+			"end": {
+				"line": 2641,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2642,
+				"character": 18
+			},
+			"end": {
+				"line": 2643,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Industry",
+			"properties",
+			"providers"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2644,
+				"character": 18
+			},
+			"end": {
+				"line": 2648,
+				"character": 55
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2656,
+				"character": 13
+			},
+			"end": {
+				"line": 2659,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2660,
+				"character": 13
+			},
+			"end": {
+				"line": 2663,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"short"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2664,
+				"character": 14
+			},
+			"end": {
+				"line": 2666,
+				"character": 40
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2667,
+				"character": 20
+			},
+			"end": {
+				"line": 2668,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"aliases"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2669,
+				"character": 16
+			},
+			"end": {
+				"line": 2672,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"aliases",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2671,
+				"character": 16
+			},
+			"end": {
+				"line": 2672,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"name_patterns"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2673,
+				"character": 22
+			},
+			"end": {
+				"line": 2677,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"name_patterns",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2676,
+				"character": 16
+			},
+			"end": {
+				"line": 2677,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"provider_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2678,
+				"character": 23
+			},
+			"end": {
+				"line": 2679,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2680,
+				"character": 18
+			},
+			"end": {
+				"line": 2681,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Region",
+			"properties",
+			"providers"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2682,
+				"character": 18
+			},
+			"end": {
+				"line": 2686,
+				"character": 55
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"IndustryList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2695,
+				"character": 13
+			},
+			"end": {
+				"line": 2698,
+				"character": 49
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"RegionList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2707,
+				"character": 13
+			},
+			"end": {
+				"line": 2710,
+				"character": 47
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"slug"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2718,
+				"character": 13
+			},
+			"end": {
+				"line": 2721,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"name"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2722,
+				"character": 13
+			},
+			"end": {
+				"line": 2725,
+				"character": 28
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"short"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2726,
+				"character": 14
+			},
+			"end": {
+				"line": 2728,
+				"character": 40
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"description"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2729,
+				"character": 20
+			},
+			"end": {
+				"line": 2730,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"aliases"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2731,
+				"character": 16
+			},
+			"end": {
+				"line": 2734,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"aliases",
+			"items"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2733,
+				"character": 16
+			},
+			"end": {
+				"line": 2734,
+				"character": 24
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"area_url"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2735,
+				"character": 17
+			},
+			"end": {
+				"line": 2739,
+				"character": 54
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api7-ssrf-url-property-format",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"area_url"
+		],
+		"message": "API7 (SSRF): URL-bearing property should declare `format: uri` and be reviewed for server-side fetch / allow-listing.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2735,
+				"character": 17
+			},
+			"end": {
+				"line": 2739,
+				"character": 54
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"area_host"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2740,
+				"character": 18
+			},
+			"end": {
+				"line": 2741,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-string-maxlength",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"icon"
+		],
+		"message": "API4 (Resource Consumption): string schema should declare `maxLength` to bound input size.",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2742,
+				"character": 13
+			},
+			"end": {
+				"line": 2743,
+				"character": 22
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"provider_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2744,
+				"character": 23
+			},
+			"end": {
+				"line": 2745,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-integer-bounds",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"api_count"
+		],
+		"message": "API4 (Resource Consumption): numeric schema should declare a `maximum` (e.g. cap page size).",
+		"severity": 2,
+		"range": {
+			"start": {
+				"line": 2746,
+				"character": 18
+			},
+			"end": {
+				"line": 2747,
+				"character": 23
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"Area",
+			"properties",
+			"providers"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2748,
+				"character": 18
+			},
+			"end": {
+				"line": 2752,
+				"character": 55
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	},
+	{
+		"code": "owasp-api4-resource-array-maxitems",
+		"path": [
+			"components",
+			"schemas",
+			"AreaList",
+			"properties",
+			"data"
+		],
+		"message": "API4 (Resource Consumption): array schema should declare `maxItems` to bound collection size.",
+		"severity": 1,
+		"range": {
+			"start": {
+				"line": 2761,
+				"character": 13
+			},
+			"end": {
+				"line": 2764,
+				"character": 45
+			}
+		},
+		"source": "/Users/kinlane/GitHub/api-evangelist/apis-io/openapi/apis-io-v1-openapi.yml"
+	}
+]

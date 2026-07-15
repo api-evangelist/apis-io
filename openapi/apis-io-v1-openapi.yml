@@ -65,89 +65,89 @@ x-apis-io:
   # `uses` = the MCP tools each prompt orchestrates (many-to-many); the tool links the prompt back
   # to the operation(s) it drives.
   prompts:
-    - { name: find_api,          tier: free, description: "Find an API for a task or use case, ranked with links.", uses: [apis_io_search] }
-    - { name: explain_artifact,  tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it.", uses: [get_api] }
-    - { name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links.", uses: [get_provider] }
-    - { name: design_api_stack,  tier: pro,  description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.", uses: [find_providers, apis_io_search, find_industries, find_ratings, recommend_stack] }
-    - { name: vendor_shortlist,  tier: pro,  description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs.", uses: [find_providers, apis_io_search, find_ratings, get_provider_rating] }
-    - { name: integrate_provider,     tier: free, description: "Onboard a provider end-to-end: pull the OpenAPI + onboarding, produce first-integration steps.", uses: [get_provider_onboarding, get_provider_artifacts, get_openapi] }
-    - { name: api_readiness_check,    tier: free, description: "Assess whether an API is ready to adopt — artifacts present, rating, what's missing.", uses: [get_api_artifacts, get_provider_rating] }
-    - { name: audit_api_estate,       tier: pro,  description: "PRO — Inventory, score, and gap a set of providers.", uses: [compare_providers, gap_analysis, find_ratings, industry_gap_analysis] }
-    - { name: find_alternatives,      tier: pro,  description: "PRO — Find and compare alternatives to a provider for a migration decision.", uses: [find_similar_providers, compare_providers, get_provider_rating] }
-    - { name: build_agent_toolset,    tier: pro,  description: "PRO — Assemble the providers, MCP servers, and skills an agent needs for a job.", uses: [recommend_stack, find_artifacts, export_stack] }
-    - { name: track_provider_changes, tier: pro,  description: "PRO — Monitor a chosen set of providers for catalog and rating movement.", uses: [whats_changed, find_rating_movers, get_rating_history] }
+    - {name: find_api, tier: free, description: "Find an API for a task or use case, ranked with links.", uses: [apis_io_search]}
+    - {name: explain_artifact, tier: free, description: "Explain one API artifact (OpenAPI, AsyncAPI, Arazzo, rules, …) and how to use it.", uses: [get_api]}
+    - {name: provider_overview, tier: free, description: "Summarize what one provider offers — its APIs, artifacts, and links.", uses: [get_provider]}
+    - {name: design_api_stack, tier: pro, description: "PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.", uses: [find_providers, apis_io_search, find_industries, find_ratings, recommend_stack]}
+    - {name: vendor_shortlist, tier: pro, description: "PRO — Build a scored vendor shortlist for one capability, with tradeoffs.", uses: [find_providers, apis_io_search, find_ratings, get_provider_rating]}
+    - {name: integrate_provider, tier: free, description: "Onboard a provider end-to-end: pull the OpenAPI + onboarding, produce first-integration steps.", uses: [get_provider_onboarding, get_provider_artifacts, get_openapi]}
+    - {name: api_readiness_check, tier: free, description: "Assess whether an API is ready to adopt — artifacts present, rating, what's missing.", uses: [get_api_artifacts, get_provider_rating]}
+    - {name: audit_api_estate, tier: pro, description: "PRO — Inventory, score, and gap a set of providers.", uses: [compare_providers, gap_analysis, find_ratings, industry_gap_analysis]}
+    - {name: find_alternatives, tier: pro, description: "PRO — Find and compare alternatives to a provider for a migration decision.", uses: [find_similar_providers, compare_providers, get_provider_rating]}
+    - {name: build_agent_toolset, tier: pro, description: "PRO — Assemble the providers, MCP servers, and skills an agent needs for a job.", uses: [recommend_stack, find_artifacts, export_stack]}
+    - {name: track_provider_changes, tier: pro, description: "PRO — Monitor a chosen set of providers for catalog and rating movement.", uses: [whats_changed, find_rating_movers, get_rating_history]}
   # `operation` = the operationId a resource is backed by (omitted for cross-cutting resources like
   # the catalog root and llms.txt that map to no single operation).
   resources:
-    - { uri: "apis://catalog",                    tier: free, description: "Service root — network-wide artifact counts." }
-    - { uri: "apis://ratings/rubric",             tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds.", operation: getRatingRubric }
-    - { uri: "apis://llms.txt",                   tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding." }
-    - { uri: "apis://provider/{slug}",            tier: free, description: "One provider's profile — its APIs and links.", operation: getProvider }
-    - { uri: "apis://provider/{slug}/dossier",    tier: pro,  description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document.", operation: getProvider }
-    - { uri: "apis://provider/{slug}/openapi",    tier: free, description: "The provider's primary OpenAPI, inlined.", operation: getOpenapi }
-    - { uri: "apis://tag/{slug}",                 tier: free, description: "One tag with its linked providers, APIs, and neighbor tags.", operation: getTag }
-    - { uri: "apis://industry/{slug}",            tier: pro,  description: "PRO — an industry vertical with its ranked member providers.", operation: getIndustry }
-    - { uri: "apis://region/{slug}",              tier: pro,  description: "PRO — a region with its ranked member providers.", operation: getRegion }
-    - { uri: "apis://area/{slug}",                tier: pro,  description: "PRO — a curated area with its ranked member providers.", operation: getArea }
-    - { uri: "apis://stack/{capabilities}",       tier: pro,  description: "PRO — a designed capability stack exported as an adoptable APIs.json.", operation: exportStack }
-    - { uri: "apis://changes",                    tier: pro,  description: "PRO — recent catalog changes (last 30 days): additions + rating movement, as a feed.", operation: whatsChanged }
+    - {uri: "apis://catalog", tier: free, description: "Service root — network-wide artifact counts."}
+    - {uri: "apis://ratings/rubric", tier: free, description: "The scoring rubric — bands, facet weights, trend thresholds.", operation: getRatingRubric}
+    - {uri: "apis://llms.txt", tier: free, description: "The apis.io llms.txt index — a machine-readable map of the network for grounding."}
+    - {uri: "apis://provider/{slug}", tier: free, description: "One provider's profile — its APIs and links.", operation: getProvider}
+    - {uri: "apis://provider/{slug}/dossier", tier: pro, description: "PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one document.", operation: getProvider}
+    - {uri: "apis://provider/{slug}/openapi", tier: free, description: "The provider's primary OpenAPI, inlined.", operation: getOpenapi}
+    - {uri: "apis://tag/{slug}", tier: free, description: "One tag with its linked providers, APIs, and neighbor tags.", operation: getTag}
+    - {uri: "apis://industry/{slug}", tier: pro, description: "PRO — an industry vertical with its ranked member providers.", operation: getIndustry}
+    - {uri: "apis://region/{slug}", tier: pro, description: "PRO — a region with its ranked member providers.", operation: getRegion}
+    - {uri: "apis://area/{slug}", tier: pro, description: "PRO — a curated area with its ranked member providers.", operation: getArea}
+    - {uri: "apis://stack/{capabilities}", tier: pro, description: "PRO — a designed capability stack exported as an adoptable APIs.json.", operation: exportStack}
+    - {uri: "apis://changes", tier: pro, description: "PRO — recent catalog changes (last 30 days): additions + rating movement, as a feed.", operation: whatsChanged}
   # operationId -> { tier, mcpTool, agentSkill }. agentSkill omitted where none exists yet (a gap
   # the coverage view surfaces on purpose).
   operations:
-    listProviders:    { tier: free, mcpTool: find_providers,      agentSkill: find-api }
-    getProvider:      { tier: free, mcpTool: get_provider,        agentSkill: integrate-provider }
-    listProviderApis: { tier: free, mcpTool: get_provider,        agentSkill: integrate-provider }
-    getProviderArtifacts:  { tier: free, mcpTool: get_provider_artifacts,   agentSkill: integrate-provider }
-    getProviderOnboarding: { tier: free, mcpTool: get_provider_onboarding,  agentSkill: integrate-provider }
-    findSimilarProviders:  { tier: free, mcpTool: find_similar_providers,   agentSkill: shortlist-vendors }
-    listApis:         { tier: free, mcpTool: find_apis,           agentSkill: find-api }
-    getApi:           { tier: free, mcpTool: get_api,             agentSkill: fetch-api-spec }
-    getApiArtifacts:  { tier: free, mcpTool: get_api_artifacts,   agentSkill: find-api }
-    findSimilarApis:  { tier: free, mcpTool: find_similar_apis,   agentSkill: find-api }
-    getOpenapi:       { tier: free, mcpTool: get_openapi,         agentSkill: integrate-provider }
-    listTags:         { tier: free, mcpTool: find_tags }
-    getTag:           { tier: free, mcpTool: get_tag }
-    listOpenapis:     { tier: free, mcpTool: find_artifacts }
-    listAsyncapis:    { tier: free, mcpTool: find_artifacts }
-    listArazzo:       { tier: free, mcpTool: find_artifacts }
-    listPostman:      { tier: free, mcpTool: find_artifacts }
-    listCollections:  { tier: free, mcpTool: find_artifacts }
-    listGraphql:      { tier: free, mcpTool: find_artifacts }
-    listJsonSchemas:  { tier: free, mcpTool: find_artifacts }
-    listJsonStructures: { tier: free, mcpTool: find_artifacts }
-    listJsonLd:       { tier: free, mcpTool: find_artifacts }
-    listVocabularies: { tier: free, mcpTool: find_artifacts }
-    listRules:        { tier: free, mcpTool: find_artifacts }
-    listExamples:     { tier: free, mcpTool: find_artifacts }
-    listFinops:       { tier: free, mcpTool: find_artifacts }
-    listPlans:        { tier: free, mcpTool: find_artifacts }
-    listRateLimits:   { tier: free, mcpTool: find_artifacts }
-    listChannels:     { tier: free, mcpTool: find_artifacts }
-    listMcpServers:   { tier: free, mcpTool: find_artifacts,      agentSkill: discover-mcp-servers }
-    listSkills:       { tier: free, mcpTool: find_artifacts }
-    listScopes:       { tier: pro,  mcpTool: find_artifacts }
-    listSecurity:     { tier: pro,  mcpTool: find_artifacts }
-    search:           { tier: free, mcpTool: apis_io_search,     agentSkill: find-api }
-    getRatingRubric:  { tier: free, mcpTool: get_rating_rubric }
-    listIndustries:   { tier: pro,  mcpTool: find_industries }
-    getIndustry:      { tier: pro,  mcpTool: get_industry }
-    getIndustryLeaders: { tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors }
-    industryGapAnalysis: { tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate }
-    listRegions:      { tier: pro,  mcpTool: find_regions }
-    getRegion:        { tier: pro,  mcpTool: get_region }
-    getRegionLeaders: { tier: pro,  mcpTool: get_region_leaders,  agentSkill: shortlist-vendors }
-    listAreas:        { tier: pro,  mcpTool: find_areas }
-    getArea:          { tier: pro,  mcpTool: get_area }
-    getAreaLeaders:   { tier: pro,  mcpTool: get_area_leaders,    agentSkill: shortlist-vendors }
-    listRatings:      { tier: pro,  mcpTool: find_ratings }
-    findRatingMovers: { tier: pro,  mcpTool: find_rating_movers,  agentSkill: track-api-changes }
-    getProviderRating: { tier: pro, mcpTool: get_provider_rating }
-    getRatingHistory: { tier: pro,  mcpTool: get_rating_history,  agentSkill: track-api-changes }
-    compareProviders: { tier: pro,  mcpTool: compare_providers,  agentSkill: audit-api-estate }
-    gapAnalysis:      { tier: pro,  mcpTool: gap_analysis,        agentSkill: audit-api-estate }
-    whatsChanged:     { tier: pro,  mcpTool: whats_changed,       agentSkill: track-api-changes }
-    recommendStack:   { tier: free, mcpTool: recommend_stack,    agentSkill: assemble-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json. }
-    exportStack:      { tier: pro,  mcpTool: export_stack,        agentSkill: assemble-api-stack }
+    listProviders: {tier: free, mcpTool: find_providers, agentSkill: find-api}
+    getProvider: {tier: free, mcpTool: get_provider, agentSkill: integrate-provider}
+    listProviderApis: {tier: free, mcpTool: get_provider, agentSkill: integrate-provider}
+    getProviderArtifacts: {tier: free, mcpTool: get_provider_artifacts, agentSkill: integrate-provider}
+    getProviderOnboarding: {tier: free, mcpTool: get_provider_onboarding, agentSkill: integrate-provider}
+    findSimilarProviders: {tier: free, mcpTool: find_similar_providers, agentSkill: shortlist-vendors}
+    listApis: {tier: free, mcpTool: find_apis, agentSkill: find-api}
+    getApi: {tier: free, mcpTool: get_api, agentSkill: fetch-api-spec}
+    getApiArtifacts: {tier: free, mcpTool: get_api_artifacts, agentSkill: find-api}
+    findSimilarApis: {tier: free, mcpTool: find_similar_apis, agentSkill: find-api}
+    getOpenapi: {tier: free, mcpTool: get_openapi, agentSkill: integrate-provider}
+    listTags: {tier: free, mcpTool: find_tags}
+    getTag: {tier: free, mcpTool: get_tag}
+    listOpenapis: {tier: free, mcpTool: find_artifacts}
+    listAsyncapis: {tier: free, mcpTool: find_artifacts}
+    listArazzo: {tier: free, mcpTool: find_artifacts}
+    listPostman: {tier: free, mcpTool: find_artifacts}
+    listCollections: {tier: free, mcpTool: find_artifacts}
+    listGraphql: {tier: free, mcpTool: find_artifacts}
+    listJsonSchemas: {tier: free, mcpTool: find_artifacts}
+    listJsonStructures: {tier: free, mcpTool: find_artifacts}
+    listJsonLd: {tier: free, mcpTool: find_artifacts}
+    listVocabularies: {tier: free, mcpTool: find_artifacts}
+    listRules: {tier: free, mcpTool: find_artifacts}
+    listExamples: {tier: free, mcpTool: find_artifacts}
+    listFinops: {tier: free, mcpTool: find_artifacts}
+    listPlans: {tier: free, mcpTool: find_artifacts}
+    listRateLimits: {tier: free, mcpTool: find_artifacts}
+    listChannels: {tier: free, mcpTool: find_artifacts}
+    listMcpServers: {tier: free, mcpTool: find_artifacts, agentSkill: discover-mcp-servers}
+    listSkills: {tier: free, mcpTool: find_artifacts}
+    listScopes: {tier: pro, mcpTool: find_artifacts}
+    listSecurity: {tier: pro, mcpTool: find_artifacts}
+    search: {tier: free, mcpTool: apis_io_search, agentSkill: find-api}
+    getRatingRubric: {tier: free, mcpTool: get_rating_rubric}
+    listIndustries: {tier: pro, mcpTool: find_industries}
+    getIndustry: {tier: pro, mcpTool: get_industry}
+    getIndustryLeaders: {tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors}
+    industryGapAnalysis: {tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate}
+    listRegions: {tier: pro, mcpTool: find_regions}
+    getRegion: {tier: pro, mcpTool: get_region}
+    getRegionLeaders: {tier: pro, mcpTool: get_region_leaders, agentSkill: shortlist-vendors}
+    listAreas: {tier: pro, mcpTool: find_areas}
+    getArea: {tier: pro, mcpTool: get_area}
+    getAreaLeaders: {tier: pro, mcpTool: get_area_leaders, agentSkill: shortlist-vendors}
+    listRatings: {tier: pro, mcpTool: find_ratings}
+    findRatingMovers: {tier: pro, mcpTool: find_rating_movers, agentSkill: track-api-changes}
+    getProviderRating: {tier: pro, mcpTool: get_provider_rating}
+    getRatingHistory: {tier: pro, mcpTool: get_rating_history, agentSkill: track-api-changes}
+    compareProviders: {tier: pro, mcpTool: compare_providers, agentSkill: audit-api-estate}
+    gapAnalysis: {tier: pro, mcpTool: gap_analysis, agentSkill: audit-api-estate}
+    whatsChanged: {tier: pro, mcpTool: whats_changed, agentSkill: track-api-changes}
+    recommendStack: {tier: free, mcpTool: recommend_stack, agentSkill: assemble-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json.}
+    exportStack: {tier: pro, mcpTool: export_stack, agentSkill: assemble-api-stack}
 
 servers:
   - url: https://apis.io/api/v1
@@ -214,6 +214,7 @@ paths:
               - created
               - score
             default: relevance
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -227,6 +228,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 
+      security: []
   /providers/{slug}:
     get:
       operationId: getProvider
@@ -247,6 +249,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /providers/{slug}/apis:
     get:
       operationId: listProviderApis
@@ -274,6 +277,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /providers/{slug}/rating:
     get:
       operationId: getProviderRating
@@ -329,6 +333,7 @@ paths:
               - created
               - score
             default: relevance
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -342,6 +347,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 
+      security: []
   /apis/{aid}:
     get:
       operationId: getApi
@@ -364,6 +370,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /tags:
     get:
       operationId: listTags
@@ -385,12 +392,14 @@ paths:
               - healthy
               - stale
               - weak
+            maxLength: 1024
         - name: min_api_count
           in: query
           description: Only tags applied to at least this many APIs.
           schema:
             type: integer
             minimum: 0
+            maximum: 1000
         - name: sort
           in: query
           schema:
@@ -404,6 +413,7 @@ paths:
               - provider_count
               - name
             default: composite
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -415,6 +425,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/TagList'
 
+      security: []
   /tags/{slug}:
     get:
       operationId: getTag
@@ -429,6 +440,7 @@ paths:
           description: Tag slug (e.g. `messaging`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
       responses:
         '200':
@@ -440,6 +452,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /industries:
     get:
       operationId: listIndustries
@@ -463,6 +476,7 @@ paths:
               - api_count
               - name
             default: provider_count
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -493,6 +507,7 @@ paths:
           description: Industrie slug (e.g. `media-entertainment`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
       responses:
         '200':
@@ -526,6 +541,7 @@ paths:
               - api_count
               - name
             default: provider_count
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -556,6 +572,7 @@ paths:
           description: Region slug (e.g. `southeast-asia`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
       responses:
         '200':
@@ -591,6 +608,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /asyncapis:
     get:
       operationId: listAsyncapis
@@ -616,6 +634,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /arazzo:
     get:
       operationId: listArazzo
@@ -641,6 +660,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /postman:
     get:
       operationId: listPostman
@@ -666,6 +686,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /collections:
     get:
       operationId: listCollections
@@ -691,6 +712,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /graphql:
     get:
       operationId: listGraphql
@@ -716,6 +738,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /json-schemas:
     get:
       operationId: listJsonSchemas
@@ -741,6 +764,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /json-structures:
     get:
       operationId: listJsonStructures
@@ -766,6 +790,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /json-ld:
     get:
       operationId: listJsonLd
@@ -791,6 +816,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /vocabularies:
     get:
       operationId: listVocabularies
@@ -816,6 +842,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /rules:
     get:
       operationId: listRules
@@ -841,6 +868,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /examples:
     get:
       operationId: listExamples
@@ -866,6 +894,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /finops:
     get:
       operationId: listFinops
@@ -891,6 +920,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /plans:
     get:
       operationId: listPlans
@@ -916,6 +946,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /rate-limits:
     get:
       operationId: listRateLimits
@@ -941,6 +972,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /ratings:
     get:
       operationId: listRatings
@@ -971,6 +1003,7 @@ paths:
               - trend
               - name
             default: composite
+            maxLength: 1024
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
       responses:
@@ -998,6 +1031,7 @@ paths:
                 $ref: '#/components/schemas/Rubric'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /search:
     get:
       operationId: search
@@ -1026,6 +1060,7 @@ paths:
               - providers
               - tags
             default: apis
+            maxLength: 1024
         - $ref: '#/components/parameters/Q'
         - $ref: '#/components/parameters/Tags'
         - $ref: '#/components/parameters/Match'
@@ -1047,6 +1082,7 @@ paths:
               - api_count
               - created
             default: relevance
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -1060,6 +1096,7 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
 
+      security: []
   /channels:
     get:
       operationId: listChannels
@@ -1087,6 +1124,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /mcp:
     get:
       operationId: listMcpServers
@@ -1114,6 +1152,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /skills:
     get:
       operationId: listSkills
@@ -1141,6 +1180,7 @@ paths:
                 $ref: '#/components/schemas/ArtifactList'
         '400':
           $ref: '#/components/responses/BadRequest'
+      security: []
   /scopes:
     get:
       operationId: listScopes
@@ -1222,6 +1262,7 @@ paths:
               - api_count
               - name
             default: provider_count
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
         - $ref: '#/components/parameters/Page'
         - $ref: '#/components/parameters/Limit'
@@ -1254,6 +1295,7 @@ paths:
           description: Area slug (e.g. `authentication`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Fields'
       responses:
         '200':
@@ -1284,6 +1326,7 @@ paths:
           description: Comma-separated provider slugs to compare (2+).
           schema:
             type: string
+            maxLength: 1024
       responses:
         '200':
           description: Side-by-side comparison of the requested providers.
@@ -1314,11 +1357,13 @@ paths:
           description: Comma-separated provider slugs (1+). Multiple = treat as a stack.
           schema:
             type: string
+            maxLength: 1024
         - name: min_share
           in: query
           description: Peer-share threshold for a gap (0–1, default 0.25).
           schema:
             type: number
+            maximum: 1000000000
       responses:
         '200':
           description: Per-provider and stack-level gaps.
@@ -1350,6 +1395,7 @@ paths:
           schema:
             type: string
             format: date
+            maxLength: 10
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -1380,11 +1426,13 @@ paths:
           description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
           schema:
             type: string
+            maxLength: 1024
         - name: region
           in: query
           description: Optional region slug to prefer, e.g. `europe`.
           schema:
             type: string
+            maxLength: 1024
       responses:
         '200':
           description: A recommended stack (preview for free callers; full for Pro).
@@ -1397,6 +1445,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
 
   # ---- Deep discovery & synthesis additions (v1.2) ---------------------------------------------
+      security: []
   /providers/{slug}/artifacts:
     get:
       operationId: getProviderArtifacts
@@ -1421,6 +1470,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /providers/{slug}/onboarding:
     get:
       operationId: getProviderOnboarding
@@ -1444,6 +1494,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /providers/{slug}/similar:
     get:
       operationId: findSimilarProviders
@@ -1467,6 +1518,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /providers/{slug}/rating/history:
     get:
       operationId: getRatingHistory
@@ -1517,6 +1569,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /apis/{aid}/similar:
     get:
       operationId: findSimilarApis
@@ -1540,6 +1593,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /openapis/{aid}:
     get:
       operationId: getOpenapi
@@ -1565,6 +1619,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 
+      security: []
   /industries/{slug}/leaders:
     get:
       operationId: getIndustryLeaders
@@ -1584,6 +1639,7 @@ paths:
           description: Industry slug (e.g. `financial-services`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -1615,6 +1671,7 @@ paths:
           description: Region slug (e.g. `europe`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -1646,6 +1703,7 @@ paths:
           description: Area slug (e.g. `authentication`).
           schema:
             type: string
+            maxLength: 1024
         - $ref: '#/components/parameters/Limit'
       responses:
         '200':
@@ -1701,11 +1759,13 @@ paths:
           description: Industry slug (e.g. `financial-services`).
           schema:
             type: string
+            maxLength: 1024
         - name: min_share
           in: query
           description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
           schema:
             type: number
+            maximum: 1000000000
       responses:
         '200':
           description: The industry's valuable-artifact coverage and gaps.
@@ -1736,11 +1796,13 @@ paths:
           description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
           schema:
             type: string
+            maxLength: 1024
         - name: region
           in: query
           description: Optional region slug to prefer.
           schema:
             type: string
+            maxLength: 1024
       responses:
         '200':
           description: The exportable stack.
@@ -1878,6 +1940,7 @@ components:
       description: Free-text query over name and description (and tags where applicable).
       schema:
         type: string
+        maxLength: 1024
     Tags:
       name: tags
       in: query
@@ -1891,6 +1954,8 @@ components:
         type: array
         items:
           type: string
+          maxLength: 1024
+        maxItems: 1000
     Match:
       name: match
       in: query
@@ -1901,6 +1966,7 @@ components:
           - any
           - all
         default: any
+        maxLength: 1024
     Providers:
       name: providers
       in: query
@@ -1911,6 +1977,8 @@ components:
         type: array
         items:
           type: string
+          maxLength: 1024
+        maxItems: 1000
     ArtifactTypes:
       name: artifact_types
       in: query
@@ -1921,6 +1989,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/ArtifactType'
+        maxItems: 1000
     Include:
       name: include
       in: query
@@ -1933,6 +2002,8 @@ components:
           type: string
           enum:
             - content
+          maxLength: 1024
+        maxItems: 1000
     Fields:
       name: fields
       in: query
@@ -1943,6 +2014,8 @@ components:
         type: array
         items:
           type: string
+          maxLength: 1024
+        maxItems: 1000
     ProviderSlug:
       name: slug
       in: path
@@ -1950,6 +2023,7 @@ components:
       description: Provider slug (e.g. `twilio`).
       schema:
         type: string
+        maxLength: 1024
     Aid:
       name: aid
       in: path
@@ -1958,6 +2032,7 @@ components:
       schema:
         type: string
         pattern: '^[^:]+:[^:]+$'
+        maxLength: 1024
     Page:
       name: page
       in: query
@@ -1966,6 +2041,7 @@ components:
         type: integer
         minimum: 1
         default: 1
+        maximum: 1000000
     Limit:
       name: limit
       in: query
@@ -1988,6 +2064,7 @@ components:
           - name
           - updated
         default: relevance
+        maxLength: 1024
     BandFilter:
       name: band
       in: query
@@ -1998,6 +2075,7 @@ components:
         type: array
         items:
           $ref: '#/components/schemas/Band'
+        maxItems: 1000
     MinScore:
       name: min_score
       in: query
@@ -2044,6 +2122,8 @@ components:
         type: array
         items:
           type: string
+          maxLength: 1024
+        maxItems: 1000
     RegionFilter:
       name: region
       in: query
@@ -2054,6 +2134,8 @@ components:
         type: array
         items:
           type: string
+          maxLength: 1024
+        maxItems: 1000
   responses:
     BadRequest:
       description: Malformed request (bad parameter value).
@@ -2102,13 +2184,17 @@ components:
         total:
           type: integer
           description: Total matching items across all pages.
+          maximum: 1000000
         page:
           type: integer
+          maximum: 1000000
         limit:
           type: integer
+          maximum: 1000
         pages:
           type: integer
           description: Total number of pages.
+          maximum: 1000000
         query:
           type: object
           additionalProperties: true
@@ -2124,15 +2210,15 @@ components:
       properties:
         type:
           type: string
-          description: Link/relationship type (e.g. Documentation
-          Website:
-          GitHub:
-          Pricing).:
+          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          maxLength: 1024
         url:
           type: string
           format: uri
+          maxLength: 2048
         title:
           type: string
+          maxLength: 1024
       required:
         - type
         - url
@@ -2197,6 +2283,7 @@ components:
         - NaftikoCapability
       x-extensible-enum: true
 
+      maxLength: 1024
     Artifact:
       type: object
       description: A machine- or human-readable artifact attached to an API.
@@ -2206,30 +2293,38 @@ components:
           description: Stable artifact id, `aid::type::n`.
           examples:
             - 'twilio:twilio-accounts-api::OpenAPI::0'
+          maxLength: 1024
         type:
           $ref: '#/components/schemas/ArtifactType'
         name:
           type: string
           description: Optional human label for the artifact.
+          maxLength: 1024
         url:
           type: string
           format: uri
           description: Reference to the artifact.
         # Owning context — populated on cross-catalog artifact results.
+          maxLength: 2048
         aid:
           type: string
           description: aid of the owning API.
+          maxLength: 1024
         provider_slug:
           type: string
+          maxLength: 1024
         provider_name:
           type: string
         # Populated only when include=content.
+          maxLength: 1024
         content:
           type: string
           description: Inlined artifact body. Present only when include=content.
+          maxLength: 20000
         content_type:
           type: string
           description: Media type of the inlined content (e.g. application/yaml).
+          maxLength: 20000
       required:
         - type
         - url
@@ -2242,34 +2337,44 @@ components:
           type: string
           examples:
             - 'twilio:twilio-accounts-api'
+          maxLength: 1024
         name:
           type: string
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         provider_slug:
           type: string
+          maxLength: 1024
         provider_name:
           type: string
+          maxLength: 1024
         baseURL:
           type: string
           format: uri
+          maxLength: 2048
         humanURL:
           type: string
           format: uri
           description: Human-facing documentation entry point.
+          maxLength: 2048
         tags:
           type: array
           description: Tag names in Title Case (e.g. Messaging, Authentication).
           items:
             type: string
+            maxLength: 1024
           examples:
             -   - Messaging
                 - Authentication
+          maxItems: 1000
         properties:
           type: array
           description: The API's artifacts.
           items:
             $ref: '#/components/schemas/Artifact'
+          maxItems: 1000
         sibling_apis:
           type: array
           description: Other APIs published by the same provider.
@@ -2278,11 +2383,15 @@ components:
             properties:
               name:
                 type: string
+                maxLength: 1024
               slug:
                 type: string
+                maxLength: 1024
+          maxItems: 1000
         overview:
           type: string
           description: Narrative overview (markdown).
+          maxLength: 1024
       required:
         - aid
         - name
@@ -2296,23 +2405,30 @@ components:
           type: string
           examples:
             - twilio
+          maxLength: 1024
         name:
           type: string
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         api_count:
           type: integer
+          maximum: 1000
         image:
           type: string
           format: uri
+          maxLength: 2048
         created:
           type: string
           format: date
+          maxLength: 10
         common:
           type: array
           description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
           items:
             $ref: '#/components/schemas/Link'
+          maxItems: 1000
         apis:
           type: array
           description: Summary list of the provider's APIs.
@@ -2321,18 +2437,24 @@ components:
             properties:
               name:
                 type: string
+                maxLength: 1024
               slug:
                 type: string
+                maxLength: 1024
               description:
                 type: string
+                maxLength: 20000
+          maxItems: 1000
         tags:
           type: array
           description: Tag names in Title Case (e.g. Messaging, Authentication).
           items:
             type: string
+            maxLength: 1024
           examples:
             -   - Messaging
                 - Authentication
+          maxItems: 1000
         score:
           $ref: '#/components/schemas/ProviderScore'
       required:
@@ -2344,9 +2466,11 @@ components:
       properties:
         slug:
           type: string
+          maxLength: 1024
         name:
           type: string
 
+          maxLength: 1024
     Tag:
       type: object
       description: A tag in the taxonomy, with network-wide ranking metadata.
@@ -2355,13 +2479,16 @@ components:
           type: string
           examples:
             - messaging
+          maxLength: 1024
         name:
           type: string
           examples:
             - Messaging
+          maxLength: 1024
         composite:
           type: number
           description: Composite ranking score.
+          maximum: 1000000000
         band:
           type: string
           enum:
@@ -2369,29 +2496,39 @@ components:
             - healthy
             - stale
             - weak
+          maxLength: 1024
         frequency:
           type: number
+          maximum: 1000000000
         breadth:
           type: number
+          maximum: 1000000000
         quality_lift:
           type: number
+          maximum: 1000000000
         provider_count:
           type: integer
+          maximum: 1000
         api_count:
           type: integer
+          maximum: 1000
         variants:
           type: array
           items:
             type: string
+            maxLength: 1024
+          maxItems: 1000
         neighbors:
           type: array
           description: Related tags.
           items:
             $ref: '#/components/schemas/TagRef'
+          maxItems: 1000
         providers:
           type: array
           items:
             $ref: '#/components/schemas/Provider'
+          maxItems: 1000
         apis:
           type: array
           items:
@@ -2399,10 +2536,14 @@ components:
             properties:
               provider:
                 type: string
+                maxLength: 1024
               slug:
                 type: string
+                maxLength: 1024
               name:
                 type: string
+                maxLength: 1024
+          maxItems: 1000
       required:
         - slug
         - name
@@ -2416,6 +2557,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Provider'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2429,6 +2571,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Api'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2442,6 +2585,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2455,6 +2599,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Artifact'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2477,6 +2622,7 @@ components:
                     - providers
                     - tags
                     - artifacts
+                  maxLength: 1024
         data:
           type: array
           items:
@@ -2485,6 +2631,7 @@ components:
               - $ref: '#/components/schemas/Provider'
               - $ref: '#/components/schemas/Tag'
               - $ref: '#/components/schemas/Artifact'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2503,11 +2650,13 @@ components:
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
             - 'https://apis.io/problems/invalid-parameter'
+          maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
             - Invalid parameter
+          maxLength: 1024
         status:
           type: integer
           minimum: 100
@@ -2518,13 +2667,16 @@ components:
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
       required:
         - type
         - title
@@ -2539,6 +2691,7 @@ components:
         - developing
         - thin
         - minimal
+      maxLength: 1024
     Trend:
       type: string
       description: Week-over-week movement in composite score (±5 thresholds).
@@ -2546,6 +2699,7 @@ components:
         - rising
         - flat
         - falling
+      maxLength: 1024
     FacetName:
       type: string
       description: One of the six rating facets.
@@ -2556,6 +2710,7 @@ components:
         - operational_transparency
         - developer_ergonomics
         - commercial_clarity
+      maxLength: 1024
     Facets:
       type: object
       description: The six facet scores, each 0–100.
@@ -2610,6 +2765,7 @@ components:
           description: Composite change since the previous snapshot.
           examples:
             - 0.0
+          maximum: 1000000000
         previous_composite:
           type: number
           minimum: 0
@@ -2617,10 +2773,12 @@ components:
         scored_at:
           type: string
           format: date
+          maxLength: 10
         schema_version:
           type: string
           examples:
             - '0.3'
+          maxLength: 1024
         facets:
           $ref: '#/components/schemas/Facets'
       required:
@@ -2633,10 +2791,13 @@ components:
         rank:
           type: integer
           description: 1-based position in the filtered, score-sorted list.
+          maximum: 2147483647
         provider_slug:
           type: string
+          maxLength: 1024
         provider_name:
           type: string
+          maxLength: 1024
         composite:
           type: number
           minimum: 0
@@ -2660,6 +2821,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RatingEntry'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2671,6 +2833,7 @@ components:
           type: string
           examples:
             - '0.3'
+          maxLength: 1024
         bands:
           type: array
           items:
@@ -2681,8 +2844,11 @@ components:
               min:
                 type: number
                 description: Inclusive lower bound of the composite range.
+                maximum: 1000000000
               description:
                 type: string
+                maxLength: 20000
+          maxItems: 1000
         facets:
           type: array
           items:
@@ -2692,11 +2858,15 @@ components:
                 $ref: '#/components/schemas/FacetName'
               label:
                 type: string
+                maxLength: 1024
               weight:
                 type: number
                 description: Share of the composite (the six weights sum to 1.0).
+                maximum: 1000000000
               description:
                 type: string
+                maxLength: 20000
+          maxItems: 1000
         trending:
           type: object
           properties:
@@ -2704,25 +2874,32 @@ components:
               type: number
               examples:
                 - 5
+              maximum: 1000000000
             falling_threshold:
               type: number
               examples:
                 - -5
+              maximum: 1000000000
     RankedProvider:
       type: object
       description: A provider summary as it appears in an industry or region membership list.
       properties:
         slug:
           type: string
+          maxLength: 1024
         name:
           type: string
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         api_count:
           type: integer
+          maximum: 1000
         image:
           type: string
           format: uri
+          maxLength: 2048
         score_band:
           $ref: '#/components/schemas/Band'
         score_composite:
@@ -2740,28 +2917,37 @@ components:
           type: string
           examples:
             - media-entertainment
+          maxLength: 1024
         name:
           type: string
           examples:
             - Media & Entertainment
+          maxLength: 1024
         short:
           type: string
           description: One-line summary.
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         aliases:
           type: array
           items:
             type: string
+            maxLength: 1024
+          maxItems: 1000
         provider_count:
           type: integer
+          maximum: 1000
         api_count:
           type: integer
+          maximum: 1000
         providers:
           type: array
           description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
+          maxItems: 1000
       required:
         - slug
         - name
@@ -2773,33 +2959,44 @@ components:
           type: string
           examples:
             - southeast-asia
+          maxLength: 1024
         name:
           type: string
           examples:
             - Southeast Asia
+          maxLength: 1024
         short:
           type: string
           description: One-line summary.
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         aliases:
           type: array
           items:
             type: string
+            maxLength: 1024
+          maxItems: 1000
         name_patterns:
           type: array
           description: Country/nationality strings used to infer regional membership.
           items:
             type: string
+            maxLength: 1024
+          maxItems: 1000
         provider_count:
           type: integer
+          maximum: 1000
         api_count:
           type: integer
+          maximum: 1000
         providers:
           type: array
           description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
+          maxItems: 1000
       required:
         - slug
         - name
@@ -2812,6 +3009,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Industry'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2824,6 +3022,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Region'
+          maxItems: 1000
       required:
         - meta
         - data
@@ -2835,37 +3034,50 @@ components:
           type: string
           examples:
             - authentication
+          maxLength: 1024
         name:
           type: string
           examples:
             - Authentication
+          maxLength: 1024
         short:
           type: string
           description: One-line summary.
+          maxLength: 1024
         description:
           type: string
+          maxLength: 20000
         aliases:
           type: array
           items:
             type: string
+            maxLength: 1024
+          maxItems: 1000
         area_url:
           type: string
           description: The area's dedicated site.
           examples:
             - https://authentication.apievangelist.com
+          format: uri
+          maxLength: 2048
         area_host:
           type: string
+          maxLength: 1024
         icon:
           type: string
+          maxLength: 1024
         provider_count:
           type: integer
+          maximum: 1000
         api_count:
           type: integer
+          maximum: 1000
         providers:
           type: array
           description: Member providers, ranked by score. Returned on the single-area endpoint; omitted from list responses by default.
           items:
             $ref: '#/components/schemas/RankedProvider'
+          maxItems: 1000
       required:
         - slug
         - name
@@ -2878,6 +3090,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Area'
+          maxItems: 1000
       required:
         - meta
         - data
