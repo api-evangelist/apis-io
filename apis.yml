@@ -142,6 +142,16 @@ apis:
     properties:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-insights-openapi.yml
+  - aid: apis-io:submit
+    name: APIs.io Submit API
+    description: Adding an API to the network — discover a target's public artifacts, then submit it for review. 2
+      operations of the APIs.io API, split out by tag so this surface is documented, rated, and governed on its own.
+    humanURL: https://apis.io/developer/documentation/
+    baseURL: https://apis.io/api/v1
+    tags: *a1
+    properties:
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-submit-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/apis-io-agentic-access.yml

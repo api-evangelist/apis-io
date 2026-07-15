@@ -340,6 +340,9 @@ tags:
       API providers) build, buy, and hire for around APIs, data, and AI, derived
       from job postings, press, and engineering blogs. Discovery is free;
       per-company depth, gaps, and provider matches are Pro.
+  - name: Submit
+    description: Adding an API to the network — discover a target's public
+      artifacts, then submit it for review.
 
 # Defined but NOT required in v1 (key-ready, see info.description).
 security: []
@@ -2235,6 +2238,91 @@ paths:
             description: Requires the Pro or Business tier.,
             content: { application/json: { schema: { type: object, additionalProperties: true } } }
           }
+  /submit/discover:
+    get:
+      operationId: discoverApi
+      tags:
+        - Submit
+      summary: Probe a URL for public API artifacts
+      description: "Given a domain or an APIs.json URL, probe the target's public
+        well-knowns and return what is there — the artifacts found, a
+        provisional rating, and a draft APIs.json you can hand straight to `POST
+        /submit`. Read-only: nothing is indexed and nothing is submitted."
+      parameters:
+        - name: url
+          in: query
+          required: true
+          description: The domain or APIs.json URL to probe (e.g. `https://example.com`).
+          schema:
+            type: string
+            format: uri
+            maxLength: 1024
+      responses:
+        "200":
+          description: What the probe found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscoverResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "502":
+          description: The target could not be analyzed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: discover_failed
+                  detail:
+                    type: string
+      security: []
+  /submit:
+    post:
+      operationId: submitApi
+      tags:
+        - Submit
+      summary: Submit an API for review
+      description: Queue an API to be added to the network. Submissions are reviewed
+        before they appear in the catalog. Pair with `GET /submit/discover` to
+        fill most of this in automatically.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubmitRequest"
+      responses:
+        "200":
+          description: Accepted, but the queue was unavailable — finish via the returned
+            `issueUrl`.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitAccepted"
+        "201":
+          description: Queued for review.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmitAccepted"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "422":
+          description: Not enough to go on — a name is the minimum.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: insufficient
+                  detail:
+                    type: string
+      security: []
 
 components:
 
@@ -3419,3 +3507,130 @@ components:
       required:
         - meta
         - data
+    DiscoverResult:
+      type: object
+      description: What a public probe of the target turned up. Nothing is indexed by
+        this call.
+      properties:
+        input:
+          type: string
+          format: uri
+          description: The URL that was probed, normalized.
+        origin:
+          type: string
+          format: uri
+          description: The origin the probe resolved to.
+        preview:
+          type: object
+          description: Title and description scraped from the target.
+          properties:
+            title:
+              type: string
+            description:
+              type: string
+        discovered:
+          type: object
+          description: Well-known artifacts found on the target (apis.json, onboarding
+            descriptor, and friends).
+        artifacts:
+          type: array
+          description: Every artifact located, with its type and URL.
+          items:
+            type: object
+        rating:
+          $ref: "#/components/schemas/SubmitRating"
+        apisjson:
+          type: object
+          description: A draft APIs.json assembled from what was found — the starting
+            point for a submission.
+    SubmitRating:
+      type: object
+      description: The provisional quality rating computed during discovery.
+      properties:
+        schema_version:
+          type: string
+          example: "0.3"
+        score:
+          type: number
+        band:
+          type: string
+          description: The band the score falls in.
+        facets:
+          type: object
+        checks:
+          type: array
+          items:
+            type: object
+    SubmitRequest:
+      type: object
+      description: An API being submitted for review. Only `name` is required — the
+        build worker can research a provider from the name alone; anything else
+        you supply seeds that research and skips ahead.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 200
+          description: API or provider name. Falls back to `apisjson.name` when omitted.
+        url:
+          type: string
+          format: uri
+          maxLength: 500
+          description: APIs.json URL. Falls back to `apisjson.url`.
+        docsUrl:
+          type: string
+          format: uri
+          maxLength: 500
+          description: Human documentation URL. Falls back to the first API's `humanURL`.
+        provider:
+          type: string
+          maxLength: 200
+          description: Provider name, when it differs from the API name.
+        contact:
+          type: string
+          maxLength: 200
+          description: How to reach you about the submission.
+        notes:
+          type: string
+          maxLength: 1000
+          description: Anything the reviewer should know.
+        tags:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            maxLength: 40
+          description: Up to twenty tags.
+        apisjson:
+          type: object
+          description: A full APIs.json document, if you already have one.
+        discovered:
+          type: object
+          description: The `discovered` block from a prior discover call, passed through.
+        rating:
+          $ref: "#/components/schemas/SubmitRating"
+    SubmitAccepted:
+      type: object
+      description: The submission was queued for review.
+      properties:
+        ok:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+          description: Submission id.
+        status:
+          type: string
+          enum:
+            - pending
+            - fallback
+          description: "`pending` once queued; `fallback` when the queue could not be
+            reached and the GitHub issue link is the way through."
+        message:
+          type: string
+        issueUrl:
+          type: string
+          format: uri
+          description: A pre-filled GitHub issue — always offered, for anyone who prefers
+            a public trail.

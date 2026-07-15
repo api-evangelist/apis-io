@@ -1,16 +1,16 @@
 {
-  "ran": "2026-07-15T20:57:30.255Z",
+  "ran": "2026-07-15T21:43:59.538Z",
   "api": "https://api.apievangelist.com/v1",
   "ruleset": "apis-io-spectral-rules.yml",
   "totals": {
-    "apis": 11,
-    "operations": 62,
+    "apis": 12,
+    "operations": 64,
     "errors": 0,
-    "warnings": 221,
-    "info": 412,
+    "warnings": 230,
+    "info": 447,
     "hints": 0,
-    "findings": 633,
-    "passing": 11
+    "findings": 677,
+    "passing": 12
   },
   "apis": [
     {
@@ -165,6 +165,20 @@
       "passed": true,
       "coverage": 84,
       "score": 93,
+      "grade": "A"
+    },
+    {
+      "tag": "Submit",
+      "ops": 2,
+      "rules": 42,
+      "errors": 0,
+      "warnings": 9,
+      "info": 35,
+      "hints": 0,
+      "findings": 44,
+      "passed": true,
+      "coverage": 85,
+      "score": 95,
       "grade": "A"
     }
   ]

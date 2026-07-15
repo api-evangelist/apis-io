@@ -75,5 +75,12 @@
     "file": "openapi/apis-io-v1-insights-openapi.yml",
     "operations": 8,
     "schemas": 1
+  },
+  {
+    "tag": "Submit",
+    "slug": "submit",
+    "file": "openapi/apis-io-v1-submit-openapi.yml",
+    "operations": 2,
+    "schemas": 5
   }
 ]
