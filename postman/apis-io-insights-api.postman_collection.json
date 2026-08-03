@@ -1,0 +1,934 @@
+{
+  "info": {
+    "_postman_id": "ed1aaa7b-779a-42f8-a49b-5ba8e7378fde",
+    "name": ".io Search APIs Insights API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:37.000Z",
+    "updatedAt": "2026-07-28T01:02:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ed1aaa7b-779a-42f8-a49b-5ba8e7378fde"
+  },
+  "item": [
+    {
+      "name": "insights",
+      "item": [
+        {
+          "name": "dimensions",
+          "item": [
+            {
+              "name": "Rank the investment dimensions.",
+              "id": "e452841a-e499-4bca-a32c-abab3697c2fc",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/insights/dimensions?page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "insights",
+                    "dimensions"
+                  ],
+                  "query": [
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                },
+                "description": "The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free."
+              },
+              "response": [
+                {
+                  "id": "6ce7d785-2e51-4744-82eb-d5b290d4561a",
+                  "name": "Dimension cross-section.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/insights/dimensions?page=1&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "insights",
+                        "dimensions"
+                      ],
+                      "query": [
+                        {
+                          "description": "1-based page number.",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-6ce7d785-2e51-4744-82eb-d5b290d4561a"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-e452841a-e499-4bca-a32c-abab3697c2fc"
+            }
+          ],
+          "id": "f615cb5c-44ef-4d1e-bdc4-fce191ce757f",
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-f615cb5c-44ef-4d1e-bdc4-fce191ce757f"
+        },
+        {
+          "name": "adoption",
+          "item": [
+            {
+              "name": "Services / tools / standards by adoption.",
+              "id": "85f170c4-3e2a-4434-84d3-d154632825ff",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/insights/adoption?type=service&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "insights",
+                    "adoption"
+                  ],
+                  "query": [
+                    {
+                      "description": "Which adoption graph to return.",
+                      "key": "type",
+                      "value": "service"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                },
+                "description": "Technologies ranked by how many companies adopt them. Free."
+              },
+              "response": [
+                {
+                  "id": "18aec377-f7df-404a-9ae1-6d9fa4182a4f",
+                  "name": "Adoption ranking.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/insights/adoption?type=service&page=1&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "insights",
+                        "adoption"
+                      ],
+                      "query": [
+                        {
+                          "description": "Which adoption graph to return.",
+                          "key": "type",
+                          "value": "service"
+                        },
+                        {
+                          "description": "1-based page number.",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-18aec377-f7df-404a-9ae1-6d9fa4182a4f"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-85f170c4-3e2a-4434-84d3-d154632825ff"
+            }
+          ],
+          "id": "69ca8c70-5f72-4ba4-95d3-494b35d3ed1c",
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-69ca8c70-5f72-4ba4-95d3-494b35d3ed1c"
+        },
+        {
+          "name": "industries",
+          "item": [
+            {
+              "name": "Industry rollup.",
+              "id": "47d49878-aaf5-438f-8db0-2be9e0fcbc40",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/insights/industries",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "insights",
+                    "industries"
+                  ]
+                },
+                "description": "Profiled sectors with company counts. Free."
+              },
+              "response": [
+                {
+                  "id": "42561dcb-96a5-493e-a500-b91351603144",
+                  "name": "Industry rollup.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/insights/industries",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "insights",
+                        "industries"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-42561dcb-96a5-493e-a500-b91351603144"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-47d49878-aaf5-438f-8db0-2be9e0fcbc40"
+            }
+          ],
+          "id": "817c3117-6cd0-4a65-a6f4-393597852c1f",
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-817c3117-6cd0-4a65-a6f4-393597852c1f"
+        },
+        {
+          "name": "companies",
+          "item": [
+            {
+              "name": "Browse profiled companies.",
+              "id": "219b15d5-d941-4bef-8d4b-d3b8effa919f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/insights/companies?q=<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "insights",
+                    "companies"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                },
+                "description": "Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields)."
+              },
+              "response": [
+                {
+                  "id": "ad6508b5-7a93-45ed-81bd-82e814ecb1a5",
+                  "name": "Company list.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/insights/companies?q=<string>&page=1&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "insights",
+                        "companies"
+                      ],
+                      "query": [
+                        {
+                          "description": "Free-text query over name and description (and tags where applicable).",
+                          "key": "q",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "1-based page number.",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-ad6508b5-7a93-45ed-81bd-82e814ecb1a5"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-219b15d5-d941-4bef-8d4b-d3b8effa919f"
+            }
+          ],
+          "id": "e4b7fec4-717e-4986-89d7-3cc48c156d5a",
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-e4b7fec4-717e-4986-89d7-3cc48c156d5a"
+        },
+        {
+          "name": "company",
+          "item": [
+            {
+              "name": "{slug}",
+              "item": [
+                {
+                  "name": "gaps",
+                  "item": [
+                    {
+                      "name": "A company's weakest dimensions.",
+                      "id": "e37a7e46-29fb-4c64-a65d-424dee512ed3",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/insights/company/:slug/gaps",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "insights",
+                            "company",
+                            ":slug",
+                            "gaps"
+                          ],
+                          "variable": [
+                            {
+                              "id": "192078db-d285-4c8e-8889-37e204fd1348",
+                              "key": "slug",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "The lowest-scoring investment dimensions \u2014 where a company is thin and a vendor could sell in. Pro."
+                      },
+                      "response": [
+                        {
+                          "id": "d65dea1b-306d-4323-8ce6-848034c3c352",
+                          "name": "Company gaps.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/insights/company/:slug/gaps",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "insights",
+                                "company",
+                                ":slug",
+                                "gaps"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                          "createdAt": "2026-07-28T01:02:38.000Z",
+                          "updatedAt": "2026-07-28T01:02:38.000Z",
+                          "uid": "35240-d65dea1b-306d-4323-8ce6-848034c3c352"
+                        },
+                        {
+                          "id": "d5e63b35-9539-43a0-9d70-d7176ca3323d",
+                          "name": "Requires the Pro or Business tier.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/insights/company/:slug/gaps",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "insights",
+                                "company",
+                                ":slug",
+                                "gaps"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                          "createdAt": "2026-07-28T01:02:38.000Z",
+                          "updatedAt": "2026-07-28T01:02:38.000Z",
+                          "uid": "35240-d5e63b35-9539-43a0-9d70-d7176ca3323d"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:02:38.000Z",
+                      "updatedAt": "2026-07-28T01:02:38.000Z",
+                      "uid": "35240-e37a7e46-29fb-4c64-a65d-424dee512ed3"
+                    }
+                  ],
+                  "id": "c245bf6c-5746-4a85-a808-406a34c22783",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-c245bf6c-5746-4a85-a808-406a34c22783"
+                },
+                {
+                  "name": "match",
+                  "item": [
+                    {
+                      "name": "Match providers to a company's stack (the supply\u2194demand join).",
+                      "id": "da9a29f3-6d43-4ed8-b484-f1f920744615",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/insights/company/:slug/match",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "insights",
+                            "company",
+                            ":slug",
+                            "match"
+                          ],
+                          "variable": [
+                            {
+                              "id": "ffb9675e-5d16-4bba-b590-cbeefa1580cd",
+                              "key": "slug",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro."
+                      },
+                      "response": [
+                        {
+                          "id": "1060a21d-387d-4675-a4e0-212e62beacee",
+                          "name": "Matched providers.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/insights/company/:slug/match",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "insights",
+                                "company",
+                                ":slug",
+                                "match"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                          "createdAt": "2026-07-28T01:02:38.000Z",
+                          "updatedAt": "2026-07-28T01:02:38.000Z",
+                          "uid": "35240-1060a21d-387d-4675-a4e0-212e62beacee"
+                        },
+                        {
+                          "id": "f45c3628-212f-48a8-82b0-a8f0ed4aa245",
+                          "name": "Requires the Pro or Business tier.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/insights/company/:slug/match",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "insights",
+                                "company",
+                                ":slug",
+                                "match"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                          "createdAt": "2026-07-28T01:02:38.000Z",
+                          "updatedAt": "2026-07-28T01:02:38.000Z",
+                          "uid": "35240-f45c3628-212f-48a8-82b0-a8f0ed4aa245"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:02:38.000Z",
+                      "updatedAt": "2026-07-28T01:02:38.000Z",
+                      "uid": "35240-da9a29f3-6d43-4ed8-b484-f1f920744615"
+                    }
+                  ],
+                  "id": "e5dcfce2-fea7-4208-b989-6aefcaab0ad6",
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-e5dcfce2-fea7-4208-b989-6aefcaab0ad6"
+                },
+                {
+                  "name": "One company's demand-side profile.",
+                  "id": "183d6212-3c7a-4161-a5d5-1e16794cac0e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/insights/company/:slug",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "insights",
+                        "company",
+                        ":slug"
+                      ],
+                      "variable": [
+                        {
+                          "id": "9583bbb4-ed7b-4b3a-befd-4c9a7f3d8bb1",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Company slug (e.g. `citi`)."
+                        }
+                      ]
+                    },
+                    "description": "Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history."
+                  },
+                  "response": [
+                    {
+                      "id": "5e06b842-16e5-4511-8a6d-8430d5ef1be0",
+                      "name": "Company profile (preview or full by tier).",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/insights/company/:slug",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "insights",
+                            "company",
+                            ":slug"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+                      "createdAt": "2026-07-28T01:02:38.000Z",
+                      "updatedAt": "2026-07-28T01:02:38.000Z",
+                      "uid": "35240-5e06b842-16e5-4511-8a6d-8430d5ef1be0"
+                    },
+                    {
+                      "id": "4670cca6-636e-4064-afcd-816354c54de4",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/insights/company/:slug",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "insights",
+                            "company",
+                            ":slug"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:38.000Z",
+                      "updatedAt": "2026-07-28T01:02:38.000Z",
+                      "uid": "35240-4670cca6-636e-4064-afcd-816354c54de4"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:38.000Z",
+                  "updatedAt": "2026-07-28T01:02:38.000Z",
+                  "uid": "35240-183d6212-3c7a-4161-a5d5-1e16794cac0e"
+                }
+              ],
+              "id": "074b5c85-4bc9-4b80-8964-cf675617843f",
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-074b5c85-4bc9-4b80-8964-cf675617843f"
+            }
+          ],
+          "id": "0d82d335-583a-45e8-810d-5c3af38c2ff3",
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-0d82d335-583a-45e8-810d-5c3af38c2ff3"
+        },
+        {
+          "name": "Insights overview.",
+          "id": "8ec07b56-7f2f-438a-8d0e-a0bd73105639",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/insights",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "insights"
+              ]
+            },
+            "description": "Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free."
+          },
+          "response": [
+            {
+              "id": "abbf0730-8597-4753-a9a7-cda5446718d6",
+              "name": "Insights summary.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/insights",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "insights"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"Duis_24d\": \"aliquip in enim non\"\n}",
+              "createdAt": "2026-07-28T01:02:38.000Z",
+              "updatedAt": "2026-07-28T01:02:38.000Z",
+              "uid": "35240-abbf0730-8597-4753-a9a7-cda5446718d6"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:38.000Z",
+          "updatedAt": "2026-07-28T01:02:38.000Z",
+          "uid": "35240-8ec07b56-7f2f-438a-8d0e-a0bd73105639"
+        }
+      ],
+      "id": "2e9d244d-5191-4b3b-ab32-cfed2d8108d8",
+      "createdAt": "2026-07-28T01:02:38.000Z",
+      "updatedAt": "2026-07-28T01:02:38.000Z",
+      "uid": "35240-2e9d244d-5191-4b3b-ab32-cfed2d8108d8"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

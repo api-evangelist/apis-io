@@ -1,0 +1,1068 @@
+{
+  "info": {
+    "_postman_id": "59d10ae5-3b9a-418f-92cc-83772d931a2d",
+    "name": ".io Search APIs Synthesis API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:43.000Z",
+    "updatedAt": "2026-07-28T01:02:43.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-59d10ae5-3b9a-418f-92cc-83772d931a2d"
+  },
+  "item": [
+    {
+      "name": "compare",
+      "item": [
+        {
+          "name": "Compare providers side by side (Pro).",
+          "id": "ad510e1b-0133-4911-95a3-d64e466f0743",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/compare?providers=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "compare"
+              ],
+              "query": [
+                {
+                  "description": "(Required) Comma-separated provider slugs to compare (2+).",
+                  "key": "providers",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Compares 2+ providers \u2014 composite/band, per-facet leaders, and an artifact-coverage matrix. Pro tier."
+          },
+          "response": [
+            {
+              "id": "d97f64f1-ba6f-4d52-9b06-82afcb34f748",
+              "name": "Side-by-side comparison of the requested providers.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/compare?providers=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "compare"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs to compare (2+).",
+                      "key": "providers",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-d97f64f1-ba6f-4d52-9b06-82afcb34f748"
+            },
+            {
+              "id": "e73a4be8-b3c4-47c9-a591-2185834df91f",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/compare?providers=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "compare"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs to compare (2+).",
+                      "key": "providers",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-e73a4be8-b3c4-47c9-a591-2185834df91f"
+            },
+            {
+              "id": "871ff53f-dc53-493d-8b4d-088f8f6b6bac",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/compare?providers=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "compare"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs to compare (2+).",
+                      "key": "providers",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-871ff53f-dc53-493d-8b4d-088f8f6b6bac"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-ad510e1b-0133-4911-95a3-d64e466f0743"
+        }
+      ],
+      "id": "f047f1a7-f00c-4f35-90e0-fcd71f77907e",
+      "createdAt": "2026-07-28T01:02:43.000Z",
+      "updatedAt": "2026-07-28T01:02:43.000Z",
+      "uid": "35240-f047f1a7-f00c-4f35-90e0-fcd71f77907e"
+    },
+    {
+      "name": "gaps",
+      "item": [
+        {
+          "name": "industry",
+          "item": [
+            {
+              "name": "{slug}",
+              "item": [
+                {
+                  "name": "Artifact gaps across a whole industry.",
+                  "id": "d100e71f-7fb1-4d86-8e48-43379e39fcd6",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gaps",
+                        "industry",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                          "key": "min_share",
+                          "value": "<number>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "57a5d670-6ede-40c8-a4af-b2f620672dda",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Industry slug (e.g. `financial-services`)."
+                        }
+                      ]
+                    },
+                    "description": "For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills\u2026) most member providers lack \u2014 where the vertical is under-served."
+                  },
+                  "response": [
+                    {
+                      "id": "aff47885-5510-4679-8630-cc0918f5b8a6",
+                      "name": "The industry's valuable-artifact coverage and gaps.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gaps",
+                            "industry",
+                            ":slug"
+                          ],
+                          "query": [
+                            {
+                              "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                              "key": "min_share",
+                              "value": "<number>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+                      "createdAt": "2026-07-28T01:02:43.000Z",
+                      "updatedAt": "2026-07-28T01:02:43.000Z",
+                      "uid": "35240-aff47885-5510-4679-8630-cc0918f5b8a6"
+                    },
+                    {
+                      "id": "fd49072b-d576-443e-97da-88dae8e3d59f",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gaps",
+                            "industry",
+                            ":slug"
+                          ],
+                          "query": [
+                            {
+                              "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                              "key": "min_share",
+                              "value": "<number>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:43.000Z",
+                      "updatedAt": "2026-07-28T01:02:43.000Z",
+                      "uid": "35240-fd49072b-d576-443e-97da-88dae8e3d59f"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:43.000Z",
+                  "updatedAt": "2026-07-28T01:02:43.000Z",
+                  "uid": "35240-d100e71f-7fb1-4d86-8e48-43379e39fcd6"
+                }
+              ],
+              "id": "71b48433-968c-4968-80c1-d45e304f1973",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-71b48433-968c-4968-80c1-d45e304f1973"
+            }
+          ],
+          "id": "be59a43d-20f7-4eaf-99c4-d58a0288797d",
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-be59a43d-20f7-4eaf-99c4-d58a0288797d"
+        },
+        {
+          "name": "Artifact + score gap analysis for a provider or stack (Pro).",
+          "id": "f6444e90-9180-4e5b-b788-11363ca3e82f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/gaps?providers=<string>&min_share=<number>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "gaps"
+              ],
+              "query": [
+                {
+                  "description": "(Required) Comma-separated provider slugs (1+). Multiple = treat as a stack.",
+                  "key": "providers",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Peer-share threshold for a gap (0\u20131, default 0.25).",
+                  "key": "min_share",
+                  "value": "<number>"
+                }
+              ]
+            },
+            "description": "For each provider \u2014 the high-value artifacts it lacks, what its peers commonly publish but it lacks, and its score vs the peer median \u2014 plus stack-level gaps across the set. Pro tier."
+          },
+          "response": [
+            {
+              "id": "1af1d85f-24c4-4374-ae44-a3ac19c4b4f8",
+              "name": "Per-provider and stack-level gaps.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gaps?providers=<string>&min_share=<number>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gaps"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs (1+). Multiple = treat as a stack.",
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Peer-share threshold for a gap (0\u20131, default 0.25).",
+                      "key": "min_share",
+                      "value": "<number>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-1af1d85f-24c4-4374-ae44-a3ac19c4b4f8"
+            },
+            {
+              "id": "ed691167-c6ee-439d-8752-69e984b22f93",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gaps?providers=<string>&min_share=<number>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gaps"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs (1+). Multiple = treat as a stack.",
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Peer-share threshold for a gap (0\u20131, default 0.25).",
+                      "key": "min_share",
+                      "value": "<number>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-ed691167-c6ee-439d-8752-69e984b22f93"
+            },
+            {
+              "id": "9fe374fa-f20e-4103-a802-9b2b55533234",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/gaps?providers=<string>&min_share=<number>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "gaps"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated provider slugs (1+). Multiple = treat as a stack.",
+                      "key": "providers",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Peer-share threshold for a gap (0\u20131, default 0.25).",
+                      "key": "min_share",
+                      "value": "<number>"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-9fe374fa-f20e-4103-a802-9b2b55533234"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-f6444e90-9180-4e5b-b788-11363ca3e82f"
+        }
+      ],
+      "id": "a5e6308f-0164-468d-8147-4718382639e5",
+      "createdAt": "2026-07-28T01:02:43.000Z",
+      "updatedAt": "2026-07-28T01:02:43.000Z",
+      "uid": "35240-a5e6308f-0164-468d-8147-4718382639e5"
+    },
+    {
+      "name": "changes",
+      "item": [
+        {
+          "name": "What changed in the catalog since a date (Pro).",
+          "id": "2569f07f-af98-4224-8591-9490bba8815f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/changes?since=<date>&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "changes"
+              ],
+              "query": [
+                {
+                  "description": "(Required) Cutoff date, YYYY-MM-DD.",
+                  "key": "since",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "Providers added/updated since a date, plus rating movement (up/down) from the latest scoring build. Pro tier."
+          },
+          "response": [
+            {
+              "id": "3f9da8ef-842d-4467-9834-e4c953f7e804",
+              "name": "Catalog changes since the given date.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/changes?since=<date>&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "changes"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Cutoff date, YYYY-MM-DD.",
+                      "key": "since",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-3f9da8ef-842d-4467-9834-e4c953f7e804"
+            },
+            {
+              "id": "acbab50f-5152-46b3-a9d9-bca3e290558b",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/changes?since=<date>&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "changes"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Cutoff date, YYYY-MM-DD.",
+                      "key": "since",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-acbab50f-5152-46b3-a9d9-bca3e290558b"
+            },
+            {
+              "id": "a95b0158-e1e1-4cf9-879c-55616082c4c3",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/changes?since=<date>&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "changes"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Cutoff date, YYYY-MM-DD.",
+                      "key": "since",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-a95b0158-e1e1-4cf9-879c-55616082c4c3"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-2569f07f-af98-4224-8591-9490bba8815f"
+        }
+      ],
+      "id": "48608cbe-c9de-4bbe-80c7-c7e006d23631",
+      "createdAt": "2026-07-28T01:02:43.000Z",
+      "updatedAt": "2026-07-28T01:02:43.000Z",
+      "uid": "35240-48608cbe-c9de-4bbe-80c7-c7e006d23631"
+    },
+    {
+      "name": "stack",
+      "item": [
+        {
+          "name": "export",
+          "item": [
+            {
+              "name": "Export a designed stack as APIs.json.",
+              "id": "dbe8dca4-4290-4dcb-8666-1303f79de685",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/stack/export?capabilities=<string>&region=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stack",
+                    "export"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.",
+                      "key": "capabilities",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Optional region slug to prefer.",
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Given a set of capabilities, returns the designed stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit."
+              },
+              "response": [
+                {
+                  "id": "3af658be-f970-45eb-be6b-4f123cab99f4",
+                  "name": "The exportable stack.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stack/export?capabilities=<string>&region=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stack",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.",
+                          "key": "capabilities",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Optional region slug to prefer.",
+                          "key": "region",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+                  "createdAt": "2026-07-28T01:02:43.000Z",
+                  "updatedAt": "2026-07-28T01:02:43.000Z",
+                  "uid": "35240-3af658be-f970-45eb-be6b-4f123cab99f4"
+                },
+                {
+                  "id": "af60cd09-5901-46aa-8cc1-729e2e8cf1a3",
+                  "name": "Malformed request (bad parameter value).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/stack/export?capabilities=<string>&region=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "stack",
+                        "export"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.",
+                          "key": "capabilities",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Optional region slug to prefer.",
+                          "key": "region",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:43.000Z",
+                  "updatedAt": "2026-07-28T01:02:43.000Z",
+                  "uid": "35240-af60cd09-5901-46aa-8cc1-729e2e8cf1a3"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-dbe8dca4-4290-4dcb-8666-1303f79de685"
+            }
+          ],
+          "id": "3286fa5a-5fcc-4dd3-aa99-6ab9576c5928",
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-3286fa5a-5fcc-4dd3-aa99-6ab9576c5928"
+        },
+        {
+          "name": "Design a recommended API stack per capability.",
+          "id": "2898519c-eacd-4142-990e-423458b75197",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/stack?capabilities=<string>&region=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "stack"
+              ],
+              "query": [
+                {
+                  "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.",
+                  "key": "capabilities",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Optional region slug to prefer, e.g. `europe`.",
+                  "key": "region",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Decompose a domain into capabilities, then get the best-rated catalog provider per capability assembled into a stack. FREE returns a preview (top pick per capability); PRO returns alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint."
+          },
+          "response": [
+            {
+              "id": "9cdd88c3-68b4-4d77-9615-4e08ff700287",
+              "name": "A recommended stack (preview for free callers; full for Pro).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/stack?capabilities=<string>&region=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stack"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.",
+                      "key": "capabilities",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Optional region slug to prefer, e.g. `europe`.",
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"consecteturecb\": -51480537.19970216\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-9cdd88c3-68b4-4d77-9615-4e08ff700287"
+            },
+            {
+              "id": "aae702cc-908f-44e1-a150-1abae19f3ebf",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/stack?capabilities=<string>&region=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stack"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.",
+                      "key": "capabilities",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Optional region slug to prefer, e.g. `europe`.",
+                      "key": "region",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:43.000Z",
+              "updatedAt": "2026-07-28T01:02:43.000Z",
+              "uid": "35240-aae702cc-908f-44e1-a150-1abae19f3ebf"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:43.000Z",
+          "updatedAt": "2026-07-28T01:02:43.000Z",
+          "uid": "35240-2898519c-eacd-4142-990e-423458b75197"
+        }
+      ],
+      "id": "0dceff60-47b7-469c-9e74-c4bc8e812b8f",
+      "createdAt": "2026-07-28T01:02:43.000Z",
+      "updatedAt": "2026-07-28T01:02:43.000Z",
+      "uid": "35240-0dceff60-47b7-469c-9e74-c4bc8e812b8f"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

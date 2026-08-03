@@ -1,0 +1,644 @@
+{
+  "info": {
+    "_postman_id": "e8eb9b18-9d3f-40ea-9899-5ec29f38553c",
+    "name": ".io Search APIs Areas API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:33.000Z",
+    "updatedAt": "2026-07-28T01:02:34.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e8eb9b18-9d3f-40ea-9899-5ec29f38553c"
+  },
+  "item": [
+    {
+      "name": "areas",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "leaders",
+              "item": [
+                {
+                  "name": "Top-rated providers in a curated area.",
+                  "id": "ab699014-7129-4076-9985-30dc180a22d8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/areas/:slug/leaders?limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "areas",
+                        ":slug",
+                        "leaders"
+                      ],
+                      "query": [
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "d13e5741-415f-4020-b22c-593c1aebf1fe",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Area slug (e.g. `authentication`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns the highest-composite-scoring member providers of a curated API Evangelist area."
+                  },
+                  "response": [
+                    {
+                      "id": "4a84b7aa-bbe4-4d20-9722-6fa1bf1c7609",
+                      "name": "A page of the area's top providers.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/areas/:slug/leaders?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "areas",
+                            ":slug",
+                            "leaders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"in_e89\": false\n}",
+                      "createdAt": "2026-07-28T01:02:34.000Z",
+                      "updatedAt": "2026-07-28T01:02:34.000Z",
+                      "uid": "35240-4a84b7aa-bbe4-4d20-9722-6fa1bf1c7609"
+                    },
+                    {
+                      "id": "eaa3cf45-7c44-497a-be17-c006052863af",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/areas/:slug/leaders?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "areas",
+                            ":slug",
+                            "leaders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:34.000Z",
+                      "updatedAt": "2026-07-28T01:02:34.000Z",
+                      "uid": "35240-eaa3cf45-7c44-497a-be17-c006052863af"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:34.000Z",
+                  "updatedAt": "2026-07-28T01:02:34.000Z",
+                  "uid": "35240-ab699014-7129-4076-9985-30dc180a22d8"
+                }
+              ],
+              "id": "cbc142af-f2c5-43f9-a3ea-55be97872c52",
+              "createdAt": "2026-07-28T01:02:34.000Z",
+              "updatedAt": "2026-07-28T01:02:34.000Z",
+              "uid": "35240-cbc142af-f2c5-43f9-a3ea-55be97872c52"
+            },
+            {
+              "name": "Get one area, with its ranked providers (Pro).",
+              "id": "26c8d0d2-dec5-454b-afbf-044302a3c6f2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/areas/:slug?fields=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "areas",
+                    ":slug"
+                  ],
+                  "query": [
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "f134aca8-2655-41d1-b335-926ab00fa879",
+                      "key": "slug",
+                      "value": "<string>",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "description": "Returns a single area by slug, including its description, site link, counts, and the member providers ranked by score. Pro tier."
+              },
+              "response": [
+                {
+                  "id": "56547178-9c65-498d-b146-c3398585b77c",
+                  "name": "Get one area, with its ranked providers.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/areas/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "areas",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"slug\": \"<string>\",\n  \"name\": \"<string>\",\n  \"short\": \"<string>\",\n  \"description\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"area_url\": \"<uri>\",\n  \"area_host\": \"<string>\",\n  \"icon\": \"<string>\",\n  \"provider_count\": \"<integer>\",\n  \"api_count\": \"<integer>\",\n  \"providers\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"score_band\": \"thin\",\n      \"score_composite\": \"<number>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"score_band\": \"thin\",\n      \"score_composite\": \"<number>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:02:34.000Z",
+                  "updatedAt": "2026-07-28T01:02:34.000Z",
+                  "uid": "35240-56547178-9c65-498d-b146-c3398585b77c"
+                },
+                {
+                  "id": "6c3ba34b-d644-4ea7-a544-d41b1199fbef",
+                  "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/areas/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "areas",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:34.000Z",
+                  "updatedAt": "2026-07-28T01:02:34.000Z",
+                  "uid": "35240-6c3ba34b-d644-4ea7-a544-d41b1199fbef"
+                },
+                {
+                  "id": "249fdbaa-0ab8-40f3-88c5-db4613a5f247",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/areas/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "areas",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:34.000Z",
+                  "updatedAt": "2026-07-28T01:02:34.000Z",
+                  "uid": "35240-249fdbaa-0ab8-40f3-88c5-db4613a5f247"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:34.000Z",
+              "updatedAt": "2026-07-28T01:02:34.000Z",
+              "uid": "35240-26c8d0d2-dec5-454b-afbf-044302a3c6f2"
+            }
+          ],
+          "id": "459a0ef4-8c67-4c9c-ba2b-42377f29b44a",
+          "createdAt": "2026-07-28T01:02:34.000Z",
+          "updatedAt": "2026-07-28T01:02:34.000Z",
+          "uid": "35240-459a0ef4-8c67-4c9c-ba2b-42377f29b44a"
+        },
+        {
+          "name": "List and filter areas (Pro).",
+          "id": "584bfaef-b51b-4475-86c6-d33381b806a7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/areas?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "areas"
+              ],
+              "query": [
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Sort order.",
+                  "key": "sort",
+                  "value": "provider_count"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "The API Evangelist areas taxonomy \u2014 curated topic collections (authentication, webhooks, payments, \u2026), each a scored provider index with its own site. Filter by free text; sort by provider count. Pro tier."
+          },
+          "response": [
+            {
+              "id": "e12f62e5-11b7-40b5-9b89-b8fa43c21939",
+              "name": "List and filter areas.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/areas?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "areas"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"exercitation_27\": \"elit sint\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"short\": \"<string>\",\n      \"description\": \"<string>\",\n      \"aliases\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"area_url\": \"<uri>\",\n      \"area_host\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": \"<number>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": \"<number>\"\n        }\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"short\": \"<string>\",\n      \"description\": \"<string>\",\n      \"aliases\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"area_url\": \"<uri>\",\n      \"area_host\": \"<string>\",\n      \"icon\": \"<string>\",\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": \"<number>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"strong\",\n          \"score_composite\": \"<number>\"\n        }\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:34.000Z",
+              "updatedAt": "2026-07-28T01:02:34.000Z",
+              "uid": "35240-e12f62e5-11b7-40b5-9b89-b8fa43c21939"
+            },
+            {
+              "id": "0e3ad08d-d4b5-4841-ac94-f8e466e88cd5",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/areas?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "areas"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:34.000Z",
+              "updatedAt": "2026-07-28T01:02:34.000Z",
+              "uid": "35240-0e3ad08d-d4b5-4841-ac94-f8e466e88cd5"
+            },
+            {
+              "id": "e7f4c9b0-9948-4e5c-afc6-989937e77a81",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/areas?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "areas"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:34.000Z",
+              "updatedAt": "2026-07-28T01:02:34.000Z",
+              "uid": "35240-e7f4c9b0-9948-4e5c-afc6-989937e77a81"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:34.000Z",
+          "updatedAt": "2026-07-28T01:02:34.000Z",
+          "uid": "35240-584bfaef-b51b-4475-86c6-d33381b806a7"
+        }
+      ],
+      "id": "0e8ffda2-b344-4b7b-bc15-26e785254a0c",
+      "createdAt": "2026-07-28T01:02:34.000Z",
+      "updatedAt": "2026-07-28T01:02:34.000Z",
+      "uid": "35240-0e8ffda2-b344-4b7b-bc15-26e785254a0c"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

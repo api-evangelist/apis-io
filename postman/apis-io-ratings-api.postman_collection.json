@@ -1,0 +1,812 @@
+{
+  "info": {
+    "_postman_id": "d8156030-82b3-470e-96d5-e20c6641a9e5",
+    "name": ".io Search APIs Ratings API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:40.000Z",
+    "updatedAt": "2026-07-28T01:02:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d8156030-82b3-470e-96d5-e20c6641a9e5"
+  },
+  "item": [
+    {
+      "name": "providers",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "rating",
+              "item": [
+                {
+                  "name": "history",
+                  "item": [
+                    {
+                      "name": "A provider's rating movement.",
+                      "id": "a8450179-a6fc-4e35-ab5e-b27ec5d3b5e6",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/rating/history",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "rating",
+                            "history"
+                          ],
+                          "variable": [
+                            {
+                              "id": "7e9063a7-df23-45ac-b077-af6b81388ca5",
+                              "key": "slug",
+                              "value": "<string>",
+                              "description": "(Required) Provider slug (e.g. `twilio`)."
+                            }
+                          ]
+                        },
+                        "description": "Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series."
+                      },
+                      "response": [
+                        {
+                          "id": "e108ceeb-62e6-4d73-84ac-226c2ab6156e",
+                          "name": "The provider's rating history.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/providers/:slug/rating/history",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "providers",
+                                ":slug",
+                                "rating",
+                                "history"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"dolore__5\": \"ullamco consequat adipisicing ut\"\n}",
+                          "createdAt": "2026-07-28T01:02:40.000Z",
+                          "updatedAt": "2026-07-28T01:02:40.000Z",
+                          "uid": "35240-e108ceeb-62e6-4d73-84ac-226c2ab6156e"
+                        },
+                        {
+                          "id": "079ef916-e794-495e-9c5a-8a9eab3cebcd",
+                          "name": "Resource not found.",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/problem+json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/providers/:slug/rating/history",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "providers",
+                                ":slug",
+                                "rating",
+                                "history"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "slug"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/problem+json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T01:02:40.000Z",
+                          "updatedAt": "2026-07-28T01:02:40.000Z",
+                          "uid": "35240-079ef916-e794-495e-9c5a-8a9eab3cebcd"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T01:02:40.000Z",
+                      "updatedAt": "2026-07-28T01:02:40.000Z",
+                      "uid": "35240-a8450179-a6fc-4e35-ab5e-b27ec5d3b5e6"
+                    }
+                  ],
+                  "id": "ed35c0a1-43de-4bfe-872b-25aa30369a5b",
+                  "createdAt": "2026-07-28T01:02:40.000Z",
+                  "updatedAt": "2026-07-28T01:02:40.000Z",
+                  "uid": "35240-ed35c0a1-43de-4bfe-872b-25aa30369a5b"
+                },
+                {
+                  "name": "One provider's rating.",
+                  "id": "0edee505-a994-4911-8a0e-47584a4c8b52",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/rating",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "rating"
+                      ],
+                      "variable": [
+                        {
+                          "id": "1fd8f18d-f490-4d72-9dad-e61f2481f556",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns the full rating breakdown for a single provider \u2014 composite, band, trend, delta, and all six facet scores."
+                  },
+                  "response": [
+                    {
+                      "id": "8ddfc6ea-dde0-4caa-be5d-32b89c439358",
+                      "name": "One provider's rating.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/rating",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "rating"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"composite\": \"<number>\",\n  \"band\": \"exemplar\",\n  \"trend\": \"flat\",\n  \"delta\": \"<number>\",\n  \"previous_composite\": \"<number>\",\n  \"scored_at\": \"<date>\",\n  \"schema_version\": \"<string>\",\n  \"facets\": {\n    \"discoverability\": \"<number>\",\n    \"contract_quality\": \"<number>\",\n    \"governance\": \"<number>\",\n    \"operational_transparency\": \"<number>\",\n    \"developer_ergonomics\": \"<number>\",\n    \"commercial_clarity\": \"<number>\"\n  }\n}",
+                      "createdAt": "2026-07-28T01:02:40.000Z",
+                      "updatedAt": "2026-07-28T01:02:40.000Z",
+                      "uid": "35240-8ddfc6ea-dde0-4caa-be5d-32b89c439358"
+                    },
+                    {
+                      "id": "1fd53474-9248-49be-a655-0e482b0ef99d",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/rating",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "rating"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:40.000Z",
+                      "updatedAt": "2026-07-28T01:02:40.000Z",
+                      "uid": "35240-1fd53474-9248-49be-a655-0e482b0ef99d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:40.000Z",
+                  "updatedAt": "2026-07-28T01:02:40.000Z",
+                  "uid": "35240-0edee505-a994-4911-8a0e-47584a4c8b52"
+                }
+              ],
+              "id": "d708b8d9-edfc-47d5-86c1-e141eca29821",
+              "createdAt": "2026-07-28T01:02:40.000Z",
+              "updatedAt": "2026-07-28T01:02:40.000Z",
+              "uid": "35240-d708b8d9-edfc-47d5-86c1-e141eca29821"
+            }
+          ],
+          "id": "3f08730c-a94f-4621-b329-3f325406674f",
+          "createdAt": "2026-07-28T01:02:40.000Z",
+          "updatedAt": "2026-07-28T01:02:40.000Z",
+          "uid": "35240-3f08730c-a94f-4621-b329-3f325406674f"
+        }
+      ],
+      "id": "2a8d7400-5b53-4eea-97a7-650d6b492784",
+      "createdAt": "2026-07-28T01:02:40.000Z",
+      "updatedAt": "2026-07-28T01:02:40.000Z",
+      "uid": "35240-2a8d7400-5b53-4eea-97a7-650d6b492784"
+    },
+    {
+      "name": "ratings",
+      "item": [
+        {
+          "name": "rubric",
+          "item": [
+            {
+              "name": "The rating rubric.",
+              "id": "5a45f43e-4588-445a-8ba3-4393f7d214ff",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ratings/rubric",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ratings",
+                    "rubric"
+                  ]
+                },
+                "description": "Returns the versioned rubric behind every score \u2014 the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block."
+              },
+              "response": [
+                {
+                  "id": "2f3f2a0f-f8b9-4a72-8a0b-0a4577084c39",
+                  "name": "The rating rubric.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ratings/rubric",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ratings",
+                        "rubric"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"schema_version\": \"<string>\",\n  \"bands\": [\n    {\n      \"label\": \"exemplar\",\n      \"min\": \"<number>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"label\": \"minimal\",\n      \"min\": \"<number>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"facets\": [\n    {\n      \"name\": \"governance\",\n      \"label\": \"<string>\",\n      \"weight\": \"<number>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"operational_transparency\",\n      \"label\": \"<string>\",\n      \"weight\": \"<number>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"trending\": {\n    \"rising_threshold\": \"<number>\",\n    \"falling_threshold\": \"<number>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:02:40.000Z",
+                  "updatedAt": "2026-07-28T01:02:40.000Z",
+                  "uid": "35240-2f3f2a0f-f8b9-4a72-8a0b-0a4577084c39"
+                },
+                {
+                  "id": "164b61cb-1f0b-4bc8-bb0f-8db7620eb363",
+                  "name": "Malformed request (bad parameter value).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ratings/rubric",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ratings",
+                        "rubric"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:40.000Z",
+                  "updatedAt": "2026-07-28T01:02:40.000Z",
+                  "uid": "35240-164b61cb-1f0b-4bc8-bb0f-8db7620eb363"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:40.000Z",
+              "updatedAt": "2026-07-28T01:02:40.000Z",
+              "uid": "35240-5a45f43e-4588-445a-8ba3-4393f7d214ff"
+            }
+          ],
+          "id": "db95e21b-89f7-4cf3-8a7c-1f6fa4ebc2e2",
+          "createdAt": "2026-07-28T01:02:40.000Z",
+          "updatedAt": "2026-07-28T01:02:40.000Z",
+          "uid": "35240-db95e21b-89f7-4cf3-8a7c-1f6fa4ebc2e2"
+        },
+        {
+          "name": "movers",
+          "item": [
+            {
+              "name": "The biggest rating movers.",
+              "id": "d58a8578-5a3e-427d-bbd1-c6c992f4f7b1",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ratings/movers?limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ratings",
+                    "movers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                },
+                "description": "Returns the providers whose composite score moved most (up and down) versus the previous scoring build."
+              },
+              "response": [
+                {
+                  "id": "4b6f6a2c-7b7c-4704-9f2e-166d10adac64",
+                  "name": "Up and down movers.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/ratings/movers?limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ratings",
+                        "movers"
+                      ],
+                      "query": [
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"dolore__5\": \"ullamco consequat adipisicing ut\"\n}",
+                  "createdAt": "2026-07-28T01:02:40.000Z",
+                  "updatedAt": "2026-07-28T01:02:40.000Z",
+                  "uid": "35240-4b6f6a2c-7b7c-4704-9f2e-166d10adac64"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:40.000Z",
+              "updatedAt": "2026-07-28T01:02:40.000Z",
+              "uid": "35240-d58a8578-5a3e-427d-bbd1-c6c992f4f7b1"
+            }
+          ],
+          "id": "5fed8c0b-8f38-44e9-869b-0d5e78290052",
+          "createdAt": "2026-07-28T01:02:40.000Z",
+          "updatedAt": "2026-07-28T01:02:40.000Z",
+          "uid": "35240-5fed8c0b-8f38-44e9-869b-0d5e78290052"
+        },
+        {
+          "name": "Ranked ratings leaderboard.",
+          "id": "76415ed8-8f09-4382-a667-6c00838b0996",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ratings?band=strong,exemplar&min_score=<number>&max_score=<number>&trend=flat&facet=discoverability&min_facet=<number>&providers=<string>,<string>&tags=<string>,<string>&sort=composite&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ratings"
+              ],
+              "query": [
+                {
+                  "description": "Filter by one or more rating bands.",
+                  "key": "band",
+                  "value": "strong,exemplar"
+                },
+                {
+                  "description": "Minimum composite score (0\u2013100).",
+                  "key": "min_score",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Maximum composite score (0\u2013100).",
+                  "key": "max_score",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Filter by trend marker.",
+                  "key": "trend",
+                  "value": "flat"
+                },
+                {
+                  "description": "Facet to apply `min_facet` against.",
+                  "key": "facet",
+                  "value": "discoverability"
+                },
+                {
+                  "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                  "key": "min_facet",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Comma-separated provider slugs to scope results to.",
+                  "key": "providers",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                  "key": "tags",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Sort order (composite descending by default).",
+                  "key": "sort",
+                  "value": "composite"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores."
+          },
+          "response": [
+            {
+              "id": "10035a78-3bde-4067-a248-91f56a7d75a0",
+              "name": "Ranked ratings leaderboard.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ratings?band=strong,exemplar&min_score=<number>&max_score=<number>&trend=flat&facet=discoverability&min_facet=<number>&providers=<string>,<string>&tags=<string>,<string>&sort=composite&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ratings"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "strong,exemplar"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Maximum composite score (0\u2013100).",
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter by trend marker.",
+                      "key": "trend",
+                      "value": "flat"
+                    },
+                    {
+                      "description": "Facet to apply `min_facet` against.",
+                      "key": "facet",
+                      "value": "discoverability"
+                    },
+                    {
+                      "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Sort order (composite descending by default).",
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"magna_f2\": false,\n      \"in_b36\": -22980688\n    }\n  },\n  \"data\": [\n    {\n      \"provider_slug\": \"<string>\",\n      \"composite\": \"<number>\",\n      \"band\": \"strong\",\n      \"rank\": \"<integer>\",\n      \"provider_name\": \"<string>\",\n      \"trend\": \"rising\",\n      \"facets\": {\n        \"discoverability\": \"<number>\",\n        \"contract_quality\": \"<number>\",\n        \"governance\": \"<number>\",\n        \"operational_transparency\": \"<number>\",\n        \"developer_ergonomics\": \"<number>\",\n        \"commercial_clarity\": \"<number>\"\n      }\n    },\n    {\n      \"provider_slug\": \"<string>\",\n      \"composite\": \"<number>\",\n      \"band\": \"thin\",\n      \"rank\": \"<integer>\",\n      \"provider_name\": \"<string>\",\n      \"trend\": \"falling\",\n      \"facets\": {\n        \"discoverability\": \"<number>\",\n        \"contract_quality\": \"<number>\",\n        \"governance\": \"<number>\",\n        \"operational_transparency\": \"<number>\",\n        \"developer_ergonomics\": \"<number>\",\n        \"commercial_clarity\": \"<number>\"\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:40.000Z",
+              "updatedAt": "2026-07-28T01:02:40.000Z",
+              "uid": "35240-10035a78-3bde-4067-a248-91f56a7d75a0"
+            },
+            {
+              "id": "0f2096ab-f14d-4a40-9f26-b7931747119f",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/ratings?band=strong,exemplar&min_score=<number>&max_score=<number>&trend=flat&facet=discoverability&min_facet=<number>&providers=<string>,<string>&tags=<string>,<string>&sort=composite&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ratings"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "strong,exemplar"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Maximum composite score (0\u2013100).",
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter by trend marker.",
+                      "key": "trend",
+                      "value": "flat"
+                    },
+                    {
+                      "description": "Facet to apply `min_facet` against.",
+                      "key": "facet",
+                      "value": "discoverability"
+                    },
+                    {
+                      "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Sort order (composite descending by default).",
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:40.000Z",
+              "updatedAt": "2026-07-28T01:02:40.000Z",
+              "uid": "35240-0f2096ab-f14d-4a40-9f26-b7931747119f"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:40.000Z",
+          "updatedAt": "2026-07-28T01:02:40.000Z",
+          "uid": "35240-76415ed8-8f09-4382-a667-6c00838b0996"
+        }
+      ],
+      "id": "92e8455a-37ec-4b2c-b053-dedeb55b39ff",
+      "createdAt": "2026-07-28T01:02:40.000Z",
+      "updatedAt": "2026-07-28T01:02:40.000Z",
+      "uid": "35240-92e8455a-37ec-4b2c-b053-dedeb55b39ff"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

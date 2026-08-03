@@ -1,0 +1,325 @@
+{
+  "info": {
+    "_postman_id": "73511a94-e6b7-45f4-b6c6-3f2c1f7af7e8",
+    "name": ".io Search APIs Tags API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:44.000Z",
+    "updatedAt": "2026-07-28T01:02:44.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-73511a94-e6b7-45f4-b6c6-3f2c1f7af7e8"
+  },
+  "item": [
+    {
+      "name": "tags",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "Get one tag, with its linked providers, APIs, and neighbors.",
+              "id": "f919fb01-61c4-4a1c-85dc-0a3769cb54a4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tags/:slug?fields=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags",
+                    ":slug"
+                  ],
+                  "query": [
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "6078b6a7-05b8-4df0-bb63-0eda9825b9d2",
+                      "key": "slug",
+                      "value": "<string>",
+                      "description": "(Required) Tag slug (e.g. `messaging`)."
+                    }
+                  ]
+                },
+                "description": "Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to."
+              },
+              "response": [
+                {
+                  "id": "22f82098-5ad7-4aa4-94c2-2bf75e307d24",
+                  "name": "The tag.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"slug\": \"<string>\",\n  \"name\": \"<string>\",\n  \"composite\": \"<number>\",\n  \"band\": \"stale\",\n  \"frequency\": \"<number>\",\n  \"breadth\": \"<number>\",\n  \"quality_lift\": \"<number>\",\n  \"provider_count\": \"<integer>\",\n  \"api_count\": \"<integer>\",\n  \"variants\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"neighbors\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"providers\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"developing\",\n        \"trend\": \"rising\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"exemplar\",\n        \"trend\": \"falling\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    }\n  ],\n  \"apis\": [\n    {\n      \"provider\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    {\n      \"provider\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:02:44.000Z",
+                  "updatedAt": "2026-07-28T01:02:44.000Z",
+                  "uid": "35240-22f82098-5ad7-4aa4-94c2-2bf75e307d24"
+                },
+                {
+                  "id": "9d77b06a-d381-47d5-97f0-a0a3fe74b5d5",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/tags/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "tags",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:44.000Z",
+                  "updatedAt": "2026-07-28T01:02:44.000Z",
+                  "uid": "35240-9d77b06a-d381-47d5-97f0-a0a3fe74b5d5"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:44.000Z",
+              "updatedAt": "2026-07-28T01:02:44.000Z",
+              "uid": "35240-f919fb01-61c4-4a1c-85dc-0a3769cb54a4"
+            }
+          ],
+          "id": "881d8af8-9c64-437c-9a94-83662ac581b3",
+          "createdAt": "2026-07-28T01:02:44.000Z",
+          "updatedAt": "2026-07-28T01:02:44.000Z",
+          "uid": "35240-881d8af8-9c64-437c-9a94-83662ac581b3"
+        },
+        {
+          "name": "List and rank tags.",
+          "id": "440b7b6b-c37e-4bd5-8d02-db185abd69de",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tags?q=<string>&band=healthy&min_api_count=<integer>&sort=composite&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tags"
+              ],
+              "query": [
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter by quality band.",
+                  "key": "band",
+                  "value": "healthy"
+                },
+                {
+                  "description": "Only tags applied to at least this many APIs.",
+                  "key": "min_api_count",
+                  "value": "<integer>"
+                },
+                {
+                  "key": "sort",
+                  "value": "composite"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,\n`breadth`, `quality_lift`, `band`). Default sort is by `composite` score.\n"
+          },
+          "response": [
+            {
+              "id": "a87dfb39-27fd-4030-9a4e-5d8fa531b400",
+              "name": "A page of tags.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tags?q=<string>&band=healthy&min_api_count=<integer>&sort=composite&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tags"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by quality band.",
+                      "key": "band",
+                      "value": "healthy"
+                    },
+                    {
+                      "description": "Only tags applied to at least this many APIs.",
+                      "key": "min_api_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"occaecate\": 87917377.94179064,\n      \"dolore_d\": \"\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"composite\": \"<number>\",\n      \"band\": \"stale\",\n      \"frequency\": \"<number>\",\n      \"breadth\": \"<number>\",\n      \"quality_lift\": \"<number>\",\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"variants\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"neighbors\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"created\": \"<date>\",\n          \"common\": [\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            },\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            }\n          ],\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"score\": {\n            \"composite\": \"<number>\",\n            \"band\": \"minimal\",\n            \"trend\": \"rising\",\n            \"delta\": \"<number>\",\n            \"previous_composite\": \"<number>\",\n            \"scored_at\": \"<date>\",\n            \"schema_version\": \"<string>\",\n            \"facets\": {\n              \"discoverability\": \"<number>\",\n              \"contract_quality\": \"<number>\",\n              \"governance\": \"<number>\",\n              \"operational_transparency\": \"<number>\",\n              \"developer_ergonomics\": \"<number>\",\n              \"commercial_clarity\": \"<number>\"\n            }\n          }\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"created\": \"<date>\",\n          \"common\": [\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            },\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            }\n          ],\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"score\": {\n            \"composite\": \"<number>\",\n            \"band\": \"developing\",\n            \"trend\": \"rising\",\n            \"delta\": \"<number>\",\n            \"previous_composite\": \"<number>\",\n            \"scored_at\": \"<date>\",\n            \"schema_version\": \"<string>\",\n            \"facets\": {\n              \"discoverability\": \"<number>\",\n              \"contract_quality\": \"<number>\",\n              \"governance\": \"<number>\",\n              \"operational_transparency\": \"<number>\",\n              \"developer_ergonomics\": \"<number>\",\n              \"commercial_clarity\": \"<number>\"\n            }\n          }\n        }\n      ],\n      \"apis\": [\n        {\n          \"provider\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"provider\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"composite\": \"<number>\",\n      \"band\": \"stale\",\n      \"frequency\": \"<number>\",\n      \"breadth\": \"<number>\",\n      \"quality_lift\": \"<number>\",\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"variants\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"neighbors\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ],\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"created\": \"<date>\",\n          \"common\": [\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            },\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            }\n          ],\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"score\": {\n            \"composite\": \"<number>\",\n            \"band\": \"developing\",\n            \"trend\": \"rising\",\n            \"delta\": \"<number>\",\n            \"previous_composite\": \"<number>\",\n            \"scored_at\": \"<date>\",\n            \"schema_version\": \"<string>\",\n            \"facets\": {\n              \"discoverability\": \"<number>\",\n              \"contract_quality\": \"<number>\",\n              \"governance\": \"<number>\",\n              \"operational_transparency\": \"<number>\",\n              \"developer_ergonomics\": \"<number>\",\n              \"commercial_clarity\": \"<number>\"\n            }\n          }\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"created\": \"<date>\",\n          \"common\": [\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            },\n            {\n              \"type\": \"<string>\",\n              \"url\": \"<uri>\",\n              \"title\": \"<string>\"\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            },\n            {\n              \"name\": \"<string>\",\n              \"slug\": \"<string>\",\n              \"description\": \"<string>\"\n            }\n          ],\n          \"tags\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"score\": {\n            \"composite\": \"<number>\",\n            \"band\": \"thin\",\n            \"trend\": \"falling\",\n            \"delta\": \"<number>\",\n            \"previous_composite\": \"<number>\",\n            \"scored_at\": \"<date>\",\n            \"schema_version\": \"<string>\",\n            \"facets\": {\n              \"discoverability\": \"<number>\",\n              \"contract_quality\": \"<number>\",\n              \"governance\": \"<number>\",\n              \"operational_transparency\": \"<number>\",\n              \"developer_ergonomics\": \"<number>\",\n              \"commercial_clarity\": \"<number>\"\n            }\n          }\n        }\n      ],\n      \"apis\": [\n        {\n          \"provider\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        },\n        {\n          \"provider\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:44.000Z",
+              "updatedAt": "2026-07-28T01:02:44.000Z",
+              "uid": "35240-a87dfb39-27fd-4030-9a4e-5d8fa531b400"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:44.000Z",
+          "updatedAt": "2026-07-28T01:02:44.000Z",
+          "uid": "35240-440b7b6b-c37e-4bd5-8d02-db185abd69de"
+        }
+      ],
+      "id": "797827c5-77f7-465b-8026-a8bb6922e696",
+      "createdAt": "2026-07-28T01:02:44.000Z",
+      "updatedAt": "2026-07-28T01:02:44.000Z",
+      "uid": "35240-797827c5-77f7-465b-8026-a8bb6922e696"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

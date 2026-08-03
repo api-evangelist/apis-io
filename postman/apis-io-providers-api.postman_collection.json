@@ -1,0 +1,1220 @@
+{
+  "info": {
+    "_postman_id": "b11bbabd-58e3-4493-9336-e5337b64d81e",
+    "name": ".io Search APIs Providers API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:38.000Z",
+    "updatedAt": "2026-07-28T01:02:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b11bbabd-58e3-4493-9336-e5337b64d81e"
+  },
+  "item": [
+    {
+      "name": "providers",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "apis",
+              "item": [
+                {
+                  "name": "List the APIs published by a provider.",
+                  "id": "07648822-104f-4f2f-bde8-6b6abcd91596",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                          "key": "tags",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                          "key": "match",
+                          "value": "any"
+                        },
+                        {
+                          "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                          "key": "artifact_types",
+                          "value": "Reference,Quickstart"
+                        },
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        },
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "1-based page number.",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "eb7f7fcf-7224-4c8e-8865-ad1c5345412a",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies."
+                  },
+                  "response": [
+                    {
+                      "id": "d30c7c3d-041a-4b91-be91-e112dd80b89a",
+                      "name": "A page of the provider's APIs.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "apis"
+                          ],
+                          "query": [
+                            {
+                              "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                              "key": "tags",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                              "key": "match",
+                              "value": "any"
+                            },
+                            {
+                              "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                              "key": "artifact_types",
+                              "value": "Reference,Quickstart"
+                            },
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            },
+                            {
+                              "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                              "key": "fields",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "1-based page number.",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"eu806\": 50801068.25997186,\n      \"tempor_a6_\": 30431211\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Capabilities\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"JSONLD\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    },\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Plans\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"RateLimits\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-d30c7c3d-041a-4b91-be91-e112dd80b89a"
+                    },
+                    {
+                      "id": "1c844a8f-71fb-4cdc-a8e5-e7faa21e29aa",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "apis"
+                          ],
+                          "query": [
+                            {
+                              "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                              "key": "tags",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                              "key": "match",
+                              "value": "any"
+                            },
+                            {
+                              "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                              "key": "artifact_types",
+                              "value": "Reference,Quickstart"
+                            },
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            },
+                            {
+                              "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                              "key": "fields",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "1-based page number.",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-1c844a8f-71fb-4cdc-a8e5-e7faa21e29aa"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-07648822-104f-4f2f-bde8-6b6abcd91596"
+                }
+              ],
+              "id": "a5e938c0-35ca-4784-acd8-7534f147cec5",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-a5e938c0-35ca-4784-acd8-7534f147cec5"
+            },
+            {
+              "name": "artifacts",
+              "item": [
+                {
+                  "name": "Every artifact a provider publishes.",
+                  "id": "2cb2d3a7-79df-4b28-9045-6e538f3dfe56",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/artifacts",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "artifacts"
+                      ],
+                      "variable": [
+                        {
+                          "id": "e6213564-61fd-46a8-a018-e79d3b845db5",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Aggregates all artifacts across a provider's APIs \u2014 grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing\u2026) \u2014 plus per-type counts. One call instead of composing several."
+                  },
+                  "response": [
+                    {
+                      "id": "e10a201e-4aaa-4765-bd2b-9490cbc0f7d7",
+                      "name": "The provider's artifacts, grouped by type.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/artifacts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "artifacts"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"sitdca\": false,\n  \"quis_3\": \"nisi et\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-e10a201e-4aaa-4765-bd2b-9490cbc0f7d7"
+                    },
+                    {
+                      "id": "84f9a719-8222-489c-b49b-6ab905eb79c2",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/artifacts",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "artifacts"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-84f9a719-8222-489c-b49b-6ab905eb79c2"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-2cb2d3a7-79df-4b28-9045-6e538f3dfe56"
+                }
+              ],
+              "id": "f857ae13-7ae1-4d38-8713-71b5dccdec51",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-f857ae13-7ae1-4d38-8713-71b5dccdec51"
+            },
+            {
+              "name": "onboarding",
+              "item": [
+                {
+                  "name": "A provider's getting-started view.",
+                  "id": "7d8ade77-0af7-459b-a435-5b0a174ae88d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/onboarding",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "onboarding"
+                      ],
+                      "variable": [
+                        {
+                          "id": "83e8776a-72dc-4279-8f60-e6dd8559f716",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Assembles website, portal, signup, docs, authentication, base URLs, and first steps from a provider's registered links and API base URLs \u2014 a best-effort onboarding descriptor."
+                  },
+                  "response": [
+                    {
+                      "id": "2343a936-0b9a-4589-a00b-a22c21a3b6e6",
+                      "name": "The provider's onboarding view.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/onboarding",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "onboarding"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"sitdca\": false,\n  \"quis_3\": \"nisi et\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-2343a936-0b9a-4589-a00b-a22c21a3b6e6"
+                    },
+                    {
+                      "id": "406e7ca5-0568-4e4d-82bc-8bb46d96195c",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/onboarding",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "onboarding"
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-406e7ca5-0568-4e4d-82bc-8bb46d96195c"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-7d8ade77-0af7-459b-a435-5b0a174ae88d"
+                }
+              ],
+              "id": "6fa5b33f-4268-4660-a17e-76b90cdddb61",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-6fa5b33f-4268-4660-a17e-76b90cdddb61"
+            },
+            {
+              "name": "similar",
+              "item": [
+                {
+                  "name": "Providers similar to a given one.",
+                  "id": "b055ed3a-0466-45f8-b6ff-a628b97fd0b2",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/similar?limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "similar"
+                      ],
+                      "query": [
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "b7dfa12d-773b-489b-a176-843d16a0d5d9",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Ranks catalog providers by weighted overlap of tags, industry, region, and artifact coverage \u2014 the alternatives to a given provider."
+                  },
+                  "response": [
+                    {
+                      "id": "680306d3-3cce-457d-bf70-33a5eefe1096",
+                      "name": "A page of similar providers, most similar first.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/similar?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "similar"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"exercitation__\": false,\n      \"reprehenderitcfc\": \"ullamco in ex\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"strong\",\n        \"trend\": \"falling\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"thin\",\n        \"trend\": \"flat\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-680306d3-3cce-457d-bf70-33a5eefe1096"
+                    },
+                    {
+                      "id": "3825e38d-2232-4c92-afbf-314601701ea3",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/similar?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "similar"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:39.000Z",
+                      "updatedAt": "2026-07-28T01:02:39.000Z",
+                      "uid": "35240-3825e38d-2232-4c92-afbf-314601701ea3"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-b055ed3a-0466-45f8-b6ff-a628b97fd0b2"
+                }
+              ],
+              "id": "57a00cbc-7a8b-473c-b46e-a0986bc18173",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-57a00cbc-7a8b-473c-b46e-a0986bc18173"
+            },
+            {
+              "name": "Get one provider.",
+              "id": "5aab2061-cf88-4fea-b425-8eb665b6c3bf",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/providers/:slug?fields=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "providers",
+                    ":slug"
+                  ],
+                  "query": [
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "76c36f7a-ce4d-48ed-8a56-3f57fa33c8b4",
+                      "key": "slug",
+                      "value": "<string>",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "description": "Returns a single provider by slug, including its provider-wide links, tags, and a summary list of the APIs it publishes."
+              },
+              "response": [
+                {
+                  "id": "6167a1cc-507a-4c30-a8dd-07d868daef25",
+                  "name": "The provider.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"slug\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"api_count\": \"<integer>\",\n  \"image\": \"<uri>\",\n  \"created\": \"<date>\",\n  \"common\": [\n    {\n      \"type\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"title\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"title\": \"<string>\"\n    }\n  ],\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"slug\": \"<string>\",\n      \"description\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"score\": {\n    \"composite\": \"<number>\",\n    \"band\": \"strong\",\n    \"trend\": \"falling\",\n    \"delta\": \"<number>\",\n    \"previous_composite\": \"<number>\",\n    \"scored_at\": \"<date>\",\n    \"schema_version\": \"<string>\",\n    \"facets\": {\n      \"discoverability\": \"<number>\",\n      \"contract_quality\": \"<number>\",\n      \"governance\": \"<number>\",\n      \"operational_transparency\": \"<number>\",\n      \"developer_ergonomics\": \"<number>\",\n      \"commercial_clarity\": \"<number>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-6167a1cc-507a-4c30-a8dd-07d868daef25"
+                },
+                {
+                  "id": "3bcb690b-a083-4185-8d83-f9fac63a4f0e",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:39.000Z",
+                  "updatedAt": "2026-07-28T01:02:39.000Z",
+                  "uid": "35240-3bcb690b-a083-4185-8d83-f9fac63a4f0e"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-5aab2061-cf88-4fea-b425-8eb665b6c3bf"
+            }
+          ],
+          "id": "92971390-055e-41d3-b5e7-979418baa8c8",
+          "createdAt": "2026-07-28T01:02:39.000Z",
+          "updatedAt": "2026-07-28T01:02:39.000Z",
+          "uid": "35240-92971390-055e-41d3-b5e7-979418baa8c8"
+        },
+        {
+          "name": "List and filter providers.",
+          "id": "f43724be-604f-4760-80b8-f1a6f02d14f1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/providers?q=<string>&tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&industry=<string>,<string>&region=<string>,<string>&band=minimal,developing&min_score=<number>&max_score=<number>&trend=flat&facet=developer_ergonomics&min_facet=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "providers"
+              ],
+              "query": [
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                  "key": "tags",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                  "key": "match",
+                  "value": "any"
+                },
+                {
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                  "key": "artifact_types",
+                  "value": "Reference,Quickstart"
+                },
+                {
+                  "description": "Filter by one or more industry slugs.",
+                  "key": "industry",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Filter by one or more region slugs.",
+                  "key": "region",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Filter by one or more rating bands.",
+                  "key": "band",
+                  "value": "minimal,developing"
+                },
+                {
+                  "description": "Minimum composite score (0\u2013100).",
+                  "key": "min_score",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Maximum composite score (0\u2013100).",
+                  "key": "max_score",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Filter by trend marker.",
+                  "key": "trend",
+                  "value": "flat"
+                },
+                {
+                  "description": "Facet to apply `min_facet` against.",
+                  "key": "facet",
+                  "value": "developer_ergonomics"
+                },
+                {
+                  "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                  "key": "min_facet",
+                  "value": "<number>"
+                },
+                {
+                  "description": "Sort order.",
+                  "key": "sort",
+                  "value": "relevance"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "List providers, optionally filtered by free text, tags, or the artifact types they publish."
+          },
+          "response": [
+            {
+              "id": "22228a03-ce34-4eb0-b841-7ee313ac71f6",
+              "name": "A page of providers.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/providers?q=<string>&tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&industry=<string>,<string>&region=<string>,<string>&band=minimal,developing&min_score=<number>&max_score=<number>&trend=flat&facet=developer_ergonomics&min_facet=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "providers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Reference,Quickstart"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "minimal,developing"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Maximum composite score (0\u2013100).",
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter by trend marker.",
+                      "key": "trend",
+                      "value": "flat"
+                    },
+                    {
+                      "description": "Facet to apply `min_facet` against.",
+                      "key": "facet",
+                      "value": "developer_ergonomics"
+                    },
+                    {
+                      "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"exercitation__\": false,\n      \"reprehenderitcfc\": \"ullamco in ex\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"strong\",\n        \"trend\": \"falling\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"created\": \"<date>\",\n      \"common\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<uri>\",\n          \"title\": \"<string>\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\",\n          \"description\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"score\": {\n        \"composite\": \"<number>\",\n        \"band\": \"thin\",\n        \"trend\": \"flat\",\n        \"delta\": \"<number>\",\n        \"previous_composite\": \"<number>\",\n        \"scored_at\": \"<date>\",\n        \"schema_version\": \"<string>\",\n        \"facets\": {\n          \"discoverability\": \"<number>\",\n          \"contract_quality\": \"<number>\",\n          \"governance\": \"<number>\",\n          \"operational_transparency\": \"<number>\",\n          \"developer_ergonomics\": \"<number>\",\n          \"commercial_clarity\": \"<number>\"\n        }\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-22228a03-ce34-4eb0-b841-7ee313ac71f6"
+            },
+            {
+              "id": "504fa5f8-a1f1-4c3c-b54a-7e056e4a52bd",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/providers?q=<string>&tags=<string>,<string>&match=any&artifact_types=Reference,Quickstart&industry=<string>,<string>&region=<string>,<string>&band=minimal,developing&min_score=<number>&max_score=<number>&trend=flat&facet=developer_ergonomics&min_facet=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "providers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Reference,Quickstart"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "minimal,developing"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Maximum composite score (0\u2013100).",
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Filter by trend marker.",
+                      "key": "trend",
+                      "value": "flat"
+                    },
+                    {
+                      "description": "Facet to apply `min_facet` against.",
+                      "key": "facet",
+                      "value": "developer_ergonomics"
+                    },
+                    {
+                      "description": "Minimum score (0\u2013100) for the facet named by `facet`.",
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:39.000Z",
+              "updatedAt": "2026-07-28T01:02:39.000Z",
+              "uid": "35240-504fa5f8-a1f1-4c3c-b54a-7e056e4a52bd"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:39.000Z",
+          "updatedAt": "2026-07-28T01:02:39.000Z",
+          "uid": "35240-f43724be-604f-4760-80b8-f1a6f02d14f1"
+        }
+      ],
+      "id": "94414ada-0b94-4a6d-9308-f345d709a45c",
+      "createdAt": "2026-07-28T01:02:39.000Z",
+      "updatedAt": "2026-07-28T01:02:39.000Z",
+      "uid": "35240-94414ada-0b94-4a6d-9308-f345d709a45c"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

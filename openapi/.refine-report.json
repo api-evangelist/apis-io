@@ -1,0 +1,34 @@
+{
+  "provider": "apis-io",
+  "sources": [
+    "apis-io-apis-api-openapi.yml",
+    "apis-io-areas-api-openapi.yml",
+    "apis-io-artifact-types-api-openapi.yml",
+    "apis-io-industries-api-openapi.yml",
+    "apis-io-insights-api-openapi.yml",
+    "apis-io-providers-api-openapi.yml",
+    "apis-io-ratings-api-openapi.yml",
+    "apis-io-regions-api-openapi.yml",
+    "apis-io-search-api-openapi.yml",
+    "apis-io-synthesis-api-openapi.yml",
+    "apis-io-tags-api-openapi.yml"
+  ],
+  "outputs": [
+    "apis-io-apis-api-openapi.yml",
+    "apis-io-areas-api-openapi.yml",
+    "apis-io-artifact-types-api-openapi.yml",
+    "apis-io-industries-api-openapi.yml",
+    "apis-io-insights-api-openapi.yml",
+    "apis-io-providers-api-openapi.yml",
+    "apis-io-ratings-api-openapi.yml",
+    "apis-io-regions-api-openapi.yml",
+    "apis-io-search-api-openapi.yml",
+    "apis-io-synthesis-api-openapi.yml",
+    "apis-io-tags-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

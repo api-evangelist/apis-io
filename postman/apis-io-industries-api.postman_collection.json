@@ -1,0 +1,707 @@
+{
+  "info": {
+    "_postman_id": "27be72ef-b58a-4be8-bc1b-0865e0721a3f",
+    "name": ".io Search APIs Industries API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:36.000Z",
+    "updatedAt": "2026-07-28T01:02:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-27be72ef-b58a-4be8-bc1b-0865e0721a3f"
+  },
+  "item": [
+    {
+      "name": "industries",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "leaders",
+              "item": [
+                {
+                  "name": "Top-rated providers in an industry.",
+                  "id": "3aa7faf9-ccc1-42ea-8753-fcc25c1b5432",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/industries/:slug/leaders?limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "industries",
+                        ":slug",
+                        "leaders"
+                      ],
+                      "query": [
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "aec89671-8ca1-4034-9ef2-27ffae6d980c",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Industry slug (e.g. `financial-services`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns the highest-composite-scoring member providers of an industry vertical."
+                  },
+                  "response": [
+                    {
+                      "id": "725607af-c3dc-4edc-b4ff-d32822e284d2",
+                      "name": "A page of the industry's top providers.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/industries/:slug/leaders?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "industries",
+                            ":slug",
+                            "leaders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"dolore_27\": -6058078.194772422,\n  \"aute_e\": -31176125.085534245,\n  \"nisi0\": 93792910\n}",
+                      "createdAt": "2026-07-28T01:02:37.000Z",
+                      "updatedAt": "2026-07-28T01:02:37.000Z",
+                      "uid": "35240-725607af-c3dc-4edc-b4ff-d32822e284d2"
+                    },
+                    {
+                      "id": "3236cf4b-f20c-4206-a589-586bf5fd3085",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/industries/:slug/leaders?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "industries",
+                            ":slug",
+                            "leaders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:37.000Z",
+                      "updatedAt": "2026-07-28T01:02:37.000Z",
+                      "uid": "35240-3236cf4b-f20c-4206-a589-586bf5fd3085"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:37.000Z",
+                  "updatedAt": "2026-07-28T01:02:37.000Z",
+                  "uid": "35240-3aa7faf9-ccc1-42ea-8753-fcc25c1b5432"
+                }
+              ],
+              "id": "60bc7fc2-f35e-4892-8ff7-fec82257869a",
+              "createdAt": "2026-07-28T01:02:37.000Z",
+              "updatedAt": "2026-07-28T01:02:37.000Z",
+              "uid": "35240-60bc7fc2-f35e-4892-8ff7-fec82257869a"
+            },
+            {
+              "name": "Get one industry, with its ranked providers.",
+              "id": "a74176ed-09a2-48ef-a9d5-9766639aecb9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/industries/:slug?fields=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "industries",
+                    ":slug"
+                  ],
+                  "query": [
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "e8290eee-2911-430f-b825-1802d779fd71",
+                      "key": "slug",
+                      "value": "<string>",
+                      "description": "(Required) Industrie slug (e.g. `media-entertainment`)."
+                    }
+                  ]
+                },
+                "description": "Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score."
+              },
+              "response": [
+                {
+                  "id": "950a111f-fa19-44e0-9431-890da59d56f9",
+                  "name": "Get one industry, with its ranked providers.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/industries/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "industries",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"slug\": \"<string>\",\n  \"name\": \"<string>\",\n  \"short\": \"<string>\",\n  \"description\": \"<string>\",\n  \"aliases\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"provider_count\": \"<integer>\",\n  \"api_count\": \"<integer>\",\n  \"providers\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"score_band\": \"developing\",\n      \"score_composite\": \"<number>\"\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"api_count\": \"<integer>\",\n      \"image\": \"<uri>\",\n      \"score_band\": \"developing\",\n      \"score_composite\": \"<number>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:02:37.000Z",
+                  "updatedAt": "2026-07-28T01:02:37.000Z",
+                  "uid": "35240-950a111f-fa19-44e0-9431-890da59d56f9"
+                },
+                {
+                  "id": "aa83014d-e4f1-4e90-bd46-7f693f272711",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/industries/:slug?fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "industries",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "slug"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:37.000Z",
+                  "updatedAt": "2026-07-28T01:02:37.000Z",
+                  "uid": "35240-aa83014d-e4f1-4e90-bd46-7f693f272711"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:37.000Z",
+              "updatedAt": "2026-07-28T01:02:37.000Z",
+              "uid": "35240-a74176ed-09a2-48ef-a9d5-9766639aecb9"
+            }
+          ],
+          "id": "3fb4e3d7-659d-4ce0-a2a8-08e0a45f1aea",
+          "createdAt": "2026-07-28T01:02:37.000Z",
+          "updatedAt": "2026-07-28T01:02:37.000Z",
+          "uid": "35240-3fb4e3d7-659d-4ce0-a2a8-08e0a45f1aea"
+        },
+        {
+          "name": "List and filter industries.",
+          "id": "4ca5c9c4-b762-4261-bc4c-bfbc79d13d30",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/industries?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "industries"
+              ],
+              "query": [
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Sort order.",
+                  "key": "sort",
+                  "value": "provider_count"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "The industry taxonomy \u2014 verticals grouping providers across the catalog. Filter by free text; sort by provider or API count."
+          },
+          "response": [
+            {
+              "id": "f7c4bb51-19d1-453c-a2b2-07900648a7fd",
+              "name": "List and filter industries.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/industries?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "industries"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"estc\": false\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"short\": \"<string>\",\n      \"description\": \"<string>\",\n      \"aliases\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": \"<number>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"strong\",\n          \"score_composite\": \"<number>\"\n        }\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"name\": \"<string>\",\n      \"short\": \"<string>\",\n      \"description\": \"<string>\",\n      \"aliases\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"provider_count\": \"<integer>\",\n      \"api_count\": \"<integer>\",\n      \"providers\": [\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"exemplar\",\n          \"score_composite\": \"<number>\"\n        },\n        {\n          \"slug\": \"<string>\",\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"api_count\": \"<integer>\",\n          \"image\": \"<uri>\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": \"<number>\"\n        }\n      ]\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:37.000Z",
+              "updatedAt": "2026-07-28T01:02:37.000Z",
+              "uid": "35240-f7c4bb51-19d1-453c-a2b2-07900648a7fd"
+            },
+            {
+              "id": "4442e5a0-0d46-4dc3-a1b4-3995a6e76f60",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/industries?q=<string>&sort=provider_count&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "industries"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Sort order.",
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:37.000Z",
+              "updatedAt": "2026-07-28T01:02:37.000Z",
+              "uid": "35240-4442e5a0-0d46-4dc3-a1b4-3995a6e76f60"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:37.000Z",
+          "updatedAt": "2026-07-28T01:02:37.000Z",
+          "uid": "35240-4ca5c9c4-b762-4261-bc4c-bfbc79d13d30"
+        }
+      ],
+      "id": "f00de4ef-3dfb-4c65-962d-e3103f6164ff",
+      "createdAt": "2026-07-28T01:02:37.000Z",
+      "updatedAt": "2026-07-28T01:02:37.000Z",
+      "uid": "35240-f00de4ef-3dfb-4c65-962d-e3103f6164ff"
+    },
+    {
+      "name": "gaps",
+      "item": [
+        {
+          "name": "industry",
+          "item": [
+            {
+              "name": "{slug}",
+              "item": [
+                {
+                  "name": "Artifact gaps across a whole industry.",
+                  "id": "02e4871c-12b5-4033-b4f7-347032e4dc4d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "gaps",
+                        "industry",
+                        ":slug"
+                      ],
+                      "query": [
+                        {
+                          "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                          "key": "min_share",
+                          "value": "<number>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "1e48ea88-2289-4c7a-8c85-98fc0a6d496d",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Industry slug (e.g. `financial-services`)."
+                        }
+                      ]
+                    },
+                    "description": "For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills\u2026) most member providers lack \u2014 where the vertical is under-served."
+                  },
+                  "response": [
+                    {
+                      "id": "c4c585e7-996e-4af9-9d52-150ddcb16e00",
+                      "name": "The industry's valuable-artifact coverage and gaps.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gaps",
+                            "industry",
+                            ":slug"
+                          ],
+                          "query": [
+                            {
+                              "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                              "key": "min_share",
+                              "value": "<number>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"dolore_27\": -6058078.194772422,\n  \"aute_e\": -31176125.085534245,\n  \"nisi0\": 93792910\n}",
+                      "createdAt": "2026-07-28T01:02:37.000Z",
+                      "updatedAt": "2026-07-28T01:02:37.000Z",
+                      "uid": "35240-c4c585e7-996e-4af9-9d52-150ddcb16e00"
+                    },
+                    {
+                      "id": "c2335108-3311-45c8-8ad7-8c6ec754b871",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/gaps/industry/:slug?min_share=<number>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "gaps",
+                            "industry",
+                            ":slug"
+                          ],
+                          "query": [
+                            {
+                              "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5).",
+                              "key": "min_share",
+                              "value": "<number>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:37.000Z",
+                      "updatedAt": "2026-07-28T01:02:37.000Z",
+                      "uid": "35240-c2335108-3311-45c8-8ad7-8c6ec754b871"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:37.000Z",
+                  "updatedAt": "2026-07-28T01:02:37.000Z",
+                  "uid": "35240-02e4871c-12b5-4033-b4f7-347032e4dc4d"
+                }
+              ],
+              "id": "ccd4d87c-bf67-434e-a7f5-2e6d52072224",
+              "createdAt": "2026-07-28T01:02:37.000Z",
+              "updatedAt": "2026-07-28T01:02:37.000Z",
+              "uid": "35240-ccd4d87c-bf67-434e-a7f5-2e6d52072224"
+            }
+          ],
+          "id": "1b3bbfb4-66f7-40ce-9592-c9d7014eb3c7",
+          "createdAt": "2026-07-28T01:02:37.000Z",
+          "updatedAt": "2026-07-28T01:02:37.000Z",
+          "uid": "35240-1b3bbfb4-66f7-40ce-9592-c9d7014eb3c7"
+        }
+      ],
+      "id": "f7a6193c-3054-47a9-a828-27cc3170a9e7",
+      "createdAt": "2026-07-28T01:02:37.000Z",
+      "updatedAt": "2026-07-28T01:02:37.000Z",
+      "uid": "35240-f7a6193c-3054-47a9-a828-27cc3170a9e7"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

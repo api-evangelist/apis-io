@@ -1,0 +1,1215 @@
+{
+  "info": {
+    "_postman_id": "0482b8b7-b85f-4a25-a7c9-3cc2e4065e53",
+    "name": ".io APIs Search API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:42.000Z",
+    "updatedAt": "2026-07-28T01:02:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-0482b8b7-b85f-4a25-a7c9-3cc2e4065e53"
+  },
+  "item": [
+    {
+      "name": "search",
+      "item": [
+        {
+          "name": "apis",
+          "item": [
+            {
+              "name": "APIs.io Search APIs",
+              "id": "36f334cc-01bd-4444-88a8-afd9e059b8c6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "query": [
+                    {
+                      "description": "The keyword to search by.",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The limit of the results.",
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The page of the results.",
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Searching across all APIs by keyword or phrase."
+              },
+              "response": [
+                {
+                  "id": "af9e1e98-b315-4816-95e7-4a6e84242c0f",
+                  "name": "A successful search.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"totalPages\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"search\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"https://\",\n      \"properties\": [\n        {\n          \"type\": \"RAML\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://uAWe\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://8No).\",\n          \"vCard\": \"https://CI_|_PD[\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://xE#C;'<[I;\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"https://sZU}:\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"InterfaceLicense\",\n          \"url\": \"https://gxQ+\\\"\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"http\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gDlnD.t\",\n          \"url\": \"https://fC\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"links\": {\n    \"self\": \"<string>\",\n    \"first\": \"<string>\",\n    \"prev\": \"<string>\",\n    \"next\": \"<string>\",\n    \"last\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-af9e1e98-b315-4816-95e7-4a6e84242c0f"
+                },
+                {
+                  "id": "1950998b-50b0-442b-bea5-7cecb85f39d3",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-1950998b-50b0-442b-bea5-7cecb85f39d3"
+                },
+                {
+                  "id": "b25f3420-8d2b-474a-92b5-546ed4d6a94e",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-b25f3420-8d2b-474a-92b5-546ed4d6a94e"
+                },
+                {
+                  "id": "89f42aa5-7173-4144-9b44-b06e05a2ec4f",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-89f42aa5-7173-4144-9b44-b06e05a2ec4f"
+                },
+                {
+                  "id": "70fa8488-eb6c-472c-967b-1b9cde1d7455",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-70fa8488-eb6c-472c-967b-1b9cde1d7455"
+                },
+                {
+                  "id": "6c3f3b55-4938-4b24-a937-026fa53699b7",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-6c3f3b55-4938-4b24-a937-026fa53699b7"
+                },
+                {
+                  "id": "63ef9dc7-ffeb-48b7-890d-970b57da72f6",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-63ef9dc7-ffeb-48b7-890d-970b57da72f6"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:42.000Z",
+              "updatedAt": "2026-07-28T01:02:42.000Z",
+              "uid": "35240-36f334cc-01bd-4444-88a8-afd9e059b8c6"
+            },
+            {
+              "name": "APIs.io Submit API",
+              "id": "83ea4274-0649-4993-8688-cbd3703d2160",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/search/apis",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search",
+                    "apis"
+                  ]
+                },
+                "description": "Submit a valid APIs.json to be included in APIs.io."
+              },
+              "response": [
+                {
+                  "id": "2fb6bd82-28e6-45da-a44a-7b5a60702e7e",
+                  "name": "Successful adding of an API.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-2fb6bd82-28e6-45da-a44a-7b5a60702e7e"
+                },
+                {
+                  "id": "0f3a6714-0eaf-44c2-bdba-4d326c0a3222",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-0f3a6714-0eaf-44c2-bdba-4d326c0a3222"
+                },
+                {
+                  "id": "99591c61-c086-483e-b9b6-3f340fee13a5",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-99591c61-c086-483e-b9b6-3f340fee13a5"
+                },
+                {
+                  "id": "b2b087a7-046b-4a0e-905d-fd7805af2d8e",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-b2b087a7-046b-4a0e-905d-fd7805af2d8e"
+                },
+                {
+                  "id": "49d0c76e-ec82-4b67-975a-3c2eea5715c4",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-49d0c76e-ec82-4b67-975a-3c2eea5715c4"
+                },
+                {
+                  "id": "aa073a5d-9125-4cf8-af86-49e570933b52",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-aa073a5d-9125-4cf8-af86-49e570933b52"
+                },
+                {
+                  "id": "95ba587d-d5d3-4a22-b443-ed80753e8e51",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"http\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"http\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"https://V; \\\\<h&_P\"\n        },\n        {\n          \"type\": \"RAML\",\n          \"url\": \"https://T2sQJ\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://NWr9^Oc\",\n          \"vCard\": \"http\",\n          \"url\": \"https://1G$z\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://}U9\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://~{<<\",\n      \"humanURL\": \"http\",\n      \"properties\": [\n        {\n          \"type\": \"Pricing\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://gy(\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://S\",\n          \"vCard\": \"https://c-\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"tags\": [\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    },\n    {\n      \"description\": \"A consistent set of tag to apply to a description\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://7dDyqYd`}\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"https://\\\\]\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:42.000Z",
+                  "updatedAt": "2026-07-28T01:02:42.000Z",
+                  "uid": "35240-95ba587d-d5d3-4a22-b443-ed80753e8e51"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:42.000Z",
+              "updatedAt": "2026-07-28T01:02:42.000Z",
+              "uid": "35240-83ea4274-0649-4993-8688-cbd3703d2160"
+            }
+          ],
+          "id": "79cc60bf-4ebd-45fc-af7e-4ff82cd76b64",
+          "createdAt": "2026-07-28T01:02:42.000Z",
+          "updatedAt": "2026-07-28T01:02:42.000Z",
+          "uid": "35240-79cc60bf-4ebd-45fc-af7e-4ff82cd76b64"
+        },
+        {
+          "name": "Unified search across apis, providers, tags, and artifacts.",
+          "id": "eb53ed8e-01bf-4f69-9388-6dc62351fe60",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/search?return=apis&q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Specification,Plans&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,exemplar&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "description": "The kind of object to return.",
+                  "key": "return",
+                  "value": "apis"
+                },
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                  "key": "tags",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                  "key": "match",
+                  "value": "any"
+                },
+                {
+                  "description": "Comma-separated provider slugs to scope results to.",
+                  "key": "providers",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                  "key": "artifact_types",
+                  "value": "Specification,Plans"
+                },
+                {
+                  "description": "Filter by one or more industry slugs.",
+                  "key": "industry",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Filter by one or more region slugs.",
+                  "key": "region",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                  "key": "include",
+                  "value": "content,content"
+                },
+                {
+                  "description": "Filter by one or more rating bands.",
+                  "key": "band",
+                  "value": "developing,exemplar"
+                },
+                {
+                  "description": "Minimum composite score (0\u2013100).",
+                  "key": "min_score",
+                  "value": "<number>"
+                },
+                {
+                  "key": "sort",
+                  "value": "relevance"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "The power endpoint. Choose what kind of object to return with `return`\n(`apis` by default), then constrain with any combination of `q`, `tags`\n(`match=any|all`), `providers`, and `artifact_types`. Use `fields` for sparse\nresponses and `include=content` to inline artifacts.\n\nExample \u2014 messaging APIs across providers that ship an OpenAPI, returning just the\nspec and pricing artifacts:\n\n    /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing\n           &fields=aid,name,provider_slug,properties\n"
+          },
+          "response": [
+            {
+              "id": "78156176-6369-42ac-89d7-1fbdc87ae1e9",
+              "name": "A page of search results of the requested kind.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/search?return=apis&q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Specification,Plans&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,exemplar&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "description": "The kind of object to return.",
+                      "key": "return",
+                      "value": "apis"
+                    },
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Specification,Plans"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "developing,exemplar"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"sint_17_\": 84843100.7309592,\n      \"nisi12\": true\n    },\n    \"return\": \"artifacts\"\n  },\n  \"data\": [\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Collection\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"Vocabulary\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    },\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"SDK\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"Hub\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:42.000Z",
+              "updatedAt": "2026-07-28T01:02:42.000Z",
+              "uid": "35240-78156176-6369-42ac-89d7-1fbdc87ae1e9"
+            },
+            {
+              "id": "401b0d86-0188-41de-8573-7eb4b328dd4e",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/search?return=apis&q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Specification,Plans&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,exemplar&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ],
+                  "query": [
+                    {
+                      "description": "The kind of object to return.",
+                      "key": "return",
+                      "value": "apis"
+                    },
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Specification,Plans"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "developing,exemplar"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:42.000Z",
+              "updatedAt": "2026-07-28T01:02:42.000Z",
+              "uid": "35240-401b0d86-0188-41de-8573-7eb4b328dd4e"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:42.000Z",
+          "updatedAt": "2026-07-28T01:02:42.000Z",
+          "uid": "35240-eb53ed8e-01bf-4f69-9388-6dc62351fe60"
+        }
+      ],
+      "id": "8b68e4b4-13ff-4249-9926-3ab9f624e0ba",
+      "createdAt": "2026-07-28T01:02:42.000Z",
+      "updatedAt": "2026-07-28T01:02:42.000Z",
+      "uid": "35240-8b68e4b4-13ff-4249-9926-3ab9f624e0ba"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}

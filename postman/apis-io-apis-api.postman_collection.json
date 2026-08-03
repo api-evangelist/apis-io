@@ -1,0 +1,1735 @@
+{
+  "info": {
+    "_postman_id": "4edadc47-db94-4e7b-a765-c0a54744f23d",
+    "name": ".io Search APIs API",
+    "description": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:02:32.000Z",
+    "updatedAt": "2026-07-28T01:02:33.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4edadc47-db94-4e7b-a765-c0a54744f23d"
+  },
+  "item": [
+    {
+      "name": "search",
+      "item": [
+        {
+          "name": "apis",
+          "item": [
+            {
+              "name": "APIs.io Search APIs",
+              "id": "99fb9e84-aede-4d80-ac83-bb4baa814d37",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "query": [
+                    {
+                      "description": "The keyword to search by.",
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The limit of the results.",
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "The page of the results.",
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ]
+                },
+                "description": "Searching across all APIs by keyword or phrase."
+              },
+              "response": [
+                {
+                  "id": "f5da2259-83f3-438c-8b5b-4e07df785d74",
+                  "name": "A successful search.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"totalPages\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"search\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://GgzNAQOJ:5\",\n      \"humanURL\": \"https://b|r8q YLT`\",\n      \"properties\": [\n        {\n          \"type\": \"StatusPage\",\n          \"url\": \"https://\"\n        },\n        {\n          \"type\": \"WSDL\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"http\",\n          \"url\": \"http\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"https://\",\n          \"url\": \"http\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"https://>7\",\n      \"humanURL\": \"https://Pn@VK\\\"\",\n      \"properties\": [\n        {\n          \"type\": \"TersmOfService\",\n          \"url\": \"http\"\n        },\n        {\n          \"type\": \"StatusPage\",\n          \"url\": \"http\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"http\",\n          \"vCard\": \"http\",\n          \"url\": \"https://K+H`}{LLe;\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"https://;tE\\\\ei\\\\\",\n          \"vCard\": \"https://0m342\",\n          \"url\": \"https:///,w\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"links\": {\n    \"self\": \"<string>\",\n    \"first\": \"<string>\",\n    \"prev\": \"<string>\",\n    \"next\": \"<string>\",\n    \"last\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-f5da2259-83f3-438c-8b5b-4e07df785d74"
+                },
+                {
+                  "id": "9129e843-6dea-4ec6-b886-da69baf7353a",
+                  "name": "Bad Request",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-9129e843-6dea-4ec6-b886-da69baf7353a"
+                },
+                {
+                  "id": "fffe5a41-df0c-4b7a-b95f-152e93b3b223",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-fffe5a41-df0c-4b7a-b95f-152e93b3b223"
+                },
+                {
+                  "id": "2c9d2d70-aab8-4659-9dd0-a5573e5467ad",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-2c9d2d70-aab8-4659-9dd0-a5573e5467ad"
+                },
+                {
+                  "id": "2d7143f4-4480-4a4f-898f-c059bbb7241d",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-2d7143f4-4480-4a4f-898f-c059bbb7241d"
+                },
+                {
+                  "id": "45e78258-31f2-47d2-99dd-aee03467edb1",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-45e78258-31f2-47d2-99dd-aee03467edb1"
+                },
+                {
+                  "id": "b2942c74-a99b-41f5-ae06-c5fb614f067f",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/search/apis?search=<string>&limit=<string>&page=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "search",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "The keyword to search by.",
+                          "key": "search",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The limit of the results.",
+                          "key": "limit",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The page of the results.",
+                          "key": "page",
+                          "value": "<string>"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<string>\",\n  \"status\": \"<integer>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-b2942c74-a99b-41f5-ae06-c5fb614f067f"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-99fb9e84-aede-4d80-ac83-bb4baa814d37"
+            }
+          ],
+          "id": "431c50ca-ffa4-4b99-a49d-feb38818ac44",
+          "createdAt": "2026-07-28T01:02:33.000Z",
+          "updatedAt": "2026-07-28T01:02:33.000Z",
+          "uid": "35240-431c50ca-ffa4-4b99-a49d-feb38818ac44"
+        }
+      ],
+      "id": "7f211065-91c8-45c7-b3c7-0688808d0852",
+      "createdAt": "2026-07-28T01:02:33.000Z",
+      "updatedAt": "2026-07-28T01:02:33.000Z",
+      "uid": "35240-7f211065-91c8-45c7-b3c7-0688808d0852"
+    },
+    {
+      "name": "providers",
+      "item": [
+        {
+          "name": "{slug}",
+          "item": [
+            {
+              "name": "apis",
+              "item": [
+                {
+                  "name": "List the APIs published by a provider.",
+                  "id": "429a634a-8aa4-440b-92f4-59a5877301dc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "providers",
+                        ":slug",
+                        "apis"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                          "key": "tags",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                          "key": "match",
+                          "value": "any"
+                        },
+                        {
+                          "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                          "key": "artifact_types",
+                          "value": "Authentication,KubernetesCRD"
+                        },
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        },
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        },
+                        {
+                          "description": "1-based page number.",
+                          "key": "page",
+                          "value": "1"
+                        },
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "5b0d3a8c-f022-4fae-8d30-4162bd86a56c",
+                          "key": "slug",
+                          "value": "<string>",
+                          "description": "(Required) Provider slug (e.g. `twilio`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies."
+                  },
+                  "response": [
+                    {
+                      "id": "e92b34b2-9c3e-46f6-b301-885cf711c089",
+                      "name": "A page of the provider's APIs.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "apis"
+                          ],
+                          "query": [
+                            {
+                              "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                              "key": "tags",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                              "key": "match",
+                              "value": "any"
+                            },
+                            {
+                              "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                              "key": "artifact_types",
+                              "value": "Authentication,KubernetesCRD"
+                            },
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            },
+                            {
+                              "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                              "key": "fields",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "1-based page number.",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"fugiat6eb\": 13722762.782769978\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"ProductPage\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"JSONSchema\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    },\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Sandbox\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"TermsOfService\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-e92b34b2-9c3e-46f6-b301-885cf711c089"
+                    },
+                    {
+                      "id": "93619723-7dad-400a-992d-ea0b9f1acc71",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/providers/:slug/apis?tags=<string>,<string>&match=any&artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>&page=1&limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "providers",
+                            ":slug",
+                            "apis"
+                          ],
+                          "query": [
+                            {
+                              "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                              "key": "tags",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                              "key": "match",
+                              "value": "any"
+                            },
+                            {
+                              "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                              "key": "artifact_types",
+                              "value": "Authentication,KubernetesCRD"
+                            },
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            },
+                            {
+                              "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                              "key": "fields",
+                              "value": "<string>,<string>"
+                            },
+                            {
+                              "description": "1-based page number.",
+                              "key": "page",
+                              "value": "1"
+                            },
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "slug"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-93619723-7dad-400a-992d-ea0b9f1acc71"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-429a634a-8aa4-440b-92f4-59a5877301dc"
+                }
+              ],
+              "id": "8b3ad38f-e302-4405-991b-e9bde64305df",
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-8b3ad38f-e302-4405-991b-e9bde64305df"
+            }
+          ],
+          "id": "1083dac0-c10c-4e54-9947-b2b969a64abd",
+          "createdAt": "2026-07-28T01:02:33.000Z",
+          "updatedAt": "2026-07-28T01:02:33.000Z",
+          "uid": "35240-1083dac0-c10c-4e54-9947-b2b969a64abd"
+        }
+      ],
+      "id": "9f93e814-1b87-42ff-bf79-94014f44f87f",
+      "createdAt": "2026-07-28T01:02:33.000Z",
+      "updatedAt": "2026-07-28T01:02:33.000Z",
+      "uid": "35240-9f93e814-1b87-42ff-bf79-94014f44f87f"
+    },
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "{aid}",
+          "item": [
+            {
+              "name": "artifacts",
+              "item": [
+                {
+                  "name": "One API's artifacts, grouped by type.",
+                  "id": "07edd40a-ddf0-4f76-afb3-579de58b7f36",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/apis/:aid/artifacts?include=content,content",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "apis",
+                        ":aid",
+                        "artifacts"
+                      ],
+                      "query": [
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "d14d2049-b3e1-4f46-b581-b87c8af33488",
+                          "key": "aid",
+                          "value": "n:0%a1W?;F.mk",
+                          "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                        }
+                      ]
+                    },
+                    "description": "Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies."
+                  },
+                  "response": [
+                    {
+                      "id": "d632cd8c-215d-4968-984c-1f4cdb27e985",
+                      "name": "The API's artifacts.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/:aid/artifacts?include=content,content",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            ":aid",
+                            "artifacts"
+                          ],
+                          "query": [
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "aid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"tempor_2ad\": false\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-d632cd8c-215d-4968-984c-1f4cdb27e985"
+                    },
+                    {
+                      "id": "d0a7cef4-d090-474d-ac88-9a5f596ffc58",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/:aid/artifacts?include=content,content",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            ":aid",
+                            "artifacts"
+                          ],
+                          "query": [
+                            {
+                              "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                              "key": "include",
+                              "value": "content,content"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "aid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-d0a7cef4-d090-474d-ac88-9a5f596ffc58"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-07edd40a-ddf0-4f76-afb3-579de58b7f36"
+                }
+              ],
+              "id": "30334a22-1ce3-4b90-bf59-e3822c16b780",
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-30334a22-1ce3-4b90-bf59-e3822c16b780"
+            },
+            {
+              "name": "similar",
+              "item": [
+                {
+                  "name": "APIs similar to a given one.",
+                  "id": "54cacce4-dcab-4c79-9468-1ee265c7b9c0",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/apis/:aid/similar?limit=25",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "apis",
+                        ":aid",
+                        "similar"
+                      ],
+                      "query": [
+                        {
+                          "description": "Items per page.",
+                          "key": "limit",
+                          "value": "25"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "796899ea-6cdb-4a46-95cf-53c9480bea73",
+                          "key": "aid",
+                          "value": "n:0%a1W?;F.mk",
+                          "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                        }
+                      ]
+                    },
+                    "description": "Ranks catalog APIs by shared tags \u2014 \"more like this API.\""
+                  },
+                  "response": [
+                    {
+                      "id": "b012a2e8-02c2-402a-b89c-fbbb6100eba2",
+                      "name": "A page of similar APIs, most similar first.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/:aid/similar?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            ":aid",
+                            "similar"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "aid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"fugiat6eb\": 13722762.782769978\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"ProductPage\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"JSONSchema\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    },\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Sandbox\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"TermsOfService\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-b012a2e8-02c2-402a-b89c-fbbb6100eba2"
+                    },
+                    {
+                      "id": "97efc700-6f62-4bff-acd5-c684f6d28178",
+                      "name": "Resource not found.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/problem+json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/apis/:aid/similar?limit=25",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "apis",
+                            ":aid",
+                            "similar"
+                          ],
+                          "query": [
+                            {
+                              "description": "Items per page.",
+                              "key": "limit",
+                              "value": "25"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "aid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/problem+json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T01:02:33.000Z",
+                      "updatedAt": "2026-07-28T01:02:33.000Z",
+                      "uid": "35240-97efc700-6f62-4bff-acd5-c684f6d28178"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-54cacce4-dcab-4c79-9468-1ee265c7b9c0"
+                }
+              ],
+              "id": "46d8dd0a-0050-473d-beb3-219dcf42756c",
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-46d8dd0a-0050-473d-beb3-219dcf42756c"
+            },
+            {
+              "name": "Get one API by aid.",
+              "id": "88798f64-3232-48d7-bda0-c6af4359b302",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/apis/:aid?artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apis",
+                    ":aid"
+                  ],
+                  "query": [
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Authentication,KubernetesCRD"
+                    },
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "7f698955-c7e0-4df6-9005-e536c38ccf81",
+                      "key": "aid",
+                      "value": "n:0%a1W?;F.mk",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "description": "Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`."
+              },
+              "response": [
+                {
+                  "id": "d6cb2841-cd27-4c3c-94eb-724bbf7814db",
+                  "name": "The API.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/apis/:aid?artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "apis",
+                        ":aid"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                          "key": "artifact_types",
+                          "value": "Authentication,KubernetesCRD"
+                        },
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        },
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "aid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"aid\": \"<string>\",\n  \"name\": \"<string>\",\n  \"provider_slug\": \"<string>\",\n  \"description\": \"<string>\",\n  \"provider_name\": \"<string>\",\n  \"baseURL\": \"<uri>\",\n  \"humanURL\": \"<uri>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": [\n    {\n      \"type\": \"KubernetesCRD\",\n      \"url\": \"<uri>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"aid\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"content\": \"<string>\",\n      \"content_type\": \"<string>\"\n    },\n    {\n      \"type\": \"GitHubOrganization\",\n      \"url\": \"<uri>\",\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"aid\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"content\": \"<string>\",\n      \"content_type\": \"<string>\"\n    }\n  ],\n  \"sibling_apis\": [\n    {\n      \"name\": \"<string>\",\n      \"slug\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"slug\": \"<string>\"\n    }\n  ],\n  \"overview\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-d6cb2841-cd27-4c3c-94eb-724bbf7814db"
+                },
+                {
+                  "id": "4375812f-e729-4dce-941c-5eae343ed6d3",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/apis/:aid?artifact_types=Authentication,KubernetesCRD&include=content,content&fields=<string>,<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "apis",
+                        ":aid"
+                      ],
+                      "query": [
+                        {
+                          "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                          "key": "artifact_types",
+                          "value": "Authentication,KubernetesCRD"
+                        },
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        },
+                        {
+                          "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                          "key": "fields",
+                          "value": "<string>,<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "aid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-4375812f-e729-4dce-941c-5eae343ed6d3"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-88798f64-3232-48d7-bda0-c6af4359b302"
+            }
+          ],
+          "id": "23d2a920-f3c7-4730-b2b3-79ca7f7d3675",
+          "createdAt": "2026-07-28T01:02:33.000Z",
+          "updatedAt": "2026-07-28T01:02:33.000Z",
+          "uid": "35240-23d2a920-f3c7-4730-b2b3-79ca7f7d3675"
+        },
+        {
+          "name": "List and filter APIs across the network.",
+          "id": "c7c66aa1-aff4-4373-b3ee-f530812e37e1",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/apis?q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Authentication,KubernetesCRD&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,developing&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "apis"
+              ],
+              "query": [
+                {
+                  "description": "Free-text query over name and description (and tags where applicable).",
+                  "key": "q",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                  "key": "tags",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                  "key": "match",
+                  "value": "any"
+                },
+                {
+                  "description": "Comma-separated provider slugs to scope results to.",
+                  "key": "providers",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                  "key": "artifact_types",
+                  "value": "Authentication,KubernetesCRD"
+                },
+                {
+                  "description": "Filter by one or more industry slugs.",
+                  "key": "industry",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Filter by one or more region slugs.",
+                  "key": "region",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                  "key": "include",
+                  "value": "content,content"
+                },
+                {
+                  "description": "Filter by one or more rating bands.",
+                  "key": "band",
+                  "value": "developing,developing"
+                },
+                {
+                  "description": "Minimum composite score (0\u2013100).",
+                  "key": "min_score",
+                  "value": "<number>"
+                },
+                {
+                  "key": "sort",
+                  "value": "relevance"
+                },
+                {
+                  "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                  "key": "fields",
+                  "value": "<string>,<string>"
+                },
+                {
+                  "description": "1-based page number.",
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "description": "Items per page.",
+                  "key": "limit",
+                  "value": "25"
+                }
+              ]
+            },
+            "description": "The core cross-provider discovery endpoint. Filter by free text, one or many tags\n(`match=any|all`), one or many providers, and/or the artifact types an API must\npublish. Use `artifact_types` together with `fields=...,properties` to return only\nthe artifacts you want.\n"
+          },
+          "response": [
+            {
+              "id": "ce6bdb0e-071d-468d-845e-254371a59542",
+              "name": "A page of APIs.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/apis?q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Authentication,KubernetesCRD&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,developing&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apis"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Authentication,KubernetesCRD"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "developing,developing"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"meta\": {\n    \"total\": \"<integer>\",\n    \"page\": \"<integer>\",\n    \"limit\": \"<integer>\",\n    \"pages\": \"<integer>\",\n    \"query\": {\n      \"fugiat6eb\": 13722762.782769978\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"ProductPage\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"JSONSchema\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    },\n    {\n      \"aid\": \"<string>\",\n      \"name\": \"<string>\",\n      \"provider_slug\": \"<string>\",\n      \"description\": \"<string>\",\n      \"provider_name\": \"<string>\",\n      \"baseURL\": \"<uri>\",\n      \"humanURL\": \"<uri>\",\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Sandbox\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        },\n        {\n          \"type\": \"TermsOfService\",\n          \"url\": \"<uri>\",\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"aid\": \"<string>\",\n          \"provider_slug\": \"<string>\",\n          \"provider_name\": \"<string>\",\n          \"content\": \"<string>\",\n          \"content_type\": \"<string>\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"slug\": \"<string>\"\n        }\n      ],\n      \"overview\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-ce6bdb0e-071d-468d-845e-254371a59542"
+            },
+            {
+              "id": "500b5c84-2361-4cc0-b9d6-2303bca909b1",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/apis?q=<string>&tags=<string>,<string>&match=any&providers=<string>,<string>&artifact_types=Authentication,KubernetesCRD&industry=<string>,<string>&region=<string>,<string>&include=content,content&band=developing,developing&min_score=<number>&sort=relevance&fields=<string>,<string>&page=1&limit=25",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apis"
+                  ],
+                  "query": [
+                    {
+                      "description": "Free-text query over name and description (and tags where applicable).",
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.",
+                      "key": "tags",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Whether results must match `any` (default) or `all` of the supplied tags.",
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "description": "Comma-separated provider slugs to scope results to.",
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.",
+                      "key": "artifact_types",
+                      "value": "Authentication,KubernetesCRD"
+                    },
+                    {
+                      "description": "Filter by one or more industry slugs.",
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Filter by one or more region slugs.",
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    },
+                    {
+                      "description": "Filter by one or more rating bands.",
+                      "key": "band",
+                      "value": "developing,developing"
+                    },
+                    {
+                      "description": "Minimum composite score (0\u2013100).",
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "description": "Sparse fieldset \u2014 comma-separated property names to return.",
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "description": "1-based page number.",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Items per page.",
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-500b5c84-2361-4cc0-b9d6-2303bca909b1"
+            }
+          ],
+          "createdAt": "2026-07-28T01:02:33.000Z",
+          "updatedAt": "2026-07-28T01:02:33.000Z",
+          "uid": "35240-c7c66aa1-aff4-4373-b3ee-f530812e37e1"
+        }
+      ],
+      "id": "e9c447ad-1bce-4361-990a-2e66ed01aa96",
+      "createdAt": "2026-07-28T01:02:33.000Z",
+      "updatedAt": "2026-07-28T01:02:33.000Z",
+      "uid": "35240-e9c447ad-1bce-4361-990a-2e66ed01aa96"
+    },
+    {
+      "name": "openapis",
+      "item": [
+        {
+          "name": "{aid}",
+          "item": [
+            {
+              "name": "An API's primary OpenAPI.",
+              "id": "20bd0e85-739a-44be-b5c7-c3e1781acd5f",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/openapis/:aid?include=content,content",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "openapis",
+                    ":aid"
+                  ],
+                  "query": [
+                    {
+                      "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                      "key": "include",
+                      "value": "content,content"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "44811138-d04c-480d-8d2c-593f1ae2585a",
+                      "key": "aid",
+                      "value": "n:0%a1W?;F.mk",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "description": "Returns the primary OpenAPI reference (url) for one API \u2014 the top agent intent. Pass `include=content` to inline the spec body."
+              },
+              "response": [
+                {
+                  "id": "dc3e42e6-55d7-4e13-a2d1-30f3fc2414fe",
+                  "name": "The API's OpenAPI reference (and body when include=content).",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/openapis/:aid?include=content,content",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "openapis",
+                        ":aid"
+                      ],
+                      "query": [
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "aid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"tempor_2ad\": false\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-dc3e42e6-55d7-4e13-a2d1-30f3fc2414fe"
+                },
+                {
+                  "id": "16e1fe7d-9ce2-452a-a896-21ed9c501743",
+                  "name": "Resource not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/openapis/:aid?include=content,content",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "openapis",
+                        ":aid"
+                      ],
+                      "query": [
+                        {
+                          "description": "Extra data to embed. `content` fetches and inlines artifact bodies.",
+                          "key": "include",
+                          "value": "content,content"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "aid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"type\": \"about:blank\",\n  \"title\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"detail\": \"<string>\",\n  \"instance\": \"<uri-reference>\",\n  \"parameter\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:02:33.000Z",
+                  "updatedAt": "2026-07-28T01:02:33.000Z",
+                  "uid": "35240-16e1fe7d-9ce2-452a-a896-21ed9c501743"
+                }
+              ],
+              "createdAt": "2026-07-28T01:02:33.000Z",
+              "updatedAt": "2026-07-28T01:02:33.000Z",
+              "uid": "35240-20bd0e85-739a-44be-b5c7-c3e1781acd5f"
+            }
+          ],
+          "id": "6d7e0121-f66c-48a7-914f-6da37a18496a",
+          "createdAt": "2026-07-28T01:02:33.000Z",
+          "updatedAt": "2026-07-28T01:02:33.000Z",
+          "uid": "35240-6d7e0121-f66c-48a7-914f-6da37a18496a"
+        }
+      ],
+      "id": "3c94ff70-5986-4b96-8228-caec6979a307",
+      "createdAt": "2026-07-28T01:02:33.000Z",
+      "updatedAt": "2026-07-28T01:02:33.000Z",
+      "uid": "35240-3c94ff70-5986-4b96-8228-caec6979a307"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://search-api.apis.io"
+    }
+  ]
+}
