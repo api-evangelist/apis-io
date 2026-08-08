@@ -47,6 +47,8 @@ apis:
     url: openapi/apis-io-apis-api-openapi.yml
   - type: Documentation
     url: https://apis.io/developer/documentation/
+  - type: MCPServer
+    url: https://apis.io/mcp
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
