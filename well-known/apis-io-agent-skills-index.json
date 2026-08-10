@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/agent-skills-discovery-rfc/main/schema/v0.2.0/index.schema.json",
+  "version": "0.2.0",
+  "name": "apis.io agent skills",
+  "description": "Skills for discovering and consuming APIs in the apis.io federated catalog — navigate the network, search the catalog, fetch specs, onboard providers, and (Pro) design, shortlist, audit, and monitor API stacks.",
+  "url": "https://apis.io/skills/",
+  "publisher": {
+    "name": "API Evangelist",
+    "url": "https://apievangelist.com"
+  },
+  "skills": [
+    {
+      "name": "discover-apis-io",
+      "type": "claude-skill",
+      "description": "Discover the structure of the apis.io network — its subdomains, machine-readable catalogs, and content-negotiation conventions — so other skills can find APIs efficiently.",
+      "url": "https://apis.io/skills/discover-apis-io/SKILL.md",
+      "sha256": "590d60427cb602b61edfeb3339dbeeb434091e0864009f70af405ba3d27401d5"
+    },
+    {
+      "name": "search-apis",
+      "type": "claude-skill",
+      "description": "Find APIs in the apis.io catalog by keyword, capability, tag, or provider.",
+      "url": "https://apis.io/skills/search-apis/SKILL.md",
+      "sha256": "74868af93c4750b665243eb0f5515367102df019468b6f4ebbd96940612aa532"
+    },
+    {
+      "name": "fetch-api-spec",
+      "type": "claude-skill",
+      "description": "Given an apis.io API URL or catalog entry, fetch the OpenAPI / AsyncAPI / Postman specification for that API.",
+      "url": "https://apis.io/skills/fetch-api-spec/SKILL.md",
+      "sha256": "0c344c0113f9536da92757597c2dc59006ebc1056787d085a21efd9681d3eaa7"
+    },
+    {
+      "name": "find-api",
+      "type": "claude-skill",
+      "description": "Find the right API for a task — search the catalog, inspect the best candidates, and recommend one with its spec and links.",
+      "url": "https://apis.io/skills/find-api/SKILL.md",
+      "sha256": "315cd6246b0bf132648083b290c8fc4572b1b5bd9ce9e6a2a27a6c3aed3f6d5b"
+    },
+    {
+      "name": "integrate-provider",
+      "type": "claude-skill",
+      "description": "Onboard a provider end-to-end — read its onboarding and OpenAPI from the catalog and produce concrete first-integration steps.",
+      "url": "https://apis.io/skills/integrate-provider/SKILL.md",
+      "sha256": "0337e298ac210ec6f8040aff529643170fedc06ada323ba738f459d4f35ed64c"
+    },
+    {
+      "name": "discover-mcp-servers",
+      "type": "claude-skill",
+      "description": "Find providers in the catalog that publish a public MCP server, so you can plug real tools into an agent.",
+      "url": "https://apis.io/skills/discover-mcp-servers/SKILL.md",
+      "sha256": "57567b68cb1be2cc1d9fac63254cfa66cac826c930be67566b2e54054bf60bc6"
+    },
+    {
+      "name": "assemble-api-stack",
+      "type": "claude-skill",
+      "description": "Pro — Design a capability stack from the catalog and export it as an adoptable APIs.json a team can commit.",
+      "url": "https://apis.io/skills/assemble-api-stack/SKILL.md",
+      "sha256": "4e496d568880b3299e6d6f3f8791c72a2e9b0312293f4deaa09a4489cb6618c5"
+    },
+    {
+      "name": "shortlist-vendors",
+      "type": "claude-skill",
+      "description": "Pro — Turn a single capability into a scored, compared vendor shortlist with a clear recommendation.",
+      "url": "https://apis.io/skills/shortlist-vendors/SKILL.md",
+      "sha256": "ac4a8c1969e2334c9702736d2673081f661d04031850e6cd19eb79db6786dd52"
+    },
+    {
+      "name": "audit-api-estate",
+      "type": "claude-skill",
+      "description": "Pro — Inventory, score, and gap a set of providers: what they publish, how they rate, and what they're missing.",
+      "url": "https://apis.io/skills/audit-api-estate/SKILL.md",
+      "sha256": "4fa12a764687d75d8cb78d20552a2e33d47b9e266ae13378f8fb8871124ccf32"
+    },
+    {
+      "name": "track-api-changes",
+      "type": "claude-skill",
+      "description": "Pro — Monitor the catalog for providers added/updated and rating movement, for a chosen set or the whole network.",
+      "url": "https://apis.io/skills/track-api-changes/SKILL.md",
+      "sha256": "9dc5d7875b2303ececcdd11e613599432a24539eb121ec4a027f870d6f87ce76"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/changelog/
+scheme: dated
+current_version: v1 (API contract 1.2.1)
+scope: >-
+  Network-wide running log — search ranking, the provider catalog and ratings, the REST + MCP API,
+  and the network sites. Newest first. Planned work lives on https://apis.io/roadmap/.
+entries:
+- date: '2026-07-26'
+  area: Site
+  title: Stack — build a watchlist, export it as apis.yml
+  breaking: false
+  additions:
+  - New top-level /stack/ page — type-ahead the catalog and watch the providers you depend on.
+  - Per-provider Kin Score and band, week-over-week movement, movement since you added it, agent
+    readiness, API count, published resources, access model, plus a stack rollup with the average
+    and the weakest link.
+  - Export the whole stack as an APIs.json 0.21 apis.yml (or JSON, or clipboard), each provider
+    carrying its rating and agent-readiness blocks and an include pointer to its own apis.yml.
+  - Re-import an exported apis.yml, or a single provider's own apis.yml, to restore a stack.
+  highlights:
+  - No account and nothing sent to APIs.io — the stack is one first-party cookie holding only
+    provider slugs; the apis.yml download is the durable copy.
+  - About and Add API moved from the top nav to the footer.
+- date: '2026-06-30'
+  area: Search
+  title: First-party (brand-owner) ranking signal
+  breaking: false
+  additions:
+  - Search now models brand ownership — a provider is canonical owner of its own name plus the
+    sub-brands it operates.
+  highlights:
+  - A brand query gives the owner's first-party API an explicit bonus over third-party
+    integrators; non-brand queries (payments, weather) are unaffected.
+- date: '2026-06-30'
+  area: Search
+  title: Quality- and ownership-aware search ranking
+  breaking: false
+  additions:
+  - Field boosting — a match in an API's name or tags outweighs a passing mention in its
+    description.
+  - Quality-weighted ordering — among matching APIs the composite rating (Exemplar → Minimal)
+    decides order.
+  highlights:
+  - Strict matches still rank ahead of synonym-broadened recall; all weights are tunable without
+    a code change.
+- date: '2026-06-30'
+  area: Network
+  title: Public changelog and roadmap
+  breaking: false
+  additions:
+  - Added the public changelog and roadmap, both linked from the site footer.
+  highlights:
+  - Requests routed to https://github.com/api-evangelist/roadmap or info@apievangelist.com.
+window: >-
+  Recent window as published on 2026-08-10 — the live page at https://apis.io/changelog/ is the
+  source of truth.
+x-evidence:
+  fetched: '2026-08-10'
+  url: https://apis.io/changelog/
+  http_status: 200

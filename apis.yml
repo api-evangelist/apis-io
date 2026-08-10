@@ -1,11 +1,19 @@
 aid: apis-io
 name: APIs.io
-description: APIs.io is an open source API search engine and directory that uses APIs.json files to discover, index, and catalog
-  APIs across the web. Built on the APIs.json specification, it provides a searchable entry point for developers to find public
-  APIs by keyword, resource, action, persona, domain, and schema. The platform indexes 779 providers, 3,188 APIs, 587 capabilities,
-  36,602 schemas, 49 event specs, 2,078 vocabularies, and 450 rulesets. It is maintained by Kin Lane, Nicolas Grenier, and
-  Steven Willmott and supports both API producers (submitting APIs) and API consumers (discovering APIs). APIs.io uses a Spectral-powered
-  rating system to evaluate API documentation quality.
+description: >-
+  APIs.io is an open-source API search engine and federated discovery network built on the APIs.json
+  specification. It indexes API providers and their individual APIs across the public internet along
+  with the machine-readable artifacts they publish — OpenAPI, AsyncAPI, GraphQL, Arazzo workflows,
+  Postman collections, JSON Schema, JSON-LD contexts, Spectral rulesets, vocabularies, OAuth scopes,
+  plans, rate limits and FinOps profiles — and lets developers and agents search that catalog by
+  keyword, capability, tag, industry, region, artifact type and quality band. As of August 2026 the
+  network published roughly 26,414 providers, 109,100 APIs and 120,595 schemas across 71 industries
+  and 77 curated areas. Every provider is scored with the Kin Score, a 0–100 composite across six
+  weighted facets plus a standalone agent-readiness score. The same read-only OpenAPI 3.1 contract
+  powers three surfaces — a REST API at https://apis.io/api/v1, a Streamable-HTTP MCP server at
+  https://apis.io/mcp, and a set of published Agent Skills — alongside an RFC 9727 api-catalog
+  linkset, an llms.txt and an APIs.json self-description. It is maintained by API Evangelist and
+  serves both API producers submitting profiles and API consumers discovering APIs.
 type: Index
 accessModel:
   pricing: freemium
@@ -30,23 +38,31 @@ tags:
 - API Search
 - APIs.json
 - Search Engine
+- API Catalog
+- Agent Discovery
+- MCP
+- Agent Skills
+- OpenAPI
+- API Governance
 url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
 created: '2026-03-26'
-modified: '2026-05-19'
+modified: '2026-08-10'
 specificationVersion: '0.19'
 apis:
 - aid: apis-io:apis-io-apis-api
   name: APIs.io APIs API
   description: Index of HTTP application programming interfaces.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - APIs
   properties:
   - type: OpenAPI
     url: openapi/apis-io-apis-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-apis-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServer
     url: https://apis.io/mcp
   - type: MCPServerCard
@@ -67,7 +83,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -77,24 +93,22 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-areas-api
   name: APIs.io Areas API
   description: >-
     The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments,
     …), each a scored provider index with its own site. Pro.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Areas
   properties:
   - type: OpenAPI
     url: openapi/apis-io-areas-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-areas-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -113,7 +127,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -123,24 +137,22 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-artifact-types-api
   name: APIs.io Artifact Types API
   description: >-
     First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more).
     Each path filters and normalizes one artifact type across all providers.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Artifact Types
   properties:
   - type: OpenAPI
     url: openapi/apis-io-artifact-types-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-artifact-types-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -159,7 +171,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -169,22 +181,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-industries-api
   name: APIs.io Industries API
   description: Industry verticals grouping providers across the catalog.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Industries
   properties:
   - type: OpenAPI
     url: openapi/apis-io-industries-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-industries-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -203,7 +213,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -213,25 +223,23 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-insights-api
   name: APIs.io Insights API
   description: >-
     Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
     for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery
     is free; per-company depth, gaps, and provider matches are Pro.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Insights
   properties:
   - type: OpenAPI
     url: openapi/apis-io-insights-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-insights-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -250,7 +258,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -260,22 +268,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-providers-api
   name: APIs.io Providers API
   description: Organizations publishing APIs on the network.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Providers
   properties:
   - type: OpenAPI
     url: openapi/apis-io-providers-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-providers-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -294,7 +300,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -304,25 +310,23 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-ratings-api
   name: APIs.io Ratings API
   description: >-
     The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted
     facets measuring how complete, governed, and integration-ready each provider's public API surface
     is. Rubric v0.3.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Ratings
   properties:
   - type: OpenAPI
     url: openapi/apis-io-ratings-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-ratings-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -341,7 +345,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -351,22 +355,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-regions-api
   name: APIs.io Regions API
   description: Geographic regions grouping providers across the catalog.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Regions
   properties:
   - type: OpenAPI
     url: openapi/apis-io-regions-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-regions-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -385,7 +387,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -395,22 +397,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-search-api
   name: APIs.io Search API
   description: Search using a cloud search engine.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Search
   properties:
   - type: OpenAPI
     url: openapi/apis-io-search-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-search-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -429,7 +429,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -439,24 +439,22 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-synthesis-api
   name: APIs.io Synthesis API
   description: >-
     Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed,
     and recommended-stack design. Pro.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Synthesis
   properties:
   - type: OpenAPI
     url: openapi/apis-io-synthesis-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-synthesis-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -475,7 +473,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -485,22 +483,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 - aid: apis-io:apis-io-tags-api
   name: APIs.io Tags API
   description: The tag taxonomy, with network-wide ranking metadata.
-  humanURL: https://apis.io/developer/documentation/
+  humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
   - Tags
   properties:
   - type: OpenAPI
     url: openapi/apis-io-tags-api-openapi.yml
+  - type: Overlay
+    url: overlays/apis-io-tags-api-overlay.yaml
   - type: Documentation
-    url: https://apis.io/developer/documentation/
+    url: https://apis.io/developer/overview/
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -519,7 +515,7 @@ apis:
   - type: RateLimits
     url: https://apis.io/developer/plans/
   - type: ChangeLog
-    url: https://apis.io/developer/change-log/
+    url: https://apis.io/changelog/
   - type: StatusPage
     url: >-
       https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
@@ -529,10 +525,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/search-apis.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/search-search.yaml
 common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apisio/overview
@@ -572,17 +564,17 @@ common:
 - type: Plans
   url: https://apis.io/developer/plans/
 - type: ChangeLog
-  url: https://apis.io/developer/change-log/
+  url: https://apis.io/changelog/
 - type: ReleaseNotes
-  url: https://apis.io/developer/change-log/
+  url: https://apis.io/changelog/
 - type: Versioning
-  url: https://apis.io/developer/versioning/
+  url: https://apis.io/developer/overview
 - type: Support
-  url: https://apis.io/developer/support/
+  url: https://apis.io/support/
 - type: TermsOfService
-  url: https://apis.io/developer/terms-of-service/
+  url: https://apis.io/terms/
 - type: PrivacyPolicy
-  url: https://apis.io/developer/privacy-policy/
+  url: https://apis.io/privacy/
 - type: GitHubOrganization
   url: https://github.com/api-search
 - type: GitHubRepository
@@ -661,6 +653,55 @@ common:
     description: Postman public workspace integration for running and testing the APIs.io Search API via pre-built collections.
   - name: AWS API Gateway
     description: The APIs.io Search API is deployed and managed through AWS API Gateway for scalable, managed API access.
+- type: WellKnown
+  url: well-known/apis-io-well-known.yml
+- type: APICatalog
+  url: https://apis.io/.well-known/api-catalog
+- type: MCPServer
+  url: https://apis.io/mcp
+- type: ToolCrosswalk
+  url: mcp/apis-io-tool-crosswalk.yml
+- type: LLMsTxt
+  url: llms/apis-io-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conformance
+  url: conformance/apis-io-conformance.yml
+- type: ErrorCatalog
+  url: errors/apis-io-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/apis-io-lifecycle.yml
+- type: StatusPage
+  url: >-
+    https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+- type: Conventions
+  url: conventions/apis-io-conventions.yml
+- type: ChangeLog
+  url: changelog/apis-io-changelog.yml
+  title: Changelog artifact
+- type: DataModel
+  url: data-model/apis-io-data-model.yml
+- type: Sandbox
+  url: sandbox/apis-io-sandbox.yml
+- type: Console
+  url: https://apis.io/developer/api/
+- type: Documentation
+  url: https://apis.io/developer/
+- type: APIReference
+  url: https://apis.io/developer/api/
+- type: Roadmap
+  url: https://apis.io/roadmap/
+- type: Pricing
+  url: https://apis.io/developer/plans/
+- type: SignUp
+  url: https://apis.io/developer/account
+- type: RateLimits
+  url: https://apis.io/developer/rate-limits
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-10'
+  status: enriched
+  artifacts_added: 37
+  pass: local-v1

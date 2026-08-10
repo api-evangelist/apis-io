@@ -1,0 +1,104 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://apis.io/",
+      "title": "APIs.io — API search engine + catalog",
+      "service-doc": [
+        { "href": "https://apis.io/", "type": "text/html", "title": "APIs.io search hub" },
+        { "href": "https://apis.io/developer/", "type": "text/html", "title": "Developer documentation" },
+        { "href": "https://apis.io/about/", "type": "text/html", "title": "About APIs.io" }
+      ],
+      "describedby": [
+        { "href": "https://apis.io/apis.json", "type": "application/json", "title": "APIs.json self-description" },
+        { "href": "https://apis.io/apis.yml", "type": "application/yaml", "title": "APIs.json self-description (YAML)" }
+      ]
+    },
+    {
+      "anchor": "https://apis.io/api/v1",
+      "title": "APIs.io API — read-only discovery API over the catalog",
+      "service-desc": [
+        { "href": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml", "type": "application/yaml", "title": "OpenAPI 3.1 contract" }
+      ],
+      "service-doc": [
+        { "href": "https://apis.io/developer/api/", "type": "text/html", "title": "Interactive API reference" }
+      ]
+    },
+    {
+      "anchor": "https://apis.io/mcp",
+      "title": "APIs.io MCP server — agent tools over the catalog",
+      "service-desc": [
+        { "href": "https://apis.io/.well-known/mcp/server-card.json", "type": "application/json", "title": "MCP server card (Streamable HTTP)" }
+      ],
+      "service-doc": [
+        { "href": "https://apis.io/developer/mcp-server/", "type": "text/html", "title": "MCP server docs" }
+      ]
+    },
+    {
+      "anchor": "https://apis.io/skills/",
+      "title": "APIs.io agent skills",
+      "service-desc": [
+        { "href": "https://apis.io/.well-known/agent-skills/index.json", "type": "application/json", "title": "Agent Skills index" }
+      ],
+      "service-doc": [
+        { "href": "https://apis.io/skills/", "type": "text/html", "title": "Skills index" }
+      ]
+    },
+    {
+      "anchor": "https://apis.io/apis/",
+      "title": "APIs — individual API descriptions",
+      "service-doc": [ { "href": "https://apis.io/apis/", "type": "text/html", "title": "APIs index" } ],
+      "describedby": [ { "href": "https://apis.io/apis.json", "type": "application/json" } ]
+    },
+    {
+      "anchor": "https://apis.io/providers/",
+      "title": "Providers — API provider profiles",
+      "service-doc": [ { "href": "https://apis.io/providers/", "type": "text/html", "title": "Providers index" } ],
+      "describedby": [ { "href": "https://apis.io/apis.json", "type": "application/json" } ]
+    },
+    {
+      "anchor": "https://apis.io/tags/",
+      "title": "Tags — topic tags across the catalog",
+      "service-doc": [ { "href": "https://apis.io/tags/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/schemas/",
+      "title": "Schemas — JSON Schema definitions",
+      "service-doc": [ { "href": "https://apis.io/schemas/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/asyncapis/",
+      "title": "AsyncAPI — event-driven API specs",
+      "service-doc": [ { "href": "https://apis.io/asyncapis/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/jsonld/",
+      "title": "JSON-LD — contexts for catalog vocabularies",
+      "service-doc": [ { "href": "https://apis.io/jsonld/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/rules/",
+      "title": "Rules — governance rules for APIs and metadata",
+      "service-doc": [ { "href": "https://apis.io/rules/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/vocabularies/",
+      "title": "Vocabularies — controlled vocabularies",
+      "service-doc": [ { "href": "https://apis.io/vocabularies/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/plans/",
+      "title": "Plans — API plan definitions",
+      "service-doc": [ { "href": "https://apis.io/plans/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/rate-limits/",
+      "title": "Rate limits — published rate-limit metadata",
+      "service-doc": [ { "href": "https://apis.io/rate-limits/", "type": "text/html" } ]
+    },
+    {
+      "anchor": "https://apis.io/finops/",
+      "title": "FinOps — pricing and cost metadata",
+      "service-doc": [ { "href": "https://apis.io/finops/", "type": "text/html" } ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/.well-known/
+host: https://apis.io
+documents:
+- path: /.well-known/api-catalog
+  standard: RFC 9727 linkset
+  status: 200
+  content_type: application/linkset+json
+  file: apis-io-api-catalog.json
+- path: /.well-known/mcp/server-card.json
+  standard: MCP server card 2025-11-05
+  status: 200
+  content_type: application/json
+  file: apis-io-mcp-server-card.json
+- path: /.well-known/agent-skills/index.json
+  standard: Agent Skills Discovery RFC v0.2.0
+  status: 200
+  content_type: application/json
+  file: apis-io-agent-skills-index.json
+- path: /.well-known/security.txt
+  standard: RFC 9116
+  status: 404
+- path: /.well-known/openid-configuration
+  status: 404
+- path: /.well-known/oauth-authorization-server
+  standard: RFC 8414
+  status: 404
+- path: /.well-known/oauth-protected-resource
+  standard: RFC 9728
+  status: 404
+- path: /.well-known/ai-plugin.json
+  status: 404
+- path: /.well-known/agent-card.json
+  standard: A2A 1.0.0
+  status: 404
+- path: /.well-known/agent.json
+  standard: A2A pre-0.3 legacy
+  status: 404
+other_discovery:
+- path: /llms.txt
+  status: 200
+  file: llms/apis-io-llms.txt
+- path: /apis.json
+  standard: APIs.json 0.21
+  status: 200
+- path: /robots.txt
+  status: 200
+  note: >-
+    Carries Cloudflare Content-Signals (search=yes, ai-input=yes, ai-train=yes) and AIPREF
+    Content-Usage (search=y, ai-input=y, ai-train=y) — explicit agent/AI permission signals.
+notes:
+- >-
+  No security.txt is published. There is no OAuth/OIDC discovery because the v1 API is open and
+  read-only (see authentication/apis-io-authentication.yml).
+- >-
+  The OpenAPI servers[] host `search-api.apis.io` has no DNS record, so no /.well-known/ probe
+  was possible against it. The live host is apis.io.
+x-evidence:
+  fetched: '2026-08-10'
+  probed_hosts:
+  - apis.io
+  - search-api.apis.io

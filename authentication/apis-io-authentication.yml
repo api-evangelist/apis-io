@@ -1,23 +1,105 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/apis-io-search-openapi.yaml, openapi/apis-io-v1-openapi.yml
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/developer/authentication
+docs: https://apis.io/developer/authentication
+plans_docs: https://apis.io/developer/plans
+derived_from: openapi/*.yml + openapi/_original/apis-io-v1-openapi.yml
 summary:
   types:
   - apiKey
   api_key_in:
   - header
+  required: false
+  read_only: true
+model: >-
+  v1 is open and read-only — every endpoint is a GET, no endpoint mutates the catalog, and
+  anonymous requests succeed on the Free tier. The OpenAPI declares an `ApiKeyAuth` apiKey scheme
+  that the docs describe as "API-key-ready": declared so metering and higher rate tiers can be
+  introduced without a breaking change. In practice a key IS already honoured — GitHub login
+  issues a free Starter key, and Pro/Business keys unlock the Industries, Regions, Ratings,
+  Insights-depth, Saved Workspace and Synthesis operations.
 schemes:
-- name: api_key
-  type: apiKey
-  in: header
-  parameter: x-api-key
-  sources:
-  - openapi/apis-io-search-openapi.yaml
 - name: ApiKeyAuth
   type: apiKey
   in: header
   parameter: X-API-Key
-  description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a
-    breaking change.
+  required: false
   sources:
-  - openapi/apis-io-v1-openapi.yml
+  - openapi/_original/apis-io-v1-openapi.yml
+- name: api_key
+  type: apiKey
+  in: header
+  parameter: x-api-key
+  required: false
+  sources:
+  - openapi/apis-io-apis-api-openapi.yml
+  - openapi/apis-io-areas-api-openapi.yml
+  - openapi/apis-io-artifact-types-api-openapi.yml
+  - openapi/apis-io-industries-api-openapi.yml
+  - openapi/apis-io-insights-api-openapi.yml
+  - openapi/apis-io-providers-api-openapi.yml
+  - openapi/apis-io-ratings-api-openapi.yml
+  - openapi/apis-io-regions-api-openapi.yml
+  - openapi/apis-io-search-api-openapi.yml
+  - openapi/apis-io-synthesis-api-openapi.yml
+  - openapi/apis-io-tags-api-openapi.yml
+  note: >-
+    The refined per-tag specs spell the header lowercase (`x-api-key`); the v1 contract spells it
+    `X-API-Key`. HTTP header names are case-insensitive, so both work.
+issuance:
+  method: github-oauth
+  url: https://apis.io/developer/plans
+  note: Log in with GitHub to be issued a free Starter key instantly; upgrade via Stripe Checkout.
+tiers:
+- tier: Free
+  auth: none (anonymous)
+  price: $0
+  rate_limit: 5 req/s
+  daily_quota: 1000
+- tier: Starter
+  auth: GitHub login
+  price: $0
+  rate_limit: 20 req/s
+  daily_quota: 10000
+- tier: Pro
+  auth: GitHub login
+  price: $49/mo
+  rate_limit: 100 req/s
+  daily_quota: 100000
+- tier: Business
+  auth: GitHub login
+  price: $199/mo
+  rate_limit: 400 req/s
+  daily_quota: 1000000
+oauth2: false
+openid_connect: false
+mutual_tls: false
+scopes:
+  present: false
+  reason: apiKey auth only — there is no OAuth scope surface to record.
+cors:
+  allow_origin: '*'
+  allow_headers: [content-type, x-api-key]
+  allow_methods: [GET, OPTIONS]
+mcp_authentication:
+  url: https://apis.io/mcp
+  anonymous_tools_list: true
+  gate: >-
+    Pro-tier tools are listed anonymously but return HTTP 402 `upgrade_required` when called
+    without a paid key.
+  oauth_discovery:
+    /.well-known/oauth-authorization-server: 404
+    /.well-known/oauth-protected-resource: 404
+x-evidence:
+  fetched: '2026-08-10'
+  probes:
+  - url: https://apis.io/api/v1/search?q=weather&limit=1
+    http_status: 200
+    note: anonymous, no key
+  - url: https://apis.io/api/v1/ratings
+    http_status: 402
+    note: anonymous — tier gate
+  - url: https://apis.io/developer/authentication
+    http_status: 200
+  - url: https://apis.io/developer/plans
+    http_status: 200

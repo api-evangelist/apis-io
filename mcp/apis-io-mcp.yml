@@ -1,0 +1,207 @@
+generated: '2026-08-10'
+method: searched
+status: published
+source: https://apis.io/.well-known/mcp/server-card.json
+server:
+  name: apis.io
+  title: APIs.io API catalog MCP server
+  version: 1.2.0
+  transport: http
+  transport_type: streamable-http
+  url: https://apis.io/mcp
+  documentation: https://apis.io/developer/mcp-server/
+  server_card: https://apis.io/.well-known/mcp/server-card.json
+  publisher: API Evangelist
+  read_only: true
+registry:
+  name: io.apis/apis-io
+  registry: https://registry.modelcontextprotocol.io
+  status: active
+  published: '2026-06-29'
+  repository: https://github.com/api-search/apis-io-aws
+  remote:
+    type: streamable-http
+    url: https://apis.io/mcp
+introspection:
+  method: tools/list
+  http_status: 200
+  gated: false
+  tool_count: 79
+  file: apis-io-mcp-tools.json
+  note: >-
+    Anonymous `tools/list` returns the full tool set with real inputSchema for every tool. The
+    server card advertises a curated subset of 28; the live server exposes 79. Pro-tier tools are
+    listed anonymously but return 402 upgrade_required when called without a paid key.
+tools:
+- name: apis_io_search
+  description: Federated overview of the catalog for a query — top matching APIs, providers and tags in one call.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#search
+- name: find_apis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listApis
+- name: get_api
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApi
+- name: find_providers
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listProviders
+- name: get_provider
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProvider
+- name: find_tags
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listTags
+- name: get_tag
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getTag
+- name: find_industries
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listIndustries
+- name: get_industry
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustry
+- name: find_regions
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRegions
+- name: get_region
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegion
+- name: find_areas
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAreas
+- name: get_area
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getArea
+- name: find_ratings
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRatings
+- name: get_provider_rating
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderRating
+- name: get_rating_rubric
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingRubric
+- name: find_artifacts
+  note: fans out across the per-type artifact list operations
+- name: compare_providers
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#compareProviders
+- name: gap_analysis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#gapAnalysis
+- name: whats_changed
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#whatsChanged
+- name: recommend_stack
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#recommendStack
+- name: export_stack
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#exportStack
+- name: get_provider_artifacts
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderArtifacts
+- name: get_api_artifacts
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApiArtifacts
+- name: get_openapi
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getOpenapi
+- name: get_provider_onboarding
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderOnboarding
+- name: find_similar_providers
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#findSimilarProviders
+- name: find_similar_apis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#findSimilarApis
+- name: get_industry_leaders
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustryLeaders
+- name: get_region_leaders
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegionLeaders
+- name: get_area_leaders
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getAreaLeaders
+- name: get_rating_history
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingHistory
+- name: find_rating_movers
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#findRatingMovers
+- name: industry_gap_analysis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#industryGapAnalysis
+- name: find_company_insights
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightCompanies
+- name: insights_dimensions
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightDimensions
+- name: insights_adoption
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightAdoption
+- name: get_company_insight
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyInsight
+- name: company_gaps
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyGaps
+- name: match_providers
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#matchCompanyProviders
+- name: find_openapis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listOpenapis
+- name: find_asyncapis
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAsyncapis
+- name: find_channels
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listChannels
+- name: find_graphql
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listGraphql
+- name: find_arazzo
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listArazzo
+- name: find_mcp
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listMcpServers
+- name: find_skills
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSkills
+- name: find_rules
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRules
+- name: find_scopes
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listScopes
+- name: find_security
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSecurity
+- name: find_plans
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listPlans
+- name: find_rate_limits
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRateLimits
+- name: find_finops
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listFinops
+- name: find_collections
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listCollections
+- name: find_json_ld
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonLd
+- name: find_json_schemas
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonSchemas
+- name: find_json_structures
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonStructures
+- name: find_examples
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listExamples
+- name: find_postman
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listPostman
+- name: find_vocabularies
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listVocabularies
+- name: find_apis_json
+  note: MCP-only — no public REST operation for the apis.json artifact collection.
+- name: resolve
+  note: MCP-only — identifier resolver with no public REST operation.
+- name: enrich_provider
+  note: MCP-only — profile/onboarding/artifact composite with no single REST operation.
+- name: find_vcs
+  note: MCP-only — venture-capital surface not exposed in the v1 REST contract.
+- name: get_vc
+  note: MCP-only.
+- name: vc_portfolio
+  note: MCP-only.
+- name: find_investors
+  note: MCP-only.
+- name: story_leads
+  note: MCP-only.
+- name: export_dataset
+  note: MCP-only.
+- name: save_search
+  note: MCP-only — Saved Workspace (Pro), stateful, no REST equivalent.
+- name: list_saved_searches
+  note: MCP-only — Saved Workspace (Pro).
+- name: run_saved_search
+  note: MCP-only — Saved Workspace (Pro).
+- name: saved_search_net_new
+  note: MCP-only — Saved Workspace (Pro).
+- name: delete_saved_search
+  note: MCP-only — Saved Workspace (Pro).
+- name: create_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: list_lists
+  note: MCP-only — Saved Workspace (Pro).
+- name: get_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: add_to_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: delete_list
+  note: MCP-only — Saved Workspace (Pro).
+x-evidence:
+  fetched: '2026-08-10'
+  tools_list:
+    url: https://apis.io/mcp
+    method: POST tools/list
+    http_status: 200
+    tools_returned: 79
+  server_card:
+    url: https://apis.io/.well-known/mcp/server-card.json
+    http_status: 200
+  registry:
+    url: https://registry.modelcontextprotocol.io/v0/servers?search=io.apis
+    http_status: 200

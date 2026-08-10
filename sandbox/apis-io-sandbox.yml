@@ -1,0 +1,60 @@
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/developer/api/
+kind: interactive-console
+console:
+  url: https://apis.io/developer/api/
+  engine: Zudoku
+  description: >-
+    Interactive API reference — every v1 operation is executable in the browser against the live
+    production base URL, with the request/response shown inline.
+  base_url: https://apis.io/api/v1
+test_vs_live:
+  separated: false
+  reason: >-
+    There is no test mode and there are no test credentials, because the v1 API is open, read-only
+    and non-mutating — production IS the sandbox. Anonymous GETs run on the Free tier.
+credentials:
+  required: false
+  header: X-API-Key
+  note: >-
+    A free Starter key is issued on GitHub login; it raises rate limits only. No test-mode key
+    prefix exists, so there are no publishable test values to record.
+runnable_examples:
+- description: Unified search
+  request: curl "https://apis.io/api/v1/search?q=payments&limit=3"
+  source: https://apis.io/developer/getting-started
+- description: Filter by tag, artifact type and rating band
+  request: >-
+    curl
+    "https://apis.io/api/v1/search?return=apis&tags=messaging&artifact_types=OpenAPI&band=exemplar,strong"
+  source: https://apis.io/developer/getting-started
+- description: One provider and its APIs
+  request: curl "https://apis.io/api/v1/providers/twilio"
+  source: https://apis.io/developer/getting-started
+- description: Inline an API's OpenAPI artifact
+  request: >-
+    curl
+    "https://apis.io/api/v1/apis/twilio:twilio-accounts-api?artifact_types=OpenAPI&include=content"
+  source: https://apis.io/developer/getting-started
+- description: A provider's rating
+  request: curl "https://apis.io/api/v1/providers/twilio/rating"
+  source: https://apis.io/developer/getting-started
+- description: Authenticated call with a key
+  request: 'curl -H "X-API-Key: <your key>" "https://apis.io/api/v1/industries"'
+  source: https://apis.io/developer/plans
+other_try_surfaces:
+- kind: postman-workspace
+  url: https://www.postman.com/kinlaneapi/apisio/overview
+- kind: mcp
+  url: https://apis.io/mcp
+  note: Anonymous tools/list works; Pro tools return 402 upgrade_required.
+x-evidence:
+  fetched: '2026-08-10'
+  probes:
+  - url: https://apis.io/developer/api/
+    http_status: 200
+  - url: https://apis.io/developer/getting-started
+    http_status: 200
+  - url: https://www.postman.com/kinlaneapi/apisio/overview
+    http_status: 200

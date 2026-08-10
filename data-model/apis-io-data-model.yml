@@ -1,0 +1,187 @@
+generated: '2026-08-10'
+method: derived
+source: openapi/_original/apis-io-v1-openapi.yml
+docs: https://apis.io/developer/overview
+identifiers:
+  provider: slug — lowercase kebab, e.g. `twilio`
+  api: 'aid — `<provider-slug>:<api-slug>`, e.g. `twilio:twilio-accounts-api`'
+  tag: slug
+  industry: slug
+  region: slug
+  area: slug
+  company_insight: slug
+entities:
+- name: Provider
+  description: An organization publishing APIs on the network. The root entity of the catalog.
+  key: slug
+  path: /providers/{slug}
+  fields: [slug, name, description, api_count, image, created, common, apis, tags, score]
+- name: Api
+  description: One published API belonging to a provider.
+  key: aid
+  path: /apis/{aid}
+  fields: [aid, name, description, provider_slug, provider_name, baseURL, humanURL, tags,
+    properties, sibling_apis, overview]
+- name: Artifact
+  description: >-
+    One machine-readable document published against an API (OpenAPI, AsyncAPI, Postman, Arazzo,
+    JSON Schema, JSON-LD, GraphQL, rules, scopes, security, plans, rate-limits, finops, …).
+  key: id
+  path: /apis/{aid}/artifacts
+  fields: [id, type, name, url, aid, provider_slug, provider_name, content, content_type]
+- name: Link
+  description: A typed link-property on a provider (`common[]`) — the apis.yml property model.
+  key: type+url
+  fields: [type, url, title]
+- name: Tag
+  description: A topic tag with network-wide ranking metadata.
+  key: slug
+  path: /tags/{slug}
+  fields: [slug, name, composite, band, frequency, breadth, quality_lift, provider_count,
+    api_count, variants, neighbors, providers, apis]
+- name: Industry
+  description: An industry vertical grouping providers.
+  key: slug
+  path: /industries/{slug}
+  fields: [slug, name, short, description, aliases, provider_count, api_count, providers]
+- name: Region
+  description: A macro sales region grouping providers.
+  key: slug
+  path: /regions/{slug}
+  fields: [slug, name, short, description, aliases, name_patterns, provider_count, api_count,
+    providers]
+- name: Area
+  description: A curated topical collection of providers, each with its own site.
+  key: slug
+  path: /areas/{slug}
+  fields: [slug, name, short, description, aliases, area_url, area_host, icon, provider_count,
+    api_count, providers]
+- name: ProviderScore
+  description: A provider's Kin Score — composite, band, trend, delta and the six facet scores.
+  path: /providers/{slug}/rating
+  fields: [composite, band, trend, delta, previous_composite, scored_at, schema_version, facets]
+- name: RatingEntry
+  description: One row of the ranked ratings leaderboard.
+  path: /ratings
+  fields: [rank, provider_slug, provider_name, composite, band, trend, facets]
+- name: Facets
+  description: The six weighted facets of the composite score.
+  fields: [discoverability, contract_quality, governance, operational_transparency,
+    developer_ergonomics, commercial_clarity]
+- name: Rubric
+  description: The scoring rubric — bands, facet weights and trend thresholds.
+  path: /ratings/rubric
+  fields: [schema_version, bands, facets, trending]
+- name: CompanyInsight
+  description: >-
+    A demand-side company profile derived from job postings, press and engineering blogs — the
+    join partner for the supply-side provider graph.
+  key: slug
+  path: /insights/company/{slug}
+relationships:
+- from: Provider
+  to: Api
+  type: has_many
+  via: apis / provider_slug
+  evidence: Api.provider_slug references Provider.slug; /providers/{slug}/apis
+- from: Api
+  to: Provider
+  type: belongs_to
+  via: provider_slug
+  evidence: Api.provider_slug
+- from: Api
+  to: Artifact
+  type: has_many
+  via: properties
+  evidence: Api.properties is an array of $ref Artifact
+- from: Artifact
+  to: Api
+  type: belongs_to
+  via: aid
+  evidence: Artifact.aid references Api.aid
+- from: Artifact
+  to: Provider
+  type: belongs_to
+  via: provider_slug
+  evidence: Artifact.provider_slug references Provider.slug
+- from: Provider
+  to: Link
+  type: has_many
+  via: common
+  evidence: Provider.common is an array of $ref Link
+- from: Provider
+  to: ProviderScore
+  type: has_one
+  via: score
+  evidence: Provider.score is a $ref ProviderScore
+- from: ProviderScore
+  to: Facets
+  type: has_one
+  via: facets
+  evidence: ProviderScore.facets is a $ref Facets
+- from: RatingEntry
+  to: Provider
+  type: belongs_to
+  via: provider_slug
+  evidence: RatingEntry.provider_slug references Provider.slug
+- from: RatingEntry
+  to: Facets
+  type: has_one
+  via: facets
+  evidence: RatingEntry.facets is a $ref Facets
+- from: Provider
+  to: Tag
+  type: has_many
+  via: tags
+  evidence: Provider.tags (slugs)
+- from: Api
+  to: Tag
+  type: has_many
+  via: tags
+  evidence: Api.tags (slugs)
+- from: Tag
+  to: Provider
+  type: has_many
+  via: providers
+  evidence: Tag.providers is an array of $ref Provider
+- from: Tag
+  to: TagRef
+  type: has_many
+  via: neighbors
+  evidence: Tag.neighbors is an array of $ref TagRef
+- from: Industry
+  to: RankedProvider
+  type: has_many
+  via: providers
+  evidence: Industry.providers is an array of $ref RankedProvider
+- from: Region
+  to: RankedProvider
+  type: has_many
+  via: providers
+  evidence: Region.providers is an array of $ref RankedProvider
+- from: Area
+  to: RankedProvider
+  type: has_many
+  via: providers
+  evidence: Area.providers is an array of $ref RankedProvider
+- from: RankedProvider
+  to: Provider
+  type: belongs_to
+  via: slug
+  evidence: RankedProvider.slug references Provider.slug
+- from: CompanyInsight
+  to: Provider
+  type: has_many
+  via: /insights/company/{slug}/match
+  evidence: matchCompanyProviders joins a demand-side company to supply-side providers
+collections:
+  envelope: '{ meta, data }'
+  meta: Meta (total, page, limit, pages, query)
+notes:
+- >-
+  The graph has one hub (Provider) and three orthogonal grouping dimensions (Tag, Industry/Region,
+  Area). Artifact is the leaf that carries every machine-readable document, keyed to both Api and
+  Provider so it can be queried from either side.
+- >-
+  Insights is a second, demand-side graph whose only edge into the supply-side graph is the
+  provider-match operation.

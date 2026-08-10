@@ -1,0 +1,86 @@
+generated: '2026-08-10'
+method: derived
+source: openapi/_original/apis-io-v1-openapi.yml
+docs: https://apis.io/developer/overview
+format: rfc9457
+format_declared: rfc9457
+format_served: custom-json
+envelope:
+  declared:
+    media_type: application/problem+json
+    schema: openapi/_original/apis-io-v1-openapi.yml#/components/schemas/Problem
+    required: [type, title, status]
+    optional: [detail, instance, parameter]
+  observed:
+    media_type: application/json
+    fields: [error, detail]
+    extensions: [tier, plans]
+    example: '{"error":"not_found","detail":"api twilio:nope"}'
+problems:
+- status: 400
+  type: https://apis.io/problems/invalid-parameter
+  title: Invalid parameter
+  detail_example: '`match` must be one of: any, all.'
+  component: '#/components/responses/BadRequest'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#search
+  remediation: >-
+    Correct the named query parameter. The `parameter` extension member identifies the offending
+    parameter in the declared contract.
+- status: 404
+  type: https://apis.io/problems/not-found
+  title: Resource not found
+  detail_example: 'No API found with aid `twilio:nope`.'
+  component: '#/components/responses/NotFound'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApi
+  remediation: >-
+    Resolve the slug or aid first. Providers are slugs (`twilio`); APIs are `provider:api-slug`.
+  observed:
+    status: 404
+    body: '{"error":"not_found","detail":"api twilio:nope"}'
+- status: 403
+  type: https://apis.io/problems/upgrade-required
+  title: Upgrade required
+  detail_example: The areas endpoint requires the Pro or Business tier.
+  component: '#/components/responses/UpgradeRequired'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRatings
+  remediation: >-
+    Send a valid `X-API-Key` for a Pro or Business tier key. See https://apis.io/developer/plans/.
+  observed:
+    status: 402
+    body: >-
+      {"error":"upgrade_required","detail":"The ratings endpoint requires the Pro or Business
+      tier.","tier":"pro","plans":"https://apis.io/developer/plans/"}
+divergences:
+- id: problem-json-not-served
+  summary: >-
+    The contract declares RFC 9457 Problem Details on `application/problem+json` with required
+    type/title/status; the deployed API returns `application/json` with an `{error, detail}`
+    envelope and none of the three required members.
+  evidence:
+    url: https://apis.io/api/v1/apis/twilio:nope
+    http_status: 404
+    content_type: application/json
+    fetched: '2026-08-10'
+- id: paywall-status-402-not-403
+  summary: >-
+    The contract documents 403 for the tier gate; the deployed API returns 402 Payment Required
+    with `error: upgrade_required` plus `tier` and `plans` extension members.
+  evidence:
+    url: https://apis.io/api/v1/ratings
+    http_status: 402
+    fetched: '2026-08-10'
+- id: bad-parameter-not-rejected
+  summary: >-
+    The contract declares 400 for an out-of-enum `match` value; the deployed API accepted
+    `match=bogus` and returned 200.
+  evidence:
+    url: https://apis.io/api/v1/search?q=a&match=bogus
+    http_status: 200
+    fetched: '2026-08-10'
+- id: areas-documented-pro-but-open
+  summary: >-
+    `/areas` is documented as a Pro operation but returned 200 anonymously; `/ratings` did gate.
+  evidence:
+    url: https://apis.io/api/v1/areas
+    http_status: 200
+    fetched: '2026-08-10'

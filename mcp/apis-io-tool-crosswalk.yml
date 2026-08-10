@@ -1,0 +1,393 @@
+generated: '2026-08-10'
+method: derived
+source: mcp/apis-io-mcp-tools.json + openapi/_original/apis-io-v1-openapi.yml
+surfaces:
+  openapi:
+    file: openapi/_original/apis-io-v1-openapi.yml
+    title: APIs.io API 1.2.1
+    server: https://apis.io/api/v1
+    operations: 62
+    gated: false
+  mcp:
+    url: https://apis.io/mcp
+    transport: streamable-http
+    tools: 79
+    gated: false
+    note: >-
+      Anonymous tools/list returned 200 with full inputSchema per tool, so every binding below is
+      confirmed against the real live tool contract, not a docs list.
+  graphql:
+    present: false
+    note: >-
+      /graphql in the REST contract is the *catalog collection* of GraphQL schemas published by
+      OTHER providers (listGraphql) — APIs.io itself serves no GraphQL endpoint.
+crosswalk:
+- tool: apis_io_search
+  category: search
+  rest: [search]
+  binding: rest
+  confidence: high
+- tool: find_apis
+  category: apis
+  rest: [listApis]
+  binding: rest
+  confidence: high
+- tool: get_api
+  category: apis
+  rest: [getApi]
+  binding: rest
+  confidence: high
+- tool: get_api_artifacts
+  category: apis
+  rest: [getApiArtifacts]
+  binding: rest
+  confidence: high
+- tool: find_similar_apis
+  category: apis
+  rest: [findSimilarApis]
+  binding: rest
+  confidence: high
+- tool: get_openapi
+  category: apis
+  rest: [getOpenapi]
+  binding: rest
+  confidence: high
+- tool: find_providers
+  category: providers
+  rest: [listProviders]
+  binding: rest
+  confidence: high
+- tool: get_provider
+  category: providers
+  rest: [getProvider]
+  binding: rest
+  confidence: high
+- tool: get_provider_artifacts
+  category: providers
+  rest: [getProviderArtifacts]
+  binding: rest
+  confidence: high
+- tool: get_provider_onboarding
+  category: providers
+  rest: [getProviderOnboarding]
+  binding: rest
+  confidence: high
+- tool: find_similar_providers
+  category: providers
+  rest: [findSimilarProviders]
+  binding: rest
+  confidence: high
+- tool: find_tags
+  category: taxonomy
+  rest: [listTags]
+  binding: rest
+  confidence: high
+- tool: get_tag
+  category: taxonomy
+  rest: [getTag]
+  binding: rest
+  confidence: high
+- tool: find_industries
+  category: taxonomy
+  rest: [listIndustries]
+  binding: rest
+  confidence: high
+- tool: get_industry
+  category: taxonomy
+  rest: [getIndustry]
+  binding: rest
+  confidence: high
+- tool: get_industry_leaders
+  category: taxonomy
+  rest: [getIndustryLeaders]
+  binding: rest
+  confidence: high
+- tool: find_regions
+  category: taxonomy
+  rest: [listRegions]
+  binding: rest
+  confidence: high
+- tool: get_region
+  category: taxonomy
+  rest: [getRegion]
+  binding: rest
+  confidence: high
+- tool: get_region_leaders
+  category: taxonomy
+  rest: [getRegionLeaders]
+  binding: rest
+  confidence: high
+- tool: find_areas
+  category: taxonomy
+  rest: [listAreas]
+  binding: rest
+  confidence: high
+- tool: get_area
+  category: taxonomy
+  rest: [getArea]
+  binding: rest
+  confidence: high
+- tool: get_area_leaders
+  category: taxonomy
+  rest: [getAreaLeaders]
+  binding: rest
+  confidence: high
+- tool: find_ratings
+  category: ratings
+  rest: [listRatings]
+  binding: rest
+  confidence: high
+- tool: get_provider_rating
+  category: ratings
+  rest: [getProviderRating]
+  binding: rest
+  confidence: high
+- tool: get_rating_rubric
+  category: ratings
+  rest: [getRatingRubric]
+  binding: rest
+  confidence: high
+- tool: get_rating_history
+  category: ratings
+  rest: [getRatingHistory]
+  binding: rest
+  confidence: high
+- tool: find_rating_movers
+  category: ratings
+  rest: [findRatingMovers]
+  binding: rest
+  confidence: high
+- tool: compare_providers
+  category: synthesis
+  rest: [compareProviders]
+  binding: rest
+  confidence: high
+- tool: gap_analysis
+  category: synthesis
+  rest: [gapAnalysis]
+  binding: rest
+  confidence: high
+- tool: industry_gap_analysis
+  category: synthesis
+  rest: [industryGapAnalysis]
+  binding: rest
+  confidence: high
+- tool: whats_changed
+  category: synthesis
+  rest: [whatsChanged]
+  binding: rest
+  confidence: high
+- tool: recommend_stack
+  category: synthesis
+  rest: [recommendStack]
+  binding: rest
+  confidence: high
+- tool: export_stack
+  category: synthesis
+  rest: [exportStack]
+  binding: rest
+  confidence: high
+- tool: find_company_insights
+  category: insights
+  rest: [listInsightCompanies]
+  binding: rest
+  confidence: high
+- tool: insights_dimensions
+  category: insights
+  rest: [listInsightDimensions]
+  binding: rest
+  confidence: high
+- tool: insights_adoption
+  category: insights
+  rest: [listInsightAdoption]
+  binding: rest
+  confidence: high
+- tool: get_company_insight
+  category: insights
+  rest: [getCompanyInsight]
+  binding: rest
+  confidence: high
+- tool: company_gaps
+  category: insights
+  rest: [getCompanyGaps]
+  binding: rest
+  confidence: high
+- tool: match_providers
+  category: insights
+  rest: [matchCompanyProviders]
+  binding: rest
+  confidence: high
+- tool: find_openapis
+  category: artifacts
+  rest: [listOpenapis]
+  binding: rest
+  confidence: high
+- tool: find_asyncapis
+  category: artifacts
+  rest: [listAsyncapis]
+  binding: rest
+  confidence: high
+- tool: find_channels
+  category: artifacts
+  rest: [listChannels]
+  binding: rest
+  confidence: high
+- tool: find_graphql
+  category: artifacts
+  rest: [listGraphql]
+  binding: rest
+  confidence: high
+- tool: find_arazzo
+  category: artifacts
+  rest: [listArazzo]
+  binding: rest
+  confidence: high
+- tool: find_mcp
+  category: artifacts
+  rest: [listMcpServers]
+  binding: rest
+  confidence: high
+- tool: find_skills
+  category: artifacts
+  rest: [listSkills]
+  binding: rest
+  confidence: high
+- tool: find_rules
+  category: artifacts
+  rest: [listRules]
+  binding: rest
+  confidence: high
+- tool: find_scopes
+  category: artifacts
+  rest: [listScopes]
+  binding: rest
+  confidence: high
+- tool: find_security
+  category: artifacts
+  rest: [listSecurity]
+  binding: rest
+  confidence: high
+- tool: find_plans
+  category: artifacts
+  rest: [listPlans]
+  binding: rest
+  confidence: high
+- tool: find_rate_limits
+  category: artifacts
+  rest: [listRateLimits]
+  binding: rest
+  confidence: high
+- tool: find_finops
+  category: artifacts
+  rest: [listFinops]
+  binding: rest
+  confidence: high
+- tool: find_collections
+  category: artifacts
+  rest: [listCollections]
+  binding: rest
+  confidence: high
+- tool: find_json_ld
+  category: artifacts
+  rest: [listJsonLd]
+  binding: rest
+  confidence: high
+- tool: find_json_schemas
+  category: artifacts
+  rest: [listJsonSchemas]
+  binding: rest
+  confidence: high
+- tool: find_json_structures
+  category: artifacts
+  rest: [listJsonStructures]
+  binding: rest
+  confidence: high
+- tool: find_examples
+  category: artifacts
+  rest: [listExamples]
+  binding: rest
+  confidence: high
+- tool: find_postman
+  category: artifacts
+  rest: [listPostman]
+  binding: rest
+  confidence: high
+- tool: find_vocabularies
+  category: artifacts
+  rest: [listVocabularies]
+  binding: rest
+  confidence: high
+- tool: find_artifacts
+  category: artifacts
+  rest: [listOpenapis, listAsyncapis, listArazzo, listPostman, listCollections, listGraphql,
+    listJsonSchemas, listJsonStructures, listJsonLd, listVocabularies, listRules, listExamples,
+    listFinops, listPlans, listRateLimits, listChannels, listMcpServers, listSkills, listScopes,
+    listSecurity]
+  binding: rest
+  confidence: medium
+  note: >-
+    Fan-out tool — one `type` parameter selects which per-type REST collection operation backs the
+    call, so a single tool multiplexes twenty operations.
+mcp_only:
+- tool: find_apis_json
+  reason: No public REST operation exposes the apis.json artifact collection.
+- tool: resolve
+  reason: Identifier resolver (slug / aid / URL → catalog entity); server-side composite.
+- tool: enrich_provider
+  reason: Composite over profile + onboarding + artifact groups; no single REST operation.
+- tool: find_vcs
+  reason: Venture-capital surface is not in the v1 REST contract.
+- tool: get_vc
+  reason: Venture-capital surface is not in the v1 REST contract.
+- tool: vc_portfolio
+  reason: Venture-capital surface is not in the v1 REST contract.
+- tool: find_investors
+  reason: Venture-capital surface is not in the v1 REST contract.
+- tool: story_leads
+  reason: Editorial lead generator; no REST equivalent.
+- tool: export_dataset
+  reason: Dataset export; no REST equivalent.
+- tool: save_search
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: list_saved_searches
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: run_saved_search
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: saved_search_net_new
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: delete_saved_search
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: create_list
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: list_lists
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: get_list
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: add_to_list
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+- tool: delete_list
+  reason: Saved Workspace — stateful, per-account, MCP-side only.
+rest_only:
+- capability: insights
+  operations: [getInsightsSummary, listInsightIndustries]
+  reason: Insights overview and industry rollup have no MCP tool binding.
+- capability: providers
+  operations: [listProviderApis]
+  reason: >-
+    Covered indirectly by get_provider (which inlines the provider's APIs), so no discrete tool
+    exists for the /providers/{slug}/apis operation.
+coverage:
+  tools_total: 79
+  tools_bound_to_rest: 60
+  mcp_only: 19
+  rest_operations_total: 62
+  rest_operations_with_tool: 59
+  rest_only: 3
+notes:
+- >-
+  The MCP surface is a strict superset of REST on the stateful side (Saved Workspace, lists) and on
+  the venture-capital and resolver surfaces; REST is a superset on the Insights rollups. Neither is
+  a projection of the other, which is why both are recorded.
+- >-
+  Pro-tier tools appear in an anonymous tools/list but return HTTP 402 `upgrade_required` when
+  called without a paid key — the tool list is not an entitlement list.

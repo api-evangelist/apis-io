@@ -1,0 +1,173 @@
+{
+ "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/main/schema/server-card.schema.json",
+ "schemaVersion": "2025-11-05",
+ "serverInfo": {
+  "name": "apis.io",
+  "title": "APIs.io API catalog MCP server",
+  "version": "1.2.0",
+  "description": "Read-only Model Context Protocol server over the APIs.io catalog — discover APIs, providers, tags, industries, regions, ratings, and published artifacts. Generated from the same OpenAPI contract that powers the REST API, so the two never drift.",
+  "publisher": {
+   "name": "API Evangelist",
+   "url": "https://apievangelist.com"
+  },
+  "homepage": "https://apis.io",
+  "documentation": "https://apis.io/developer/mcp-server/"
+ },
+ "transport": {
+  "status": "active",
+  "type": "streamable-http",
+  "url": "https://apis.io/mcp",
+  "note": "Streamable HTTP JSON-RPC. Call initialize, then tools/list, then tools/call. Read-only; no tool mutates catalog state. Free + Starter tiers cover discovery; industries/regions/ratings tools require the Pro or Business tier (https://apis.io/developer/plans/)."
+ },
+ "discovery": {
+  "restApi": "https://apis.io/api/v1",
+  "openapi": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml",
+  "apiCatalog": "https://apis.io/.well-known/api-catalog",
+  "agentSkills": "https://apis.io/.well-known/agent-skills/index.json",
+  "apisJson": "https://apis.io/apis.json",
+  "sitemap": "https://apis.io/sitemap.xml"
+ },
+ "capabilities": {
+  "tools": {
+   "listChanged": false,
+   "available": [
+    {
+     "name": "apis_io_search",
+     "description": "Power tool — find APIs, providers, or tags by free text, tags (match any/all), providers, artifact types, industry, region, and rating band."
+    },
+    {
+     "name": "find_apis",
+     "description": "Cross-provider API discovery by tag / provider / artifact type."
+    },
+    {
+     "name": "get_api",
+     "description": "Full detail for one API by aid; optionally inline artifact content."
+    },
+    {
+     "name": "find_providers",
+     "description": "Discover providers by text / tag / artifact type / industry / region / band."
+    },
+    {
+     "name": "get_provider",
+     "description": "Full detail for one provider, including its APIs and links."
+    },
+    {
+     "name": "find_tags",
+     "description": "Browse / rank the tag taxonomy."
+    },
+    {
+     "name": "get_tag",
+     "description": "One tag with linked providers, APIs, and neighbors."
+    },
+    {
+     "name": "find_industries",
+     "description": "Browse industry verticals. (Pro+)"
+    },
+    {
+     "name": "get_industry",
+     "description": "One industry with ranked member providers. (Pro+)"
+    },
+    {
+     "name": "find_regions",
+     "description": "Browse geographic regions. (Pro+)"
+    },
+    {
+     "name": "get_region",
+     "description": "One region with ranked member providers. (Pro+)"
+    },
+    {
+     "name": "find_ratings",
+     "description": "Ranked ratings leaderboard. (Pro+)"
+    },
+    {
+     "name": "get_provider_rating",
+     "description": "One provider's full rating breakdown. (Pro+)"
+    },
+    {
+     "name": "get_rating_rubric",
+     "description": "The rating rubric — bands, facet weights, trend thresholds."
+    },
+    {
+     "name": "find_artifacts",
+     "description": "Find artifacts of one type (OpenAPI, AsyncAPI, Postman, …) across the catalog."
+    },
+    {
+     "name": "get_provider_artifacts",
+     "description": "Every artifact a provider publishes across its APIs, grouped by type."
+    },
+    {
+     "name": "get_provider_onboarding",
+     "description": "A provider getting-started view — signup, auth, base URLs, first steps."
+    },
+    {
+     "name": "get_openapi",
+     "description": "An API primary OpenAPI reference; optionally inline the spec body."
+    },
+    {
+     "name": "find_similar_providers",
+     "description": "Providers similar to a given one (alternatives) by tags / industry / artifacts."
+    },
+    {
+     "name": "find_similar_apis",
+     "description": "APIs similar to a given one (\"more like this\")."
+    },
+    {
+     "name": "compare_providers",
+     "description": "PRO — compare 2+ providers side by side with an artifact-coverage matrix."
+    },
+    {
+     "name": "gap_analysis",
+     "description": "PRO — high-value artifacts a provider or stack lacks vs its peers."
+    },
+    {
+     "name": "industry_gap_analysis",
+     "description": "PRO — valuable artifact types commonly missing across a whole industry."
+    },
+    {
+     "name": "find_rating_movers",
+     "description": "PRO — biggest rating movers up/down since the previous scoring build."
+    },
+    {
+     "name": "recommend_stack",
+     "description": "Design an API stack — best provider per capability (free preview / pro full)."
+    },
+    {
+     "name": "export_stack",
+     "description": "PRO — export a designed capability stack as an adoptable APIs.json."
+    },
+    {
+     "name": "whats_changed",
+     "description": "PRO — catalog changes since a date: additions + rating movement."
+    }
+   ]
+  },
+  "resources": {
+   "listChanged": false
+  },
+  "prompts": {
+   "listChanged": false
+  }
+ },
+ "links": [
+  {
+   "rel": "service-desc",
+   "href": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml",
+   "type": "application/yaml"
+  },
+  {
+   "rel": "api-catalog",
+   "href": "https://apis.io/.well-known/api-catalog",
+   "type": "application/linkset+json"
+  },
+  {
+   "rel": "agent-skills",
+   "href": "https://apis.io/.well-known/agent-skills/index.json",
+   "type": "application/json"
+  },
+  {
+   "rel": "describedby",
+   "href": "https://apis.io/apis.json",
+   "type": "application/json"
+  }
+ ]
+}

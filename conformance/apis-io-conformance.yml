@@ -1,0 +1,95 @@
+generated: '2026-08-10'
+method: derived
+source: openapi/_original/apis-io-v1-openapi.yml + live probes of https://apis.io
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: All 12 specs in openapi/ declare openapi 3.1.0; the v1 contract carries 62 operations.
+- id: apis-json-0.21
+  conforms: true
+  evidence: >-
+    https://apis.io/apis.json returns specificationVersion 0.21 (HTTP 200); the catalog is built on
+    the APIs.json format.
+- id: rfc9727-api-catalog
+  conforms: true
+  evidence: >-
+    /.well-known/api-catalog returns HTTP 200 application/linkset+json with service-desc,
+    service-doc and describedby relations.
+- id: rfc8615-well-known
+  conforms: true
+  evidence: api-catalog, mcp/server-card.json and agent-skills/index.json served under /.well-known/.
+- id: llms-txt
+  conforms: true
+  evidence: https://apis.io/llms.txt returns HTTP 200 text/plain in llms.txt format.
+- id: mcp-2025-11-05
+  conforms: true
+  evidence: >-
+    Streamable-HTTP MCP server at https://apis.io/mcp; anonymous tools/list returned 200 with 79
+    tools; server card declares schemaVersion 2025-11-05.
+- id: agent-skills-discovery-0.2.0
+  conforms: true
+  evidence: >-
+    /.well-known/agent-skills/index.json validates against the Cloudflare Agent Skills Discovery
+    RFC v0.2.0 index schema; 10 skills with sha256 digests.
+- id: aipref-content-usage
+  conforms: true
+  evidence: 'robots.txt carries Content-Usage: search=y, ai-input=y, ai-train=y.'
+- id: cloudflare-content-signals
+  conforms: true
+  evidence: 'robots.txt carries Content-Signal: search=yes, ai-input=yes, ai-train=yes.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Declared in the contract (components.schemas.Problem, application/problem+json) but not served
+    — live 404 returns application/json {"error","detail"}. See errors/apis-io-problem-types.yml.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: https://apis.io/.well-known/security.txt returned HTTP 404.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset/Deprecation headers and no published deprecation policy.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme in any spec; auth is an optional X-API-Key header.
+- id: openid-connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returned HTTP 404.
+- id: a2a-agent-card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json both returned HTTP 404 on apis.io.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event or webhook surface — the API is read-only and publishes no AsyncAPI. Not applicable
+    rather than deficient.
+- id: json-schema
+  conforms: true
+  evidence: 13 JSON Schema documents in json-schema/, referenced from apis.yml.
+- id: arazzo-1.0.1
+  conforms: true
+  evidence: 4 Arazzo workflows in arazzo/, wired as common[] Arazzo pointers.
+- id: spectral-governance
+  conforms: true
+  evidence: 2 Spectral rulesets in rules/; OWASP scan results under governance/owasp/.
+compliance_program:
+  published: false
+  certifications: []
+  note: >-
+    APIs.io publishes no trust centre and claims no SOC 2 / ISO 27001 / PCI DSS / HIPAA
+    certification. The page at https://apis.io/security/ is the catalog's cross-provider "API
+    Security Posture" index — it lists OTHER providers' certifications and must not be read as an
+    APIs.io compliance claim.
+x-evidence:
+  fetched: '2026-08-10'
+  probes:
+  - url: https://apis.io/apis.json
+    http_status: 200
+  - url: https://apis.io/.well-known/api-catalog
+    http_status: 200
+  - url: https://apis.io/mcp
+    http_status: 200
+  - url: https://apis.io/.well-known/security.txt
+    http_status: 404
+  - url: https://apis.io/.well-known/agent-card.json
+    http_status: 404

@@ -1,0 +1,107 @@
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/developer/overview
+docs:
+  overview: https://apis.io/developer/overview
+  getting_started: https://apis.io/developer/getting-started
+  authentication: https://apis.io/developer/authentication
+  rate_limits: https://apis.io/developer/rate-limits
+  plans: https://apis.io/developer/plans
+  api_reference: https://apis.io/developer/api/
+base_url: https://apis.io/api/v1
+http:
+  methods: [GET]
+  read_only: true
+  note: >-
+    Every v1 endpoint is a GET. No operation mutates catalog state, which is why the API ships no
+    idempotency contract — there is nothing to make idempotent.
+authentication:
+  style: api-key-header
+  header: X-API-Key
+  required: false
+  note: >-
+    v1 is open — anonymous requests run on the Free tier. A GitHub login issues a free Starter key;
+    Pro and Business keys raise limits and unlock Industries, Regions, Ratings, Insights depth,
+    Saved Workspace and Synthesis.
+  artifact: authentication/apis-io-authentication.yml
+idempotency:
+  supported: false
+  reason: >-
+    Read-only API — GET only, no write operations, no idempotency-key header documented or present
+    in the OpenAPI contract.
+pagination:
+  style: page-number
+  request_params:
+    page: 1-based page number
+    limit: page size, default 25, maximum 100 (docs) / 1000 (schema maximum)
+  response_envelope: '{ meta, data }'
+  response_fields:
+    meta.total: Total matching items across all pages.
+    meta.page: Current page.
+    meta.limit: Effective page size.
+    meta.pages: Total number of pages.
+    meta.query: The effective query parameters, echoed back.
+  example: https://apis.io/api/v1/search?q=weather&page=2&limit=25
+field_selection:
+  fields_param: fields
+  view_param: view
+  include_param: include
+  note: >-
+    `artifact_types` narrows which artifacts come back; `include=content` inlines the artifact
+    bytes (specs are large — request only when needed). `fields` and `view` shape the record.
+filtering:
+  common_params: [q, tags, match, providers, artifact_types, band, min_score, max_score, industry,
+    region, area, pricing, onboarding, try_now, public, sort, trend, facet, min_facet]
+  match_semantics: 'match=any (default) | match=all across tags'
+identifiers:
+  provider: slug (e.g. twilio)
+  api: 'provider:api-slug (e.g. twilio:twilio-accounts-api)'
+versioning:
+  scheme: uri-path
+  current: v1
+  contract_version: 1.2.1
+  note: >-
+    No dated or header-based version negotiation. The `ApiKeyAuth` scheme is declared but not
+    enforced in v1 specifically so metering can be introduced without a breaking change.
+  artifact: lifecycle/apis-io-lifecycle.yml
+error_envelope:
+  declared: RFC 9457 Problem Details (application/problem+json)
+  observed: '{ error, detail } on application/json'
+  artifact: errors/apis-io-problem-types.yml
+  note: >-
+    Contract and deployment diverge — see the divergences block in the error catalog.
+rate_limit_signaling:
+  headers: none observed
+  note: >-
+    No RateLimit / X-RateLimit headers are returned. Limits are enforced per-IP at the CloudFront
+    edge (Free 5 req/s, Starter 20, Pro 100, Business 400) plus a daily quota. Over-quota Pro
+    surfaces return HTTP 402 upgrade_required rather than 429.
+  artifact: rate-limits/apis-io-rate-limits.yml
+tracing:
+  request_id_headers: [x-amzn-requestid, x-amzn-trace-id]
+  note: AWS API Gateway request identifiers; no first-party request-id convention documented.
+caching:
+  cache_control: public, max-age=300
+  cdn: CloudFront
+  note: Responses are edge-cacheable; identical repeated queries are cheap.
+cors:
+  enabled: true
+  allow_origin: '*'
+  allow_methods: [GET, OPTIONS]
+  allow_headers: [content-type, x-api-key]
+  note: Served same-origin with apis.io and browser-callable.
+agent_signals:
+  robots_txt: https://apis.io/robots.txt
+  content_signal: search=yes, ai-input=yes, ai-train=yes
+  content_usage: search=y, ai-input=y, ai-train=y
+  llms_txt: llms/apis-io-llms.txt
+  api_catalog: well-known/apis-io-api-catalog.json
+x-evidence:
+  fetched: '2026-08-10'
+  probes:
+  - url: https://apis.io/api/v1/search?q=weather&limit=1
+    http_status: 200
+  - url: https://apis.io/api/v1/industries
+    http_status: 200
+  - url: https://apis.io/developer/overview.md
+    http_status: 200

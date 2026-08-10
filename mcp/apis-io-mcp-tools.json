@@ -1,0 +1,2888 @@
+{
+  "tools": [
+    {
+      "name": "apis_io_search",
+      "description": "START HERE. Federated overview of the APIs.io catalog for a query: the top matching APIs, providers, AND tags in one call, each with its total match count. Filter by tags, artifact types, industry, region, rating band. `limit` is per section. To page/sort the full list of ONE type, use find_apis / find_providers / find_tags; for one entity, get_api / get_provider.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifact_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+          },
+          "min_score": {
+            "type": "number"
+          },
+          "industry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "relevance",
+              "composite",
+              "name",
+              "created",
+              "modified",
+              "api_count",
+              "demand"
+            ],
+            "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 25,
+            "default": 5,
+            "description": "Top matches to return per section (apis/providers/tags)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_apis",
+      "description": "Paginated, sortable list of APIs across providers \u2014 filter by tag, provider, artifact type, industry, region, or rating band. Use apis_io_search first for a cross-type overview.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifact_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+          },
+          "min_score": {
+            "type": "number"
+          },
+          "industry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Access model \u2014 pricing: free, freemium, free-trial, paid, enterprise. (providers only)"
+          },
+          "onboarding": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Access model \u2014 how to start: open (no key), self-serve, approval. (providers only)"
+          },
+          "try_now": {
+            "type": "boolean",
+            "description": "Only providers a developer can start using at no cost right now (free/trial + self-serve/open). (providers only)"
+          },
+          "public": {
+            "type": "boolean",
+            "description": "Only providers callable publicly with no signup (onboarding=open). (providers only)"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "relevance",
+              "composite",
+              "name",
+              "created",
+              "modified",
+              "api_count",
+              "demand"
+            ],
+            "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Return exactly these top-level keys (overrides view)."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_api",
+      "description": "Full detail for one API by aid (provider:api-slug); set include=[\"content\"] to inline artifact bodies.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "aid"
+        ],
+        "properties": {
+          "aid": {
+            "type": "string"
+          },
+          "artifact_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "find_providers",
+      "description": "Paginated, sortable list of providers \u2014 filter by text, tag, artifact type, industry, region, rating band, or access model (pricing/onboarding/try_now/public). Use apis_io_search first for a cross-type overview.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifact_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+          },
+          "min_score": {
+            "type": "number"
+          },
+          "industry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pricing": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Access model \u2014 pricing: free, freemium, free-trial, paid, enterprise. (providers only)"
+          },
+          "onboarding": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Access model \u2014 how to start: open (no key), self-serve, approval. (providers only)"
+          },
+          "try_now": {
+            "type": "boolean",
+            "description": "Only providers a developer can start using at no cost right now (free/trial + self-serve/open). (providers only)"
+          },
+          "public": {
+            "type": "boolean",
+            "description": "Only providers callable publicly with no signup (onboarding=open). (providers only)"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "relevance",
+              "composite",
+              "name",
+              "created",
+              "modified",
+              "api_count",
+              "demand"
+            ],
+            "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Return exactly these top-level keys (overrides view)."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_provider",
+      "description": "Full detail for one provider: profile, rating, and the APIs it publishes. The heavy `collections` and `common` sections are omitted by default (their counts are still reported) \u2014 pass view=full for the whole document, or fields=[\"common\"] for a section. Narrow for cheap reads: fields=[\"score\"] returns just the rating. Relative artifact URLs are resolved to absolute, fetchable ones.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Return exactly these top-level keys (slug and name always included); overrides view."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_tags",
+      "description": "Paginated, sortable list of tags in the taxonomy. Use apis_io_search first for a cross-type overview.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "relevance",
+              "composite",
+              "name",
+              "created",
+              "modified",
+              "api_count",
+              "demand"
+            ],
+            "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Return exactly these top-level keys (overrides view)."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_tag",
+      "description": "One tag: its metadata, neighbor tags, and a top sample of its providers and APIs (with totals). Use find_apis?tags=slug / find_providers?tags=slug for the full ranked list, or view=full here.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25,
+            "description": "Top members to show per list."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_industries",
+      "description": "Browse industry verticals; sort by provider/API count.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_industry",
+      "description": "One industry: metadata + a top sample of its member providers (ranked, with the total). Use find_providers?industry=slug for the full list, or view=full here.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25,
+            "description": "Top members to show."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_regions",
+      "description": "Browse geographic regions; sort by provider/API count.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_region",
+      "description": "One region: metadata + a top sample of its member providers (ranked, with the total). Use find_providers?region=slug for the full list, or view=full here.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25,
+            "description": "Top members to show."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_areas",
+      "description": "Browse the API Evangelist areas taxonomy (authentication, webhooks, payments, \u2026) \u2014 curated, scored provider indexes. Search by text; sort by provider count.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "sort": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_area",
+      "description": "One area: metadata, its dedicated site link, and a top sample of member providers (with the total). Use find_providers?area=slug for the full list, or view=full here.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25,
+            "description": "Top members to show."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_ratings",
+      "description": "Ranked ratings leaderboard \u2014 filter by band, score range, trend, or facet threshold. Sort by composite (default), delta (biggest gainers), or any quality facet (governance, security, \u2026) to rank providers by that dimension.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "min_score": {
+            "type": "number"
+          },
+          "trend": {
+            "type": "string"
+          },
+          "facet": {
+            "type": "string"
+          },
+          "min_facet": {
+            "type": "number"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "composite",
+              "delta",
+              "discoverability",
+              "contract_quality",
+              "governance",
+              "operational_transparency",
+              "developer_ergonomics",
+              "commercial_clarity"
+            ],
+            "description": "Leaderboard order; default composite."
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_provider_rating",
+      "description": "One provider's full rating breakdown (composite, band, trend, six facets).",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_rating_rubric",
+      "description": "The rubric \u2014 bands, facet weights, trend thresholds \u2014 so an agent can interpret any score.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "find_artifacts",
+      "description": "Find artifacts of ANY one type across the catalog \u2014 the cross-type entry point. Each type also has a dedicated find_<type> tool (find_mcp, find_rules, find_scopes, \u2026) with sorts and filters unique to that type; prefer those when you know the type. Types: mcp, skills, rules, arazzo, plans, rate-limits, finops, collections, asyncapis, graphql, json-ld, channels, examples, json-schemas, json-structures, openapis, postman, vocabularies, apis-json. PRO: scopes, security. include=[\"content\"] inlines bodies.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "q": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "compare_providers",
+      "description": "PRO \u2014 Compare 2+ providers side by side: composite/band, per-facet leaders, and an artifact-coverage matrix.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "providers"
+        ],
+        "properties": {
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Provider slugs to compare (2+)."
+          }
+        }
+      }
+    },
+    {
+      "name": "gap_analysis",
+      "description": "PRO \u2014 For each provider: high-value artifacts it lacks (MCP, Arazzo, Rules, Skills\u2026), what its peers commonly publish but it lacks, and its score vs the peer median \u2014 plus stack-level gaps across the set.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "providers"
+        ],
+        "properties": {
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Provider slugs (1+). Multiple = treat as a stack."
+          },
+          "min_share": {
+            "type": "number",
+            "description": "Peer-share threshold for a gap (0\u20131, default 0.25)."
+          }
+        }
+      }
+    },
+    {
+      "name": "whats_changed",
+      "description": "PRO \u2014 What changed in the catalog since a date: providers added/updated, plus rating movement (up/down) from the latest scoring build.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "since"
+        ],
+        "properties": {
+          "since": {
+            "type": "string",
+            "description": "YYYY-MM-DD."
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "recommend_stack",
+      "description": "Design an API stack \u2014 the best-rated catalog provider per capability, assembled into a stack. FREE preview = the top pick per capability; PRO = alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint. Decompose the domain into capabilities first, then pass them here.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "capabilities"
+        ],
+        "properties": {
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The capabilities the stack needs, e.g. [\"payments\",\"email\",\"identity\",\"observability\"]."
+          },
+          "region": {
+            "type": "string",
+            "description": "Optional region slug to prefer, e.g. europe."
+          }
+        }
+      }
+    },
+    {
+      "name": "get_provider_artifacts",
+      "description": "Every artifact a provider publishes \u2014 provider-level (MCP, security, scopes, rules, agentic-access) and per-API (OpenAPI, Arazzo, overlays, reference docs) \u2014 grouped by type with counts. by_type_counts is the full summary; pass `type` (e.g. OpenAPI, MCP) to scope the artifacts list to one type, since an unfiltered provider can be 250+ entries.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "description": "Return only artifacts of this type (synonym-aware: MCP matches MCPServer)."
+          }
+        }
+      }
+    },
+    {
+      "name": "get_api_artifacts",
+      "description": "One API's artifacts grouped by type (by_type_counts is the full summary); pass `type` to scope the list to one type (synonym-aware: MCP matches MCPServer), include=[\"content\"] to inline the bodies.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "aid"
+        ],
+        "properties": {
+          "aid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "description": "Return only artifacts of this type."
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get_openapi",
+      "description": "An API's primary OpenAPI reference (url) \u2014 the top agent intent; set include=[\"content\"] to inline the spec body.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "aid"
+        ],
+        "properties": {
+          "aid": {
+            "type": "string"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get_provider_onboarding",
+      "description": "A getting-started view for a provider \u2014 website, portal, signup, docs, authentication, base URLs, and first steps assembled from its registered links.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "find_similar_providers",
+      "description": "Providers similar to a given one (alternatives) by shared tags, industry, region, and artifact coverage.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_similar_apis",
+      "description": "APIs similar to a given one (\"more like this\") by shared tags.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "aid"
+        ],
+        "properties": {
+          "aid": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_industry_leaders",
+      "description": "PRO \u2014 Top-rated providers in an industry vertical.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_region_leaders",
+      "description": "PRO \u2014 Top-rated providers in a region.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_area_leaders",
+      "description": "PRO \u2014 Top-rated providers in a curated API Evangelist area.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_rating_history",
+      "description": "PRO \u2014 A provider's rating movement: current score/band/trend and the implied previous-build point.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "find_rating_movers",
+      "description": "PRO \u2014 The biggest rating movers (up and down) since the previous scoring build.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "story_leads",
+      "description": "OWNER \u2014 The weekly \"what's worth writing\" rollup: ranked story leads from the demand map crossed with rating movement \u2014 unmet demand (searched, no result), risers/fallers, and hot-but-thin capabilities. Each lead is a headline, its signal, and a suggested angle. include=[\"raw\"] appends the underlying demand report.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "raw"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "export_dataset",
+      "description": "BUSINESS/license tier \u2014 the WHOLE dataset in one pull (not a 100-row page): `ratings` (every rated provider with facets, trend, rubric + provenance) or `providers` (the catalog with coverage + score). For media outlets and analysts licensing the data to publish rankings and trends. Attribute to apis.io and cite the rubric.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dataset": {
+            "type": "string",
+            "enum": [
+              "ratings",
+              "providers"
+            ],
+            "default": "ratings"
+          },
+          "co_brand": {
+            "type": "string",
+            "description": "Optional partner name for a co-branded license \u2014 stamps the attribution the license carries."
+          }
+        }
+      }
+    },
+    {
+      "name": "industry_gap_analysis",
+      "description": "PRO \u2014 Valuable artifact types (MCP, Arazzo, Rules, Skills\u2026) commonly missing across a whole industry \u2014 where the vertical is under-served.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "min_share": {
+            "type": "number",
+            "description": "Coverage threshold below which a type counts as an industry gap (0\u20131, default 0.5)."
+          }
+        }
+      }
+    },
+    {
+      "name": "export_stack",
+      "description": "PRO \u2014 Export a designed capability stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "capabilities"
+        ],
+        "properties": {
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The capabilities the stack needs, e.g. [\"payments\",\"email\",\"identity\"]."
+          },
+          "region": {
+            "type": "string",
+            "description": "Optional region slug to prefer."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_company_insights",
+      "description": "Browse profiled companies (Fortune 1000) by name; ranked by overall technology-readiness signal. Free discovery.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "insights_dimensions",
+      "description": "Cross-section ranking of the 40 tracked investment dimensions (AI, cloud, governance, security, \u2026) by how many profiled companies show signal. Free.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "insights_adoption",
+      "description": "Services, tools, or standards ranked by how many companies adopt them across the profiled set. Free.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "service",
+              "tool",
+              "standard"
+            ],
+            "default": "service"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_company_insight",
+      "description": "Full demand-side profile for one company: 40-dimension readiness scores, adopted stack, and per-quarter history. Pro.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "company_gaps",
+      "description": "A company's weakest investment dimensions \u2014 where it is thin and a vendor could sell in. Pro.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "match_providers",
+      "description": "The supply\u2194demand join: apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "find_vcs",
+      "description": "Find venture-capital firms by name, thesis tags, or category. Each carries a network-matched, rated portfolio graph. Sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Free.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "category": {
+            "type": "string",
+            "description": "Firm category, e.g. \"Venture Capital\"."
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "portfolio_on_network",
+              "portfolio_total",
+              "portfolio_rating",
+              "name"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "get_vc",
+      "description": "One VC firm: identity, fund facts, and portfolio summary (totals, band distribution, average rating). Pass view=full to inline the whole portfolio. Free.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "view": {
+            "type": "string",
+            "enum": [
+              "summary",
+              "full"
+            ],
+            "default": "summary",
+            "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+          }
+        }
+      }
+    },
+    {
+      "name": "vc_portfolio",
+      "description": "A VC firm's portfolio companies, each matched to the network and rated. Filter is_provider=true (only API providers), in_network=true, band, or min_score; sort by score (default), api_count, or name. The demand-side view of who a fund has backed. Free.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "is_provider": {
+            "type": "boolean",
+            "description": "Only portfolio companies that publish an API on the network."
+          },
+          "in_network": {
+            "type": "boolean"
+          },
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+          },
+          "min_score": {
+            "type": "number"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "score",
+              "api_count",
+              "name"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_investors",
+      "description": "The reverse portfolio edge \u2014 which VC firms in the network back a given provider/company (by slug). Free.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "slug"
+        ],
+        "properties": {
+          "slug": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "resolve",
+      "description": "Resolve ANY identifier \u2014 website URL, domain (stripe.com), or GitHub org (github.com/stripe) \u2014 to the apis.io provider it belongs to. Use this when you have a URL, not a slug. Free.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "identifier"
+        ],
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "A domain, URL, or github.com/<org>."
+          }
+        }
+      }
+    },
+    {
+      "name": "enrich_provider",
+      "description": "One call, pick your field groups \u2014 resolves a slug OR any identifier and returns exactly the groups you ask for, instead of chaining get_provider + get_provider_rating + get_provider_artifacts + get_provider_onboarding. Groups: profile, onboarding, artifacts (free); rating, insights (Pro). Free base.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Provider slug OR any identifier resolve() accepts."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Field groups: profile, onboarding, artifacts, rating, security, insights. Default: profile+onboarding+artifacts+rating."
+          }
+        }
+      }
+    },
+    {
+      "name": "save_search",
+      "description": "PRO \u2014 Persist the current search criteria as a named saved search you own, so you can re-run it and get net-new results later. Criteria use the same filters as apis_io_search. Requires an apis.io API key.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "band": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+          },
+          "industry": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "region": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "area": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "artifact_types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "min_score": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    {
+      "name": "list_saved_searches",
+      "description": "PRO \u2014 List the saved searches you own (name, criteria, when last run, how many matches are tracked).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "run_saved_search",
+      "description": "PRO \u2014 Re-run one of your saved searches against the live catalog and return current matching providers.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "saved_search_net_new",
+      "description": "PRO \u2014 What is NEW for a saved search since you last checked: providers that newly match your criteria. Advances the delta cursor, so each call reports only what changed since the previous call. The agent-native version of the demand report.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "delete_saved_search",
+      "description": "PRO \u2014 Delete a saved search you own.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "create_list",
+      "description": "PRO \u2014 Create a named, persistent list (a shortlist / stack you own) of providers or APIs. Requires an apis.io API key.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Provider slugs and/or aids to seed the list."
+          }
+        }
+      }
+    },
+    {
+      "name": "list_lists",
+      "description": "PRO \u2014 List the lists/shortlists you own.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_list",
+      "description": "PRO \u2014 Get a list you own, with each member resolved to its current name, band, and score.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "add_to_list",
+      "description": "PRO \u2014 Add providers/APIs (by slug or aid) to one of your lists.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id",
+          "members"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "delete_list",
+      "description": "PRO \u2014 Delete a list you own.",
+      "inputSchema": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "find_openapis",
+      "description": "OpenAPI specifications across the catalog. The REST contract. get_openapi returns one API's primary spec with optional inlined body. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_asyncapis",
+      "description": "AsyncAPI (event-driven) specifications across the catalog. Event/streaming APIs. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "version": {
+            "type": "string",
+            "description": "AsyncAPI spec version, e.g. 2.6.0 or 3.0.0."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_channels",
+      "description": "AsyncAPI event channels across the catalog. Individual event channels (topics/streams). Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "protocol": {
+            "type": "string",
+            "description": "AsyncAPI version the channel is defined in."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_graphql",
+      "description": "GraphQL schemas across the catalog. GraphQL type systems. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_arazzo",
+      "description": "Arazzo workflows across the catalog. Multi-step API workflows chaining operations. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_mcp",
+      "description": "MCP servers across the catalog. Model Context Protocol servers a provider offers to agents. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "install_method": {
+            "type": "string",
+            "description": "How the server is delivered: \"Hosted endpoint\", \"GitHub repo\", \"Documentation link\"."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_skills",
+      "description": "Agent Skills across the catalog. Packaged agent skills. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_rules",
+      "description": "Spectral governance rulesets across the catalog. API design/linting rulesets. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "rule_count"
+            ],
+            "description": "Order: name, or rule_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_scopes",
+      "description": "OAuth scope catalogs across the catalog. The OAuth scopes an API defines. Pro tier. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "scope_count"
+            ],
+            "description": "Order: name, or scope_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_security",
+      "description": "Security artifacts across the catalog. Authentication, domain security, VDP, trust center. Pro tier. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "scheme_count"
+            ],
+            "description": "Order: name, or scheme_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_plans",
+      "description": "Pricing plans across the catalog. An API's pricing tiers. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "plan_count"
+            ],
+            "description": "Order: name, or plan_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_rate_limits",
+      "description": "Rate-limit policies across the catalog. Declared throttling policies. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "limit_count"
+            ],
+            "description": "Order: name, or limit_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_finops",
+      "description": "FinOps / billing models across the catalog. How usage is metered and billed. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "billing_model": {
+            "type": "string",
+            "description": "Billing model, e.g. subscription, consumption, prepaid."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_collections",
+      "description": "Postman / Open collections across the catalog. Runnable request collections. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "item_count"
+            ],
+            "description": "Order: name, or item_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_json_ld",
+      "description": "JSON-LD contexts across the catalog. Linked-data vocabularies. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "class_count",
+              "property_count"
+            ],
+            "description": "Order: name, or class_count / property_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_json_schemas",
+      "description": "JSON Schemas across the catalog. Standalone data schemas. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_json_structures",
+      "description": "JSON Structures across the catalog. Data structures behind an API. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "property_count"
+            ],
+            "description": "Order: name, or property_count (largest first)."
+          },
+          "struct_type": {
+            "type": "string",
+            "description": "Root type: object, array, datetime, \u2026"
+          }
+        }
+      }
+    },
+    {
+      "name": "find_examples",
+      "description": "Example payloads across the catalog. Real request/response examples. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "name",
+              "key_count"
+            ],
+            "description": "Order: name, or key_count (largest first)."
+          }
+        }
+      }
+    },
+    {
+      "name": "find_postman",
+      "description": "Postman collections across the catalog. Postman-format collections (by reference). Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_vocabularies",
+      "description": "API vocabularies across the catalog. Controlled vocabularies a provider publishes. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    },
+    {
+      "name": "find_apis_json",
+      "description": "APIs.json indexes across the catalog. The APIs.json discovery documents themselves. Filter by q / tags / providers; include=[\"content\"] inlines bodies. Use find_artifacts for cross-type search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "description": "Free text over name + description."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag slugs."
+          },
+          "providers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "match": {
+            "type": "string",
+            "enum": [
+              "any",
+              "all"
+            ],
+            "default": "any"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "content"
+              ]
+            }
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 25
+          }
+        }
+      }
+    }
+  ]
+}

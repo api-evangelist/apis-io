@@ -1,0 +1,54 @@
+generated: '2026-08-10'
+method: searched
+source: https://apis.io/developer/overview
+versioning:
+  scheme: uri-path
+  current: v1
+  contract_version: 1.2.1
+  docs: https://apis.io/developer/overview
+  note: >-
+    Single major version in the path (`/api/v1`). No dated versions, no version header, no
+    published version-support window. The OpenAPI declares an `ApiKeyAuth` scheme that is not
+    enforced in v1, explicitly so metering can arrive without a breaking change.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation header support, and no deprecated
+    operations declared in the OpenAPI contract. This is a real gap, not an absence of evidence.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page: >-
+  https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+status_page_kind: postman-monitor
+changelog:
+  url: https://apis.io/changelog/
+  artifact: changelog/apis-io-changelog.yml
+roadmap:
+  url: https://apis.io/roadmap/
+  issue_tracker: https://github.com/api-evangelist/roadmap
+  note: >-
+    A public roadmap plus a public request inbox (https://github.com/api-search/inbox) — shipped
+    items move from the roadmap to the changelog.
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-10'
+  probes:
+  - url: https://apis.io/changelog/
+    http_status: 200
+  - url: https://apis.io/roadmap/
+    http_status: 200
+  - url: >-
+      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    http_status: 200
+  - url: https://apis.io/developer/change-log/
+    http_status: 404
+    note: >-
+      Stale pointer carried in apis.yml — the live changelog is at https://apis.io/changelog/.
+  - url: https://apis.io/developer/versioning/
+    http_status: 404
+    note: Stale pointer carried in apis.yml — versioning is documented on /developer/overview.

@@ -1,0 +1,66 @@
+# APIs.io — Federated API Discovery Network
+
+> APIs.io is an agent-friendly directory of public-internet APIs. It indexes API providers, their individual APIs, schemas, event-driven specs, governance rules, vocabularies, and JSON-LD contexts — all served under the single `apis.io` root domain (each section at its own subpath, e.g. `/providers/`, `/apis/`, `/tags/`).
+
+APIs.io is intended for both humans and agents. Indexing, retrieval-augmented generation (RAG), grounding, and model training are explicitly permitted — see https://apis.io/terms/. Every page exposes a `<link rel="api-catalog">` pointing at an RFC 9727 linkset that enumerates the indexed APIs, and robots.txt permits search, ai-input, and ai-train via Cloudflare Content-Signals and AIPREF Content-Usage.
+
+The catalog currently indexes roughly 26414 providers, 109100 APIs, and 120595 schemas.
+
+## For agents: API, MCP & skills
+
+The entire catalog is queryable programmatically — start here:
+
+- [REST API](https://apis.io/api/v1): read-only discovery API. Contract: [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml). Docs: https://apis.io/developer/
+- [MCP server](https://apis.io/mcp): Streamable HTTP Model Context Protocol server (15 curated tools, led by `apis_io_search`). Card: https://apis.io/.well-known/mcp/server-card.json
+- [Agent skills](https://apis.io/skills/): index at https://apis.io/.well-known/agent-skills/index.json
+- [api-catalog](https://apis.io/.well-known/api-catalog): RFC 9727 linkset of every machine-readable surface
+- [Plans](https://apis.io/developer/plans/): free + paid tiers (industries/regions/ratings need Pro+)
+
+## Core entry points
+
+- [APIs.io home](https://apis.io/): Search across the whole network by provider, schema, or name
+- [About APIs.io](https://apis.io/about/): What the network is and how it is built
+- [Add an API](https://apis.io/add/): How to submit a provider profile
+- [Stack](https://apis.io/stack/): Assemble a watchlist of the providers you depend on and export it as an APIs.json 0.21 `apis.yml` — each provider carrying its Kin Score, agent readiness, and published resources. Browser-only (one cookie), no account.
+- [Blog](https://apis.io/blog/): Network updates, provider profiles, weekly roundups
+- [Insights](https://apis.io/insights/): Cross-network reports (top providers, top tags, spec-format breakdowns)
+- [Agent Skills](https://apis.io/agent-skills/): Agent skills published by API providers across the network
+
+## Sister sites in the APIs.io network
+
+- [providers.apis.io](https://apis.io/providers/): API provider profiles — one page per organization (Stripe, GitHub, FDA, …)
+- [apis.apis.io](https://apis.io/apis/): Individual API records — one page per published API, with OpenAPI links
+- [industries.apis.io](https://apis.io/industries/): Industry-vertical index — every provider mapped to one or more of 29 industries (financial services, healthcare, manufacturing, transportation, etc.)
+- [regions.apis.io](https://apis.io/regions/): Sales-region index — providers grouped by macro sales region (North America, LATAM, EMEA, APAC, Greater China, ANZ, …)
+- [agent-skills.apis.io](https://apis.io/agent-skills/): Provider Agent Skill index — 800+ SKILL.md files across 80+ providers, rendered inline with per-skill and per-provider rollup pages
+- [mcp.apis.io](https://apis.io/servers/): Official MCP server index — 230+ Model Context Protocol servers across 220+ providers, with install hints and source links
+- [schemas.apis.io](https://apis.io/schemas/): JSON Schemas extracted from the indexed APIs
+- [asyncapi.apis.io](https://apis.io/asyncapis/): AsyncAPI event-driven specifications
+- [json-ld.apis.io](https://apis.io/jsonld/): JSON-LD contexts and semantic vocabularies
+- [rules.apis.io](https://apis.io/rules/): Spectral governance rules
+- [vocabularies.apis.io](https://apis.io/vocabularies/): Provider tag vocabularies
+- [tags.apis.io](https://apis.io/tags/): Tag index across the network
+- [examples.apis.io](https://examples.apis.io/): API usage examples
+- [developer.apis.io](https://apis.io/developer/): Developer portal and feeds
+- [plans.apis.io](https://apis.io/plans/): API pricing plan profiles
+- [rate-limits.apis.io](https://apis.io/rate-limits/): API rate-limit profiles
+- [finops.apis.io](https://apis.io/finops/): API FinOps profiles
+
+## Machine-readable feeds
+
+- [/.well-known/api-catalog](https://apis.io/.well-known/api-catalog): RFC 9727 linkset for the apis.io hub
+- [providers.apis.io api-catalog](https://apis.io/.well-known/api-catalog): Linkset of every indexed provider
+- [apis.apis.io api-catalog](https://apis.io/.well-known/api-catalog): Linkset of every indexed API
+- [APIs.json profile](https://apis.io/apis.json): Self-describing APIs.json document for the network
+- [sitemap.xml](https://apis.io/sitemap.xml): Per-subdomain sitemaps live at `<subdomain>/sitemap.xml`
+- [search-index.json](https://apis.io/search-index.json): Front-end search index used by the hub homepage
+
+## Related projects
+
+- [APIs.json](https://apisjson.org): The machine-readable API discovery format that every profile in this network uses
+- [API Commons](https://apicommons.org): Standard vocabulary of common operational properties referenced from APIs.json
+- [api-evangelist](https://github.com/api-evangelist): Upstream Git-versioned provider profile repos this network is built from
+
+## License and usage
+
+All content on APIs.io is published as a public catalog of API metadata, intended for both human and machine consumption. Search indexing, AI grounding/RAG, and AI training are explicitly permitted. See https://apis.io/terms/ for the full terms.

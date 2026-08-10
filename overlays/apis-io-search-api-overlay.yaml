@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for .io APIs Search API
+  version: 1.0.0
+extends: openapi/apis-io-search-api-openapi.yml
+x-generated: '2026-08-10'
+x-method: generated
+x-source: live probes of https://apis.io/api/v1 + https://apis.io/developer/overview
+actions:
+- target: $.servers
+  description: Correct the server host. The harvested spec declares https://search-api.apis.io, which
+    has NO DNS record (dig returns empty; curl cannot connect). The live production base URL is https://apis.io/api/v1,
+    verified 200 on 2026-08-10.
+  update:
+  - url: https://apis.io/api/v1
+    description: Production server.
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-10'
+    x-apis-io-error-envelope: Deployed responses use application/json {error, detail}, not the declared
+      application/problem+json.
+    x-apis-io-tier-gate-status: 402
+    x-apis-io-mcp: https://apis.io/mcp
+    x-apis-io-api-catalog: https://apis.io/.well-known/api-catalog
+    x-apis-io-llms-txt: https://apis.io/llms.txt
