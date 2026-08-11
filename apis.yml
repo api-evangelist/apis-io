@@ -526,6 +526,11 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 common:
+- type: IssueTracker
+  url: https://github.com/apisio/apis.io/issues
+- type: License
+  name: MIT
+  url: https://github.com/apisio/apis.io/blob/master/LICENSE
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apisio/overview
 - type: AgenticAccess
