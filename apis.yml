@@ -47,7 +47,7 @@ tags:
 url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
 created: '2026-03-26'
 modified: '2026-08-10'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: apis-io:apis-io-apis-api
   name: APIs.io APIs API
