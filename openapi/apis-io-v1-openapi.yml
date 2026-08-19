@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.2.1
+  version: 1.3.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions — with a free discovery tier and a Pro synthesis tier.
   description: |
     A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.
@@ -19,14 +19,19 @@ info:
       to inline an artifact's body.
     - **Selectable artifacts.** Use `artifact_types` to return only the artifact types
       you care about (e.g. `OpenAPI,Postman`).
-    - **Free vs. Pro tiers.** Raw discovery — `/search`, `/providers`, `/apis`, `/tags`, and
-      most artifact-type collections (`/openapis`, `/mcp`, `/skills`, `/examples`, `/schemas`, …)
-      — is **free**. The curated taxonomy dimensions (`/industries`, `/regions`, `/areas`), the
-      rating **data** (`/ratings`, `/providers/{slug}/rating`), the synthesis composites
-      (`/compare`, `/gaps`, `/changes`, `/stack`), and the high-value security artifact collections
-      (`/scopes`, `/security`) are **Pro**. Each operation declares its tier
-      via `x-tier`; the rubric (`/ratings/rubric`) stays free. Send `X-API-Key` for a paid tier;
-      keyless callers get the free tier. See `x-apis-io` for the full tier / MCP-tool / skill map.
+    - **Free, Pro, and Business tiers.** Raw discovery — `/search`, `/providers`, `/apis`, `/tags`,
+      the curated taxonomy dimensions (`/industries`, `/regions`, `/areas`), `/resolve`, `/enrich`,
+      `/vcs`, `/insights`, and most artifact-type collections (`/openapis`, `/mcp`, `/skills`,
+      `/examples`, `/json-schemas`, …) — is **free**. The rating **data** (`/ratings`,
+      `/providers/{slug}/rating`), the ranked `…/leaders` views within a dimension, the synthesis
+      composites (`/compare`, `/gaps`, `/changes`), the per-company insight depth, the saved
+      workspace (`/me/*`), and the high-value security artifact collections (`/scopes`, `/security`)
+      are **Pro**. `/stack` is freemium: free callers get the top pick per capability, Pro gets the
+      full blueprint and `/stack/export`. Bulk dataset pulls (`/export`) are **Business**, the
+      license tier above Pro. Each operation declares its tier via `x-tier`; the rubric
+      (`/ratings/rubric`) stays free. Send `X-API-Key` for a paid tier; keyless callers get the free
+      tier. A gated call returns **402 Payment Required** (not 403 — CloudFront rewrites 403/404).
+      See `x-apis-io` for the full tier / MCP-tool / skill map.
     - **Also an MCP server + Agent Skills.** Every operation maps 1:1 to an MCP tool at
       `https://apis.io/mcp` (see each operation's `x-mcp-tool`) and, where one exists, an
       Agent Skill (`x-agent-skill`). This is the API → MCP → Agent-Skill experience chain.
@@ -107,37 +112,36 @@ x-apis-io:
     getOpenapi: {tier: free, mcpTool: get_openapi, agentSkill: integrate-provider}
     listTags: {tier: free, mcpTool: find_tags}
     getTag: {tier: free, mcpTool: get_tag}
-    listOpenapis: {tier: free, mcpTool: find_artifacts}
-    listAsyncapis: {tier: free, mcpTool: find_artifacts}
-    listArazzo: {tier: free, mcpTool: find_artifacts}
-    listPostman: {tier: free, mcpTool: find_artifacts}
-    listCollections: {tier: free, mcpTool: find_artifacts}
-    listGraphql: {tier: free, mcpTool: find_artifacts}
-    listJsonSchemas: {tier: free, mcpTool: find_artifacts}
-    listJsonStructures: {tier: free, mcpTool: find_artifacts}
-    listJsonLd: {tier: free, mcpTool: find_artifacts}
-    listVocabularies: {tier: free, mcpTool: find_artifacts}
-    listRules: {tier: free, mcpTool: find_artifacts}
-    listExamples: {tier: free, mcpTool: find_artifacts}
-    listFinops: {tier: free, mcpTool: find_artifacts}
-    listPlans: {tier: free, mcpTool: find_artifacts}
-    listRateLimits: {tier: free, mcpTool: find_artifacts}
-    listChannels: {tier: free, mcpTool: find_artifacts}
-    listMcpServers: {tier: free, mcpTool: find_artifacts, agentSkill: discover-mcp-servers}
-    listSkills: {tier: free, mcpTool: find_artifacts}
-    listScopes: {tier: pro, mcpTool: find_artifacts}
-    listSecurity: {tier: pro, mcpTool: find_artifacts}
+    listOpenapis: {tier: free, mcpTool: find_openapis}
+    listAsyncapis: {tier: free, mcpTool: find_asyncapis}
+    listArazzo: {tier: free, mcpTool: find_arazzo}
+    listPostman: {tier: free, mcpTool: find_postman}
+    listCollections: {tier: free, mcpTool: find_collections}
+    listGraphql: {tier: free, mcpTool: find_graphql}
+    listJsonSchemas: {tier: free, mcpTool: find_json_schemas}
+    listJsonStructures: {tier: free, mcpTool: find_json_structures}
+    listJsonLd: {tier: free, mcpTool: find_json_ld}
+    listRules: {tier: free, mcpTool: find_rules}
+    listExamples: {tier: free, mcpTool: find_examples}
+    listFinops: {tier: free, mcpTool: find_finops}
+    listPlans: {tier: free, mcpTool: find_plans}
+    listRateLimits: {tier: free, mcpTool: find_rate_limits}
+    listChannels: {tier: free, mcpTool: find_channels}
+    listMcpServers: {tier: free, mcpTool: find_mcp, agentSkill: discover-mcp-servers}
+    listSkills: {tier: free, mcpTool: find_skills}
+    listScopes: {tier: pro, mcpTool: find_scopes}
+    listSecurity: {tier: pro, mcpTool: find_security}
     search: {tier: free, mcpTool: apis_io_search, agentSkill: find-api}
     getRatingRubric: {tier: free, mcpTool: get_rating_rubric}
-    listIndustries: {tier: pro, mcpTool: find_industries}
-    getIndustry: {tier: pro, mcpTool: get_industry}
+    listIndustries: {tier: free, mcpTool: find_industries}
+    getIndustry: {tier: free, mcpTool: get_industry}
     getIndustryLeaders: {tier: pro, mcpTool: get_industry_leaders, agentSkill: shortlist-vendors}
     industryGapAnalysis: {tier: pro, mcpTool: industry_gap_analysis, agentSkill: audit-api-estate}
-    listRegions: {tier: pro, mcpTool: find_regions}
-    getRegion: {tier: pro, mcpTool: get_region}
+    listRegions: {tier: free, mcpTool: find_regions}
+    getRegion: {tier: free, mcpTool: get_region}
     getRegionLeaders: {tier: pro, mcpTool: get_region_leaders, agentSkill: shortlist-vendors}
-    listAreas: {tier: pro, mcpTool: find_areas}
-    getArea: {tier: pro, mcpTool: get_area}
+    listAreas: {tier: free, mcpTool: find_areas}
+    getArea: {tier: free, mcpTool: get_area}
     getAreaLeaders: {tier: pro, mcpTool: get_area_leaders, agentSkill: shortlist-vendors}
     listRatings: {tier: pro, mcpTool: find_ratings}
     findRatingMovers: {tier: pro, mcpTool: find_rating_movers, agentSkill: track-api-changes}
@@ -148,6 +152,33 @@ x-apis-io:
     whatsChanged: {tier: pro, mcpTool: whats_changed, agentSkill: track-api-changes}
     recommendStack: {tier: free, mcpTool: recommend_stack, agentSkill: assemble-api-stack, note: Free returns a top-pick preview; Pro returns alternatives + gaps + exportable APIs.json.}
     exportStack: {tier: pro, mcpTool: export_stack, agentSkill: assemble-api-stack}
+    getInsightsSummary:    {tier: free, mcpTool: insights_dimensions}
+    listInsightDimensions: {tier: free, mcpTool: insights_dimensions}
+    listInsightAdoption:   {tier: free, mcpTool: insights_adoption}
+    listInsightIndustries: {tier: free, mcpTool: insights_dimensions}
+    listInsightCompanies:  {tier: free, mcpTool: find_company_insights}
+    getCompanyInsight:     {tier: free, mcpTool: get_company_insight}
+    getCompanyGaps:        {tier: pro, mcpTool: company_gaps}
+    matchCompanyProviders: {tier: pro, mcpTool: match_providers}
+    resolveIdentifier:     {tier: free, mcpTool: resolve, agentSkill: find-api}
+    enrichProvider:        {tier: free, mcpTool: enrich_provider, agentSkill: find-api}
+    listVcs:               {tier: free, mcpTool: find_vcs}
+    getVc:                 {tier: free, mcpTool: get_vc}
+    getVcPortfolio:        {tier: free, mcpTool: vc_portfolio}
+    getProviderInvestors:  {tier: free, mcpTool: find_investors}
+    listSavedSearches:     {tier: pro, mcpTool: list_saved_searches}
+    createSavedSearch:     {tier: pro, mcpTool: save_search}
+    deleteSavedSearch:     {tier: pro, mcpTool: delete_saved_search}
+    runSavedSearch:        {tier: pro, mcpTool: run_saved_search}
+    savedSearchNetNew:     {tier: pro, mcpTool: saved_search_net_new}
+    listLists:             {tier: pro, mcpTool: list_lists}
+    createList:            {tier: pro, mcpTool: create_list}
+    getList:               {tier: pro, mcpTool: get_list}
+    deleteList:            {tier: pro, mcpTool: delete_list}
+    addToList:             {tier: pro, mcpTool: add_to_list}
+    exportDataset:         {tier: business, mcpTool: export_dataset}
+    exportNamedDataset:    {tier: business, mcpTool: export_dataset}
+    listApisJson:          {tier: free, mcpTool: find_apis_json}
 
 servers:
   - url: https://apis.io/api/v1
@@ -176,6 +207,14 @@ tags:
     description: Unified cross-resource search.
   - name: Insights
     description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+  - name: Venture Capital
+    description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
+  - name: Resolve & Enrich
+    description: Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. Free (the rating and insights enrichment groups are Pro).
+  - name: Saved Workspace
+    description: A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace. Requires an API key.
+  - name: Export
+    description: Bulk data export — the license tier above Pro. The whole ratings or providers dataset in one pull, with the attribution string a published figure must carry. Business tier.
 
 # Defined but NOT required in v1 (key-ready, see info.description).
 security: []
@@ -455,7 +494,7 @@ paths:
   /industries:
     get:
       operationId: listIndustries
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: find_industries
       security: []
       tags:
@@ -490,7 +529,7 @@ paths:
   /industries/{slug}:
     get:
       operationId: getIndustry
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: get_industry
       security: []
       tags:
@@ -518,7 +557,7 @@ paths:
   /regions:
     get:
       operationId: listRegions
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: find_regions
       security: []
       tags:
@@ -553,7 +592,7 @@ paths:
   /regions/{slug}:
     get:
       operationId: getRegion
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: get_region
       security: []
       tags:
@@ -805,32 +844,6 @@ paths:
       responses:
         '200':
           description: A page of json-ld contexts with owning API and provider context.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-      security: []
-  /vocabularies:
-    get:
-      operationId: listVocabularies
-      tags:
-        - Artifact Types
-      summary: List vocabularies across the catalog.
-      description: First-class collection of vocabularies across every provider on the network. Surfaces and normalizes the `Vocabulary` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
-      parameters:
-        - $ref: '#/components/parameters/Q'
-        - $ref: '#/components/parameters/Providers'
-        - $ref: '#/components/parameters/Tags'
-        - $ref: '#/components/parameters/Match'
-        - $ref: '#/components/parameters/Include'
-        - $ref: '#/components/parameters/ArtifactSort'
-        - $ref: '#/components/parameters/Page'
-        - $ref: '#/components/parameters/Limit'
-      responses:
-        '200':
-          description: A page of vocabularies with owning API and provider context.
           content:
             application/json:
               schema:
@@ -1234,7 +1247,7 @@ paths:
   /areas:
     get:
       operationId: listAreas
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: find_areas
       security: []
       tags:
@@ -1271,7 +1284,7 @@ paths:
   /areas/{slug}:
     get:
       operationId: getArea
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: get_area
       security: []
       tags:
@@ -1908,6 +1921,351 @@ paths:
         '200': {description: Matched providers., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
         '403': {description: Requires the Pro or Business tier., content: {application/json: {schema: {type: object, additionalProperties: true}}}}
 
+
+  # ---- Resolve & Enrich ----
+  /resolve:
+    get:
+      operationId: resolveIdentifier
+      x-mcp-tool: resolve
+      tags: [Resolve & Enrich]
+      summary: Resolve any identifier (domain / URL / GitHub org) to a provider.
+      description: Given a website URL, bare domain (`stripe.com`), or GitHub org (`github.com/stripe`), return the apis.io provider that owns it. Use when you hold a URL, not a slug. Free.
+      parameters:
+        - name: identifier
+          in: query
+          required: true
+          description: A domain, URL, or `github.com/<org>`.
+          schema: { type: string }
+      responses:
+        '200': { description: 'The matched provider (slug, name, website, band, composite, match kind).', content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /enrich:
+    get:
+      operationId: enrichProvider
+      x-mcp-tool: enrich_provider
+      tags: [Resolve & Enrich]
+      summary: Enrich a provider in one call, choosing field groups.
+      description: >-
+        Resolves a slug OR any identifier and returns exactly the requested field groups, instead of
+        chaining several `get_provider*` calls. Groups `profile`, `onboarding`, `artifacts` are free;
+        `rating` and `insights` require the Pro tier (returned as `{ gated: true }` for free callers).
+      parameters:
+        - name: id
+          in: query
+          required: true
+          description: Provider slug or any identifier `/resolve` accepts.
+          schema: { type: string }
+        - name: fields
+          in: query
+          description: 'Comma-separated field groups: profile, onboarding, artifacts, rating, security, insights. Default: profile,onboarding,artifacts,rating.'
+          schema: { type: string }
+      responses:
+        '200': { description: The requested field groups for the provider., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ---- Venture Capital ----
+  /vcs:
+    get:
+      operationId: listVcs
+      x-mcp-tool: find_vcs
+      tags: [Venture Capital]
+      summary: List / search venture-capital firms.
+      description: Venture-capital firms in the network, each with a network-matched, rated portfolio graph. Filter by text, thesis tags, or category; sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Free.
+      parameters:
+        - { name: q, in: query, description: Free text over firm name + description., schema: { type: string } }
+        - { name: tags, in: query, description: Thesis tag slugs (comma-separated)., schema: { type: string } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: sort, in: query, schema: { type: string, enum: [portfolio_on_network, portfolio_total, portfolio_rating, name] } }
+        - { name: page, in: query, schema: { type: integer } }
+        - { name: limit, in: query, schema: { type: integer } }
+      responses:
+        '200': { description: A page of VC firms (identity + portfolio summary)., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+  /vcs/{slug}:
+    get:
+      operationId: getVc
+      x-mcp-tool: get_vc
+      tags: [Venture Capital]
+      summary: One VC firm — identity, fund facts, portfolio summary.
+      description: Identity, fund facts (properties), and portfolio summary (totals, band distribution, average rating). Pass view=full to inline the full portfolio graph. Free.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: view, in: query, schema: { type: string, enum: [summary, full] } }
+      responses:
+        '200': { description: The VC firm., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /vcs/{slug}/portfolio:
+    get:
+      operationId: getVcPortfolio
+      x-mcp-tool: vc_portfolio
+      tags: [Venture Capital]
+      summary: A VC firm's portfolio graph.
+      description: The firm's portfolio companies, each matched to the network and rated. Filter is_provider=true (only API providers), in_network=true, band, or min_score; sort by score (default), api_count, or name. Free.
+      parameters:
+        - { name: slug, in: path, required: true, schema: { type: string } }
+        - { name: is_provider, in: query, description: Only companies that publish an API on the network., schema: { type: boolean } }
+        - { name: in_network, in: query, schema: { type: boolean } }
+        - { name: band, in: query, schema: { type: string } }
+        - { name: min_score, in: query, schema: { type: number } }
+        - { name: sort, in: query, schema: { type: string, enum: [score, api_count, name] } }
+        - { name: page, in: query, schema: { type: integer } }
+        - { name: limit, in: query, schema: { type: integer } }
+      responses:
+        '200': { description: A page of portfolio companies with network match + rating., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /providers/{slug}/investors:
+    get:
+      operationId: getProviderInvestors
+      x-mcp-tool: find_investors
+      tags: [Venture Capital]
+      summary: Which VC firms back this provider (reverse portfolio edge).
+      description: The venture-capital firms in the network whose portfolio includes this provider/company. The reverse of the VC portfolio graph. Free.
+      parameters:
+        - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200': { description: The backing VC firms., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ---- Saved Workspace (Pro, per-user) ----
+  /me/searches:
+    get:
+      operationId: listSavedSearches
+      x-tier: pro
+      x-mcp-tool: list_saved_searches
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: List your saved searches.
+      description: The saved searches owned by the authenticated key. Pro. Requires an API key.
+      responses:
+        '200': { description: Your saved searches., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+    post:
+      operationId: createSavedSearch
+      x-tier: pro
+      x-mcp-tool: save_search
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Create a saved search.
+      description: Persist a named search using the same filter vocabulary as `/search`. Pro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                q: { type: string }
+                tags: { type: array, items: { type: string } }
+                band: { type: array, items: { type: string } }
+                industry: { type: array, items: { type: string } }
+                region: { type: array, items: { type: string } }
+                area: { type: array, items: { type: string } }
+                artifact_types: { type: array, items: { type: string } }
+                match: { type: string, enum: [any, all] }
+                min_score: { type: number }
+      responses:
+        '201': { description: 'The created saved search (id, name, criteria).', content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/searches/{id}:
+    delete:
+      operationId: deleteSavedSearch
+      x-tier: pro
+      x-mcp-tool: delete_saved_search
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Delete a saved search you own.
+      description: Permanently removes the saved search and its delta cursor. Pro.
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses:
+        '200': { description: Deleted., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/searches/{id}/results:
+    get:
+      operationId: runSavedSearch
+      x-tier: pro
+      x-mcp-tool: run_saved_search
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Re-run a saved search against the live catalog.
+      description: Re-runs the stored criteria and returns providers that currently match. Pro.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer } }
+      responses:
+        '200': { description: Current matching providers., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/searches/{id}/net_new:
+    get:
+      operationId: savedSearchNetNew
+      x-tier: pro
+      x-mcp-tool: saved_search_net_new
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: What's NEW for a saved search since you last checked.
+      description: >-
+        Providers that newly match your criteria since the previous call. Advances the delta cursor,
+        so each call reports only the change. The first call establishes the baseline (net-new empty).
+        The agent-native version of the demand report. Pro.
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses:
+        '200': { description: Net-new matches + advanced cursor., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/lists:
+    get:
+      operationId: listLists
+      x-tier: pro
+      x-mcp-tool: list_lists
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: List the lists/shortlists you own.
+      responses:
+        '200': { description: Your lists., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '401': { $ref: '#/components/responses/AuthRequired' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+    post:
+      operationId: createList
+      x-tier: pro
+      x-mcp-tool: create_list
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Create a named, persistent list.
+      description: Creates a shortlist/stack you own; seed it with provider slugs and/or aids. Pro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string }
+                members: { type: array, items: { type: string }, description: Provider slugs and/or aids. }
+      responses:
+        '201': { description: The created list., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/lists/{id}:
+    get:
+      operationId: getList
+      x-tier: pro
+      x-mcp-tool: get_list
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Get a list, members resolved to current name/band/score.
+      description: Returns the list with each member resolved to its current profile and rating. Pro.
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses:
+        '200': { description: The list with resolved members., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+    delete:
+      operationId: deleteList
+      x-tier: pro
+      x-mcp-tool: delete_list
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Delete a list you own.
+      description: Permanently removes the list. Pro.
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses:
+        '200': { description: Deleted., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /me/lists/{id}/entries:
+    post:
+      operationId: addToList
+      x-tier: pro
+      x-mcp-tool: add_to_list
+      security: [{ ApiKeyAuth: [] }]
+      tags: [Saved Workspace]
+      summary: Add providers/APIs to a list.
+      description: Appends providers/APIs (by slug or aid) to the list, de-duplicated. Pro.
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [members]
+              properties:
+                members: { type: array, items: { type: string } }
+      responses:
+        '200': { description: Updated list (count + added)., content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+
+  # ---- Bulk export (Business/license tier) ----
+  /export:
+    get:
+      operationId: exportDataset
+      x-tier: business
+      x-mcp-tool: export_dataset
+      tags: [Export]
+      summary: Export a whole dataset in one pull.
+      description: >-
+        The license tier above Pro. Pro is per-query intelligence; Business is the entire dataset in a
+        single response, for a media outlet or analyst who licenses "publish our numbers". Defaults to
+        the `ratings` dataset. Every response carries a `license` attribution string that must be cited
+        with any published figure, alongside the rubric `schema_version`.
+      parameters:
+        - name: co_brand
+          in: query
+          description: A flat-license partner name stamped into the returned attribution string.
+          schema: { type: string, maxLength: 60 }
+      responses:
+        '200':
+          description: The full dataset, with its license attribution and provenance.
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /export/{dataset}:
+    get:
+      operationId: exportNamedDataset
+      x-tier: business
+      x-mcp-tool: export_dataset
+      tags: [Export]
+      summary: Export one named dataset.
+      description: >-
+        `ratings` returns every rated provider with composite, band, trend, delta and facet scores —
+        the full leaderboard, not a page. `providers` returns the catalog itself (slug, name,
+        description, counts, artifact coverage, tags, industries, regions, score) for an analyst
+        building their own view.
+      parameters:
+        - name: dataset
+          in: path
+          required: true
+          schema: { type: string, enum: [ratings, providers] }
+        - name: co_brand
+          in: query
+          description: A flat-license partner name stamped into the returned attribution string.
+          schema: { type: string, maxLength: 60 }
+      responses:
+        '200':
+          description: The named dataset.
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+        '400': { description: Unknown dataset; the response lists the valid names. }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+
+  # ---- APIs.json ----
+  /apis-json:
+    get:
+      operationId: listApisJson
+      x-tier: free
+      x-mcp-tool: find_apis_json
+      tags: [Artifact Types]
+      summary: APIs.json indexes across the catalog.
+      description: The APIs.json self-descriptions registered by APIs in the catalog, by reference. Pass `include=content` to inline each document.
+      parameters:
+        - $ref: '#/components/parameters/Q'
+        - $ref: '#/components/parameters/Providers'
+        - $ref: '#/components/parameters/Tags'
+        - $ref: '#/components/parameters/Include'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A page of APIs.json references.
+          content: { application/json: { schema: { type: object, additionalProperties: true } } }
+
 components:
 
   securitySchemes:
@@ -2121,6 +2479,16 @@ components:
           maxLength: 1024
         maxItems: 1000
   responses:
+    AuthRequired:
+      description: The Saved Workspace needs a signed-in apis.io API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          example:
+            error: auth_required
+            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -2215,7 +2583,7 @@ components:
       examples:
         - OpenAPI
         - JSONSchema
-        - Postman
+        - PostmanCollection
       enum:
         - Documentation
         - OpenAPI
