@@ -1,0 +1,1307 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Artifact Types API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Artifact Types",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List openapi specifications across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/openapis",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of openapi specifications across every provider on the network. Surfaces and normalizes the `OpenAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List asyncapi specifications across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/asyncapis",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of asyncapi specifications across every provider on the network. Surfaces and normalizes the `AsyncAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List arazzo workflows across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/arazzo",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of arazzo workflows across every provider on the network. Surfaces and normalizes the `Arazzo` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List postman collections across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/postman",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of postman collections across every provider on the network. Surfaces and normalizes the `PostmanCollection` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List api collections across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/collections",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of api collections across every provider on the network. Surfaces and normalizes the `Collection`, `Collections` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List graphql schemas across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/graphql",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of graphql schemas across every provider on the network. Surfaces and normalizes the `GraphQL` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List json schema definitions across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/json-schemas",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of json schema definitions across every provider on the network. Surfaces and normalizes the `JSONSchema` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List json structure definitions across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/json-structures",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of json structure definitions across every provider on the network. Surfaces and normalizes the `JSONStructure` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List json-ld contexts across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/json-ld",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of json-ld contexts across every provider on the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List vocabularies across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/vocabularies",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of vocabularies across every provider on the network. Surfaces and normalizes the `Vocabulary` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List governance rulesets across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/rules",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of governance rulesets across every provider on the network. Surfaces and normalizes the `Rules`, `SpectralRules`, `SpectralRuleset`, `Spectral` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List examples across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/examples",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of examples across every provider on the network. Surfaces and normalizes the `Example`, `Examples`, `CodeExamples` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List finops artifacts across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/finops",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of finops artifacts across every provider on the network. Surfaces and normalizes the `FinOps` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List plans across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/plans",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of plans across every provider on the network. Surfaces and normalizes the `Plans` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List rate limits across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/rate-limits",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of rate limits across every provider on the network. Surfaces and normalizes the `RateLimits` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body."
+        },
+        {
+          "info": {
+            "name": "List AsyncAPI event channels across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/channels",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of AsyncAPI event channels across every provider — the finest-grained event/streaming discovery surface. Filter by free text, provider, and tags; `include=content` inlines each channel's spec."
+        },
+        {
+          "info": {
+            "name": "List published MCP servers across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/mcp",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of provider MCP servers across the network. Filter by free text, provider, and tags; `include=content` inlines each server's card/manifest."
+        },
+        {
+          "info": {
+            "name": "List published Agent Skills across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/skills",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "First-class collection of provider Agent Skills across the network. Filter by free text, provider, and tags; `include=content` inlines each skill."
+        },
+        {
+          "info": {
+            "name": "List OAuth scope sets across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/scopes",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "PRO — first-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set."
+        },
+        {
+          "info": {
+            "name": "List security scheme definitions across the catalog.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/security",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "PRO — first-class collection of provider security/auth scheme definitions (authentication, domain security, VDP, trust center) across the network. Filter by free text, provider, and tags; `include=content` inlines each definition."
+        },
+        {
+          "info": {
+            "name": "Every artifact a provider publishes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/artifacts",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              }
+            ]
+          },
+          "docs": "Aggregates all artifacts across a provider's APIs — grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type counts. One call instead of composing several."
+        },
+        {
+          "info": {
+            "name": "One API's artifacts, grouped by type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/apis/:aid/artifacts",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              }
+            ]
+          },
+          "docs": "Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies."
+        },
+        {
+          "info": {
+            "name": "An API's primary OpenAPI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/openapis/:aid",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              }
+            ]
+          },
+          "docs": "Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

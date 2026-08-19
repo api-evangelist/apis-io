@@ -1,0 +1,182 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Insights API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Insights",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Insights overview.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights"
+          },
+          "docs": "Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free."
+        },
+        {
+          "info": {
+            "name": "Rank the investment dimensions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/dimensions",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free."
+        },
+        {
+          "info": {
+            "name": "Services / tools / standards by adoption.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/adoption",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Which adoption graph to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Technologies ranked by how many companies adopt them. Free."
+        },
+        {
+          "info": {
+            "name": "Industry rollup.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/industries"
+          },
+          "docs": "Profiled sectors with company counts. Free."
+        },
+        {
+          "info": {
+            "name": "Browse profiled companies.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/companies",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields)."
+        },
+        {
+          "info": {
+            "name": "One company's demand-side profile.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/company/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Company slug (e.g. `citi`)."
+              }
+            ]
+          },
+          "docs": "Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history."
+        },
+        {
+          "info": {
+            "name": "A company's weakest dimensions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/company/:slug/gaps",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "The lowest-scoring investment dimensions — where a company is thin and a vendor could sell in. Pro."
+        },
+        {
+          "info": {
+            "name": "Match providers to a company's stack (the supply↔demand join).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/insights/company/:slug/match",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

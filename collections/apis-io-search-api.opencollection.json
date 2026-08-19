@@ -1,0 +1,166 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io APIs Search API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIs.io Search APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/search/apis",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "The keyword to search by."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The limit of the results."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of the results."
+              }
+            ]
+          },
+          "docs": "Searching across all APIs by keyword or phrase."
+        },
+        {
+          "info": {
+            "name": "APIs.io Submit API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://search-api.apis.io/search/apis",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a valid APIs.json to be included in APIs.io."
+        },
+        {
+          "info": {
+            "name": "Unified search across apis, providers, tags, and artifacts.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/search",
+            "params": [
+              {
+                "name": "return",
+                "value": "",
+                "type": "query",
+                "description": "The kind of object to return."
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "industry",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more industry slugs."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more region slugs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "band",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more rating bands."
+              },
+              {
+                "name": "min_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum composite score (0–100)."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "The power endpoint. Choose what kind of object to return with `return`\n(`apis` by default), then constrain with any combination of `q`, `tags`\n(`match=any|all`), `providers`, and `artifact_types`. Use `fields` for sparse\nresponses and `include=content` to inline artifacts.\n\nExample — messaging APIs across providers that ship an OpenAPI, returning just the\nspec and pricing artifacts:\n\n    /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing\n           &fields=aid,name,provider_slug,p"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

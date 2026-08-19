@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Tags API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List and rank tags.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/tags",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "band",
+                "value": "",
+                "type": "query",
+                "description": "Filter by quality band."
+              },
+              {
+                "name": "min_api_count",
+                "value": "",
+                "type": "query",
+                "description": "Only tags applied to at least this many APIs."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,\n`breadth`, `quality_lift`, `band`). Default sort is by `composite` score.\n"
+        },
+        {
+          "info": {
+            "name": "Get one tag, with its linked providers, APIs, and neighbors.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/tags/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Tag slug (e.g. `messaging`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              }
+            ]
+          },
+          "docs": "Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

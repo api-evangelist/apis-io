@@ -1,0 +1,663 @@
+{
+  "item": [
+    {
+      "id": "9d1d886e-72fc-46a7-9c88-8fffc88dbcbd",
+      "name": "Industries",
+      "description": {
+        "content": "Industry verticals grouping providers across the catalog.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82261fdd-eccc-4a1b-a3cb-3a881e3f7577",
+          "name": "List and filter industries.",
+          "request": {
+            "name": "List and filter industries.",
+            "description": {
+              "content": "The industry taxonomy — verticals grouping providers across the catalog. Filter by free text; sort by provider or API count.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "industries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "provider_count",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b01a1294-963d-4b86-9b5b-d24b66d78e98",
+              "name": "List and filter industries.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 682697,\n    \"page\": 538647,\n    \"limit\": 509,\n    \"pages\": 660571,\n    \"query\": {\n      \"key_0\": 5466.468133133466\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"media-entertainment\",\n      \"name\": \"Media & Entertainment\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"provider_count\": 465,\n      \"api_count\": 615,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 611,\n          \"image\": \"http://OAjxEoEJhloVC.wwvkWm92cTALWnFr0IY-70K00sH4xxkg4QcfYiQkN.GEQfVco+Wf3nW8mxP0UWFw\",\n          \"score_band\": \"exemplar\",\n          \"score_composite\": 64.09023672349252\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 414,\n          \"image\": \"http://ivNGcNGuNoPRddIGPTCR.roxvOWjZguKbOUQ,5Fw4+YjlFj1FYJQ-\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": 49.449491659724956\n        }\n      ]\n    },\n    {\n      \"slug\": \"media-entertainment\",\n      \"name\": \"Media & Entertainment\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"provider_count\": 639,\n      \"api_count\": 29,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 653,\n          \"image\": \"http://jsNEGoJqZ.dxmesXYRU6yJROe0xGpmZ+dXYtGQ\",\n          \"score_band\": \"strong\",\n          \"score_composite\": 10.171221469088954\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 302,\n          \"image\": \"https://Wh.khrFds,ufBjDXec1FK4qMkqgjHVoTgnLtufJOjlPkOij,iwrNZUz\",\n          \"score_band\": \"thin\",\n          \"score_composite\": 51.413437685902885\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abffe394-b4c0-432a-bf76-b578618311b6",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6a7f636-ce7a-42c5-8208-363feea36d41",
+          "name": "Get one industry, with its ranked providers.",
+          "request": {
+            "name": "Get one industry, with its ranked providers.",
+            "description": {
+              "content": "Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "industries",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Industrie slug (e.g. `media-entertainment`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f2aeb89-4e43-4a21-ac53-dbd3f19a6f71",
+              "name": "Get one industry, with its ranked providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industrie slug (e.g. `media-entertainment`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"media-entertainment\",\n  \"name\": \"Media & Entertainment\",\n  \"short\": \"string\",\n  \"description\": \"string\",\n  \"aliases\": [\n    \"string\",\n    \"string\"\n  ],\n  \"provider_count\": 184,\n  \"api_count\": 569,\n  \"providers\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 237,\n      \"image\": \"http://kxUclQ.bblmu4m6U+qfd.mEelrgzV0gsX88,kG\",\n      \"score_band\": \"strong\",\n      \"score_composite\": 60.50073294547751\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 227,\n      \"image\": \"http://nkIAyYWzls.afycQangAx3mtXtx4REVa2tmOeQ6dSpgAIpvlWLOG04oD4c\",\n      \"score_band\": \"strong\",\n      \"score_composite\": 11.23349414407101\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c94c3b4d-58f6-468f-8cda-328283eaa359",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industrie slug (e.g. `media-entertainment`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "358d1255-3f28-4ecf-a60b-ef70aab6e348",
+          "name": "Top-rated providers in an industry.",
+          "request": {
+            "name": "Top-rated providers in an industry.",
+            "description": {
+              "content": "Returns the highest-composite-scoring member providers of an industry vertical.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "industries",
+                ":slug",
+                "leaders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Industry slug (e.g. `financial-services`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dd586873-e049-4070-91bd-fa31637e6b75",
+              "name": "A page of the industry's top providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industry slug (e.g. `financial-services`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": false,\n  \"key_2\": 9165,\n  \"key_3\": 7882.747287300816\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "30682ab2-36a6-42a3-8736-03e16b41da01",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "industries",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industry slug (e.g. `financial-services`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd574081-7f9b-4f70-ae51-e7f1fa130517",
+          "name": "Artifact gaps across a whole industry.",
+          "request": {
+            "name": "Artifact gaps across a whole industry.",
+            "description": {
+              "content": "For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gaps",
+                "industry",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "min_share",
+                  "value": "<number>",
+                  "description": "Coverage threshold below which a type counts as an industry gap (0–1, default 0.5)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Industry slug (e.g. `financial-services`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5c60319-9f84-4fd2-9e34-1700ee4a6a32",
+              "name": "The industry's valuable-artifact coverage and gaps.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gaps",
+                    "industry",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_share",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industry slug (e.g. `financial-services`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": false,\n  \"key_1\": false,\n  \"key_2\": 9165,\n  \"key_3\": 7882.747287300816\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "203ef9be-4fa9-4659-9649-da9b1d484fad",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gaps",
+                    "industry",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "min_share",
+                      "value": "<number>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Industry slug (e.g. `financial-services`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "57ed31ce-3f96-45e8-ae15-c650f44970e0",
+    "name": ".io Search APIs Industries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

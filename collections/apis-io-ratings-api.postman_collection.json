@@ -1,0 +1,759 @@
+{
+  "item": [
+    {
+      "id": "c73fe900-facc-4526-bc3a-27f92d4aaa80",
+      "name": "Ratings",
+      "description": {
+        "content": "The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "41c9c4a7-dba5-4e25-9069-6a684c926181",
+          "name": "One provider's rating.",
+          "request": {
+            "name": "One provider's rating.",
+            "description": {
+              "content": "Returns the full rating breakdown for a single provider — composite, band, trend, delta, and all six facet scores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":slug",
+                "rating"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Provider slug (e.g. `twilio`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b6f4d6a9-b05a-4f3d-9114-9930ceb8988f",
+              "name": "One provider's rating.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"composite\": 66.3,\n  \"band\": \"developing\",\n  \"trend\": \"falling\",\n  \"delta\": 0,\n  \"previous_composite\": 4.494497916703811,\n  \"scored_at\": \"1952-01-25\",\n  \"schema_version\": \"0.3\",\n  \"facets\": {\n    \"discoverability\": 1.3079426952451012,\n    \"contract_quality\": 49.33114840544859,\n    \"governance\": 43.26046077841266,\n    \"operational_transparency\": 34.616389098553256,\n    \"developer_ergonomics\": 31.9120669983209,\n    \"commercial_clarity\": 16.4325734034536\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8242332-f24a-4074-b72c-52f9fc40d68a",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "rating"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7bbd1ab-4168-4b1b-b814-483b6dc5acf2",
+          "name": "Ranked ratings leaderboard.",
+          "request": {
+            "name": "Ranked ratings leaderboard.",
+            "description": {
+              "content": "Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ratings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "band",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more rating bands."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_score",
+                  "value": "<number>",
+                  "description": "Minimum composite score (0–100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "max_score",
+                  "value": "<number>",
+                  "description": "Maximum composite score (0–100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "trend",
+                  "value": "<string>",
+                  "description": "Filter by trend marker."
+                },
+                {
+                  "disabled": false,
+                  "key": "facet",
+                  "value": "<string>",
+                  "description": "Facet to apply `min_facet` against."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_facet",
+                  "value": "<number>",
+                  "description": "Minimum score (0–100) for the facet named by `facet`."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "composite",
+                  "description": "Sort order (composite descending by default)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef851158-95c6-4119-b616-7c3cbc4fe457",
+              "name": "Ranked ratings leaderboard.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ratings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "band",
+                      "value": "minimal,strong"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "trend",
+                      "value": "rising"
+                    },
+                    {
+                      "key": "facet",
+                      "value": "contract_quality"
+                    },
+                    {
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 387937,\n    \"page\": 394281,\n    \"limit\": 434,\n    \"pages\": 707620,\n    \"query\": {\n      \"key_0\": 130.71585708623766,\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"provider_slug\": \"string\",\n      \"composite\": 17.03863065619832,\n      \"band\": \"exemplar\",\n      \"rank\": 99594107,\n      \"provider_name\": \"string\",\n      \"trend\": \"falling\",\n      \"facets\": {\n        \"discoverability\": 88.83201846047558,\n        \"contract_quality\": 24.098251032678863,\n        \"governance\": 60.11357231017459,\n        \"operational_transparency\": 74.6019260937222,\n        \"developer_ergonomics\": 21.36680486076533,\n        \"commercial_clarity\": 93.04459543490101\n      }\n    },\n    {\n      \"provider_slug\": \"string\",\n      \"composite\": 61.99840770619907,\n      \"band\": \"strong\",\n      \"rank\": 2030841374,\n      \"provider_name\": \"string\",\n      \"trend\": \"rising\",\n      \"facets\": {\n        \"discoverability\": 48.60843582364488,\n        \"contract_quality\": 61.82647339704928,\n        \"governance\": 87.16236641456881,\n        \"operational_transparency\": 35.69943229639474,\n        \"developer_ergonomics\": 66.30380525304624,\n        \"commercial_clarity\": 82.35011577055221\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1731e860-27ea-4ed4-a72d-2dcc222d23bf",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ratings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "band",
+                      "value": "minimal,strong"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "max_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "trend",
+                      "value": "rising"
+                    },
+                    {
+                      "key": "facet",
+                      "value": "contract_quality"
+                    },
+                    {
+                      "key": "min_facet",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f250f7c-fb43-43b8-ab4a-7e3661020113",
+          "name": "The rating rubric.",
+          "request": {
+            "name": "The rating rubric.",
+            "description": {
+              "content": "Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ratings",
+                "rubric"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "16c9ad9e-9553-4624-bff0-6bf211339099",
+              "name": "The rating rubric.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ratings",
+                    "rubric"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"schema_version\": \"0.3\",\n  \"bands\": [\n    {\n      \"label\": \"minimal\",\n      \"min\": 821108722.8881896,\n      \"description\": \"string\"\n    },\n    {\n      \"label\": \"thin\",\n      \"min\": 428925884.38934785,\n      \"description\": \"string\"\n    }\n  ],\n  \"facets\": [\n    {\n      \"name\": \"commercial_clarity\",\n      \"label\": \"string\",\n      \"weight\": 426416192.5522307,\n      \"description\": \"string\"\n    },\n    {\n      \"name\": \"operational_transparency\",\n      \"label\": \"string\",\n      \"weight\": 621150961.059891,\n      \"description\": \"string\"\n    }\n  ],\n  \"trending\": {\n    \"rising_threshold\": 5,\n    \"falling_threshold\": -5\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66c41568-0e99-4982-8bb1-169a633065d3",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ratings",
+                    "rubric"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddab43c0-8c2f-4010-a9be-f199efc1cb70",
+          "name": "A provider's rating movement.",
+          "request": {
+            "name": "A provider's rating movement.",
+            "description": {
+              "content": "Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":slug",
+                "rating",
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Provider slug (e.g. `twilio`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b4918e35-4408-4989-86e7-28865267af22",
+              "name": "The provider's rating history.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "rating",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4060\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1fabc141-6d13-411d-a779-2a8520340dc6",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "rating",
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "787bdf7f-f4be-4093-a41f-414bbbb1dd8c",
+          "name": "The biggest rating movers.",
+          "request": {
+            "name": "The biggest rating movers.",
+            "description": {
+              "content": "Returns the providers whose composite score moved most (up and down) versus the previous scoring build.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ratings",
+                "movers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "333e0b1d-bb20-4882-ab8a-6b200cbd0173",
+              "name": "Up and down movers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ratings",
+                    "movers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 4060\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "46c3d914-2401-4399-98a2-45b025c53668",
+    "name": ".io Search APIs Ratings API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

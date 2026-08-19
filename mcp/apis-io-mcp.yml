@@ -28,13 +28,13 @@ introspection:
   gated: false
   tool_count: 79
   file: apis-io-mcp-tools.json
-  note: >-
-    Anonymous `tools/list` returns the full tool set with real inputSchema for every tool. The
-    server card advertises a curated subset of 28; the live server exposes 79. Pro-tier tools are
-    listed anonymously but return 402 upgrade_required when called without a paid key.
+  note: Anonymous `tools/list` returns the full tool set with real inputSchema for every tool. The server
+    card advertises a curated subset of 28; the live server exposes 79. Pro-tier tools are listed anonymously
+    but return 402 upgrade_required when called without a paid key.
 tools:
 - name: apis_io_search
-  description: Federated overview of the catalog for a query — top matching APIs, providers and tags in one call.
+  description: Federated overview of the catalog for a query — top matching APIs, providers and tags in
+    one call.
   source_operation: openapi/_original/apis-io-v1-openapi.yml#search
 - name: find_apis
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listApis
@@ -205,3 +205,11 @@ x-evidence:
   registry:
     url: https://registry.modelcontextprotocol.io/v0/servers?search=io.apis
     http_status: 200
+deployment:
+  mode: remote
+  endpoint: https://apis.io/mcp
+  verified: probed
+  probe: live
+  tools: 79
+  checked: '2026-08-12'
+  source: catalog MCP census

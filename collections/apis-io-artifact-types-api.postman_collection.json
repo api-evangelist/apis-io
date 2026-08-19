@@ -1,0 +1,4868 @@
+{
+  "item": [
+    {
+      "id": "5de72754-c2a2-40b3-a72f-82d14cf56194",
+      "name": "Artifact Types",
+      "description": {
+        "content": "First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f4ab7262-397d-46c1-b5b1-c271ca5d10b0",
+          "name": "List openapi specifications across the catalog.",
+          "request": {
+            "name": "List openapi specifications across the catalog.",
+            "description": {
+              "content": "First-class collection of openapi specifications across every provider on the network. Surfaces and normalizes the `OpenAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openapis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9577a78e-320c-45ab-b916-77b1808fc90b",
+              "name": "A page of openapi specifications with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "371e2cc7-fb86-42f6-a650-e93e80acabb0",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52101747-b566-40b6-ad2a-45f6e0a50f74",
+          "name": "List asyncapi specifications across the catalog.",
+          "request": {
+            "name": "List asyncapi specifications across the catalog.",
+            "description": {
+              "content": "First-class collection of asyncapi specifications across every provider on the network. Surfaces and normalizes the `AsyncAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "asyncapis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a4f0609-7d08-4a3e-9427-45c407e63840",
+              "name": "A page of asyncapi specifications with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "asyncapis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3025c94c-6a22-4476-8122-31331500d051",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "asyncapis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8f64251-18de-401a-9ab3-5cf5630672a7",
+          "name": "List arazzo workflows across the catalog.",
+          "request": {
+            "name": "List arazzo workflows across the catalog.",
+            "description": {
+              "content": "First-class collection of arazzo workflows across every provider on the network. Surfaces and normalizes the `Arazzo` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "arazzo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4e7af81-1cbb-4aa5-83d6-e3fea37381ad",
+              "name": "A page of arazzo workflows with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "arazzo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b8161d0-b486-4005-935b-6cf492135974",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "arazzo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0175431f-8867-4a2c-9c6c-3c2da466764d",
+          "name": "List postman collections across the catalog.",
+          "request": {
+            "name": "List postman collections across the catalog.",
+            "description": {
+              "content": "First-class collection of postman collections across every provider on the network. Surfaces and normalizes the `PostmanCollection` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "postman"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b76e96d5-6c93-4555-abdd-4fbe6b35febe",
+              "name": "A page of postman collections with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postman"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d74bdfbb-de16-40cb-9377-4a0902ec43df",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postman"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e943531-3a3c-4bc4-8fdb-2b71a00ab02a",
+          "name": "List api collections across the catalog.",
+          "request": {
+            "name": "List api collections across the catalog.",
+            "description": {
+              "content": "First-class collection of api collections across every provider on the network. Surfaces and normalizes the `Collection`, `Collections` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d49afa0b-423b-47b3-9c62-1e2e05249e25",
+              "name": "A page of api collections with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97e34047-9659-465e-b058-653e0657deea",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "310b5fec-3892-4e1d-bf07-946b25096fc6",
+          "name": "List graphql schemas across the catalog.",
+          "request": {
+            "name": "List graphql schemas across the catalog.",
+            "description": {
+              "content": "First-class collection of graphql schemas across every provider on the network. Surfaces and normalizes the `GraphQL` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd0fd214-0c3d-4bad-be7b-d946919257d5",
+              "name": "A page of graphql schemas with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f55c82d5-aff3-4b77-b959-169b1b210087",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b6c594c0-ea99-4810-b57e-8a4d147b78cc",
+          "name": "List json schema definitions across the catalog.",
+          "request": {
+            "name": "List json schema definitions across the catalog.",
+            "description": {
+              "content": "First-class collection of json schema definitions across every provider on the network. Surfaces and normalizes the `JSONSchema` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "json-schemas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4ce6ada-494d-46ee-9fd2-a2d8e2ffc792",
+              "name": "A page of json schema definitions with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3596bc3b-c1ea-4760-9d1d-cc8b22bb31df",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-schemas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "052fa4ec-84a6-4d1d-a5f6-7d6a3d06e8f3",
+          "name": "List json structure definitions across the catalog.",
+          "request": {
+            "name": "List json structure definitions across the catalog.",
+            "description": {
+              "content": "First-class collection of json structure definitions across every provider on the network. Surfaces and normalizes the `JSONStructure` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "json-structures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26052316-0597-4ca5-8313-cf5e6b8d5a42",
+              "name": "A page of json structure definitions with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-structures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6ced968-80bc-41ff-9509-b2beb619652b",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-structures"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6331542-dd54-4cf4-b2d1-1d47fe427dd6",
+          "name": "List json-ld contexts across the catalog.",
+          "request": {
+            "name": "List json-ld contexts across the catalog.",
+            "description": {
+              "content": "First-class collection of json-ld contexts across every provider on the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "json-ld"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bbaeb2a5-8303-45f0-b4b4-5ed81d9e370a",
+              "name": "A page of json-ld contexts with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-ld"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97366909-5519-439a-9fc6-5828db720809",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "json-ld"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f56a03a2-f286-4316-b217-10b3acdff605",
+          "name": "List vocabularies across the catalog.",
+          "request": {
+            "name": "List vocabularies across the catalog.",
+            "description": {
+              "content": "First-class collection of vocabularies across every provider on the network. Surfaces and normalizes the `Vocabulary` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vocabularies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c13ad312-626f-42c2-b5a8-5f7d49c21d13",
+              "name": "A page of vocabularies with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vocabularies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "294456c1-8cad-466d-b894-d1fda2a83872",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vocabularies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e929fb2-3cc1-4994-8e7f-0287dca7b4e4",
+          "name": "List governance rulesets across the catalog.",
+          "request": {
+            "name": "List governance rulesets across the catalog.",
+            "description": {
+              "content": "First-class collection of governance rulesets across every provider on the network. Surfaces and normalizes the `Rules`, `SpectralRules`, `SpectralRuleset`, `Spectral` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88bf5bfc-5b55-4d13-a5f8-1269d68c0584",
+              "name": "A page of governance rulesets with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0154500c-ffa4-4ec7-9395-9f933eec6d1e",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9345723-6d58-4334-9df5-6a00615dbc99",
+          "name": "List examples across the catalog.",
+          "request": {
+            "name": "List examples across the catalog.",
+            "description": {
+              "content": "First-class collection of examples across every provider on the network. Surfaces and normalizes the `Example`, `Examples`, `CodeExamples` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "examples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efacc147-33de-4c87-86e0-8d25baf311e3",
+              "name": "A page of examples with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "examples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcff5dd9-9ca3-4002-bc42-a886d9f9229b",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "examples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9831aaac-4ae3-456a-9ce5-d8293e84bdac",
+          "name": "List finops artifacts across the catalog.",
+          "request": {
+            "name": "List finops artifacts across the catalog.",
+            "description": {
+              "content": "First-class collection of finops artifacts across every provider on the network. Surfaces and normalizes the `FinOps` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "finops"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d095b45-c940-4352-bafa-1f1da0ea9a70",
+              "name": "A page of finops artifacts with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "finops"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db9d7e87-1b9b-4498-97ca-1ad6f5f89be3",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "finops"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b7231c9-beca-4640-a9c1-742e2411c201",
+          "name": "List plans across the catalog.",
+          "request": {
+            "name": "List plans across the catalog.",
+            "description": {
+              "content": "First-class collection of plans across every provider on the network. Surfaces and normalizes the `Plans` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "plans"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aa569197-7e61-4133-8920-c0c3519e8c49",
+              "name": "A page of plans with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af1c42e7-423f-46a7-bd83-5f759bfa7bb8",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "plans"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a128572-c1e7-414c-899c-26fb7c4f362e",
+          "name": "List rate limits across the catalog.",
+          "request": {
+            "name": "List rate limits across the catalog.",
+            "description": {
+              "content": "First-class collection of rate limits across every provider on the network. Surfaces and normalizes the `RateLimits` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rate-limits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f169fd4-bb6e-431f-98ac-de9141541ea2",
+              "name": "A page of rate limits with owning API and provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rate-limits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62388359-cef2-4af1-abb8-f23f7d448186",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rate-limits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "125dc264-1bd8-464a-9b84-7671ae7d7e26",
+          "name": "List AsyncAPI event channels across the catalog.",
+          "request": {
+            "name": "List AsyncAPI event channels across the catalog.",
+            "description": {
+              "content": "First-class collection of AsyncAPI event channels across every provider — the finest-grained event/streaming discovery surface. Filter by free text, provider, and tags; `include=content` inlines each channel's spec.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b1d71a9c-20ee-4fbe-a974-7c6660c3e2ff",
+              "name": "A page of event channels with owning provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e5734c4-9320-4352-92bc-97b8ae7c238f",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f766f352-0676-4cda-bf88-039962791283",
+          "name": "List published MCP servers across the catalog.",
+          "request": {
+            "name": "List published MCP servers across the catalog.",
+            "description": {
+              "content": "First-class collection of provider MCP servers across the network. Filter by free text, provider, and tags; `include=content` inlines each server's card/manifest.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mcp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8cda616-efc0-4d3f-9754-f59094b2c5bc",
+              "name": "A page of MCP servers with owning provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7f26425-8907-46f4-a0a4-992e74bf77ea",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mcp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "877b7817-77cb-4c97-849d-bafae41d8432",
+          "name": "List published Agent Skills across the catalog.",
+          "request": {
+            "name": "List published Agent Skills across the catalog.",
+            "description": {
+              "content": "First-class collection of provider Agent Skills across the network. Filter by free text, provider, and tags; `include=content` inlines each skill.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "skills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "54382141-f70f-4217-84b6-70daef0d0457",
+              "name": "A page of Agent Skills with owning provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b3154de-1440-4eef-9b21-88c74b55d38a",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "skills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b3ad1fb1-d181-46b6-9bd9-0b0520e8c194",
+          "name": "List OAuth scope sets across the catalog.",
+          "request": {
+            "name": "List OAuth scope sets across the catalog.",
+            "description": {
+              "content": "PRO — first-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a61afd6-d985-4fae-b78c-ded751f5ba5e",
+              "name": "A page of OAuth scope sets with owning provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16f1e7e1-66f1-49ed-af7a-9e77d8f115ee",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "afedb501-68a4-45bd-8735-c6d4bcec8bcb",
+          "name": "List security scheme definitions across the catalog.",
+          "request": {
+            "name": "List security scheme definitions across the catalog.",
+            "description": {
+              "content": "PRO — first-class collection of provider security/auth scheme definitions (authentication, domain security, VDP, trust center) across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "security"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0199e604-4a58-41f7-bcb7-ab3962d9b977",
+              "name": "A page of security definitions with owning provider context.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "security"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 490556,\n    \"page\": 245366,\n    \"limit\": 833,\n    \"pages\": 454532,\n    \"query\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://AQCycPyqHgKGst.acduw+Izee6EDf3P4kc2jwENJsoXcHhzP4sXvHZk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://TSuLYlXuaURJEJJGkXfNuRxH.alhYQWf97dA1gy-LOteZ,SXq.umL.TRNm1ygVOa\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7cb80130-bf93-4776-8a97-59977678386a",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "security"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5b2a77e-385c-469c-90f3-c9ba64748aa2",
+          "name": "Every artifact a provider publishes.",
+          "request": {
+            "name": "Every artifact a provider publishes.",
+            "description": {
+              "content": "Aggregates all artifacts across a provider's APIs — grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type counts. One call instead of composing several.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":slug",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Provider slug (e.g. `twilio`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ecca005-b551-4b4c-b223-540e1281f7a7",
+              "name": "The provider's artifacts, grouped by type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 8506,\n  \"key_1\": 6792\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a00902f2-8114-4517-853b-13748e0e4a2e",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ecefc59-9e8e-4f67-9365-32439af96053",
+          "name": "One API's artifacts, grouped by type.",
+          "request": {
+            "name": "One API's artifacts, grouped by type.",
+            "description": {
+              "content": "Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":aid",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2918dcdf-7256-45d5-a67c-f34e1a5685e5",
+              "name": "The API's artifacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 8506,\n  \"key_1\": 6792\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c5c753d-29ff-40a5-9440-67fbab2da556",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25569cb3-dbe5-46fc-a3e2-3566800ccb7a",
+          "name": "An API's primary OpenAPI.",
+          "request": {
+            "name": "An API's primary OpenAPI.",
+            "description": {
+              "content": "Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openapis",
+                ":aid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6aefd470-a163-4ec7-b376-3de75f73031a",
+              "name": "The API's OpenAPI reference (and body when include=content).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 8506,\n  \"key_1\": 6792\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd25d22a-06f3-4618-8e78-e6941ca7bbc3",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a023c769-9e24-4ca4-bb0d-f4d32a0de70b",
+    "name": ".io Search APIs Artifact Types API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

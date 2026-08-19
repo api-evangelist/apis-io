@@ -1,0 +1,1599 @@
+{
+  "item": [
+    {
+      "id": "2871880b-3ee7-4bc5-af4a-d0881c2be8e3",
+      "name": "APIs",
+      "description": {
+        "content": "Index of HTTP application programming interfaces.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea32db5e-f5fe-433d-a95d-eaf819a183a4",
+          "name": "APIs.io Search APIs",
+          "request": {
+            "name": "APIs.io Search APIs",
+            "description": {
+              "content": "Searching across all APIs by keyword or phrase.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "The keyword to search by."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": "The limit of the results."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "The page of the results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3b7d2bad-3661-4591-ac32-57d9d22ce20c",
+              "name": "A successful search.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"search\": \"AI\",\n    \"limit\": 50,\n    \"page\": 0,\n    \"totalPages\": 20\n  },\n  \"data\": [\n    {\n      \"name\": \"AssemblyAI API\",\n      \"description\": \"Built by AI experts, AssemblyAI’s Speech AI models include accurate speech-to-text for voice data (such as calls, virtual meetings, and podcasts), speaker detection, sentiment analysis, chapter detection, PII redaction, and more.\",\n      \"searchUrl\": \"https://ai.apis.io/apis/assemblyai/apis/\",\n      \"apiUrl\": \"https://www.assemblyai.com/docs/\",\n      \"indexUrl\": \"https://raw.githubusercontent.com/api-search/artificial-intelligence/main/_apis_/assemblyai/apis.md\",\n      \"score\": 546,\n      \"tags\": [\n        \"Artificial Intelligence\",\n        \"AI\"\n      ]\n    }\n  ],\n  \"links\": {\n    \"self\": \"/search/apis/?search=&page=0&limit=50\",\n    \"next\": \"/search/apis/?search=&page=01&limit=50\",\n    \"last\": \"/search/apis/?search=&page=20&limit=50\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da988924-7bc5-44fb-a582-7197dd92081b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"The request is invalid or missing required parameters.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e2be738-efdd-455e-a19f-26dc97d26bb9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/unauthorized\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"You do not have the necessary permissions.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d68d486-38c0-48fb-a1fc-8af9cfcbb082",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/forbidden\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Access is forbidden with the provided credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2316204-3f43-4a75-86c1-c4e727dac0b8",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/not-found\",\n  \"title\": \"Not Found\",\n  \"status\": 404,\n  \"detail\": \"The requested resource was not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "add05dd4-5d09-4c1b-823e-adc9006d36b1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/too-many-requests\",\n  \"title\": \"Too Many Requests\",\n  \"status\": 429,\n  \"detail\": \"You have exceeded the rate limit.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aa04443d-6f45-4107-bad1-e4f075c53a20",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"An unexpected error occurred.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73ff0558-05f9-450e-89de-c689b8ed67f4",
+          "name": "List the APIs published by a provider.",
+          "request": {
+            "name": "List the APIs published by a provider.",
+            "description": {
+              "content": "Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "providers",
+                ":slug",
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifact_types",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Provider slug (e.g. `twilio`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1784167a-01c9-4fa8-8158-5b06b64f79fd",
+              "name": "A page of the provider's APIs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 100886,\n    \"page\": 52835,\n    \"limit\": 745,\n    \"pages\": 215872,\n    \"query\": {\n      \"key_0\": true\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"https://BMsORbyZTOLNNlKucxTqYlEqgVJblZ.xmgPCQ,ARryNIbvpO+XVD-ZHx3pMEOUQnNeAUHks,+BeLC5MPJ+DU7K40at+56UteTZQBFtJrtwz\",\n      \"humanURL\": \"http://ReZa.poee0X0bmpiYV5rPuH.Ot,yWtgP4,cvu+PHjRa1a224h0Jnef\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://tIKOynlXSNuFgwJhfcb.fcU98YYLtgGH+yz6QM\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://HiryRJPZWLgImUzmkxLaqmzCFtLrox.bskNPg6O3QeVmU.m7zSIschmIEEkvll5o,YGnyY2hxkYhBP8qxqUJe2KQVHKoABPYzVhz3+FK\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    },\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"http://wpejAMJDjcQGX.rvaqC5ZIY-KLJPoGt8i.2tHCkDJpxQ,\",\n      \"humanURL\": \"http://fKVMjyGcFWLfGWrbNlbLgrAFvTFMXLqSt.gzglVJ4e\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://cDETq.tndMD6xANIfYaReerjpOr-p.VdnKJ.tPyCt5Rqqo9xg0kNtd\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://FYRLPhjTNhrgOMFEoLOMl.ssghXAZHCgRmH\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a5da31ac-89d1-466c-8bfd-1907da712fc4",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "providers",
+                    ":slug",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Provider slug (e.g. `twilio`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24565542-e275-4e60-9ea3-6617c2a373b4",
+          "name": "List and filter APIs across the network.",
+          "request": {
+            "name": "List and filter APIs across the network.",
+            "description": {
+              "content": "The core cross-provider discovery endpoint. Filter by free text, one or many tags\n(`match=any|all`), one or many providers, and/or the artifact types an API must\npublish. Use `artifact_types` together with `fields=...,properties` to return only\nthe artifacts you want.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifact_types",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+                },
+                {
+                  "disabled": false,
+                  "key": "industry",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more industry slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more region slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "band",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more rating bands."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_score",
+                  "value": "<number>",
+                  "description": "Minimum composite score (0–100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "31de026e-0c30-4cdd-b8aa-26a47ba5c3dc",
+              "name": "A page of APIs.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "band",
+                      "value": "developing,minimal"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 100886,\n    \"page\": 52835,\n    \"limit\": 745,\n    \"pages\": 215872,\n    \"query\": {\n      \"key_0\": true\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"https://BMsORbyZTOLNNlKucxTqYlEqgVJblZ.xmgPCQ,ARryNIbvpO+XVD-ZHx3pMEOUQnNeAUHks,+BeLC5MPJ+DU7K40at+56UteTZQBFtJrtwz\",\n      \"humanURL\": \"http://ReZa.poee0X0bmpiYV5rPuH.Ot,yWtgP4,cvu+PHjRa1a224h0Jnef\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://tIKOynlXSNuFgwJhfcb.fcU98YYLtgGH+yz6QM\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://HiryRJPZWLgImUzmkxLaqmzCFtLrox.bskNPg6O3QeVmU.m7zSIschmIEEkvll5o,YGnyY2hxkYhBP8qxqUJe2KQVHKoABPYzVhz3+FK\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    },\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"http://wpejAMJDjcQGX.rvaqC5ZIY-KLJPoGt8i.2tHCkDJpxQ,\",\n      \"humanURL\": \"http://fKVMjyGcFWLfGWrbNlbLgrAFvTFMXLqSt.gzglVJ4e\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://cDETq.tndMD6xANIfYaReerjpOr-p.VdnKJ.tPyCt5Rqqo9xg0kNtd\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://FYRLPhjTNhrgOMFEoLOMl.ssghXAZHCgRmH\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17498dd7-605a-4eab-8cb5-99274e338f41",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "band",
+                      "value": "developing,minimal"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63625d4d-de4a-4343-a92e-300a1f166ed0",
+          "name": "Get one API by aid.",
+          "request": {
+            "name": "Get one API by aid.",
+            "description": {
+              "content": "Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":aid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "artifact_types",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b4945375-156c-4f1a-81ca-6e11e90bd8d4",
+              "name": "The API.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"aid\": \"twilio:twilio-accounts-api\",\n  \"name\": \"string\",\n  \"provider_slug\": \"string\",\n  \"description\": \"string\",\n  \"provider_name\": \"string\",\n  \"baseURL\": \"https://VOFSDuywUbl.mcjuAheEkXxNBUbt1Q+RrzVGOR-Xvad5JcBgfo6pMWvYL7vc\",\n  \"humanURL\": \"https://LlivrAjMblJyCwEyiGcLswuYMgmRlXe.usutuCNR9LKfePbWSIrD8hAjkQbuUKI3TOTQbvsorihSIT251.Mt\",\n  \"tags\": [\n    \"Messaging\",\n    \"Authentication\"\n  ],\n  \"properties\": [\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"https://ZamLgNOkrYEFKSlElJRygoFdFBPNIq.iryzAxEiGv5oFbTkheIHfvq0Kl0HyqjU5zk\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    },\n    {\n      \"type\": \"OpenAPI\",\n      \"url\": \"http://FERNww.mpashEkE5H4DVGc-075hHa-HpV-BjIV\",\n      \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n      \"name\": \"string\",\n      \"aid\": \"string\",\n      \"provider_slug\": \"string\",\n      \"provider_name\": \"string\",\n      \"content\": \"string\",\n      \"content_type\": \"string\"\n    }\n  ],\n  \"sibling_apis\": [\n    {\n      \"name\": \"string\",\n      \"slug\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"slug\": \"string\"\n    }\n  ],\n  \"overview\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efddca32-3bec-4c7d-b65c-6ffe54cc786a",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "611f438b-361e-459b-a6bf-8be4f65e2fe0",
+          "name": "One API's artifacts, grouped by type.",
+          "request": {
+            "name": "One API's artifacts, grouped by type.",
+            "description": {
+              "content": "Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":aid",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a904ac9e-a925-439c-ab4d-b892ba5fafa9",
+              "name": "The API's artifacts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2516,\n  \"key_1\": 6240\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f81f454e-9ae9-4912-a504-ce13cdc0f78e",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9bac4f6-2046-4dcc-bd0c-f503dbab70c2",
+          "name": "APIs similar to a given one.",
+          "request": {
+            "name": "APIs similar to a given one.",
+            "description": {
+              "content": "Ranks catalog APIs by shared tags — \"more like this API.\"",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                ":aid",
+                "similar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b9d932ca-55a0-4c93-a6d6-f408e478b791",
+              "name": "A page of similar APIs, most similar first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 100886,\n    \"page\": 52835,\n    \"limit\": 745,\n    \"pages\": 215872,\n    \"query\": {\n      \"key_0\": true\n    }\n  },\n  \"data\": [\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"https://BMsORbyZTOLNNlKucxTqYlEqgVJblZ.xmgPCQ,ARryNIbvpO+XVD-ZHx3pMEOUQnNeAUHks,+BeLC5MPJ+DU7K40at+56UteTZQBFtJrtwz\",\n      \"humanURL\": \"http://ReZa.poee0X0bmpiYV5rPuH.Ot,yWtgP4,cvu+PHjRa1a224h0Jnef\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://tIKOynlXSNuFgwJhfcb.fcU98YYLtgGH+yz6QM\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://HiryRJPZWLgImUzmkxLaqmzCFtLrox.bskNPg6O3QeVmU.m7zSIschmIEEkvll5o,YGnyY2hxkYhBP8qxqUJe2KQVHKoABPYzVhz3+FK\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    },\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"http://wpejAMJDjcQGX.rvaqC5ZIY-KLJPoGt8i.2tHCkDJpxQ,\",\n      \"humanURL\": \"http://fKVMjyGcFWLfGWrbNlbLgrAFvTFMXLqSt.gzglVJ4e\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://cDETq.tndMD6xANIfYaReerjpOr-p.VdnKJ.tPyCt5Rqqo9xg0kNtd\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://FYRLPhjTNhrgOMFEoLOMl.ssghXAZHCgRmH\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f885e4f6-bd72-46c6-8450-2d450e594ef1",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    ":aid",
+                    "similar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd582961-2a76-4fcd-bf82-07719f87cea7",
+          "name": "An API's primary OpenAPI.",
+          "request": {
+            "name": "An API's primary OpenAPI.",
+            "description": {
+              "content": "Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openapis",
+                ":aid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "aid",
+                  "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "783d0120-f92b-42f8-bbd4-2445237ef162",
+              "name": "The API's OpenAPI reference (and body when include=content).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2516,\n  \"key_1\": 6240\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34a4f131-dcb2-4372-89f1-1ebb5c6413ab",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openapis",
+                    ":aid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "aid",
+                      "description": "(Required) API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4e2ba42f-f7f3-4757-97f9-301c9728936b",
+    "name": ".io Search APIs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

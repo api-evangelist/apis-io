@@ -1,0 +1,276 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Providers API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Providers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List and filter providers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "industry",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more industry slugs."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more region slugs."
+              },
+              {
+                "name": "band",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more rating bands."
+              },
+              {
+                "name": "min_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum composite score (0–100)."
+              },
+              {
+                "name": "max_score",
+                "value": "",
+                "type": "query",
+                "description": "Maximum composite score (0–100)."
+              },
+              {
+                "name": "trend",
+                "value": "",
+                "type": "query",
+                "description": "Filter by trend marker."
+              },
+              {
+                "name": "facet",
+                "value": "",
+                "type": "query",
+                "description": "Facet to apply `min_facet` against."
+              },
+              {
+                "name": "min_facet",
+                "value": "",
+                "type": "query",
+                "description": "Minimum score (0–100) for the facet named by `facet`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "List providers, optionally filtered by free text, tags, or the artifact types they publish."
+        },
+        {
+          "info": {
+            "name": "Get one provider.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              }
+            ]
+          },
+          "docs": "Returns a single provider by slug, including its provider-wide links, tags, and a summary list of the APIs it publishes."
+        },
+        {
+          "info": {
+            "name": "List the APIs published by a provider.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/apis",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies."
+        },
+        {
+          "info": {
+            "name": "Every artifact a provider publishes.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/artifacts",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              }
+            ]
+          },
+          "docs": "Aggregates all artifacts across a provider's APIs — grouped by type (OpenAPI, MCP, Arazzo, rules, security, pricing…) — plus per-type counts. One call instead of composing several."
+        },
+        {
+          "info": {
+            "name": "A provider's getting-started view.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/onboarding",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              }
+            ]
+          },
+          "docs": "Assembles website, portal, signup, docs, authentication, base URLs, and first steps from a provider's registered links and API base URLs — a best-effort onboarding descriptor."
+        },
+        {
+          "info": {
+            "name": "Providers similar to a given one.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/similar",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Ranks catalog providers by weighted overlap of tags, industry, region, and artifact coverage — the alternatives to a given provider."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

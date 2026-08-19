@@ -1,0 +1,318 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "APIs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIs.io Search APIs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/search/apis",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "The keyword to search by."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The limit of the results."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The page of the results."
+              }
+            ]
+          },
+          "docs": "Searching across all APIs by keyword or phrase."
+        },
+        {
+          "info": {
+            "name": "List the APIs published by a provider.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/apis",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Returns a page of the APIs owned by one provider, optionally filtered by tags and required artifact types. Pass `include=content` to inline artifact bodies."
+        },
+        {
+          "info": {
+            "name": "List and filter APIs across the network.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/apis",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "match",
+                "value": "",
+                "type": "query",
+                "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "industry",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more industry slugs."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more region slugs."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "band",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more rating bands."
+              },
+              {
+                "name": "min_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum composite score (0–100)."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "The core cross-provider discovery endpoint. Filter by free text, one or many tags\n(`match=any|all`), one or many providers, and/or the artifact types an API must\npublish. Use `artifact_types` together with `fields=...,properties` to return only\nthe artifacts you want.\n"
+        },
+        {
+          "info": {
+            "name": "Get one API by aid.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/apis/:aid",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "artifact_types",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              }
+            ]
+          },
+          "docs": "Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`."
+        },
+        {
+          "info": {
+            "name": "One API's artifacts, grouped by type.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/apis/:aid/artifacts",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              }
+            ]
+          },
+          "docs": "Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies."
+        },
+        {
+          "info": {
+            "name": "APIs similar to a given one.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/apis/:aid/similar",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Ranks catalog APIs by shared tags — \"more like this API.\""
+        },
+        {
+          "info": {
+            "name": "An API's primary OpenAPI.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/openapis/:aid",
+            "params": [
+              {
+                "name": "aid",
+                "value": "",
+                "type": "path",
+                "description": "API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`)."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+              }
+            ]
+          },
+          "docs": "Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

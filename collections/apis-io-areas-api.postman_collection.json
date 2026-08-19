@@ -1,0 +1,616 @@
+{
+  "item": [
+    {
+      "id": "61cc9136-37db-4b87-bdfa-f2c0d616b46b",
+      "name": "Areas",
+      "description": {
+        "content": "The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "07421258-a612-4e43-a8a5-c1aacc2e479c",
+          "name": "List and filter areas (Pro).",
+          "request": {
+            "name": "List and filter areas (Pro).",
+            "description": {
+              "content": "The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Filter by free text; sort by provider count. Pro tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "areas"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "provider_count",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d07ec358-053a-4243-b25d-a8a6ad33fbbb",
+              "name": "List and filter areas.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 639040,\n    \"page\": 881652,\n    \"limit\": 750,\n    \"pages\": 796519,\n    \"query\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"authentication\",\n      \"name\": \"Authentication\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"area_url\": \"https://authentication.apievangelist.com\",\n      \"area_host\": \"string\",\n      \"icon\": \"string\",\n      \"provider_count\": 701,\n      \"api_count\": 658,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 750,\n          \"image\": \"https://pSVKoThlKJuGDEk.zwkkp7GfcI1oEO1cCGFMk7BvClpxKLcTIZNE2+yB9kyIpAiCRyYjPKX,f\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": 12.76141767356761\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 844,\n          \"image\": \"https://qZlDGWixuSShNlrLKWbf.vyj4\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": 89.38000414466626\n        }\n      ]\n    },\n    {\n      \"slug\": \"authentication\",\n      \"name\": \"Authentication\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"area_url\": \"https://authentication.apievangelist.com\",\n      \"area_host\": \"string\",\n      \"icon\": \"string\",\n      \"provider_count\": 835,\n      \"api_count\": 49,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 356,\n          \"image\": \"https://fvrLoVYUDizuobEUDxEtQZ.gijgG6w,bxKklvB,rqa4UDnimcoat63ASvGfAfxaMiJIGofFJy11F\",\n          \"score_band\": \"developing\",\n          \"score_composite\": 66.66172353109471\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 65,\n          \"image\": \"http://mmJdl.hkGB2XLPk\",\n          \"score_band\": \"exemplar\",\n          \"score_composite\": 93.34240607419399\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6fbced9c-231f-4e27-8c83-3058c49555b6",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a59ee30a-0cfe-4cbe-a940-0a5ad2730270",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/upgrade-required\",\n  \"title\": \"Upgrade required\",\n  \"status\": 403,\n  \"detail\": \"The areas endpoint requires the Pro or Business tier.\",\n  \"instance\": \"/v1/areas\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cc4b5852-54d4-4c1e-8972-86415d1c5a78",
+          "name": "Get one area, with its ranked providers (Pro).",
+          "request": {
+            "name": "Get one area, with its ranked providers (Pro).",
+            "description": {
+              "content": "Returns a single area by slug, including its description, site link, counts, and the member providers ranked by score. Pro tier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "areas",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Area slug (e.g. `authentication`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b691213c-d8a6-4a40-9da1-0cd095160304",
+              "name": "Get one area, with its ranked providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"authentication\",\n  \"name\": \"Authentication\",\n  \"short\": \"string\",\n  \"description\": \"string\",\n  \"aliases\": [\n    \"string\",\n    \"string\"\n  ],\n  \"area_url\": \"https://authentication.apievangelist.com\",\n  \"area_host\": \"string\",\n  \"icon\": \"string\",\n  \"provider_count\": 709,\n  \"api_count\": 669,\n  \"providers\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 570,\n      \"image\": \"https://XbchjJkEypEkOxjUhDkmFKsoFmQ.vuENr2z7wcc2jaM0aXdb.XJppjJOHzEglrOh2ykka8AmOIThzeNr\",\n      \"score_band\": \"developing\",\n      \"score_composite\": 8.741038809290714\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 997,\n      \"image\": \"https://WTXNKSkvpRwsxOtPULQRIjABp.ibLNdOMAMlWjaM,ITmhZTK0Ua27i0,yE+VZL3rpzLGnohaVvmX16jw\",\n      \"score_band\": \"exemplar\",\n      \"score_composite\": 98.02552633123625\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b760233d-4ff1-4757-88b4-5626923667f7",
+              "name": "This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/upgrade-required\",\n  \"title\": \"Upgrade required\",\n  \"status\": 403,\n  \"detail\": \"The areas endpoint requires the Pro or Business tier.\",\n  \"instance\": \"/v1/areas\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88e1c5af-c082-4fca-a9c0-64868bf62872",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "69b8c663-d072-48e1-aaa5-adc39ffc737a",
+          "name": "Top-rated providers in a curated area.",
+          "request": {
+            "name": "Top-rated providers in a curated area.",
+            "description": {
+              "content": "Returns the highest-composite-scoring member providers of a curated API Evangelist area.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "areas",
+                ":slug",
+                "leaders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Area slug (e.g. `authentication`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08d9bb6c-76eb-4c40-a0d3-1cdbb82fa49f",
+              "name": "A page of the area's top providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": \"string\",\n  \"key_1\": 2159.543032364201\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1f9b2d7-a59c-46c0-af46-0dd2b6dc4cc7",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "areas",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Area slug (e.g. `authentication`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4c4e098b-1971-46dc-b887-96f015f3249e",
+    "name": ".io Search APIs Areas API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

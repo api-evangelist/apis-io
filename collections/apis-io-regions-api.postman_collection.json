@@ -1,0 +1,511 @@
+{
+  "item": [
+    {
+      "id": "ee0b1185-08ca-4109-948e-3bb67b01b1a9",
+      "name": "Regions",
+      "description": {
+        "content": "Geographic regions grouping providers across the catalog.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "05b4061c-4704-4c3e-af2c-10283d86fb96",
+          "name": "List and filter regions.",
+          "request": {
+            "name": "List and filter regions.",
+            "description": {
+              "content": "The region taxonomy — geographic groupings of providers across the catalog. Filter by free text; sort by provider or API count.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "regions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "provider_count",
+                  "description": "Sort order."
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "86c02cf0-ee45-4529-8431-0a93faebdcbc",
+              "name": "List and filter regions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 758668,\n    \"page\": 212209,\n    \"limit\": 786,\n    \"pages\": 589341,\n    \"query\": {\n      \"key_0\": \"string\"\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"southeast-asia\",\n      \"name\": \"Southeast Asia\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name_patterns\": [\n        \"string\",\n        \"string\"\n      ],\n      \"provider_count\": 854,\n      \"api_count\": 257,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 251,\n          \"image\": \"https://MFiN.oxzK87ig4Ow.STn5ETbZAX.AMCnWIZwFZ.QCTai5fkMpRbxwyFYtWIJ-A,xZJ,IIfG0\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": 84.9620382325726\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 165,\n          \"image\": \"http://ORqZlLYlgvaviTBHdKmBDGgRUCRKTFu.otr+RuMv.FV\",\n          \"score_band\": \"developing\",\n          \"score_composite\": 16.253350825795998\n        }\n      ]\n    },\n    {\n      \"slug\": \"southeast-asia\",\n      \"name\": \"Southeast Asia\",\n      \"short\": \"string\",\n      \"description\": \"string\",\n      \"aliases\": [\n        \"string\",\n        \"string\"\n      ],\n      \"name_patterns\": [\n        \"string\",\n        \"string\"\n      ],\n      \"provider_count\": 697,\n      \"api_count\": 398,\n      \"providers\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 568,\n          \"image\": \"https://q.tctKG7Apu9GxztHHkQxN2KyBoQBxelhm\",\n          \"score_band\": \"developing\",\n          \"score_composite\": 75.68024035023797\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 979,\n          \"image\": \"http://B.dzpwqHr\",\n          \"score_band\": \"minimal\",\n          \"score_composite\": 63.77648531256066\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "011af493-e355-4955-b4ed-f0e9a71be8f4",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "provider_count"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ccb58a57-7a1c-4c36-a292-d3de2d66ac89",
+          "name": "Get one region, with its ranked providers.",
+          "request": {
+            "name": "Get one region, with its ranked providers.",
+            "description": {
+              "content": "Returns a single region by slug, including its aliases, name patterns, counts, and the member providers ranked by score.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "regions",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Region slug (e.g. `southeast-asia`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d8f040c8-d4f1-4c89-bf2b-1661196654a7",
+              "name": "Get one region, with its ranked providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Region slug (e.g. `southeast-asia`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"southeast-asia\",\n  \"name\": \"Southeast Asia\",\n  \"short\": \"string\",\n  \"description\": \"string\",\n  \"aliases\": [\n    \"string\",\n    \"string\"\n  ],\n  \"name_patterns\": [\n    \"string\",\n    \"string\"\n  ],\n  \"provider_count\": 759,\n  \"api_count\": 721,\n  \"providers\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 475,\n      \"image\": \"https://SNjGEPUDJEarWjIvrudjkBNZFZFwW.muiiH,XgPxPzS\",\n      \"score_band\": \"developing\",\n      \"score_composite\": 60.727137687868\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 97,\n      \"image\": \"https://HXILwYTYOULvBgqbt.mgeMsUw0Q+X9-Bg7jGmnsFw3OrikhZ4SIPvr7It\",\n      \"score_band\": \"exemplar\",\n      \"score_composite\": 21.2425624618255\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "878afe09-9fdf-4114-a657-c4242739876e",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Region slug (e.g. `southeast-asia`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "223fc8c9-2ddc-42e7-8cc5-45d2805f002c",
+          "name": "Top-rated providers in a region.",
+          "request": {
+            "name": "Top-rated providers in a region.",
+            "description": {
+              "content": "Returns the highest-composite-scoring member providers of a region.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "regions",
+                ":slug",
+                "leaders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Region slug (e.g. `europe`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4b74b9cc-b541-4364-8932-8f5955d5afaf",
+              "name": "A page of the region's top providers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Region slug (e.g. `europe`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"key_0\": 2965,\n  \"key_1\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bffbc616-40ce-4a4d-92d2-a9f6114d5c38",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "regions",
+                    ":slug",
+                    "leaders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Region slug (e.g. `europe`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "dbea170d-3a94-40b3-8d5d-5b0202ff2c71",
+    "name": ".io Search APIs Regions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

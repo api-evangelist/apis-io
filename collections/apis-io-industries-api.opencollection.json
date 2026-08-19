@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Industries API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Industries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List and filter industries.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/industries",
+            "params": [
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Free-text query over name and description (and tags where applicable)."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "The industry taxonomy — verticals grouping providers across the catalog. Filter by free text; sort by provider or API count."
+        },
+        {
+          "info": {
+            "name": "Get one industry, with its ranked providers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/industries/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Industrie slug (e.g. `media-entertainment`)."
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Sparse fieldset — comma-separated property names to return."
+              }
+            ]
+          },
+          "docs": "Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score."
+        },
+        {
+          "info": {
+            "name": "Top-rated providers in an industry.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/industries/:slug/leaders",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Industry slug (e.g. `financial-services`)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Returns the highest-composite-scoring member providers of an industry vertical."
+        },
+        {
+          "info": {
+            "name": "Artifact gaps across a whole industry.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/gaps/industry/:slug",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Industry slug (e.g. `financial-services`)."
+              },
+              {
+                "name": "min_share",
+                "value": "",
+                "type": "query",
+                "description": "Coverage threshold below which a type counts as an industry gap (0–1, default 0.5)."
+              }
+            ]
+          },
+          "docs": "For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

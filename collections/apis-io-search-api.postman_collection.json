@@ -1,0 +1,1104 @@
+{
+  "item": [
+    {
+      "id": "b44c71f2-1b66-490c-9be6-e59e1095ce7e",
+      "name": "Search",
+      "description": {
+        "content": "Search using a cloud search engine.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f8187918-c26e-4840-8f7c-3aa2a5262c50",
+          "name": "APIs.io Search APIs",
+          "request": {
+            "name": "APIs.io Search APIs",
+            "description": {
+              "content": "Searching across all APIs by keyword or phrase.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "The keyword to search by."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": "The limit of the results."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<string>",
+                  "description": "The page of the results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba717af1-42d7-4bf1-9636-4aa942cce7fb",
+              "name": "A successful search.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"search\": \"AI\",\n    \"limit\": 50,\n    \"page\": 0,\n    \"totalPages\": 20\n  },\n  \"data\": [\n    {\n      \"name\": \"AssemblyAI API\",\n      \"description\": \"Built by AI experts, AssemblyAI’s Speech AI models include accurate speech-to-text for voice data (such as calls, virtual meetings, and podcasts), speaker detection, sentiment analysis, chapter detection, PII redaction, and more.\",\n      \"searchUrl\": \"https://ai.apis.io/apis/assemblyai/apis/\",\n      \"apiUrl\": \"https://www.assemblyai.com/docs/\",\n      \"indexUrl\": \"https://raw.githubusercontent.com/api-search/artificial-intelligence/main/_apis_/assemblyai/apis.md\",\n      \"score\": 546,\n      \"tags\": [\n        \"Artificial Intelligence\",\n        \"AI\"\n      ]\n    }\n  ],\n  \"links\": {\n    \"self\": \"/search/apis/?search=&page=0&limit=50\",\n    \"next\": \"/search/apis/?search=&page=01&limit=50\",\n    \"last\": \"/search/apis/?search=&page=20&limit=50\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8be13f8e-6928-41e1-9342-08a9a8867163",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"The request is invalid or missing required parameters.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac5e44f2-35f2-46c2-a9fd-bceff98832c7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/unauthorized\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"You do not have the necessary permissions.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dc31da5-8431-45a5-8651-e7520cafb9f5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/forbidden\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Access is forbidden with the provided credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdd7c0f6-44f8-415a-85ef-0cd01c7dee16",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/not-found\",\n  \"title\": \"Not Found\",\n  \"status\": 404,\n  \"detail\": \"The requested resource was not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfd4ec99-3f02-4137-90d9-b94fbad5ef30",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/too-many-requests\",\n  \"title\": \"Too Many Requests\",\n  \"status\": 429,\n  \"detail\": \"You have exceeded the rate limit.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02acfb5c-369e-4db2-95ac-72d9d7bab476",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"An unexpected error occurred.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68325e2f-f4cc-400f-8b09-729d8526f5db",
+          "name": "APIs.io Submit API",
+          "request": {
+            "name": "APIs.io Submit API",
+            "description": {
+              "content": "Submit a valid APIs.json to be included in APIs.io.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "apis"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"url\": \"<string>\",\n  \"image\": \"<string>\",\n  \"created\": \"<date>\",\n  \"modified\": \"<date>\",\n  \"specificationVersion\": \"<string>\",\n  \"apis\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"<string>\",\n      \"humanURL\": \"<string>\",\n      \"properties\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<string>\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"<string>\",\n          \"vCard\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"<string>\",\n          \"vCard\": \"<string>\",\n          \"url\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"image\": \"<string>\",\n      \"baseURL\": \"<string>\",\n      \"humanURL\": \"<string>\",\n      \"properties\": [\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"url\": \"<string>\"\n        }\n      ],\n      \"contact\": [\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"<string>\",\n          \"vCard\": \"<string>\",\n          \"url\": \"<string>\"\n        },\n        {\n          \"FN\": \"<string>\",\n          \"email\": \"<email>\",\n          \"organizationName\": \"<string>\",\n          \"adr\": \"<string>\",\n          \"tel\": \"<string>\",\n          \"X-github\": \"<string>\",\n          \"photo\": \"<string>\",\n          \"vCard\": \"<string>\",\n          \"url\": \"<string>\"\n        }\n      ],\n      \"tags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"meta\": [\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"key\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"name\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\"\n    }\n  ],\n  \"include\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9eb90b6b-45b7-4915-aa89-60908e54eb64",
+              "name": "Successful adding of an API.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": \"The API has been added to the APIs.io index.\",\n  \"url\": \"https://github.com/apis-json/artisanal/tree/main/_apis/example-api/apis.md?plain=1\",\n  \"issue\": \"https://github.com/apis-json/artisanal/issues/undefined\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "478d6614-7ae3-4831-b4f6-cd7924d17228",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/bad-request\",\n  \"title\": \"Bad Request\",\n  \"status\": 400,\n  \"detail\": \"The request is invalid or missing required parameters.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8e5bf34-d4ec-4c4e-9e32-810bd2110069",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/unauthorized\",\n  \"title\": \"Unauthorized\",\n  \"status\": 401,\n  \"detail\": \"You do not have the necessary permissions.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce002f20-3a4e-4544-bcb3-380ec0f03835",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/forbidden\",\n  \"title\": \"Forbidden\",\n  \"status\": 403,\n  \"detail\": \"Access is forbidden with the provided credentials.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58eeecee-17dd-4bd4-905b-42919ae5daa8",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/not-found\",\n  \"title\": \"Not Found\",\n  \"status\": 404,\n  \"detail\": \"The requested resource was not found.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "609b22ab-f907-43ff-8659-99bfa8b3d447",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/too-many-requests\",\n  \"title\": \"Too Many Requests\",\n  \"status\": 429,\n  \"detail\": \"You have exceeded the rate limit.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbb9410e-16b0-4a11-b52a-5e0b8467b517",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "apis"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aid\": \"apis.json\",\n  \"name\": \"Example API\",\n  \"type\": \"Index\",\n  \"description\": \"This is an example APIs.json file, demonstrating what is possible with\\nthe API discovery specification.\",\n  \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n  \"tags\": [\n    \"Application Programming Interface\",\n    \"API\"\n  ],\n  \"created\": \"2024-05-22\",\n  \"modified\": \"2024-05-22\",\n  \"url\": \"http://example.com/apis.json\",\n  \"specificationVersion\": \"0.18\",\n  \"apis\": [\n    {\n      \"aid\": \"apis.json:example-api\",\n      \"name\": \"Example API\",\n      \"description\": \"This provides details about a specific API, telling what is possible.\",\n      \"image\": \"https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg\",\n      \"humanURL\": \"http://example.com\",\n      \"baseURL\": \"http://api.example.com\",\n      \"tags\": [\n        \"API\",\n        \"Application Programming Interface\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"Documentation\",\n          \"url\": \"https://example.com/documentation\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://example.com/openapi.yml\"\n        }\n      ]\n    }\n  ],\n  \"common\": [\n    {\n      \"type\": \"Signup\",\n      \"url\": \"https://example.com/signup\"\n    },\n    {\n      \"type\": \"Login\",\n      \"url\": \"https://example.com/login\"\n    },\n    {\n      \"type\": \"Authentication\",\n      \"url\": \"http://example.com/authentication\"\n    }\n  ],\n  \"maintainers\": [\n    {\n      \"FN\": \"Kin Lane\",\n      \"X-twitter\": \"apievangelist\",\n      \"email\": \"info@apievangelist.com\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://example.com/errors/internal-server-error\",\n  \"title\": \"Internal Server Error\",\n  \"status\": 500,\n  \"detail\": \"An unexpected error occurred.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cfa50c4f-d578-4592-a76a-03e6091f5605",
+          "name": "Unified search across apis, providers, tags, and artifacts.",
+          "request": {
+            "name": "Unified search across apis, providers, tags, and artifacts.",
+            "description": {
+              "content": "The power endpoint. Choose what kind of object to return with `return`\n(`apis` by default), then constrain with any combination of `q`, `tags`\n(`match=any|all`), `providers`, and `artifact_types`. Use `fields` for sparse\nresponses and `include=content` to inline artifacts.\n\nExample — messaging APIs across providers that ship an OpenAPI, returning just the\nspec and pricing artifacts:\n\n    /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing\n           &fields=aid,name,provider_slug,properties\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "return",
+                  "value": "apis",
+                  "description": "The kind of object to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tags",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+                },
+                {
+                  "disabled": false,
+                  "key": "match",
+                  "value": "any",
+                  "description": "Whether results must match `any` (default) or `all` of the supplied tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "providers",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated provider slugs to scope results to."
+                },
+                {
+                  "disabled": false,
+                  "key": "artifact_types",
+                  "value": "<string>,<string>",
+                  "description": "Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify."
+                },
+                {
+                  "disabled": false,
+                  "key": "industry",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more industry slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "region",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more region slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>,<string>",
+                  "description": "Extra data to embed. `content` fetches and inlines artifact bodies."
+                },
+                {
+                  "disabled": false,
+                  "key": "band",
+                  "value": "<string>,<string>",
+                  "description": "Filter by one or more rating bands."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_score",
+                  "value": "<number>",
+                  "description": "Minimum composite score (0–100)."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "relevance"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe75b470-d28e-41b2-98cc-3e0c3f89356d",
+              "name": "A page of search results of the requested kind.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return",
+                      "value": "apis"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "band",
+                      "value": "strong,developing"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 678303,\n    \"page\": 897196,\n    \"limit\": 626,\n    \"pages\": 950258,\n    \"query\": {\n      \"key_0\": 7566,\n      \"key_1\": 4093.7901904693217\n    },\n    \"return\": \"artifacts\"\n  },\n  \"data\": [\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"https://gUdm.eptkWRQJUF9c\",\n      \"humanURL\": \"https://ufeFjqARZRUBdNprvJCLNbzm.hzfnwcdXGzSljWGpyw35sFvepNfrYbv,ZdbNOUl3k5,c+TezLh.CrdZ-4aS8PpezMHmFcxuqqlBNUIv\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://NEagrDfJhlpF.rnTetnMujCPc.U6iYSMjNOchAAQrBUXVckYtYe0kihlgMvoeAR+so\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"http://X.wxmSTYEo6Hi.DKKB2tzSM7jUDE5.29GDzx3EZ0LrZnatspCeKoQYnbQxy.Ue+IopiSQY+6i0st.-OLpZs1\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    },\n    {\n      \"aid\": \"twilio:twilio-accounts-api\",\n      \"name\": \"string\",\n      \"provider_slug\": \"string\",\n      \"description\": \"string\",\n      \"provider_name\": \"string\",\n      \"baseURL\": \"https://mtyYjzYdJWnzf.hoymEd,0qVnwX2ZGTTbNgUc0ulUd8Q+TFZLhfUtFBg-If\",\n      \"humanURL\": \"https://fxSQsGYTgCssUMT.vuuQLruyk.yMGyI1.g9NHsaGaInJgFMZOIxh7KELs5mnbcCPC3pMKZfpT1RI9TMVhtq+m-RlMyypx\",\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"properties\": [\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://dyNnBjHswCKnOywjAc.dkgWOruQdKOl,+VRa-.gw7DAqZn.IHQyQ-7hDIFVMcSR+boMO0\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        },\n        {\n          \"type\": \"OpenAPI\",\n          \"url\": \"https://TTGRaZMz.yxdfkXsTgzXnQBiBQtj16oV4hyOfMm2U0kFqmV2xMmE2Pdlx2zs6Y07w3Xjm\",\n          \"id\": \"twilio:twilio-accounts-api::OpenAPI::0\",\n          \"name\": \"string\",\n          \"aid\": \"string\",\n          \"provider_slug\": \"string\",\n          \"provider_name\": \"string\",\n          \"content\": \"string\",\n          \"content_type\": \"string\"\n        }\n      ],\n      \"sibling_apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\"\n        }\n      ],\n      \"overview\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1ebfe6e-79d3-4340-a40d-6d7c7afcf343",
+              "name": "Malformed request (bad parameter value).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return",
+                      "value": "apis"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tags",
+                      "value": "Messaging,Authentication"
+                    },
+                    {
+                      "key": "match",
+                      "value": "any"
+                    },
+                    {
+                      "key": "providers",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "artifact_types",
+                      "value": "OpenAPI,OpenAPI"
+                    },
+                    {
+                      "key": "industry",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "region",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "band",
+                      "value": "strong,developing"
+                    },
+                    {
+                      "key": "min_score",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "relevance"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/invalid-parameter\",\n  \"title\": \"Invalid parameter\",\n  \"status\": 400,\n  \"detail\": \"`match` must be one of: any, all.\",\n  \"instance\": \"/v1/search\",\n  \"parameter\": \"match\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0f1988f6-79d0-43f2-b11f-94400819a807",
+    "name": ".io APIs Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

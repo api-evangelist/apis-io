@@ -1,0 +1,322 @@
+{
+  "item": [
+    {
+      "id": "80e221e4-df39-4dd9-8322-d693ac7fae88",
+      "name": "Tags",
+      "description": {
+        "content": "The tag taxonomy, with network-wide ranking metadata.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6e7b55ac-1d61-432d-b957-8f4e3df66480",
+          "name": "List and rank tags.",
+          "request": {
+            "name": "List and rank tags.",
+            "description": {
+              "content": "The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,\n`breadth`, `quality_lift`, `band`). Default sort is by `composite` score.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Free-text query over name and description (and tags where applicable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "band",
+                  "value": "<string>",
+                  "description": "Filter by quality band."
+                },
+                {
+                  "disabled": false,
+                  "key": "min_api_count",
+                  "value": "<integer>",
+                  "description": "Only tags applied to at least this many APIs."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "composite"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "1-based page number."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "25",
+                  "description": "Items per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ed2a4ed-a41e-4d25-a3c7-fb33ec65ab77",
+              "name": "A page of tags.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "band",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "min_api_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "composite"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"total\": 234729,\n    \"page\": 482593,\n    \"limit\": 905,\n    \"pages\": 911388,\n    \"query\": {\n      \"key_0\": true\n    }\n  },\n  \"data\": [\n    {\n      \"slug\": \"messaging\",\n      \"name\": \"Messaging\",\n      \"composite\": 453286683.2715364,\n      \"band\": \"weak\",\n      \"frequency\": 519410195.2055411,\n      \"breadth\": 936602906.7820973,\n      \"quality_lift\": 941474202.4609724,\n      \"provider_count\": 765,\n      \"api_count\": 490,\n      \"variants\": [\n        \"string\",\n        \"string\"\n      ],\n      \"neighbors\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"providers\": [\n        {\n          \"slug\": \"twilio\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 89,\n          \"image\": \"https://OtAxrjpNTqLGCFBXu.gmbbWvmuRhPrwcaqWnj,erOZffrZb0SPzVTCk5Vja4yTZp28Q1sStFZ4CQWdDV8VgT2D\",\n          \"created\": \"1981-12-10\",\n          \"common\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            },\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            }\n          ],\n          \"tags\": [\n            \"Messaging\",\n            \"Authentication\"\n          ],\n          \"score\": {\n            \"composite\": 66.3,\n            \"band\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trend\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"delta\": 0,\n            \"previous_composite\": 9.059248735595782,\n            \"scored_at\": \"1966-10-08\",\n            \"schema_version\": \"0.3\",\n            \"facets\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"slug\": \"twilio\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 143,\n          \"image\": \"https://x.bkykL6OkFwQHrLiDEK7WMm.54dPX2KYpzNAYomI49\",\n          \"created\": \"2013-09-13\",\n          \"common\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            },\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            }\n          ],\n          \"tags\": [\n            \"Messaging\",\n            \"Authentication\"\n          ],\n          \"score\": {\n            \"composite\": 66.3,\n            \"band\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trend\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"delta\": 0,\n            \"previous_composite\": 10.494184673227934,\n            \"scored_at\": \"2009-08-14\",\n            \"schema_version\": \"0.3\",\n            \"facets\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"apis\": [\n        {\n          \"provider\": \"string\",\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"provider\": \"string\",\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    },\n    {\n      \"slug\": \"messaging\",\n      \"name\": \"Messaging\",\n      \"composite\": 738880667.4696145,\n      \"band\": \"weak\",\n      \"frequency\": 641616198.5026374,\n      \"breadth\": 175601554.35341763,\n      \"quality_lift\": 674662521.5351088,\n      \"provider_count\": 313,\n      \"api_count\": 867,\n      \"variants\": [\n        \"string\",\n        \"string\"\n      ],\n      \"neighbors\": [\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        }\n      ],\n      \"providers\": [\n        {\n          \"slug\": \"twilio\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 394,\n          \"image\": \"https://CFPobHxxbvPQCRutsulyXiHY.bakvLB1JOLZgr4pVi-+5\",\n          \"created\": \"1984-05-05\",\n          \"common\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            },\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            }\n          ],\n          \"tags\": [\n            \"Messaging\",\n            \"Authentication\"\n          ],\n          \"score\": {\n            \"composite\": 66.3,\n            \"band\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trend\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"delta\": 0,\n            \"previous_composite\": 81.87978024009355,\n            \"scored_at\": \"1993-10-29\",\n            \"schema_version\": \"0.3\",\n            \"facets\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"slug\": \"twilio\",\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"api_count\": 436,\n          \"image\": \"https://XSTpWpNSYCEEmwYvMRgkaJbGPxU.ivqbizTcm.TNj7Vr7V5Fn73D,-S5MQSJP3jYiOSvoZF6o8t\",\n          \"created\": \"1956-01-26\",\n          \"common\": [\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"url\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"title\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"apis\": [\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            },\n            {\n              \"name\": \"string\",\n              \"slug\": \"string\",\n              \"description\": \"string\"\n            }\n          ],\n          \"tags\": [\n            \"Messaging\",\n            \"Authentication\"\n          ],\n          \"score\": {\n            \"composite\": 66.3,\n            \"band\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"trend\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"delta\": 0,\n            \"previous_composite\": 70.08883492713035,\n            \"scored_at\": \"1949-12-04\",\n            \"schema_version\": \"0.3\",\n            \"facets\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"apis\": [\n        {\n          \"provider\": \"string\",\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        },\n        {\n          \"provider\": \"string\",\n          \"slug\": \"string\",\n          \"name\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d368190f-df1b-424e-93ca-62661dfb0848",
+          "name": "Get one tag, with its linked providers, APIs, and neighbors.",
+          "request": {
+            "name": "Get one tag, with its linked providers, APIs, and neighbors.",
+            "description": {
+              "content": "Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tags",
+                ":slug"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>,<string>",
+                  "description": "Sparse fieldset — comma-separated property names to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "slug",
+                  "description": "(Required) Tag slug (e.g. `messaging`)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6cb91829-7207-4de4-9275-3c6dc11670c0",
+              "name": "The tag.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tags",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Tag slug (e.g. `messaging`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"slug\": \"messaging\",\n  \"name\": \"Messaging\",\n  \"composite\": 367926184.1533703,\n  \"band\": \"stale\",\n  \"frequency\": 88515254.53751218,\n  \"breadth\": 30488543.28277706,\n  \"quality_lift\": 999765989.1173683,\n  \"provider_count\": 765,\n  \"api_count\": 133,\n  \"variants\": [\n    \"string\",\n    \"string\"\n  ],\n  \"neighbors\": [\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"slug\": \"string\",\n      \"name\": \"string\"\n    }\n  ],\n  \"providers\": [\n    {\n      \"slug\": \"twilio\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 289,\n      \"image\": \"https://wyTqIvhQVpJULxP.xfxoqnpQSWz,\",\n      \"created\": \"2002-07-07\",\n      \"common\": [\n        {\n          \"type\": \"string\",\n          \"url\": \"https://SLvA.hpbouM1vOz.wLIuns6tlBbfau\",\n          \"title\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"url\": \"https://AUkYywXjHUZKJd.pqQWH3wJJcQH6OfMiMuhYhpizjftOhYfMZVPqxL46g\",\n          \"title\": \"string\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"score\": {\n        \"composite\": 66.3,\n        \"band\": \"minimal\",\n        \"trend\": \"rising\",\n        \"delta\": 0,\n        \"previous_composite\": 50.48396676142147,\n        \"scored_at\": \"1997-11-05\",\n        \"schema_version\": \"0.3\",\n        \"facets\": {\n          \"discoverability\": 89.35094031455787,\n          \"contract_quality\": 80.63105344332801,\n          \"governance\": 77.30976252341235,\n          \"operational_transparency\": 48.68434913541858,\n          \"developer_ergonomics\": 36.814123957916614,\n          \"commercial_clarity\": 94.55838396397537\n        }\n      }\n    },\n    {\n      \"slug\": \"twilio\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"api_count\": 504,\n      \"image\": \"http://IpYcU.myzAG4JmxXzRS2ql7lduvnrGxI1QClLDhhQRCcofE2MtdzUv\",\n      \"created\": \"1995-10-24\",\n      \"common\": [\n        {\n          \"type\": \"string\",\n          \"url\": \"http://CVDCvkelbmrL.qgzCk+jYFFSEVAD-cApXUpgVXfnGcpyifig+4LauK4JKUswgGVXNU3Uba9,GNw9rilbP\",\n          \"title\": \"string\"\n        },\n        {\n          \"type\": \"string\",\n          \"url\": \"https://nqkBsvyhcDwArskPDJwdvhCIi.sdwNX4rDj4iuozNFkvJmE\",\n          \"title\": \"string\"\n        }\n      ],\n      \"apis\": [\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"slug\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"tags\": [\n        \"Messaging\",\n        \"Authentication\"\n      ],\n      \"score\": {\n        \"composite\": 66.3,\n        \"band\": \"thin\",\n        \"trend\": \"rising\",\n        \"delta\": 0,\n        \"previous_composite\": 19.33680288418088,\n        \"scored_at\": \"2016-02-23\",\n        \"schema_version\": \"0.3\",\n        \"facets\": {\n          \"discoverability\": 23.557042909349178,\n          \"contract_quality\": 54.528734119008135,\n          \"governance\": 19.030072764912543,\n          \"operational_transparency\": 45.18023116732368,\n          \"developer_ergonomics\": 35.92166042045343,\n          \"commercial_clarity\": 86.11194285309283\n        }\n      }\n    }\n  ],\n  \"apis\": [\n    {\n      \"provider\": \"string\",\n      \"slug\": \"string\",\n      \"name\": \"string\"\n    },\n    {\n      \"provider\": \"string\",\n      \"slug\": \"string\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0ff3036-d080-4476-a37d-b5e86a57f5ab",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tags",
+                    ":slug"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>,<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "slug",
+                      "description": "(Required) Tag slug (e.g. `messaging`)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"type\": \"https://apis.io/problems/not-found\",\n  \"title\": \"Resource not found\",\n  \"status\": 404,\n  \"detail\": \"No API found with aid `twilio:nope`.\",\n  \"instance\": \"/v1/apis/twilio:nope\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://search-api.apis.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f0a9051b-d565-4e52-bdac-2d774db75d0f",
+    "name": ".io Search APIs Tags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This is the technical API contract for the search API for the APIs.io search engine.\n\nContact Support:\n Name: Kin Lane\n Email: info@apievangelist.com",
+      "type": "text/plain"
+    }
+  }
+}

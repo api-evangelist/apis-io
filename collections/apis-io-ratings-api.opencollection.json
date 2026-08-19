@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": ".io Search APIs Ratings API",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "One provider's rating.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/rating",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              }
+            ]
+          },
+          "docs": "Returns the full rating breakdown for a single provider — composite, band, trend, delta, and all six facet scores."
+        },
+        {
+          "info": {
+            "name": "Ranked ratings leaderboard.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/ratings",
+            "params": [
+              {
+                "name": "band",
+                "value": "",
+                "type": "query",
+                "description": "Filter by one or more rating bands."
+              },
+              {
+                "name": "min_score",
+                "value": "",
+                "type": "query",
+                "description": "Minimum composite score (0–100)."
+              },
+              {
+                "name": "max_score",
+                "value": "",
+                "type": "query",
+                "description": "Maximum composite score (0–100)."
+              },
+              {
+                "name": "trend",
+                "value": "",
+                "type": "query",
+                "description": "Filter by trend marker."
+              },
+              {
+                "name": "facet",
+                "value": "",
+                "type": "query",
+                "description": "Facet to apply `min_facet` against."
+              },
+              {
+                "name": "min_facet",
+                "value": "",
+                "type": "query",
+                "description": "Minimum score (0–100) for the facet named by `facet`."
+              },
+              {
+                "name": "providers",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated provider slugs to scope results to."
+              },
+              {
+                "name": "tags",
+                "value": "Messaging,Authentication",
+                "type": "query",
+                "description": "Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order (composite descending by default)."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "1-based page number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores."
+        },
+        {
+          "info": {
+            "name": "The rating rubric.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/ratings/rubric"
+          },
+          "docs": "Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block."
+        },
+        {
+          "info": {
+            "name": "A provider's rating movement.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/providers/:slug/rating/history",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "path",
+                "description": "Provider slug (e.g. `twilio`)."
+              }
+            ]
+          },
+          "docs": "Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series."
+        },
+        {
+          "info": {
+            "name": "The biggest rating movers.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://search-api.apis.io/ratings/movers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Items per page."
+              }
+            ]
+          },
+          "docs": "Returns the providers whose composite score moved most (up and down) versus the previous scoring build."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
