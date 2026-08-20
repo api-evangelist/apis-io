@@ -1,0 +1,144 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Export API
+  version: 1.4.0
+  description: |-
+    Bulk data export — the license tier above Pro. The whole ratings or providers dataset in one pull, with the attribution string a published figure must carry. Business tier.
+
+    This is the Export surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Export
+    description: Bulk data export — the license tier above Pro. The whole ratings or providers dataset in one pull, with the attribution string a published figure must carry. Business tier.
+paths:
+  /export:
+    get:
+      operationId: exportDataset
+      x-tier: business
+      x-mcp-tool: export_dataset
+      tags:
+        - Export
+      summary: Export a whole dataset in one pull.
+      description: The license tier above Pro. Pro is per-query intelligence; Business is the entire dataset in a single response, for a media outlet or analyst who licenses "publish our numbers". Defaults to the `ratings` dataset. Every response carries a `license` attribution string that must be cited with any published figure, alongside the rubric `schema_version`.
+      parameters:
+        - name: co_brand
+          in: query
+          description: A flat-license partner name stamped into the returned attribution string.
+          schema:
+            type: string
+            maxLength: 60
+      responses:
+        "200":
+          description: The full dataset, with its license attribution and provenance.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /export/{dataset}:
+    get:
+      operationId: exportNamedDataset
+      x-tier: business
+      x-mcp-tool: export_dataset
+      tags:
+        - Export
+      summary: Export one named dataset.
+      description: "`ratings` returns every rated provider with composite, band, trend, delta and facet scores — the full leaderboard, not a page. `providers` returns the catalog itself (slug, name, description, counts, artifact coverage, tags, industries, regions, score) for an analyst building their own view."
+      parameters:
+        - name: dataset
+          in: path
+          required: true
+          schema:
+            type: string
+            enum:
+              - ratings
+              - providers
+        - name: co_brand
+          in: query
+          description: A flat-license partner name stamped into the returned attribution string.
+          schema:
+            type: string
+            maxLength: 60
+      responses:
+        "200":
+          description: The named dataset.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "400":
+          description: Unknown dataset; the response lists the valid names.
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+components:
+  responses:
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
+  schemas:
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true

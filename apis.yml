@@ -1,19 +1,16 @@
 aid: apis-io
 name: APIs.io
-description: >-
-  APIs.io is an open-source API search engine and federated discovery network built on the APIs.json
-  specification. It indexes API providers and their individual APIs across the public internet along
-  with the machine-readable artifacts they publish — OpenAPI, AsyncAPI, GraphQL, Arazzo workflows,
-  Postman collections, JSON Schema, JSON-LD contexts, Spectral rulesets, vocabularies, OAuth scopes,
-  plans, rate limits and FinOps profiles — and lets developers and agents search that catalog by
-  keyword, capability, tag, industry, region, artifact type and quality band. As of August 2026 the
-  network published roughly 26,414 providers, 109,100 APIs and 120,595 schemas across 71 industries
-  and 77 curated areas. Every provider is scored with the Kin Score, a 0–100 composite across six
-  weighted facets plus a standalone agent-readiness score. The same read-only OpenAPI 3.1 contract
-  powers three surfaces — a REST API at https://apis.io/api/v1, a Streamable-HTTP MCP server at
-  https://apis.io/mcp, and a set of published Agent Skills — alongside an RFC 9727 api-catalog
-  linkset, an llms.txt and an APIs.json self-description. It is maintained by API Evangelist and
-  serves both API producers submitting profiles and API consumers discovering APIs.
+description: APIs.io is an open-source API search engine and federated discovery network built on the APIs.json specification.
+  It indexes API providers and their individual APIs across the public internet along with the machine-readable artifacts
+  they publish — OpenAPI, AsyncAPI, GraphQL, Arazzo workflows, Postman collections, JSON Schema, JSON-LD contexts, Spectral
+  rulesets, vocabularies, OAuth scopes, plans, rate limits and FinOps profiles — and lets developers and agents search that
+  catalog by keyword, capability, tag, industry, region, artifact type and quality band. As of August 2026 the network published
+  roughly 26,414 providers, 109,100 APIs and 120,595 schemas across 71 industries and 77 curated areas. Every provider is
+  scored with the Kin Score, a 0–100 composite across six weighted facets plus a standalone agent-readiness score. The same
+  read-only OpenAPI 3.1 contract powers three surfaces — a REST API at https://apis.io/api/v1, a Streamable-HTTP MCP server
+  at https://apis.io/mcp, and a set of published Agent Skills — alongside an RFC 9727 api-catalog linkset, an llms.txt and
+  an APIs.json self-description. It is maintained by API Evangelist and serves both API producers submitting profiles and
+  API consumers discovering APIs.
 type: Index
 accessModel:
   pricing: freemium
@@ -46,7 +43,7 @@ tags:
 - API Governance
 url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
 created: '2026-03-26'
-modified: '2026-08-10'
+modified: '2026-08-20'
 specificationVersion: '0.23'
 apis:
 - aid: apis-io:apis-io-apis-api
@@ -54,7 +51,7 @@ apis:
   description: Index of HTTP application programming interfaces.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
-  tags:
+  tags: &id001
   - APIs
   properties:
   - type: OpenAPI
@@ -70,14 +67,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -85,19 +79,15 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-areas-api
   name: APIs.io Areas API
-  description: >-
-    The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments,
-    …), each a scored provider index with its own site. Pro.
+  description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each
+    a scored provider index with its own site. Pro.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
@@ -114,14 +104,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -129,19 +116,15 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-artifact-types-api
   name: APIs.io Artifact Types API
-  description: >-
-    First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more).
-    Each path filters and normalizes one artifact type across all providers.
+  description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each
+    path filters and normalizes one artifact type across all providers.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
@@ -158,14 +141,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -173,14 +153,11 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-industries-api
   name: APIs.io Industries API
   description: Industry verticals grouping providers across the catalog.
@@ -200,14 +177,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -215,20 +189,16 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-insights-api
   name: APIs.io Insights API
-  description: >-
-    Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
-    for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery
-    is free; per-company depth, gaps, and provider matches are Pro.
+  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around
+    APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps,
+    and provider matches are Pro.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
@@ -245,14 +215,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -260,14 +227,11 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-providers-api
   name: APIs.io Providers API
   description: Organizations publishing APIs on the network.
@@ -287,14 +251,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -302,20 +263,15 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-ratings-api
   name: APIs.io Ratings API
-  description: >-
-    The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted
-    facets measuring how complete, governed, and integration-ready each provider's public API surface
-    is. Rubric v0.3.
+  description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets
+    measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
@@ -332,14 +288,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -347,14 +300,11 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-regions-api
   name: APIs.io Regions API
   description: Geographic regions grouping providers across the catalog.
@@ -374,14 +324,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -389,14 +336,11 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-search-api
   name: APIs.io Search API
   description: Search using a cloud search engine.
@@ -416,14 +360,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -431,19 +372,15 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-synthesis-api
   name: APIs.io Synthesis API
-  description: >-
-    Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed,
-    and recommended-stack design. Pro.
+  description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack
+    design. Pro.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
@@ -460,14 +397,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -475,14 +409,11 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-tags-api
   name: APIs.io Tags API
   description: The tag taxonomy, with network-wide ranking metadata.
@@ -502,14 +433,11 @@ apis:
   - type: AgentSkills
     url: https://apis.io/skills/
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-io-discovery/SKILL.md
   - type: AgentSkills
-    url: >-
-      https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
+    url: https://raw.githubusercontent.com/api-commons/agent-skills/main/apis-json-author/SKILL.md
   - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+    url: https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
   - type: Authentication
     url: https://apis.io/developer/authentication/
   - type: RateLimits
@@ -517,14 +445,36 @@ apis:
   - type: ChangeLog
     url: https://apis.io/changelog/
   - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+    url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+- aid: apis-io:apis-io-cohorts-api
+  name: APIs.io Cohorts API
+  description: Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution,
+    rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from. 7 operations of the APIs.io
+    API, split out by tag so this surface is documented, rated, and governed on its own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-cohorts-openapi.yml
+  - type: SpectralRules
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+- aid: apis-io:apis-io-editorial-api
+  name: APIs.io Editorial API
+  description: Story leads mined from catalog movement (owner tier). 1 operation of the APIs.io API, split out by tag so this
+    surface is documented, rated, and governed on its own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-editorial-openapi.yml
+  - type: SpectralRules
+    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
 common:
 - type: IssueTracker
   url: https://github.com/apisio/apis.io/issues
@@ -677,8 +627,7 @@ common:
 - type: Lifecycle
   url: lifecycle/apis-io-lifecycle.yml
 - type: StatusPage
-  url: >-
-    https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+  url: https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
 - type: Conventions
   url: conventions/apis-io-conventions.yml
 - type: ChangeLog

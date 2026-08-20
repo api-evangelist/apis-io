@@ -1,0 +1,423 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Saved Workspace API
+  version: 1.4.0
+  description: |-
+    A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace. Requires an API key.
+
+    This is the Saved Workspace surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Saved Workspace
+    description: A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace. Requires an API key.
+paths:
+  /me/searches:
+    get:
+      operationId: listSavedSearches
+      x-tier: pro
+      x-mcp-tool: list_saved_searches
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: List your saved searches.
+      description: The saved searches owned by the authenticated key. Pro. Requires an API key.
+      responses:
+        "200":
+          description: Your saved searches.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "401":
+          $ref: "#/components/responses/AuthRequired"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+    post:
+      operationId: createSavedSearch
+      x-tier: pro
+      x-mcp-tool: save_search
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Create a saved search.
+      description: Persist a named search using the same filter vocabulary as `/search`. Pro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                q:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                band:
+                  type: array
+                  items:
+                    type: string
+                industry:
+                  type: array
+                  items:
+                    type: string
+                region:
+                  type: array
+                  items:
+                    type: string
+                area:
+                  type: array
+                  items:
+                    type: string
+                artifact_types:
+                  type: array
+                  items:
+                    type: string
+                match:
+                  type: string
+                  enum:
+                    - any
+                    - all
+                min_score:
+                  type: number
+      responses:
+        "201":
+          description: The created saved search (id, name, criteria).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "401":
+          $ref: "#/components/responses/AuthRequired"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/searches/{id}:
+    delete:
+      operationId: deleteSavedSearch
+      x-tier: pro
+      x-mcp-tool: delete_saved_search
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Delete a saved search you own.
+      description: Permanently removes the saved search and its delta cursor. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/searches/{id}/results:
+    get:
+      operationId: runSavedSearch
+      x-tier: pro
+      x-mcp-tool: run_saved_search
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Re-run a saved search against the live catalog.
+      description: Re-runs the stored criteria and returns providers that currently match. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Current matching providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/searches/{id}/net_new:
+    get:
+      operationId: savedSearchNetNew
+      x-tier: pro
+      x-mcp-tool: saved_search_net_new
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: What's NEW for a saved search since you last checked.
+      description: Providers that newly match your criteria since the previous call. Advances the delta cursor, so each call reports only the change. The first call establishes the baseline (net-new empty). The agent-native version of the demand report. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Net-new matches + advanced cursor.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/lists:
+    get:
+      operationId: listLists
+      x-tier: pro
+      x-mcp-tool: list_lists
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: List the lists/shortlists you own.
+      responses:
+        "200":
+          description: Your lists.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "401":
+          $ref: "#/components/responses/AuthRequired"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+    post:
+      operationId: createList
+      x-tier: pro
+      x-mcp-tool: create_list
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Create a named, persistent list.
+      description: Creates a shortlist/stack you own; seed it with provider slugs and/or aids. Pro.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                members:
+                  type: array
+                  items:
+                    type: string
+                  description: Provider slugs and/or aids.
+      responses:
+        "201":
+          description: The created list.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/lists/{id}:
+    get:
+      operationId: getList
+      x-tier: pro
+      x-mcp-tool: get_list
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Get a list, members resolved to current name/band/score.
+      description: Returns the list with each member resolved to its current profile and rating. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The list with resolved members.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+    delete:
+      operationId: deleteList
+      x-tier: pro
+      x-mcp-tool: delete_list
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Delete a list you own.
+      description: Permanently removes the list. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+  /me/lists/{id}/entries:
+    post:
+      operationId: addToList
+      x-tier: pro
+      x-mcp-tool: add_to_list
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - Saved Workspace
+      summary: Add providers/APIs to a list.
+      description: Appends providers/APIs (by slug or aid) to the list, de-duplicated. Pro.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - members
+              properties:
+                members:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Updated list (count + added).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+components:
+  responses:
+    AuthRequired:
+      description: The Saved Workspace needs a signed-in apis.io API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          example:
+            error: auth_required
+            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
+  schemas:
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a breaking change.

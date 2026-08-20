@@ -1,0 +1,251 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Venture Capital API
+  version: 1.4.0
+  description: |-
+    Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
+
+    This is the Venture Capital surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Venture Capital
+    description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
+paths:
+  /vcs:
+    get:
+      operationId: listVcs
+      x-mcp-tool: find_vcs
+      tags:
+        - Venture Capital
+      summary: List / search venture-capital firms.
+      description: Venture-capital firms in the network, each with a network-matched, rated portfolio graph. Filter by text, thesis tags, or category; sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Free.
+      parameters:
+        - name: q
+          in: query
+          description: Free text over firm name + description.
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: Thesis tag slugs (comma-separated).
+          schema:
+            type: string
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - portfolio_on_network
+              - portfolio_total
+              - portfolio_rating
+              - name
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A page of VC firms (identity + portfolio summary).
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+      x-tier: free
+  /vcs/{slug}:
+    get:
+      operationId: getVc
+      x-mcp-tool: get_vc
+      tags:
+        - Venture Capital
+      summary: One VC firm — identity, fund facts, portfolio summary.
+      description: Identity, fund facts (properties), and portfolio summary (totals, band distribution, average rating). Pass view=full to inline the full portfolio graph. Free.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: view
+          in: query
+          schema:
+            type: string
+            enum:
+              - summary
+              - full
+      responses:
+        "200":
+          description: The VC firm.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: free
+  /vcs/{slug}/portfolio:
+    get:
+      operationId: getVcPortfolio
+      x-mcp-tool: vc_portfolio
+      tags:
+        - Venture Capital
+      summary: A VC firm's portfolio graph.
+      description: The firm's portfolio companies, each matched to the network and rated. Filter is_provider=true (only API providers), in_network=true, band, or min_score; sort by score (default), api_count, or name. Free.
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: is_provider
+          in: query
+          description: Only companies that publish an API on the network.
+          schema:
+            type: boolean
+        - name: in_network
+          in: query
+          schema:
+            type: boolean
+        - name: band
+          in: query
+          schema:
+            type: string
+        - name: min_score
+          in: query
+          schema:
+            type: number
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - score
+              - api_count
+              - name
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A page of portfolio companies with network match + rating.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: free
+  /providers/{slug}/investors:
+    get:
+      operationId: getProviderInvestors
+      x-mcp-tool: find_investors
+      tags:
+        - Venture Capital
+      summary: Which VC firms back this provider (reverse portfolio edge).
+      description: The venture-capital firms in the network whose portfolio includes this provider/company. The reverse of the VC portfolio graph. Free.
+      parameters:
+        - $ref: "#/components/parameters/ProviderSlug"
+      responses:
+        "200":
+          description: The backing VC firms.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: free
+components:
+  parameters:
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+  schemas:
+    Problem:
+      type: object
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+        added alongside the standard fields.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
