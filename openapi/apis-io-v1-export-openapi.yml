@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io Export API
-  version: 1.4.0
+  version: 1.5.0
   description: |-
     Bulk data export — the license tier above Pro. The whole ratings or providers dataset in one pull, with the attribution string a published figure must carry. Business tier.
 

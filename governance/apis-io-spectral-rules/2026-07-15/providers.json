@@ -1,0 +1,3349 @@
+{
+  "api": "APIs.io Providers API",
+  "file": "openapi/apis-io-v1-providers-openapi.yml",
+  "operations": 6,
+  "lint": {
+    "format": "openapi",
+    "ruleCount": 42,
+    "passed": true,
+    "summary": {
+      "error": 0,
+      "warning": 25,
+      "info": 67,
+      "hint": 0,
+      "total": 92
+    },
+    "diagnostics": [
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 26,
+            "character": 15
+          },
+          "end": {
+            "line": 26,
+            "character": 41
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 57,
+            "character": 16
+          },
+          "end": {
+            "line": 65,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 57,
+            "character": 16
+          },
+          "end": {
+            "line": 65,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 72,
+            "character": 15
+          },
+          "end": {
+            "line": 72,
+            "character": 32
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 77,
+            "character": 16
+          },
+          "end": {
+            "line": 85,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 77,
+            "character": 16
+          },
+          "end": {
+            "line": 85,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 77,
+            "character": 16
+          },
+          "end": {
+            "line": 85,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/apis",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 92,
+            "character": 15
+          },
+          "end": {
+            "line": 92,
+            "character": 53
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/apis",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 103,
+            "character": 16
+          },
+          "end": {
+            "line": 111,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/apis",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 103,
+            "character": 16
+          },
+          "end": {
+            "line": 111,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/apis",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 103,
+            "character": 16
+          },
+          "end": {
+            "line": 111,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/artifacts",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 121,
+            "character": 15
+          },
+          "end": {
+            "line": 121,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/artifacts",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 125,
+            "character": 16
+          },
+          "end": {
+            "line": 134,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/artifacts",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 125,
+            "character": 16
+          },
+          "end": {
+            "line": 134,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/artifacts",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 125,
+            "character": 16
+          },
+          "end": {
+            "line": 134,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/onboarding",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 144,
+            "character": 15
+          },
+          "end": {
+            "line": 144,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/onboarding",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 148,
+            "character": 16
+          },
+          "end": {
+            "line": 157,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/onboarding",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 148,
+            "character": 16
+          },
+          "end": {
+            "line": 157,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/onboarding",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 148,
+            "character": 16
+          },
+          "end": {
+            "line": 157,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/similar",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 167,
+            "character": 15
+          },
+          "end": {
+            "line": 167,
+            "character": 48
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/similar",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 172,
+            "character": 16
+          },
+          "end": {
+            "line": 180,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/similar",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 172,
+            "character": 16
+          },
+          "end": {
+            "line": 180,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/providers/{slug}/similar",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 172,
+            "character": 16
+          },
+          "end": {
+            "line": 180,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "components-security-schemes-defined",
+        "message": "Security schemes should be defined in components",
+        "severity": "info",
+        "path": [
+          "components"
+        ],
+        "range": {
+          "start": {
+            "line": 182,
+            "character": 11
+          },
+          "end": {
+            "line": 827,
+            "character": 21
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "aid"
+        ],
+        "range": {
+          "start": {
+            "line": 382,
+            "character": 12
+          },
+          "end": {
+            "line": 386,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "name"
+        ],
+        "range": {
+          "start": {
+            "line": 387,
+            "character": 13
+          },
+          "end": {
+            "line": 389,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "description"
+        ],
+        "range": {
+          "start": {
+            "line": 390,
+            "character": 20
+          },
+          "end": {
+            "line": 392,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "provider_slug"
+        ],
+        "range": {
+          "start": {
+            "line": 393,
+            "character": 22
+          },
+          "end": {
+            "line": 395,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "provider_name"
+        ],
+        "range": {
+          "start": {
+            "line": 396,
+            "character": 22
+          },
+          "end": {
+            "line": 398,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "baseURL"
+        ],
+        "range": {
+          "start": {
+            "line": 399,
+            "character": 16
+          },
+          "end": {
+            "line": 402,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-properties-casing",
+        "message": "Schema properties should be snake_case (the dominant convention in this API).",
+        "severity": "warning",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "baseURL"
+        ],
+        "range": {
+          "start": {
+            "line": 399,
+            "character": 16
+          },
+          "end": {
+            "line": 402,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-properties-snake-case",
+        "message": "Schema property names should use snake_case",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "baseURL"
+        ],
+        "range": {
+          "start": {
+            "line": 399,
+            "character": 16
+          },
+          "end": {
+            "line": 402,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "humanURL"
+        ],
+        "range": {
+          "start": {
+            "line": 403,
+            "character": 17
+          },
+          "end": {
+            "line": 407,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-properties-casing",
+        "message": "Schema properties should be snake_case (the dominant convention in this API).",
+        "severity": "warning",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "humanURL"
+        ],
+        "range": {
+          "start": {
+            "line": 403,
+            "character": 17
+          },
+          "end": {
+            "line": 407,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-properties-snake-case",
+        "message": "Schema property names should use snake_case",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "humanURL"
+        ],
+        "range": {
+          "start": {
+            "line": 403,
+            "character": 17
+          },
+          "end": {
+            "line": 407,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "tags"
+        ],
+        "range": {
+          "start": {
+            "line": 408,
+            "character": 13
+          },
+          "end": {
+            "line": 417,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "properties"
+        ],
+        "range": {
+          "start": {
+            "line": 418,
+            "character": 19
+          },
+          "end": {
+            "line": 423,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "sibling_apis"
+        ],
+        "range": {
+          "start": {
+            "line": 424,
+            "character": 21
+          },
+          "end": {
+            "line": 436,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Api",
+          "properties",
+          "overview"
+        ],
+        "range": {
+          "start": {
+            "line": 437,
+            "character": 17
+          },
+          "end": {
+            "line": 440,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-description-recommended",
+        "message": "Component schemas should have descriptions",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ApiList"
+        ],
+        "range": {
+          "start": {
+            "line": 445,
+            "character": 12
+          },
+          "end": {
+            "line": 457,
+            "character": 14
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ApiList",
+          "properties",
+          "data"
+        ],
+        "range": {
+          "start": {
+            "line": 450,
+            "character": 13
+          },
+          "end": {
+            "line": 454,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "id"
+        ],
+        "range": {
+          "start": {
+            "line": 462,
+            "character": 11
+          },
+          "end": {
+            "line": 467,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "name"
+        ],
+        "range": {
+          "start": {
+            "line": 470,
+            "character": 13
+          },
+          "end": {
+            "line": 473,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "url"
+        ],
+        "range": {
+          "start": {
+            "line": 474,
+            "character": 12
+          },
+          "end": {
+            "line": 478,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "aid"
+        ],
+        "range": {
+          "start": {
+            "line": 479,
+            "character": 12
+          },
+          "end": {
+            "line": 482,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "provider_slug"
+        ],
+        "range": {
+          "start": {
+            "line": 483,
+            "character": 22
+          },
+          "end": {
+            "line": 485,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "provider_name"
+        ],
+        "range": {
+          "start": {
+            "line": 486,
+            "character": 22
+          },
+          "end": {
+            "line": 488,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "content"
+        ],
+        "range": {
+          "start": {
+            "line": 489,
+            "character": 16
+          },
+          "end": {
+            "line": 492,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Artifact",
+          "properties",
+          "content_type"
+        ],
+        "range": {
+          "start": {
+            "line": 493,
+            "character": 21
+          },
+          "end": {
+            "line": 496,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ArtifactType"
+        ],
+        "range": {
+          "start": {
+            "line": 500,
+            "character": 17
+          },
+          "end": {
+            "line": 559,
+            "character": 21
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Band"
+        ],
+        "range": {
+          "start": {
+            "line": 560,
+            "character": 9
+          },
+          "end": {
+            "line": 569,
+            "character": 21
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets"
+        ],
+        "range": {
+          "start": {
+            "line": 581,
+            "character": 11
+          },
+          "end": {
+            "line": 614,
+            "character": 68
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "discoverability"
+        ],
+        "range": {
+          "start": {
+            "line": 585,
+            "character": 24
+          },
+          "end": {
+            "line": 589,
+            "character": 65
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "contract_quality"
+        ],
+        "range": {
+          "start": {
+            "line": 590,
+            "character": 25
+          },
+          "end": {
+            "line": 594,
+            "character": 66
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "governance"
+        ],
+        "range": {
+          "start": {
+            "line": 595,
+            "character": 19
+          },
+          "end": {
+            "line": 599,
+            "character": 60
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "operational_transparency"
+        ],
+        "range": {
+          "start": {
+            "line": 600,
+            "character": 33
+          },
+          "end": {
+            "line": 604,
+            "character": 74
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "developer_ergonomics"
+        ],
+        "range": {
+          "start": {
+            "line": 605,
+            "character": 29
+          },
+          "end": {
+            "line": 609,
+            "character": 70
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Facets",
+          "properties",
+          "commercial_clarity"
+        ],
+        "range": {
+          "start": {
+            "line": 610,
+            "character": 27
+          },
+          "end": {
+            "line": 614,
+            "character": 68
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-description-recommended",
+        "message": "Component schemas should have descriptions",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Link"
+        ],
+        "range": {
+          "start": {
+            "line": 615,
+            "character": 9
+          },
+          "end": {
+            "line": 631,
+            "character": 13
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Link",
+          "properties",
+          "type"
+        ],
+        "range": {
+          "start": {
+            "line": 618,
+            "character": 13
+          },
+          "end": {
+            "line": 621,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Link",
+          "properties",
+          "url"
+        ],
+        "range": {
+          "start": {
+            "line": 622,
+            "character": 12
+          },
+          "end": {
+            "line": 625,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Link",
+          "properties",
+          "title"
+        ],
+        "range": {
+          "start": {
+            "line": 626,
+            "character": 14
+          },
+          "end": {
+            "line": 628,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta"
+        ],
+        "range": {
+          "start": {
+            "line": 632,
+            "character": 9
+          },
+          "end": {
+            "line": 658,
+            "character": 15
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta",
+          "properties",
+          "total"
+        ],
+        "range": {
+          "start": {
+            "line": 636,
+            "character": 14
+          },
+          "end": {
+            "line": 639,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta",
+          "properties",
+          "page"
+        ],
+        "range": {
+          "start": {
+            "line": 640,
+            "character": 13
+          },
+          "end": {
+            "line": 642,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta",
+          "properties",
+          "limit"
+        ],
+        "range": {
+          "start": {
+            "line": 643,
+            "character": 14
+          },
+          "end": {
+            "line": 645,
+            "character": 23
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta",
+          "properties",
+          "pages"
+        ],
+        "range": {
+          "start": {
+            "line": 646,
+            "character": 14
+          },
+          "end": {
+            "line": 649,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Meta",
+          "properties",
+          "query"
+        ],
+        "range": {
+          "start": {
+            "line": 650,
+            "character": 14
+          },
+          "end": {
+            "line": 653,
+            "character": 67
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "type"
+        ],
+        "range": {
+          "start": {
+            "line": 666,
+            "character": 13
+          },
+          "end": {
+            "line": 673,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "title"
+        ],
+        "range": {
+          "start": {
+            "line": 674,
+            "character": 14
+          },
+          "end": {
+            "line": 679,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "status"
+        ],
+        "range": {
+          "start": {
+            "line": 680,
+            "character": 15
+          },
+          "end": {
+            "line": 686,
+            "character": 17
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "detail"
+        ],
+        "range": {
+          "start": {
+            "line": 687,
+            "character": 15
+          },
+          "end": {
+            "line": 690,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "instance"
+        ],
+        "range": {
+          "start": {
+            "line": 691,
+            "character": 17
+          },
+          "end": {
+            "line": 695,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "parameter"
+        ],
+        "range": {
+          "start": {
+            "line": 696,
+            "character": 18
+          },
+          "end": {
+            "line": 699,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "slug"
+        ],
+        "range": {
+          "start": {
+            "line": 709,
+            "character": 13
+          },
+          "end": {
+            "line": 713,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "name"
+        ],
+        "range": {
+          "start": {
+            "line": 714,
+            "character": 13
+          },
+          "end": {
+            "line": 716,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "description"
+        ],
+        "range": {
+          "start": {
+            "line": 717,
+            "character": 20
+          },
+          "end": {
+            "line": 719,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "api_count"
+        ],
+        "range": {
+          "start": {
+            "line": 720,
+            "character": 18
+          },
+          "end": {
+            "line": 722,
+            "character": 23
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "image"
+        ],
+        "range": {
+          "start": {
+            "line": 723,
+            "character": 14
+          },
+          "end": {
+            "line": 726,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "created"
+        ],
+        "range": {
+          "start": {
+            "line": 727,
+            "character": 16
+          },
+          "end": {
+            "line": 730,
+            "character": 23
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "common"
+        ],
+        "range": {
+          "start": {
+            "line": 731,
+            "character": 15
+          },
+          "end": {
+            "line": 736,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "apis"
+        ],
+        "range": {
+          "start": {
+            "line": 737,
+            "character": 13
+          },
+          "end": {
+            "line": 752,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Provider",
+          "properties",
+          "tags"
+        ],
+        "range": {
+          "start": {
+            "line": 753,
+            "character": 13
+          },
+          "end": {
+            "line": 762,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "schema-description-recommended",
+        "message": "Component schemas should have descriptions",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderList"
+        ],
+        "range": {
+          "start": {
+            "line": 768,
+            "character": 17
+          },
+          "end": {
+            "line": 780,
+            "character": 14
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderList",
+          "properties",
+          "data"
+        ],
+        "range": {
+          "start": {
+            "line": 773,
+            "character": 13
+          },
+          "end": {
+            "line": 777,
+            "character": 24
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore"
+        ],
+        "range": {
+          "start": {
+            "line": 781,
+            "character": 18
+          },
+          "end": {
+            "line": 819,
+            "character": 14
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore",
+          "properties",
+          "composite"
+        ],
+        "range": {
+          "start": {
+            "line": 785,
+            "character": 18
+          },
+          "end": {
+            "line": 791,
+            "character": 18
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore",
+          "properties",
+          "delta"
+        ],
+        "range": {
+          "start": {
+            "line": 796,
+            "character": 14
+          },
+          "end": {
+            "line": 801,
+            "character": 29
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore",
+          "properties",
+          "previous_composite"
+        ],
+        "range": {
+          "start": {
+            "line": 802,
+            "character": 27
+          },
+          "end": {
+            "line": 805,
+            "character": 22
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore",
+          "properties",
+          "scored_at"
+        ],
+        "range": {
+          "start": {
+            "line": 806,
+            "character": 18
+          },
+          "end": {
+            "line": 809,
+            "character": 23
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "ProviderScore",
+          "properties",
+          "schema_version"
+        ],
+        "range": {
+          "start": {
+            "line": 810,
+            "character": 23
+          },
+          "end": {
+            "line": 814,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Trend"
+        ],
+        "range": {
+          "start": {
+            "line": 820,
+            "character": 10
+          },
+          "end": {
+            "line": 827,
+            "character": 21
+          }
+        },
+        "source": "document"
+      }
+    ]
+  },
+  "coverage": {
+    "format": "openapi",
+    "nodes": [
+      {
+        "pointer": "/info",
+        "section": "info",
+        "label": "info"
+      },
+      {
+        "pointer": "/servers/0",
+        "section": "servers",
+        "label": "server 0"
+      },
+      {
+        "pointer": "/tags/0",
+        "section": "tags",
+        "label": "tag: Providers"
+      },
+      {
+        "pointer": "/paths/~1providers",
+        "section": "paths",
+        "label": "path: /providers"
+      },
+      {
+        "pointer": "/paths/~1providers/get",
+        "section": "operations",
+        "label": "GET /providers"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/1",
+        "section": "parameters",
+        "label": "param: 1"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/2",
+        "section": "parameters",
+        "label": "param: 2"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/3",
+        "section": "parameters",
+        "label": "param: 3"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/4",
+        "section": "parameters",
+        "label": "param: 4"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/5",
+        "section": "parameters",
+        "label": "param: 5"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/6",
+        "section": "parameters",
+        "label": "param: 6"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/7",
+        "section": "parameters",
+        "label": "param: 7"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/8",
+        "section": "parameters",
+        "label": "param: 8"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/9",
+        "section": "parameters",
+        "label": "param: 9"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/10",
+        "section": "parameters",
+        "label": "param: 10"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/11",
+        "section": "parameters",
+        "label": "param: 11"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/12",
+        "section": "parameters",
+        "label": "param: sort"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/13",
+        "section": "parameters",
+        "label": "param: 13"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/14",
+        "section": "parameters",
+        "label": "param: 14"
+      },
+      {
+        "pointer": "/paths/~1providers/get/parameters/15",
+        "section": "parameters",
+        "label": "param: 15"
+      },
+      {
+        "pointer": "/paths/~1providers/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}",
+        "section": "paths",
+        "label": "path: /providers/{slug}"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get",
+        "section": "operations",
+        "label": "GET /providers/{slug}"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get/parameters/1",
+        "section": "parameters",
+        "label": "param: 1"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis",
+        "section": "paths",
+        "label": "path: /providers/{slug}/apis"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get",
+        "section": "operations",
+        "label": "GET /providers/{slug}/apis"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/1",
+        "section": "parameters",
+        "label": "param: 1"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/2",
+        "section": "parameters",
+        "label": "param: 2"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/3",
+        "section": "parameters",
+        "label": "param: 3"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/4",
+        "section": "parameters",
+        "label": "param: 4"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/5",
+        "section": "parameters",
+        "label": "param: 5"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/6",
+        "section": "parameters",
+        "label": "param: 6"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/parameters/7",
+        "section": "parameters",
+        "label": "param: 7"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1apis/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts",
+        "section": "paths",
+        "label": "path: /providers/{slug}/artifacts"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts/get",
+        "section": "operations",
+        "label": "GET /providers/{slug}/artifacts"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1artifacts/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding",
+        "section": "paths",
+        "label": "path: /providers/{slug}/onboarding"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding/get",
+        "section": "operations",
+        "label": "GET /providers/{slug}/onboarding"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1onboarding/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar",
+        "section": "paths",
+        "label": "path: /providers/{slug}/similar"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get",
+        "section": "operations",
+        "label": "GET /providers/{slug}/similar"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get/parameters/0",
+        "section": "parameters",
+        "label": "param: 0"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get/parameters/1",
+        "section": "parameters",
+        "label": "param: 1"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1providers~1{slug}~1similar/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/components/schemas/Api",
+        "section": "schemas",
+        "label": "schema: Api"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/aid",
+        "section": "properties",
+        "label": "property: aid"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/name",
+        "section": "properties",
+        "label": "property: name"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/description",
+        "section": "properties",
+        "label": "property: description"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/provider_slug",
+        "section": "properties",
+        "label": "property: provider_slug"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/provider_name",
+        "section": "properties",
+        "label": "property: provider_name"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/baseURL",
+        "section": "properties",
+        "label": "property: baseURL"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/humanURL",
+        "section": "properties",
+        "label": "property: humanURL"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/tags",
+        "section": "properties",
+        "label": "property: tags"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/properties",
+        "section": "properties",
+        "label": "property: properties"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/sibling_apis",
+        "section": "properties",
+        "label": "property: sibling_apis"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/sibling_apis/items/properties/name",
+        "section": "properties",
+        "label": "property: name"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/sibling_apis/items/properties/slug",
+        "section": "properties",
+        "label": "property: slug"
+      },
+      {
+        "pointer": "/components/schemas/Api/properties/overview",
+        "section": "properties",
+        "label": "property: overview"
+      },
+      {
+        "pointer": "/components/schemas/ApiList",
+        "section": "schemas",
+        "label": "schema: ApiList"
+      },
+      {
+        "pointer": "/components/schemas/ApiList/properties/meta",
+        "section": "properties",
+        "label": "property: meta"
+      },
+      {
+        "pointer": "/components/schemas/ApiList/properties/data",
+        "section": "properties",
+        "label": "property: data"
+      },
+      {
+        "pointer": "/components/schemas/Artifact",
+        "section": "schemas",
+        "label": "schema: Artifact"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/id",
+        "section": "properties",
+        "label": "property: id"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/type",
+        "section": "properties",
+        "label": "property: type"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/name",
+        "section": "properties",
+        "label": "property: name"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/url",
+        "section": "properties",
+        "label": "property: url"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/aid",
+        "section": "properties",
+        "label": "property: aid"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/provider_slug",
+        "section": "properties",
+        "label": "property: provider_slug"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/provider_name",
+        "section": "properties",
+        "label": "property: provider_name"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/content",
+        "section": "properties",
+        "label": "property: content"
+      },
+      {
+        "pointer": "/components/schemas/Artifact/properties/content_type",
+        "section": "properties",
+        "label": "property: content_type"
+      },
+      {
+        "pointer": "/components/schemas/ArtifactType",
+        "section": "schemas",
+        "label": "schema: ArtifactType"
+      },
+      {
+        "pointer": "/components/schemas/Band",
+        "section": "schemas",
+        "label": "schema: Band"
+      },
+      {
+        "pointer": "/components/schemas/FacetName",
+        "section": "schemas",
+        "label": "schema: FacetName"
+      },
+      {
+        "pointer": "/components/schemas/Facets",
+        "section": "schemas",
+        "label": "schema: Facets"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/discoverability",
+        "section": "properties",
+        "label": "property: discoverability"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/contract_quality",
+        "section": "properties",
+        "label": "property: contract_quality"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/governance",
+        "section": "properties",
+        "label": "property: governance"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/operational_transparency",
+        "section": "properties",
+        "label": "property: operational_transparency"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/developer_ergonomics",
+        "section": "properties",
+        "label": "property: developer_ergonomics"
+      },
+      {
+        "pointer": "/components/schemas/Facets/properties/commercial_clarity",
+        "section": "properties",
+        "label": "property: commercial_clarity"
+      },
+      {
+        "pointer": "/components/schemas/Link",
+        "section": "schemas",
+        "label": "schema: Link"
+      },
+      {
+        "pointer": "/components/schemas/Link/properties/type",
+        "section": "properties",
+        "label": "property: type"
+      },
+      {
+        "pointer": "/components/schemas/Link/properties/url",
+        "section": "properties",
+        "label": "property: url"
+      },
+      {
+        "pointer": "/components/schemas/Link/properties/title",
+        "section": "properties",
+        "label": "property: title"
+      },
+      {
+        "pointer": "/components/schemas/Meta",
+        "section": "schemas",
+        "label": "schema: Meta"
+      },
+      {
+        "pointer": "/components/schemas/Meta/properties/total",
+        "section": "properties",
+        "label": "property: total"
+      },
+      {
+        "pointer": "/components/schemas/Meta/properties/page",
+        "section": "properties",
+        "label": "property: page"
+      },
+      {
+        "pointer": "/components/schemas/Meta/properties/limit",
+        "section": "properties",
+        "label": "property: limit"
+      },
+      {
+        "pointer": "/components/schemas/Meta/properties/pages",
+        "section": "properties",
+        "label": "property: pages"
+      },
+      {
+        "pointer": "/components/schemas/Meta/properties/query",
+        "section": "properties",
+        "label": "property: query"
+      },
+      {
+        "pointer": "/components/schemas/Problem",
+        "section": "schemas",
+        "label": "schema: Problem"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/type",
+        "section": "properties",
+        "label": "property: type"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/title",
+        "section": "properties",
+        "label": "property: title"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/status",
+        "section": "properties",
+        "label": "property: status"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/detail",
+        "section": "properties",
+        "label": "property: detail"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/instance",
+        "section": "properties",
+        "label": "property: instance"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/parameter",
+        "section": "properties",
+        "label": "property: parameter"
+      },
+      {
+        "pointer": "/components/schemas/Provider",
+        "section": "schemas",
+        "label": "schema: Provider"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/slug",
+        "section": "properties",
+        "label": "property: slug"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/name",
+        "section": "properties",
+        "label": "property: name"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/description",
+        "section": "properties",
+        "label": "property: description"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/api_count",
+        "section": "properties",
+        "label": "property: api_count"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/image",
+        "section": "properties",
+        "label": "property: image"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/created",
+        "section": "properties",
+        "label": "property: created"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/common",
+        "section": "properties",
+        "label": "property: common"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/apis",
+        "section": "properties",
+        "label": "property: apis"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/apis/items/properties/name",
+        "section": "properties",
+        "label": "property: name"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/apis/items/properties/slug",
+        "section": "properties",
+        "label": "property: slug"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/apis/items/properties/description",
+        "section": "properties",
+        "label": "property: description"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/tags",
+        "section": "properties",
+        "label": "property: tags"
+      },
+      {
+        "pointer": "/components/schemas/Provider/properties/score",
+        "section": "properties",
+        "label": "property: score"
+      },
+      {
+        "pointer": "/components/schemas/ProviderList",
+        "section": "schemas",
+        "label": "schema: ProviderList"
+      },
+      {
+        "pointer": "/components/schemas/ProviderList/properties/meta",
+        "section": "properties",
+        "label": "property: meta"
+      },
+      {
+        "pointer": "/components/schemas/ProviderList/properties/data",
+        "section": "properties",
+        "label": "property: data"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore",
+        "section": "schemas",
+        "label": "schema: ProviderScore"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/composite",
+        "section": "properties",
+        "label": "property: composite"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/band",
+        "section": "properties",
+        "label": "property: band"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/trend",
+        "section": "properties",
+        "label": "property: trend"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/delta",
+        "section": "properties",
+        "label": "property: delta"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/previous_composite",
+        "section": "properties",
+        "label": "property: previous_composite"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/scored_at",
+        "section": "properties",
+        "label": "property: scored_at"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/schema_version",
+        "section": "properties",
+        "label": "property: schema_version"
+      },
+      {
+        "pointer": "/components/schemas/ProviderScore/properties/facets",
+        "section": "properties",
+        "label": "property: facets"
+      },
+      {
+        "pointer": "/components/schemas/Trend",
+        "section": "schemas",
+        "label": "schema: Trend"
+      },
+      {
+        "pointer": "/components/parameters/ArtifactTypes",
+        "section": "parameters",
+        "label": "param: ArtifactTypes"
+      },
+      {
+        "pointer": "/components/parameters/BandFilter",
+        "section": "parameters",
+        "label": "param: BandFilter"
+      },
+      {
+        "pointer": "/components/parameters/FacetFilter",
+        "section": "parameters",
+        "label": "param: FacetFilter"
+      },
+      {
+        "pointer": "/components/parameters/Fields",
+        "section": "parameters",
+        "label": "param: Fields"
+      },
+      {
+        "pointer": "/components/parameters/Include",
+        "section": "parameters",
+        "label": "param: Include"
+      },
+      {
+        "pointer": "/components/parameters/IndustryFilter",
+        "section": "parameters",
+        "label": "param: IndustryFilter"
+      },
+      {
+        "pointer": "/components/parameters/Limit",
+        "section": "parameters",
+        "label": "param: Limit"
+      },
+      {
+        "pointer": "/components/parameters/Match",
+        "section": "parameters",
+        "label": "param: Match"
+      },
+      {
+        "pointer": "/components/parameters/MaxScore",
+        "section": "parameters",
+        "label": "param: MaxScore"
+      },
+      {
+        "pointer": "/components/parameters/MinFacet",
+        "section": "parameters",
+        "label": "param: MinFacet"
+      },
+      {
+        "pointer": "/components/parameters/MinScore",
+        "section": "parameters",
+        "label": "param: MinScore"
+      },
+      {
+        "pointer": "/components/parameters/Page",
+        "section": "parameters",
+        "label": "param: Page"
+      },
+      {
+        "pointer": "/components/parameters/ProviderSlug",
+        "section": "parameters",
+        "label": "param: ProviderSlug"
+      },
+      {
+        "pointer": "/components/parameters/Q",
+        "section": "parameters",
+        "label": "param: Q"
+      },
+      {
+        "pointer": "/components/parameters/RegionFilter",
+        "section": "parameters",
+        "label": "param: RegionFilter"
+      },
+      {
+        "pointer": "/components/parameters/Tags",
+        "section": "parameters",
+        "label": "param: Tags"
+      },
+      {
+        "pointer": "/components/parameters/TrendFilter",
+        "section": "parameters",
+        "label": "param: TrendFilter"
+      },
+      {
+        "pointer": "/components/responses/BadRequest",
+        "section": "responses",
+        "label": "response: BadRequest"
+      },
+      {
+        "pointer": "/components/responses/NotFound",
+        "section": "responses",
+        "label": "response: NotFound"
+      }
+    ],
+    "nodeRules": {},
+    "totalNodes": 163,
+    "coveredNodes": 153,
+    "coveragePct": 94,
+    "avgRules": 2.6666666666666665,
+    "thinNodes": 26,
+    "sections": [
+      {
+        "section": "info",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 5
+      },
+      {
+        "section": "servers",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "tags",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "paths",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "operations",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 13
+      },
+      {
+        "section": "parameters",
+        "total": 47,
+        "covered": 47,
+        "pct": 100,
+        "avgRules": 1.702127659574468
+      },
+      {
+        "section": "mediaTypes",
+        "total": 6,
+        "covered": 0,
+        "pct": 0,
+        "avgRules": 0
+      },
+      {
+        "section": "responses",
+        "total": 14,
+        "covered": 14,
+        "pct": 100,
+        "avgRules": 1.4285714285714286
+      },
+      {
+        "section": "schemas",
+        "total": 14,
+        "covered": 14,
+        "pct": 100,
+        "avgRules": 3.5
+      },
+      {
+        "section": "properties",
+        "total": 67,
+        "covered": 63,
+        "pct": 94,
+        "avgRules": 2.5238095238095237
+      }
+    ],
+    "ruleReach": [
+      {
+        "id": "no-empty-descriptions",
+        "title": "no-empty-descriptions",
+        "reach": 81,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-properties-snake-case",
+        "title": "schema-properties-snake-case",
+        "reach": 62,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "examples-on-schemas",
+        "title": "examples-on-schemas",
+        "reach": 62,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-description-required",
+        "title": "parameter-description-required",
+        "reach": 30,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-schema-required",
+        "title": "parameter-schema-required",
+        "reach": 30,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-description-recommended",
+        "title": "schema-description-recommended",
+        "reach": 14,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-type-defined",
+        "title": "schema-type-defined",
+        "reach": 14,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-description-required",
+        "title": "response-description-required",
+        "reach": 12,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-properties-casing",
+        "title": "schema-properties-casing",
+        "reach": 10,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "paths-kebab-case",
+        "title": "paths-kebab-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "paths-no-trailing-slash",
+        "title": "paths-no-trailing-slash",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-required",
+        "title": "operation-summary-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-prefix",
+        "title": "operation-summary-prefix",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-title-case",
+        "title": "operation-summary-title-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-description-required",
+        "title": "operation-description-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-id-required",
+        "title": "operation-id-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-id-camel-case",
+        "title": "operation-id-camel-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-tags-required",
+        "title": "operation-tags-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-200-required",
+        "title": "response-200-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-400-recommended",
+        "title": "response-400-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-401-recommended",
+        "title": "response-401-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-500-recommended",
+        "title": "response-500-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "get-no-request-body",
+        "title": "get-no-request-body",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-title-format",
+        "title": "info-title-format",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-description-required",
+        "title": "info-description-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-version-required",
+        "title": "info-version-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-contact-required",
+        "title": "info-contact-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-https-only",
+        "title": "servers-https-only",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "tag-description-required",
+        "title": "tag-description-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-names-snake-case",
+        "title": "parameter-names-snake-case",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-expected-domain",
+        "title": "servers-expected-domain",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "query-params-casing",
+        "title": "query-params-casing",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "openapi-version-31",
+        "title": "openapi-version-31",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-defined",
+        "title": "servers-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "tags-defined",
+        "title": "tags-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "request-body-description-required",
+        "title": "request-body-description-required",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-json-content",
+        "title": "request-body-json-content",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "components-security-schemes-defined",
+        "title": "components-security-schemes-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "post-has-request-body",
+        "title": "post-has-request-body",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "apis-json-format-validation",
+        "title": "apis-json-format-validation",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "path-params-casing",
+        "title": "path-params-casing",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "schema-names-casing",
+        "title": "schema-names-casing",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      }
+    ],
+    "deadRules": [
+      {
+        "id": "apis-json-format-validation",
+        "title": "apis-json-format-validation",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "path-params-casing",
+        "title": "path-params-casing",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "post-has-request-body",
+        "title": "post-has-request-body",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-description-required",
+        "title": "request-body-description-required",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-json-content",
+        "title": "request-body-json-content",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      }
+    ],
+    "gatedRules": 0,
+    "totalRules": 42,
+    "activeRules": 42,
+    "unresolvedGivens": 0
+  },
+  "scorecard": {
+    "overall": 98,
+    "grade": "A",
+    "dimensions": [
+      {
+        "name": "Design & style",
+        "score": 98,
+        "weight": 0.25,
+        "detail": "0 errors, 25 warnings over 163 governed nodes (0.2 warnings/node)"
+      },
+      {
+        "name": "Governance coverage",
+        "score": 94,
+        "weight": 0.15,
+        "detail": "94% of the description is inspected by the ruleset"
+      },
+      {
+        "name": "Documentation",
+        "score": 100,
+        "weight": 0.2,
+        "detail": "5/5 info fields, 100% of operations described"
+      }
+    ]
+  }
+}

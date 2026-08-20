@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io Venture Capital API
-  version: 1.4.0
+  version: 1.5.0
   description: |-
     Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
 

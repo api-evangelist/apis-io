@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.4.0
+  version: 1.5.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions
     — with a free discovery tier and a Pro synthesis tier.
   description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\nThe catalog\
@@ -3333,6 +3333,140 @@ paths:
             application/json:
               schema:
                 type: object
+  /providers/{slug}/operations:
+    get:
+      operationId: getProviderOperations
+      x-tier: free
+      x-mcp-tool: get_provider_operations
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every operation a provider exposes.
+      description: 'All operations across all of a provider''s OpenAPIs in one call — method, path, operationId,
+        summary, the API each belongs to, and deprecation. The shortcut for "what can I actually call here?", which
+        otherwise means fetching and parsing every spec they publish (159 documents for Stripe).
+
+
+        Where the provider publishes agentic-access, each operation carries its action class and consequence — the
+        difference between a read and something that moves money — and `meta.coverage` states how many operations
+        have it. An operation WITHOUT an `agentic` block was not profiled; that is not the same as safe.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: method
+        in: query
+        schema:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - HEAD
+          - OPTIONS
+      - name: api
+        in: query
+        schema:
+          type: string
+        description: Restrict to one API, by aid or api slug.
+      - name: path
+        in: query
+        schema:
+          type: string
+        description: Substring match on the operation path.
+      - name: consequence
+        in: query
+        schema:
+          type: string
+        description: Agentic consequence, e.g. read.
+      - name: action_class
+        in: query
+        schema:
+          type: string
+      - name: deprecated
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+        description: Only operations the provider marks deprecated.
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every operation a provider exposes.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404': &id006
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/tools:
+    get:
+      operationId: getProviderTools
+      x-tier: free
+      x-mcp-tool: get_provider_tools
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every MCP tool a provider ships.
+      description: 'Each tool with the operation it wraps and its auth, plus provenance: `first-party` means the
+        provider publishes that server; `derived` means API Evangelist generated a candidate tool list from their
+        OpenAPI because no hosted server was found. Filter `?provenance=first-party` for a true picture — counting
+        derived tools as the provider''s own is what overstates MCP adoption across the catalog.
+
+
+        A server whose tools could not be enumerated (auth-gated, for instance) appears in `meta.coverage.not_enumerable`
+        with the reason, rather than being silently counted as zero.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: provenance
+        in: query
+        schema:
+          type: string
+          enum:
+          - first-party
+          - derived
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every MCP tool a provider ships.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404': *id006
+  /providers/{slug}/schema:
+    get:
+      operationId: getProviderSchema
+      x-tier: free
+      x-mcp-tool: get_provider_schema
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every JSON Schema a provider publishes.
+      description: The data shapes a provider's API works in, in one list, without walking their artifacts.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every JSON Schema a provider publishes.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404': *id006
 components:
   securitySchemes:
     ApiKeyAuth:

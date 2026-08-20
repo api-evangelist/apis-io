@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io Industries API
-  version: 1.4.0
+  version: 1.5.0
   description: |-
     Industry verticals grouping providers across the catalog.
 

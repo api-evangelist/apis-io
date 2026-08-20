@@ -1,0 +1,1328 @@
+{
+  "api": "APIs.io Synthesis API",
+  "file": "openapi/apis-io-v1-synthesis-openapi.yml",
+  "operations": 6,
+  "lint": {
+    "format": "openapi",
+    "ruleCount": 42,
+    "passed": true,
+    "summary": {
+      "error": 0,
+      "warning": 19,
+      "info": 7,
+      "hint": 0,
+      "total": 26
+    },
+    "diagnostics": [
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/compare",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 29,
+            "character": 15
+          },
+          "end": {
+            "line": 29,
+            "character": 52
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/compare",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 39,
+            "character": 16
+          },
+          "end": {
+            "line": 50,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/compare",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 39,
+            "character": 16
+          },
+          "end": {
+            "line": 50,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 59,
+            "character": 15
+          },
+          "end": {
+            "line": 59,
+            "character": 75
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 75,
+            "character": 16
+          },
+          "end": {
+            "line": 86,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 75,
+            "character": 16
+          },
+          "end": {
+            "line": 86,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/changes",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 95,
+            "character": 15
+          },
+          "end": {
+            "line": 95,
+            "character": 62
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/changes",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 107,
+            "character": 16
+          },
+          "end": {
+            "line": 118,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/changes",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 107,
+            "character": 16
+          },
+          "end": {
+            "line": 118,
+            "character": 56
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 127,
+            "character": 15
+          },
+          "end": {
+            "line": 127,
+            "character": 61
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 143,
+            "character": 16
+          },
+          "end": {
+            "line": 152,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 143,
+            "character": 16
+          },
+          "end": {
+            "line": 152,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps/industry/{slug}",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 163,
+            "character": 15
+          },
+          "end": {
+            "line": 163,
+            "character": 53
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-400-recommended",
+        "message": "Operations should include a 400 Bad Request response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps/industry/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 179,
+            "character": 16
+          },
+          "end": {
+            "line": 188,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps/industry/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 179,
+            "character": 16
+          },
+          "end": {
+            "line": 188,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/gaps/industry/{slug}",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 179,
+            "character": 16
+          },
+          "end": {
+            "line": 188,
+            "character": 49
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "operation-summary-prefix",
+        "message": "Operation summaries should start with \"APIs.io\"",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack/export",
+          "get",
+          "summary"
+        ],
+        "range": {
+          "start": {
+            "line": 198,
+            "character": 15
+          },
+          "end": {
+            "line": 198,
+            "character": 52
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-401-recommended",
+        "message": "Operations should include a 401 Unauthorized response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack/export",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 214,
+            "character": 16
+          },
+          "end": {
+            "line": 223,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "response-500-recommended",
+        "message": "Operations should include a 500 Internal Server Error response",
+        "severity": "warning",
+        "path": [
+          "paths",
+          "/stack/export",
+          "get",
+          "responses"
+        ],
+        "range": {
+          "start": {
+            "line": 214,
+            "character": 16
+          },
+          "end": {
+            "line": 223,
+            "character": 51
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "components-security-schemes-defined",
+        "message": "Security schemes should be defined in components",
+        "severity": "info",
+        "path": [
+          "components"
+        ],
+        "range": {
+          "start": {
+            "line": 224,
+            "character": 11
+          },
+          "end": {
+            "line": 319,
+            "character": 32
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "type"
+        ],
+        "range": {
+          "start": {
+            "line": 281,
+            "character": 13
+          },
+          "end": {
+            "line": 288,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "title"
+        ],
+        "range": {
+          "start": {
+            "line": 289,
+            "character": 14
+          },
+          "end": {
+            "line": 294,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "status"
+        ],
+        "range": {
+          "start": {
+            "line": 295,
+            "character": 15
+          },
+          "end": {
+            "line": 301,
+            "character": 17
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "detail"
+        ],
+        "range": {
+          "start": {
+            "line": 302,
+            "character": 15
+          },
+          "end": {
+            "line": 305,
+            "character": 26
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "instance"
+        ],
+        "range": {
+          "start": {
+            "line": 306,
+            "character": 17
+          },
+          "end": {
+            "line": 310,
+            "character": 25
+          }
+        },
+        "source": "document"
+      },
+      {
+        "code": "examples-on-schemas",
+        "message": "Schema properties should include examples",
+        "severity": "info",
+        "path": [
+          "components",
+          "schemas",
+          "Problem",
+          "properties",
+          "parameter"
+        ],
+        "range": {
+          "start": {
+            "line": 311,
+            "character": 18
+          },
+          "end": {
+            "line": 314,
+            "character": 25
+          }
+        },
+        "source": "document"
+      }
+    ]
+  },
+  "coverage": {
+    "format": "openapi",
+    "nodes": [
+      {
+        "pointer": "/info",
+        "section": "info",
+        "label": "info"
+      },
+      {
+        "pointer": "/servers/0",
+        "section": "servers",
+        "label": "server 0"
+      },
+      {
+        "pointer": "/tags/0",
+        "section": "tags",
+        "label": "tag: Synthesis"
+      },
+      {
+        "pointer": "/paths/~1compare",
+        "section": "paths",
+        "label": "path: /compare"
+      },
+      {
+        "pointer": "/paths/~1compare/get",
+        "section": "operations",
+        "label": "GET /compare"
+      },
+      {
+        "pointer": "/paths/~1compare/get/parameters/0",
+        "section": "parameters",
+        "label": "param: providers"
+      },
+      {
+        "pointer": "/paths/~1compare/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1compare/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1compare/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/paths/~1compare/get/responses/403",
+        "section": "responses",
+        "label": "response 403"
+      },
+      {
+        "pointer": "/paths/~1gaps",
+        "section": "paths",
+        "label": "path: /gaps"
+      },
+      {
+        "pointer": "/paths/~1gaps/get",
+        "section": "operations",
+        "label": "GET /gaps"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/parameters/0",
+        "section": "parameters",
+        "label": "param: providers"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/parameters/1",
+        "section": "parameters",
+        "label": "param: min_share"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/paths/~1gaps/get/responses/403",
+        "section": "responses",
+        "label": "response 403"
+      },
+      {
+        "pointer": "/paths/~1changes",
+        "section": "paths",
+        "label": "path: /changes"
+      },
+      {
+        "pointer": "/paths/~1changes/get",
+        "section": "operations",
+        "label": "GET /changes"
+      },
+      {
+        "pointer": "/paths/~1changes/get/parameters/0",
+        "section": "parameters",
+        "label": "param: since"
+      },
+      {
+        "pointer": "/paths/~1changes/get/parameters/1",
+        "section": "parameters",
+        "label": "param: 1"
+      },
+      {
+        "pointer": "/paths/~1changes/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1changes/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1changes/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/paths/~1changes/get/responses/403",
+        "section": "responses",
+        "label": "response 403"
+      },
+      {
+        "pointer": "/paths/~1stack",
+        "section": "paths",
+        "label": "path: /stack"
+      },
+      {
+        "pointer": "/paths/~1stack/get",
+        "section": "operations",
+        "label": "GET /stack"
+      },
+      {
+        "pointer": "/paths/~1stack/get/parameters/0",
+        "section": "parameters",
+        "label": "param: capabilities"
+      },
+      {
+        "pointer": "/paths/~1stack/get/parameters/1",
+        "section": "parameters",
+        "label": "param: region"
+      },
+      {
+        "pointer": "/paths/~1stack/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1stack/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1stack/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}",
+        "section": "paths",
+        "label": "path: /gaps/industry/{slug}"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get",
+        "section": "operations",
+        "label": "GET /gaps/industry/{slug}"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get/parameters/0",
+        "section": "parameters",
+        "label": "param: slug"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get/parameters/1",
+        "section": "parameters",
+        "label": "param: min_share"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1gaps~1industry~1{slug}/get/responses/404",
+        "section": "responses",
+        "label": "response 404"
+      },
+      {
+        "pointer": "/paths/~1stack~1export",
+        "section": "paths",
+        "label": "path: /stack/export"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get",
+        "section": "operations",
+        "label": "GET /stack/export"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get/parameters/0",
+        "section": "parameters",
+        "label": "param: capabilities"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get/parameters/1",
+        "section": "parameters",
+        "label": "param: region"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get/responses/200",
+        "section": "responses",
+        "label": "response 200"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get/responses/200/content/application~1json",
+        "section": "mediaTypes",
+        "label": "media: application/json"
+      },
+      {
+        "pointer": "/paths/~1stack~1export/get/responses/400",
+        "section": "responses",
+        "label": "response 400"
+      },
+      {
+        "pointer": "/components/schemas/Problem",
+        "section": "schemas",
+        "label": "schema: Problem"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/type",
+        "section": "properties",
+        "label": "property: type"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/title",
+        "section": "properties",
+        "label": "property: title"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/status",
+        "section": "properties",
+        "label": "property: status"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/detail",
+        "section": "properties",
+        "label": "property: detail"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/instance",
+        "section": "properties",
+        "label": "property: instance"
+      },
+      {
+        "pointer": "/components/schemas/Problem/properties/parameter",
+        "section": "properties",
+        "label": "property: parameter"
+      },
+      {
+        "pointer": "/components/parameters/Limit",
+        "section": "parameters",
+        "label": "param: Limit"
+      },
+      {
+        "pointer": "/components/responses/BadRequest",
+        "section": "responses",
+        "label": "response: BadRequest"
+      },
+      {
+        "pointer": "/components/responses/NotFound",
+        "section": "responses",
+        "label": "response: NotFound"
+      },
+      {
+        "pointer": "/components/responses/UpgradeRequired",
+        "section": "responses",
+        "label": "response: UpgradeRequired"
+      }
+    ],
+    "nodeRules": {},
+    "totalNodes": 58,
+    "coveredNodes": 52,
+    "coveragePct": 90,
+    "avgRules": 3.8076923076923075,
+    "thinNodes": 13,
+    "sections": [
+      {
+        "section": "info",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 5
+      },
+      {
+        "section": "servers",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "tags",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "paths",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "operations",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 13
+      },
+      {
+        "section": "parameters",
+        "total": 12,
+        "covered": 12,
+        "pct": 100,
+        "avgRules": 4.333333333333333
+      },
+      {
+        "section": "mediaTypes",
+        "total": 6,
+        "covered": 0,
+        "pct": 0,
+        "avgRules": 0
+      },
+      {
+        "section": "responses",
+        "total": 18,
+        "covered": 18,
+        "pct": 100,
+        "avgRules": 1.3333333333333333
+      },
+      {
+        "section": "schemas",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 4
+      },
+      {
+        "section": "properties",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 3
+      }
+    ],
+    "ruleReach": [
+      {
+        "id": "no-empty-descriptions",
+        "title": "no-empty-descriptions",
+        "reach": 36,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-description-required",
+        "title": "response-description-required",
+        "reach": 15,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-description-required",
+        "title": "parameter-description-required",
+        "reach": 11,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-schema-required",
+        "title": "parameter-schema-required",
+        "reach": 11,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "parameter-names-snake-case",
+        "title": "parameter-names-snake-case",
+        "reach": 10,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "query-params-casing",
+        "title": "query-params-casing",
+        "reach": 9,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "paths-kebab-case",
+        "title": "paths-kebab-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "paths-no-trailing-slash",
+        "title": "paths-no-trailing-slash",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-required",
+        "title": "operation-summary-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-prefix",
+        "title": "operation-summary-prefix",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-summary-title-case",
+        "title": "operation-summary-title-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-description-required",
+        "title": "operation-description-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-id-required",
+        "title": "operation-id-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-id-camel-case",
+        "title": "operation-id-camel-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "operation-tags-required",
+        "title": "operation-tags-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-200-required",
+        "title": "response-200-required",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-400-recommended",
+        "title": "response-400-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-401-recommended",
+        "title": "response-401-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "response-500-recommended",
+        "title": "response-500-recommended",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-properties-snake-case",
+        "title": "schema-properties-snake-case",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "get-no-request-body",
+        "title": "get-no-request-body",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "examples-on-schemas",
+        "title": "examples-on-schemas",
+        "reach": 6,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-title-format",
+        "title": "info-title-format",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-description-required",
+        "title": "info-description-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-version-required",
+        "title": "info-version-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "info-contact-required",
+        "title": "info-contact-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-https-only",
+        "title": "servers-https-only",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "tag-description-required",
+        "title": "tag-description-required",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-description-recommended",
+        "title": "schema-description-recommended",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-type-defined",
+        "title": "schema-type-defined",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-expected-domain",
+        "title": "servers-expected-domain",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "schema-properties-casing",
+        "title": "schema-properties-casing",
+        "reach": 1,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "openapi-version-31",
+        "title": "openapi-version-31",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "servers-defined",
+        "title": "servers-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "tags-defined",
+        "title": "tags-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "request-body-description-required",
+        "title": "request-body-description-required",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-json-content",
+        "title": "request-body-json-content",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "components-security-schemes-defined",
+        "title": "components-security-schemes-defined",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      },
+      {
+        "id": "post-has-request-body",
+        "title": "post-has-request-body",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "apis-json-format-validation",
+        "title": "apis-json-format-validation",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "path-params-casing",
+        "title": "path-params-casing",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "schema-names-casing",
+        "title": "schema-names-casing",
+        "reach": 0,
+        "matchedAny": true,
+        "gated": false
+      }
+    ],
+    "deadRules": [
+      {
+        "id": "apis-json-format-validation",
+        "title": "apis-json-format-validation",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "path-params-casing",
+        "title": "path-params-casing",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "post-has-request-body",
+        "title": "post-has-request-body",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-description-required",
+        "title": "request-body-description-required",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      },
+      {
+        "id": "request-body-json-content",
+        "title": "request-body-json-content",
+        "reach": 0,
+        "matchedAny": false,
+        "gated": false
+      }
+    ],
+    "gatedRules": 0,
+    "totalRules": 42,
+    "activeRules": 42,
+    "unresolvedGivens": 0
+  },
+  "scorecard": {
+    "overall": 96,
+    "grade": "A",
+    "dimensions": [
+      {
+        "name": "Design & style",
+        "score": 96,
+        "weight": 0.25,
+        "detail": "0 errors, 19 warnings over 58 governed nodes (0.3 warnings/node)"
+      },
+      {
+        "name": "Governance coverage",
+        "score": 90,
+        "weight": 0.15,
+        "detail": "90% of the description is inspected by the ruleset"
+      },
+      {
+        "name": "Documentation",
+        "score": 100,
+        "weight": 0.2,
+        "detail": "5/5 info fields, 100% of operations described"
+      }
+    ]
+  }
+}

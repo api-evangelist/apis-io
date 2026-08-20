@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io Artifact Types API
-  version: 1.4.0
+  version: 1.5.0
   description: |-
     First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
 

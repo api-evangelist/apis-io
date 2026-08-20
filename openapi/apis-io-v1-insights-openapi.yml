@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io Insights API
-  version: 1.4.0
+  version: 1.5.0
   description: |-
     Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
 
