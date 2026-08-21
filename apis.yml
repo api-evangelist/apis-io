@@ -671,6 +671,14 @@ common:
   url: https://apis.io/developer/account
 - type: RateLimits
   url: https://apis.io/developer/rate-limits
+- type: Deprecation
+  url: https://apis.io/developer/deprecation
+- type: Security
+  url: https://apis.io/developer/security
+- type: SecurityTxt
+  url: https://apis.io/.well-known/security.txt
+- type: VulnerabilityDisclosure
+  url: https://apis.io/developer/security
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
