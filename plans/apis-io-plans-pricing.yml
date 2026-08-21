@@ -4,10 +4,25 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: APIs.io
 providerId: apis-io
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+# HARVESTED 2026-08-21 from the provider's own published surface, replacing the
+# 2026-05-04 bulk-sweep scaffold. That scaffold was not merely unverified, it was
+# WRONG about a paid product in every dimension:
+#
+#            scaffold said                    truth
+#   tiers    Free / Professional / Enterprise Free / Starter / Pro / Business
+#   free     10 requests per MINUTE           5 requests per SECOND
+#   free     1,000 per MONTH                  1,000 per DAY
+#   pro      100,000 per MONTH                100,000 per DAY
+#   price    absent / "TBD"                   $0, $0, $49/mo, $199/mo
+#   domain   https://search-api.apis.io       https://apis.io/api/v1 (the old host is NXDOMAIN)
+#
+# Ground truth is the enforced configuration, not any page: the numbers below are
+# the API Gateway usage plans in apis-io-aws/lib/apis-io-stack.js, which agree
+# exactly with https://apis.io/developer/plans. Note the /developer/rate-limits
+# page contradicted BOTH, claiming "there are no per-key quotas in v1" -- it has
+# been corrected in the same pass.
+method: harvested
+modified: '2026-08-21'
 tags:
   - API Aggregation
   - API Directory
@@ -17,138 +32,233 @@ tags:
   - API Search
   - APIs.json
   - Search Engine
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: >-
+  Published plans and pricing for the APIs.io API. Four customer tiers, all metered per API key at
+  the gateway with a per-second rate limit and a rolling daily quota. Free and Starter cost nothing;
+  Starter requires a GitHub sign-in. Paid tiers raise the limits and unlock industries, regions,
+  ratings, Insights depth and the Saved Workspace. Gated resources answer 402 rather than 403.
+x-source:
+  - https://apis.io/developer/plans
+  - https://apis.io/developer/account
+  - apis-io-aws/lib/apis-io-stack.js (API Gateway usage plans — the enforced values)
+x-enforced-by: AWS API Gateway usage plans, keyed on x-api-key via the request authorizer
+x-gated-response: 402
 plans:
   - id: apis-io-free
     name: Free
     type: freemium
-    description: Free entry tier for the APIs.io API surface. Intended for evaluation, prototyping, and
-      low-volume integrations. Real limits and pricing must be reconciled with the provider's published
-      plan documentation.
+    description: >-
+      Keyless default. Every request without a key is metered on this tier. Discovery, search and
+      browse across the catalog; the rated, industry, region and Insights-depth surfaces answer 402.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
+      - label: Rate Limit
+        description: Sustained requests per second, per API key
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 5
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Burst
+        description: Short-term burst ceiling before throttling
+        name: burst
+        type: rate
+        metric: requests_per_second
+        limit: 10
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Daily Quota
+        description: Requests per rolling day, per API key
         name: api_requests
         type: quota
         metric: requests
         limit: 1000
-        timeFrame: month
+        timeFrame: day
         geo: global
-        domains:
-          - https://search-api.apis.io
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://search-api.apis.io
+        domains: [https://apis.io/api/v1]
         unit: 1
         price: '0.00'
         userMultiplied: false
     elements:
-      - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: APIs.io Search API
-  - id: apis-io-pro
-    name: Professional
-    type: paid
-    description: Production tier for APIs.io. Provides higher quotas, priority support, and access to
-      the broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+      - name: Catalog search and browse
+      - name: Provider and API detail
+      - name: Public documentation
+      - name: MCP server
+  - id: apis-io-starter
+    name: Starter
+    type: freemium
+    description: >-
+      Free, but keyed. Sign in with GitHub to issue a Starter key; four times the rate and ten times
+      the daily quota of the keyless tier.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
+      - label: Rate Limit
+        description: Sustained requests per second, per API key
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 20
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Burst
+        description: Short-term burst ceiling before throttling
+        name: burst
+        type: rate
+        metric: requests_per_second
+        limit: 40
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Daily Quota
+        description: Requests per rolling day, per API key
+        name: api_requests
+        type: quota
+        metric: requests
+        limit: 10000
+        timeFrame: day
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Everything in Free
+      - name: GitHub sign-in issued key
+      - name: Saved searches
+  - id: apis-io-pro
+    name: Pro
+    type: paid
+    description: >-
+      Paid tier at $49/month via Stripe, self-serve from the account page. Unlocks industries,
+      regions, ratings, Insights depth and the Saved Workspace.
+    entries:
+      - label: Subscription
+        description: Monthly subscription price
+        name: subscription
+        type: recurring
+        metric: months
+        limit: 1
+        timeFrame: month
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '49.00'
+        userMultiplied: false
+      - label: Rate Limit
+        description: Sustained requests per second, per API key
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 100
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Burst
+        description: Short-term burst ceiling before throttling
+        name: burst
+        type: rate
+        metric: requests_per_second
+        limit: 200
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Daily Quota
+        description: Requests per rolling day, per API key
         name: api_requests
         type: quota
         metric: requests
         limit: 100000
-        timeFrame: month
+        timeFrame: day
         geo: global
-        domains:
-          - https://search-api.apis.io
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://search-api.apis.io
+        domains: [https://apis.io/api/v1]
         unit: 1
         price: '0.00'
         userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
-        limit: -1
+    elements:
+      - name: Everything in Starter
+      - name: Industries
+      - name: Regions
+      - name: Ratings
+      - name: Insights depth
+      - name: Saved Workspace
+  - id: apis-io-business
+    name: Business
+    type: paid
+    description: >-
+      Paid tier at $199/month via Stripe. Same capability set as Pro at four times the rate and ten
+      times the daily quota.
+    entries:
+      - label: Subscription
+        description: Monthly subscription price
+        name: subscription
+        type: recurring
+        metric: months
+        limit: 1
         timeFrame: month
         geo: global
-        domains:
-          - https://search-api.apis.io
-        unit: 1000
-        price: TBD
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '199.00'
         userMultiplied: false
-    elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: APIs.io Search API
-  - id: apis-io-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom-negotiated tier for APIs.io. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
-    entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
+      - label: Rate Limit
+        description: Sustained requests per second, per API key
+        name: rate_limit
+        type: rate
+        metric: requests_per_second
+        limit: 400
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Burst
+        description: Short-term burst ceiling before throttling
+        name: burst
+        type: rate
+        metric: requests_per_second
+        limit: 800
+        timeFrame: second
+        geo: global
+        domains: [https://apis.io/api/v1]
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Daily Quota
+        description: Requests per rolling day, per API key
         name: api_requests
         type: quota
         metric: requests
-        limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://search-api.apis.io
+        limit: 1000000
+        timeFrame: day
+        geo: global
+        domains: [https://apis.io/api/v1]
         unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
-        geo: configurable
-        domains:
-          - https://search-api.apis.io
-        unit: 1
-        price: custom
+        price: '0.00'
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
-      - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: APIs.io Search API
+      - name: Everything in Pro
+      - name: Higher rate and quota
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
