@@ -12,6 +12,20 @@ description: APIs.io is an open-source API search engine and federated discovery
   an APIs.json self-description. It is maintained by API Evangelist and serves both API producers submitting profiles and
   API consumers discovering APIs.
 type: Index
+deliveryModel:
+  model: open-core
+  license: MIT
+  open_source: true
+  commercial: true
+  callable_host: true
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
