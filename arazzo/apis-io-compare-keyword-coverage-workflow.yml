@@ -12,8 +12,8 @@ info:
     comparison is self-describing.
   version: 1.0.0
 sourceDescriptions:
-- name: apisIoSearchApi
-  url: ../openapi/apis-io-search-openapi.yaml
+- name: apisApi
+  url: ../openapi/apis-io-apis-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: compare-keyword-coverage
