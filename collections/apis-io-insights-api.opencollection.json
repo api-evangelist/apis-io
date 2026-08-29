@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights"
+            "url": "https://apis.io/api/v1/insights"
           },
           "docs": "Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free."
         },
@@ -29,7 +29,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/dimensions",
+            "url": "https://apis.io/api/v1/insights/dimensions",
             "params": [
               {
                 "name": "page",
@@ -54,7 +54,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/adoption",
+            "url": "https://apis.io/api/v1/insights/adoption",
             "params": [
               {
                 "name": "type",
@@ -85,7 +85,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/industries"
+            "url": "https://apis.io/api/v1/insights/industries"
           },
           "docs": "Profiled sectors with company counts. Free."
         },
@@ -96,7 +96,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/companies",
+            "url": "https://apis.io/api/v1/insights/companies",
             "params": [
               {
                 "name": "q",
@@ -127,7 +127,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/company/:slug",
+            "url": "https://apis.io/api/v1/insights/company/:slug",
             "params": [
               {
                 "name": "slug",
@@ -146,7 +146,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/company/:slug/gaps",
+            "url": "https://apis.io/api/v1/insights/company/:slug/gaps",
             "params": [
               {
                 "name": "slug",
@@ -164,7 +164,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/insights/company/:slug/match",
+            "url": "https://apis.io/api/v1/insights/company/:slug/match",
             "params": [
               {
                 "name": "slug",

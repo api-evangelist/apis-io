@@ -1088,7 +1088,7 @@
   "variable": [
     {
       "type": "string",
-      "value": "https://search-api.apis.io",
+      "value": "https://apis.io/api/v1",
       "key": "baseUrl"
     }
   ],

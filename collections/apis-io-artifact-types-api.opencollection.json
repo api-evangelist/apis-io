@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/openapis",
+            "url": "https://apis.io/api/v1/openapis",
             "params": [
               {
                 "name": "q",
@@ -79,7 +79,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/asyncapis",
+            "url": "https://apis.io/api/v1/asyncapis",
             "params": [
               {
                 "name": "q",
@@ -140,7 +140,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/arazzo",
+            "url": "https://apis.io/api/v1/arazzo",
             "params": [
               {
                 "name": "q",
@@ -201,7 +201,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/postman",
+            "url": "https://apis.io/api/v1/postman",
             "params": [
               {
                 "name": "q",
@@ -262,7 +262,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/collections",
+            "url": "https://apis.io/api/v1/collections",
             "params": [
               {
                 "name": "q",
@@ -323,7 +323,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/graphql",
+            "url": "https://apis.io/api/v1/graphql",
             "params": [
               {
                 "name": "q",
@@ -384,7 +384,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/json-schemas",
+            "url": "https://apis.io/api/v1/json-schemas",
             "params": [
               {
                 "name": "q",
@@ -445,7 +445,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/json-structures",
+            "url": "https://apis.io/api/v1/json-structures",
             "params": [
               {
                 "name": "q",
@@ -506,7 +506,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/json-ld",
+            "url": "https://apis.io/api/v1/json-ld",
             "params": [
               {
                 "name": "q",
@@ -567,7 +567,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/vocabularies",
+            "url": "https://apis.io/api/v1/vocabularies",
             "params": [
               {
                 "name": "q",
@@ -628,7 +628,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/rules",
+            "url": "https://apis.io/api/v1/rules",
             "params": [
               {
                 "name": "q",
@@ -689,7 +689,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/examples",
+            "url": "https://apis.io/api/v1/examples",
             "params": [
               {
                 "name": "q",
@@ -750,7 +750,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/finops",
+            "url": "https://apis.io/api/v1/finops",
             "params": [
               {
                 "name": "q",
@@ -811,7 +811,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/plans",
+            "url": "https://apis.io/api/v1/plans",
             "params": [
               {
                 "name": "q",
@@ -872,7 +872,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/rate-limits",
+            "url": "https://apis.io/api/v1/rate-limits",
             "params": [
               {
                 "name": "q",
@@ -933,7 +933,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/channels",
+            "url": "https://apis.io/api/v1/channels",
             "params": [
               {
                 "name": "q",
@@ -994,7 +994,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/mcp",
+            "url": "https://apis.io/api/v1/mcp",
             "params": [
               {
                 "name": "q",
@@ -1055,7 +1055,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/skills",
+            "url": "https://apis.io/api/v1/skills",
             "params": [
               {
                 "name": "q",
@@ -1116,7 +1116,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/scopes",
+            "url": "https://apis.io/api/v1/scopes",
             "params": [
               {
                 "name": "q",
@@ -1177,7 +1177,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/security",
+            "url": "https://apis.io/api/v1/security",
             "params": [
               {
                 "name": "q",
@@ -1238,7 +1238,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/artifacts",
+            "url": "https://apis.io/api/v1/providers/:slug/artifacts",
             "params": [
               {
                 "name": "slug",
@@ -1257,7 +1257,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/apis/:aid/artifacts",
+            "url": "https://apis.io/api/v1/apis/:aid/artifacts",
             "params": [
               {
                 "name": "aid",
@@ -1282,7 +1282,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/openapis/:aid",
+            "url": "https://apis.io/api/v1/openapis/:aid",
             "params": [
               {
                 "name": "aid",

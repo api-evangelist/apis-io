@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/search/apis",
+            "url": "https://apis.io/api/v1/search/apis",
             "params": [
               {
                 "name": "search",
@@ -49,7 +49,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/apis",
+            "url": "https://apis.io/api/v1/providers/:slug/apis",
             "params": [
               {
                 "name": "slug",
@@ -110,7 +110,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/apis",
+            "url": "https://apis.io/api/v1/apis",
             "params": [
               {
                 "name": "q",
@@ -206,7 +206,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/apis/:aid",
+            "url": "https://apis.io/api/v1/apis/:aid",
             "params": [
               {
                 "name": "aid",
@@ -243,7 +243,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/apis/:aid/artifacts",
+            "url": "https://apis.io/api/v1/apis/:aid/artifacts",
             "params": [
               {
                 "name": "aid",
@@ -268,7 +268,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/apis/:aid/similar",
+            "url": "https://apis.io/api/v1/apis/:aid/similar",
             "params": [
               {
                 "name": "aid",
@@ -293,7 +293,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/openapis/:aid",
+            "url": "https://apis.io/api/v1/openapis/:aid",
             "params": [
               {
                 "name": "aid",

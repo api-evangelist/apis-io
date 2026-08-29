@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/compare",
+            "url": "https://apis.io/api/v1/compare",
             "params": [
               {
                 "name": "providers",
@@ -37,7 +37,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/gaps",
+            "url": "https://apis.io/api/v1/gaps",
             "params": [
               {
                 "name": "providers",
@@ -62,7 +62,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/changes",
+            "url": "https://apis.io/api/v1/changes",
             "params": [
               {
                 "name": "since",
@@ -87,7 +87,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/stack",
+            "url": "https://apis.io/api/v1/stack",
             "params": [
               {
                 "name": "capabilities",
@@ -112,7 +112,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/gaps/industry/:slug",
+            "url": "https://apis.io/api/v1/gaps/industry/:slug",
             "params": [
               {
                 "name": "slug",
@@ -137,7 +137,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/stack/export",
+            "url": "https://apis.io/api/v1/stack/export",
             "params": [
               {
                 "name": "capabilities",

@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.5.0
+  version: 1.6.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated dimensions
     — with a free discovery tier and a Pro synthesis tier.
   description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\nThe catalog\
@@ -448,6 +448,9 @@ tags:
   description: Individual APIs, each owned by a provider and described by artifacts.
 - name: Tags
   description: The tag taxonomy, with network-wide ranking metadata.
+- name: Tag groups
+  description: 'The layer between a tag and a facet: sets of tags that demonstrably travel together across providers,
+    computed rather than curated.'
 - name: Industries
   description: Industry verticals grouping providers across the catalog.
 - name: Regions
@@ -462,6 +465,9 @@ tags:
   description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted
     facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric
     v0.3.
+- name: Cohorts
+  description: Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution,
+    rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
 - name: Artifact Types
   description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and
     more). Each path filters and normalizes one artifact type across all providers.
@@ -471,6 +477,8 @@ tags:
   description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
     for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company
     depth, gaps, and provider matches are Pro.
+- name: Editorial
+  description: Story leads mined from catalog movement (owner tier).
 - name: Venture Capital
   description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO
     GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse
@@ -485,12 +493,9 @@ tags:
 - name: Export
   description: Bulk data export — the license tier above Pro. The whole ratings or providers dataset in one pull,
     with the attribution string a published figure must carry. Business tier.
-- name: Cohorts
-  description: Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution,
-    rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
-- name: Editorial
-  description: Story leads mined from catalog movement (owner tier).
-security: []
+security:
+- {}
+- ApiKeyAuth: []
 paths:
   /providers:
     get:
@@ -528,7 +533,6 @@ paths:
       - $ref: '#/components/parameters/Fields'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
       responses:
         '200':
           description: A page of providers.
@@ -536,10 +540,247 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderList'
+              example:
+                meta:
+                  total: 26692
+                  page: 1
+                  limit: 2
+                  pages: 13346
+                  query:
+                    tags: null
+                data:
+                - slug: xquik-api
+                  name: Xquik
+                  description: Xquik is an independent third-party X data and automation platform. It provides public
+                    data reads, connected-account write actions, monitoring, signed webhooks, exports, hosted MCP
+                    servers, OAuth 2.1, API keys, 8 SDKs, a CLI, Agent Skills, and an OpenAPI 3.1 contract. Not
+                    affiliated with X Corp.
+                  api_count: 3
+                  artifact_types:
+                  - MCP
+                  - Security
+                  - Rules
+                  - Plans
+                  - RateLimits
+                  - FinOps
+                  - Scopes
+                  - AgenticAccess
+                  - MCPServer
+                  - ToolCrosswalk
+                  - OAuthScopes
+                  - Authentication
+                  - Documentation
+                  - OpenAPI
+                  - OpenAPISource
+                  - APIReference
+                  - APIsJSON
+                  tags:
+                  - social-media-data
+                  - X / Twitter
+                  - Social Listening
+                  - Data Extraction
+                  - Automation
+                  - Webhook
+                  - MCP
+                  - Developer API
+                  - Agents
+                  - Documentation
+                  - REST
+                  - OpenAPI
+                  score:
+                    composite: 92.8
+                    band: exemplar
+                    scored_at: '2026-08-20'
+                    schema_version: 0.12.0
+                    trend: flat
+                    delta: 0
+                    previous_composite: 92.8
+                    facets:
+                      discoverability: 100
+                      contract_quality: 80.9
+                      governance: 100
+                      contract_governance: 100
+                      operational_transparency: 81.6
+                      developer_ergonomics: 100
+                      commercial_clarity: 100
+                      access_clarity: 100
+                    provenance:
+                      mcp: first-party
+                      skills: first-party
+                      agentic_access: unknown
+                      conformance: first-party
+                      contracts:
+                        total: 1
+                        derived: 0
+                        marker_coverage: 100
+                        callable: 100
+                  agent_readiness:
+                    score: 84.9
+                    band: agent-native
+                    scored_at: '2026-08-20'
+                    schema_version: 0.2
+                    dimensions:
+                      spec_presence: true
+                      agentic_access: true
+                      reversibility_documented: false
+                      mcp_server: documented
+                      auth_clarity: true
+                      idempotency: documented
+                      error_semantics: verified
+                      openapi_examples: verified
+                      rate_limit_signal: verified
+                      event_surface_described: true
+                      agent_skills: true
+                      well_known_catalog: true
+                      consent_identity: true
+                      agent_card: conformant
+                      dry_run_mode: true
+                  access_model: null
+                  industries:
+                  - data-analytics
+                  - robotics
+                  regions: []
+                  areas:
+                  - ai-automation
+                  - workflow-automation
+                  image: https://xquik.com/logo-square.png
+                  created: '2026-04-14'
+                  modified: '2026-08-13'
+                  collections_count: 1
+                  common_count: 69
+                - slug: medplum
+                  name: Medplum
+                  description: Medplum is an Apache 2.0 open-source, FHIR-native developer platform for shipping
+                    clinical software. It bundles a FHIR R4 datastore, REST and GraphQL APIs, a TypeScript SDK,
+                    React component library, OAuth 2.0 / SMART on FHIR authentication, declarative Access Policies,
+                    Subscriptions, and TypeScript-based serverless Bots — sold as a hosted service at api.medplum.com
+                    and as a self-hostable monorepo on GitHub. Medplum is HIPAA, SOC 2 Type II, and ONC-certified.
+                  api_count: 4
+                  artifact_types:
+                  - MCP
+                  - Security
+                  - Rules
+                  - Plans
+                  - RateLimits
+                  - FinOps
+                  - Scopes
+                  - AgenticAccess
+                  - Arazzo
+                  - Documentation
+                  - JSONSchema
+                  - Examples
+                  - OpenAPI
+                  - APIReference
+                  - Authentication
+                  - MCPServer
+                  - ToolCrosswalk
+                  - JSONStructure
+                  - GraphQL
+                  - APIsJSON
+                  tags:
+                  - Healthcare
+                  - FHIR
+                  - Open-Source
+                  - Developer Platform
+                  - HIPAA
+                  - SMART on FHIR
+                  - Clinical
+                  - Interoperability
+                  - Bots
+                  - Automation
+                  - Serverless
+                  - Integration
+                  - GraphQL
+                  - Subscription
+                  - Webhook
+                  - Event
+                  score:
+                    composite: 91.4
+                    band: exemplar
+                    scored_at: '2026-08-20'
+                    schema_version: 0.12.0
+                    trend: flat
+                    delta: 0
+                    previous_composite: 91.4
+                    facets:
+                      discoverability: 83.3
+                      contract_quality: 79
+                      governance: 55.3
+                      contract_governance: 55.3
+                      operational_transparency: 97.4
+                      developer_ergonomics: 78
+                      commercial_clarity: 86.8
+                      access_clarity: 86.8
+                    regulatory:
+                      applies: true
+                      regime: Health
+                      regime_id: health
+                      score: 92.5
+                      matched_via: tags
+                    provenance:
+                      mcp: first-party
+                      skills: derived
+                      agentic_access: derived
+                      conformance: first-party
+                      contracts:
+                        total: 1
+                        derived: 0
+                        marker_coverage: 0
+                        callable: 100
+                  agent_readiness:
+                    score: 46.6
+                    band: agent-native
+                    scored_at: '2026-08-20'
+                    schema_version: 0.2
+                    dimensions:
+                      spec_presence: true
+                      agentic_access: derived
+                      reversibility_documented: false
+                      mcp_server: documented
+                      auth_clarity: true
+                      idempotency: documented
+                      error_semantics: documented
+                      openapi_examples: false
+                      rate_limit_signal: documented
+                      event_surface_described: true
+                      agent_skills: derived
+                      well_known_catalog: false
+                      consent_identity: false
+                      agent_card: false
+                      dry_run_mode: false
+                  access_model:
+                    confidence: high
+                    label: Freemium · Self-serve signup
+                    onboarding: self-serve
+                    pricing: freemium
+                    public: false
+                    source:
+                    - plans
+                    - authentication
+                    trial: false
+                    try_now: true
+                  industries:
+                  - developer-tools
+                  - digital-health
+                  regions: []
+                  areas: []
+                  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/medplum.png
+                  created: '2026-05-25'
+                  modified: '2026-08-17'
+                  collections_count: 3
+                  common_count: 65
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /providers/{slug}:
     get:
       operationId: getProvider
@@ -558,10 +799,142 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Provider'
+              example:
+                slug: xquik-api
+                name: Xquik
+                description: Xquik is an independent third-party X data and automation platform. It provides public
+                  data reads, connected-account write actions, monitoring, signed webhooks, exports, hosted MCP
+                  servers, OAuth 2.1, API keys, 8 SDKs, a CLI, Agent Skills, and an OpenAPI 3.1 contract. Not affiliated
+                  with X Corp.
+                overview: 'Xquik publishes 1 API on the [APIs.io](https://apis.io/) network: REST API. Tagged areas
+                  include social-media-data, X / Twitter, Social Listening, Data Extraction, and Automation.
+
+
+                  The Xquik catalog on APIs.io includes 2 event-driven AsyncAPI specifications, 1 JSON-LD context,
+                  and 1 Spectral governance ruleset.
+
+
+                  Xquik''s developer surface includes authentication, documentation, API reference, getting-started
+                  guide, SDKs, CLI, sandbox, and 62 more developer resources.'
+                api_count: 3
+                apis:
+                - description: OpenAPI 3.1 REST API for public X data, connected-account write actions, monitoring,
+                    signed webhooks, exports, account management, and billing.
+                  name: Xquik REST API
+                  slug: xquik-rest-api
+                - description: Hosted MCP server for the Xquik API with OAuth 2.1 and API-key access.
+                  name: Xquik API MCP Server
+                  slug: xquik-api-mcp-server
+                - description: Read-only hosted MCP server for searching Xquik documentation.
+                  name: Xquik Docs MCP Server
+                  slug: xquik-docs-mcp-server
+                image: https://xquik.com/logo-square.png
+                url: https://xquik.com/apis.yml
+                screenshot: https://raw.githubusercontent.com/api-evangelist/xquik-api/refs/heads/main/screenshots/xquik-api-2026-08-17T075407.png
+                created: '2026-04-14'
+                modified: '2026-08-13'
+                score:
+                  composite: 92.8
+                  band: exemplar
+                  scored_at: '2026-08-20'
+                  schema_version: 0.12.0
+                  trend: flat
+                  delta: 0
+                  previous_composite: 92.8
+                  facets:
+                    discoverability: 100
+                    contract_quality: 80.9
+                    governance: 100
+                    contract_governance: 100
+                    operational_transparency: 81.6
+                    developer_ergonomics: 100
+                    commercial_clarity: 100
+                    access_clarity: 100
+                  provenance:
+                    mcp: first-party
+                    skills: first-party
+                    agentic_access: unknown
+                    conformance: first-party
+                    contracts:
+                      total: 1
+                      derived: 0
+                      marker_coverage: 100
+                      callable: 100
+                agent_readiness:
+                  score: 84.9
+                  band: agent-native
+                  scored_at: '2026-08-20'
+                  schema_version: 0.2
+                  dimensions:
+                    spec_presence: true
+                    agentic_access: true
+                    reversibility_documented: false
+                    mcp_server: documented
+                    auth_clarity: true
+                    idempotency: documented
+                    error_semantics: verified
+                    openapi_examples: verified
+                    rate_limit_signal: verified
+                    event_surface_described: true
+                    agent_skills: true
+                    well_known_catalog: true
+                    consent_identity: true
+                    agent_card: conformant
+                    dry_run_mode: true
+                access_model: null
+                tags:
+                - social-media-data
+                - X / Twitter
+                - Social Listening
+                - Data Extraction
+                - Automation
+                - Webhook
+                - MCP
+                - Developer API
+                - Agents
+                - Documentation
+                - REST
+                - OpenAPI
+                artifact_types:
+                - MCP
+                - Security
+                - Rules
+                - Plans
+                - RateLimits
+                - FinOps
+                - Scopes
+                - AgenticAccess
+                - MCPServer
+                - ToolCrosswalk
+                - OAuthScopes
+                - Authentication
+                - Documentation
+                - OpenAPI
+                - OpenAPISource
+                - APIReference
+                - APIsJSON
+                _type: provider
+                industries:
+                - data-analytics
+                - robotics
+                regions: []
+                areas:
+                - ai-automation
+                - workflow-automation
+                collections_count: 1
+                common_count: 69
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
-      x-tier: free
   /providers/{slug}/apis:
     get:
       operationId: listProviderApis
@@ -587,10 +960,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiList'
+              example:
+                meta:
+                  total: 3
+                  page: 1
+                  limit: 2
+                  pages: 2
+                  query:
+                    provider: xquik-api
+                data:
+                - aid: xquik-api:xquik-api-mcp-server
+                  slug: xquik-api-mcp-server
+                  name: Xquik API MCP Server
+                  description: Hosted MCP server for the Xquik API with OAuth 2.1 and API-key access.
+                  tags:
+                  - MCP
+                  - Agents
+                  - Automation
+                  provider_slug: xquik-api
+                  provider_name: Xquik
+                  artifact_types:
+                  - MCPServer
+                  - ToolCrosswalk
+                  - OAuthScopes
+                  - Authentication
+                  baseURL: https://xquik.com/mcp
+                  humanURL: https://docs.xquik.com/mcp/overview
+                  artifact_count: 0
+                - aid: xquik-api:xquik-docs-mcp-server
+                  slug: xquik-docs-mcp-server
+                  name: Xquik Docs MCP Server
+                  description: Read-only hosted MCP server for searching Xquik documentation.
+                  tags:
+                  - MCP
+                  - Documentation
+                  - Agents
+                  provider_slug: xquik-api
+                  provider_name: Xquik
+                  artifact_types:
+                  - MCPServer
+                  - Documentation
+                  baseURL: https://docs.xquik.com/mcp
+                  humanURL: https://docs.xquik.com/mcp/overview
+                  artifact_count: 0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
-      x-tier: free
   /providers/{slug}/rating:
     get:
       operationId: getProviderRating
@@ -611,6 +1035,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderScore'
+              example:
+                slug: xquik-api
+                name: Xquik
+                composite: 92.8
+                band: exemplar
+                scored_at: '2026-08-20'
+                schema_version: 0.12.0
+                trend: flat
+                delta: 0
+                previous_composite: 92.8
+                facets:
+                  discoverability: 100
+                  contract_quality: 80.9
+                  governance: 100
+                  contract_governance: 100
+                  operational_transparency: 81.6
+                  developer_ergonomics: 100
+                  commercial_clarity: 100
+                  access_clarity: 100
+                provenance:
+                  mcp: first-party
+                  skills: first-party
+                  agentic_access: unknown
+                  conformance: first-party
+                  contracts:
+                    total: 1
+                    derived: 0
+                    marker_coverage: 100
+                    callable: 100
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /apis:
@@ -654,7 +1116,6 @@ paths:
       - $ref: '#/components/parameters/Fields'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
       responses:
         '200':
           description: A page of APIs.
@@ -662,10 +1123,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiList'
+              example:
+                meta:
+                  total: 116613
+                  page: 1
+                  limit: 2
+                  pages: 58307
+                  query:
+                    tags: null
+                data:
+                - aid: xquik-api:xquik-api-mcp-server
+                  slug: xquik-api-mcp-server
+                  name: Xquik API MCP Server
+                  description: Hosted MCP server for the Xquik API with OAuth 2.1 and API-key access.
+                  tags:
+                  - MCP
+                  - Agents
+                  - Automation
+                  provider_slug: xquik-api
+                  provider_name: Xquik
+                  artifact_types:
+                  - MCPServer
+                  - ToolCrosswalk
+                  - OAuthScopes
+                  - Authentication
+                  baseURL: https://xquik.com/mcp
+                  humanURL: https://docs.xquik.com/mcp/overview
+                  artifact_count: 0
+                - aid: xquik-api:xquik-docs-mcp-server
+                  slug: xquik-docs-mcp-server
+                  name: Xquik Docs MCP Server
+                  description: Read-only hosted MCP server for searching Xquik documentation.
+                  tags:
+                  - MCP
+                  - Documentation
+                  - Agents
+                  provider_slug: xquik-api
+                  provider_name: Xquik
+                  artifact_types:
+                  - MCPServer
+                  - Documentation
+                  baseURL: https://docs.xquik.com/mcp
+                  humanURL: https://docs.xquik.com/mcp/overview
+                  artifact_count: 0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /apis/{aid}:
     get:
       operationId: getApi
@@ -686,10 +1198,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Api'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
-      x-tier: free
   /tags:
     get:
       operationId: listTags
@@ -738,7 +1258,6 @@ paths:
       - $ref: '#/components/parameters/Fields'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
       responses:
         '200':
           description: A page of tags.
@@ -746,8 +1265,107 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TagList'
+              example:
+                meta:
+                  total: 13663
+                  page: 1
+                  limit: 2
+                  pages: 6832
+                  query: {}
+                data:
+                - slug: company
+                  name: Company
+                  composite: 70.7
+                  band: posture
+                  provider_count: 14964
+                  api_count: 72
+                  frequency: 100
+                  breadth: 100
+                  quality_lift: 28.6
+                  variants:
+                  - COMPANY
+                  - Company
+                  - company
+                  neighbors:
+                  - tag: Artificial Intelligence
+                    jaccard: 0.1803
+                    count: 2843
+                  - tag: Fintech
+                    jaccard: 0.0993
+                    count: 1524
+                  - tag: Healthcare
+                    jaccard: 0.0947
+                    count: 1451
+                  - tag: Consumer
+                    jaccard: 0.0876
+                    count: 1315
+                  - tag: E-Commerce
+                    jaccard: 0.0803
+                    count: 1230
+                  - tag: Payments
+                    jaccard: 0.0572
+                    count: 897
+                  - tag: Life Sciences
+                    jaccard: 0.0548
+                    count: 824
+                  - tag: Machine-Learning
+                    jaccard: 0.0529
+                    count: 807
+                  senses: null
+                  sense_unassigned: null
+                - slug: artificial-intelligence
+                  name: Artificial Intelligence
+                  composite: 58.5
+                  band: canonical
+                  provider_count: 3648
+                  api_count: 606
+                  frequency: 100
+                  breadth: 100
+                  quality_lift: 27.2
+                  variants:
+                  - AI
+                  - Ai
+                  - Artificial Intelligence
+                  - ArtificialIntelligence
+                  - ai
+                  - artificial-intelligence
+                  neighbors:
+                  - tag: Company
+                    jaccard: 0.1803
+                    count: 2843
+                  - tag: Machine-Learning
+                    jaccard: 0.1761
+                    count: 709
+                  - tag: Agents
+                    jaccard: 0.102
+                    count: 407
+                  - tag: MCP
+                    jaccard: 0.096
+                    count: 429
+                  - tag: Healthcare
+                    jaccard: 0.075
+                    count: 380
+                  - tag: AI Agents
+                    jaccard: 0.0688
+                    count: 283
+                  - tag: LLM
+                    jaccard: 0.0678
+                    count: 252
+                  - tag: Analytics
+                    jaccard: 0.0656
+                    count: 308
+                  senses: null
+                  sense_unassigned: null
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /tags/{slug}:
     get:
       operationId: getTag
@@ -772,10 +1390,353 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tag'
+              example:
+                slug: company
+                name: Company
+                composite: 70.7
+                band: posture
+                provider_count: 14964
+                api_count: 72
+                frequency: 100
+                breadth: 100
+                quality_lift: 28.6
+                variants:
+                - COMPANY
+                - Company
+                - company
+                neighbors:
+                - tag: Artificial Intelligence
+                  jaccard: 0.1803
+                  count: 2843
+                - tag: Fintech
+                  jaccard: 0.0993
+                  count: 1524
+                - tag: Healthcare
+                  jaccard: 0.0947
+                  count: 1451
+                - tag: Consumer
+                  jaccard: 0.0876
+                  count: 1315
+                - tag: E-Commerce
+                  jaccard: 0.0803
+                  count: 1230
+                - tag: Payments
+                  jaccard: 0.0572
+                  count: 897
+                - tag: Life Sciences
+                  jaccard: 0.0548
+                  count: 824
+                - tag: Machine-Learning
+                  jaccard: 0.0529
+                  count: 807
+                senses: null
+                sense_unassigned: null
+                providers:
+                  total: 14964
+                  top:
+                  - slug: and-volume
+                    name: '&Volume'
+                  - slug: txt
+                    name: .txt
+                apis:
+                  total: 72
+                  top:
+                  - provider: 6sense
+                    slug: 6sense-company-api
+                    name: 6sense Company API
+                  - provider: altimate-ai
+                    slug: altimate-ai-company-api
+                    name: Altimate AI COMPANY API
+                _type: tag
+                members_note: Top 2 shown per list. Use find_apis?tags=company or find_providers?tags=company for
+                  the full, ranked, paginated set. view=full returns every member here.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
+  /tag-groups:
+    get:
+      operationId: findTagGroups
       x-tier: free
+      x-mcp-tool: find_tag_groups
+      security: []
+      tags:
+      - Tag groups
+      summary: Tag groups — the layer between a tag and a facet.
+      description: There are ~13,600 tags and six facets and nothing in between. A tag group is a set of tags that
+        demonstrably travel together across providers, computed deterministically rather than curated. Filter by
+        the basis of the grouping, minimum size, or free text.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - name: basis
+        in: query
+        required: false
+        description: How the group was derived (e.g. `cooccurrence`).
+        schema:
+          type: string
+          maxLength: 1024
+      - name: exclude
+        in: query
+        required: false
+        description: Comma-separated group slugs to omit.
+        schema:
+          type: string
+          maxLength: 1024
+      - name: min_tags
+        in: query
+        required: false
+        description: Only groups with at least this many member tags.
+        schema:
+          type: integer
+          minimum: 0
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Tag groups — the layer between a tag and a facet.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 1524
+                  page: 1
+                  limit: 2
+                  pages: 762
+                  query:
+                    q: null
+                    basis: null
+                    exclude: null
+                    min_tags: null
+                data:
+                - slug: company
+                  group: Company
+                  basis: cooccurrence
+                  tag_count: 3
+                  source_provider_count: 7099
+                  provider_count_is_floor: true
+                  cohesion: 0.1599
+                  density: 0.6667
+                  cross_cutting: true
+                  sparse: false
+                  top_tags:
+                  - Company
+                  - Artificial Intelligence
+                - slug: authentication
+                  group: Authentication
+                  basis: cooccurrence
+                  tag_count: 17
+                  source_provider_count: 4882
+                  provider_count_is_floor: false
+                  cohesion: 0.1147
+                  density: 0.2279
+                  cross_cutting: false
+                  sparse: false
+                  top_tags:
+                  - Authentication
+                  - Webhook
+                coverage:
+                  tags_total: 13664
+                  grouped: 10054
+                  grouped_share: 0.736
+                  ungrouped: 3610
+                  ungrouped_share: 0.264
+                  grouped_by_cooccurrence: 9624
+                  grouped_by_facet: 430
+                  group_count: 1524
+                  parameters:
+                    min_pair: 2
+                    min_jaccard: 0.08
+                    max_iterations: 25
+                  generated_from:
+                    tags_json_generated_at: '2026-08-20'
+                    tag_count: 13664
+                  input_freshness:
+                    tags_json_date: '2026-08-20'
+                    provider_index_date: '2026-08-24'
+                    in_corpus_not_in_provider_index:
+                    - Casino
+                    - iGaming
+                    in_provider_index_not_in_corpus: []
+                  note: Groups are computed by label propagation over the jaccard co-occurrence graph. Tags with
+                    no surviving edge and no facet are ungrouped and belong to no group; any count taken from this
+                    endpoint should…
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /tag-groups/{slug}:
+    get:
+      operationId: getTagGroup
+      x-tier: free
+      x-mcp-tool: get_tag_group
+      security: []
+      tags:
+      - Tag groups
+      summary: One tag group and the providers it resolves to.
+      description: The group's member tags plus the provider roster they resolve to in the catalog. Optionally narrowed
+        by industry, region, country, or area so a group can be read inside one market.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Tag-group slug (e.g. `authentication`).
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/IndustryFilter'
+      - $ref: '#/components/parameters/RegionFilter'
+      - name: country
+        in: query
+        required: false
+        description: Narrow the roster to one country.
+        schema:
+          type: string
+          maxLength: 1024
+      - name: area
+        in: query
+        required: false
+        description: Narrow the roster to one area slug.
+        schema:
+          type: string
+          maxLength: 1024
+      responses:
+        '200':
+          description: One tag group and the providers it resolves to.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                slug: authentication
+                group: Authentication
+                basis: cooccurrence
+                tag_count: 17
+                cohesion: 0.1147
+                density: 0.2279
+                cross_cutting: false
+                sparse: false
+                source_provider_count: 4882
+                source_provider_count_is_floor: false
+                provider_count: 4882
+                unfiltered_provider_count: 4882
+                unresolved_tag_count: 0
+                filters: null
+                stats:
+                  provider_count: 4882
+                  scored_count: 4882
+                  kin_score_mean: 41.2
+                  agent_readiness_mean: 32.5
+                  bands:
+                    strong: 664
+                    developing: 1790
+                    emerging: 506
+                    exemplar: 190
+                    thin: 1602
+                    minimal: 130
+                stats_available: true
+                tags:
+                - Authentication
+                providers:
+                - slug: 1fort
+                  name: 1Fort
+                  kin_score: 58
+                  band: strong
+                  agent_readiness: 45.9
+                parts:
+                  tags: /v1/tag-groups/authentication/tags
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tag-groups/{slug}/tags:
+    get:
+      operationId: getTagGroupTags
+      x-tier: free
+      x-mcp-tool: tag_group_tags
+      security: []
+      tags:
+      - Tag groups
+      summary: The tags inside one group.
+      description: The member tags of a group, each with its catalog counts — the paginated view of what the group
+        is actually made of.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Tag-group slug (e.g. `authentication`).
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: The tags inside one group.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                meta:
+                  total: 17
+                  page: 1
+                  limit: 2
+                  pages: 9
+                  query:
+                    tag_group: authentication
+                data:
+                - tag: Authentication
+                  slug: authentication
+                  in_catalog: true
+                  provider_count: 1745
+                  api_count: 1716
+                  band: canonical
+                  composite: 48.9
+                - tag: Webhook
+                  slug: webhook
+                  in_catalog: true
+                  provider_count: 1562
+                  api_count: 1482
+                  band: canonical
+                  composite: 49.4
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /industries:
     get:
       operationId: listIndustries
@@ -810,6 +1771,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndustryList'
+              example:
+                meta:
+                  total: 72
+                  page: 1
+                  limit: 2
+                  pages: 36
+                  query: {}
+                data:
+                - slug: aerospace
+                  name: Aerospace
+                  short: Companies involved in the design, manufacturing, and maintenance of aircraft, spacecraft,
+                    and related systems and components.
+                  description: The Aerospace vertical on the APIs.io network is tracked across 2 sub-sectors — Aircraft
+                    Systems & Components and Aircraft Engines & Systems — mapping 23 companies from ongoing API
+                    Evangelist industry research to the providers and APIs they operate on the network.
+                  aliases:
+                  - Aircraft Systems & Components
+                  - Aircraft Engines & Systems
+                  provider_count: 23
+                  api_count: 23
+                  _type: industry
+                - slug: agriculture
+                  name: Agriculture
+                  short: Companies providing farming equipment, precision agriculture technologies, and agricultural
+                    solutions to improve crop yields and operational efficiency.
+                  description: The Agriculture vertical on the APIs.io network is tracked across 1 sub-sector —
+                    Farm Equipment & Precision Agriculture — mapping 18 companies from ongoing API Evangelist industry
+                    research to the providers and APIs they operate on the network.
+                  aliases:
+                  - Farm Equipment & Precision Agriculture
+                  provider_count: 18
+                  api_count: 47
+                  _type: industry
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /industries/{slug}:
@@ -839,6 +1842,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Industry'
+              example:
+                slug: aerospace
+                name: Aerospace
+                short: Companies involved in the design, manufacturing, and maintenance of aircraft, spacecraft,
+                  and related systems and components.
+                description: The Aerospace vertical on the APIs.io network is tracked across 2 sub-sectors — Aircraft
+                  Systems & Components and Aircraft Engines & Systems — mapping 23 companies from ongoing API Evangelist
+                  industry research to the providers and APIs they operate on the network.
+                aliases:
+                - Aircraft Systems & Components
+                - Aircraft Engines & Systems
+                provider_count: 23
+                api_count: 23
+                providers:
+                  total: 23
+                  top:
+                  - slug: airbus
+                    name: Airbus
+                    description: A European multinational aerospace corporation designing, manufacturing, and selling
+                      commercial aircraft, helicopters, defense, and space products. Through its Space Solutions
+                      / OneAtlas division Airbus publishes a developer API portal for satellite imagery, mapping,
+                      and elevation data.
+                    api_count: 7
+                    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/airbus.png
+                    score_band: developing
+                    score_composite: 41.1
+                  - slug: rtx
+                    name: RTX
+                    description: 'RTX Corporation is a leading American aerospace and defense company comprising
+                      three market businesses: Collins Aerospace, Pratt & Whitney, and Raytheon. Raytheon develops
+                      the EAGLE (Enhanced Automated Graphical Logistics Environment) software platform for integrated
+                      logistics support and logistic s'
+                    api_count: 3
+                    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rtx.png
+                    score_band: thin
+                    score_composite: 30.5
+                _type: industry
+                members_note: Top 2 shown per list. Use find_providers?industry=aerospace for the full, ranked,
+                  paginated set. view=full returns every member here.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /regions:
@@ -875,6 +1926,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegionList'
+              example:
+                meta:
+                  total: 17
+                  page: 1
+                  limit: 2
+                  pages: 9
+                  query: {}
+                data:
+                - slug: africa
+                  name: Africa
+                  short: Sub-Saharan Africa plus North Africa — Nigeria, Kenya, South Africa, Egypt, Ghana, etc.
+                  description: APIs from Africa — Sub-Saharan Africa plus North Africa. A region where mobile-money
+                    APIs (M-Pesa, MTN MoMo) have leapfrogged card rails entirely and where fintech, agritech, and
+                    logistics APIs dominate.
+                  aliases:
+                  - Africa
+                  - African
+                  - South Africa
+                  - Nigeria
+                  - Nigerian
+                  - Kenya
+                  - Kenyan
+                  - Egypt
+                  - Egyptian
+                  - Ghana
+                  - Ghanaian
+                  - Morocco
+                  - Moroccan
+                  - Ethiopia
+                  provider_count: 153
+                  api_count: 658
+                  _type: region
+                - slug: anz
+                  name: Australia & New Zealand
+                  short: Australia and New Zealand — the ANZ region.
+                  description: APIs from Australia and New Zealand. A region known for strong open-banking (CDR)
+                    and government open-data programs, plus a thriving SMB-focused fintech and accounting-API stack
+                    (Xero, MYOB).
+                  aliases:
+                  - Australia
+                  - Australian
+                  - ANZ
+                  - New Zealand
+                  - Kiwi
+                  provider_count: 216
+                  api_count: 1028
+                  _type: region
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /regions/{slug}:
@@ -904,6 +2011,63 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Region'
+              example:
+                slug: africa
+                name: Africa
+                short: Sub-Saharan Africa plus North Africa — Nigeria, Kenya, South Africa, Egypt, Ghana, etc.
+                description: APIs from Africa — Sub-Saharan Africa plus North Africa. A region where mobile-money
+                  APIs (M-Pesa, MTN MoMo) have leapfrogged card rails entirely and where fintech, agritech, and
+                  logistics APIs dominate.
+                aliases:
+                - Africa
+                - African
+                - South Africa
+                - Nigeria
+                - Nigerian
+                - Kenya
+                - Kenyan
+                - Egypt
+                - Egyptian
+                - Ghana
+                - Ghanaian
+                - Morocco
+                - Moroccan
+                - Ethiopia
+                provider_count: 153
+                api_count: 658
+                providers:
+                  total: 153
+                  top:
+                  - slug: peachpayments
+                    name: Peach Payments
+                    description: Peach Payments is a pan-African payment orchestration gateway founded in 2012 in
+                      Cape Town, South Africa, operating across South Africa, Kenya, and Mauritius. Its PCI DSS
+                      Level 1 platform exposes REST APIs for Checkout (Hosted, Embedded, Embedded Express), server-to-server
+                      Payments, Payment Links, P
+                    api_count: 6
+                    score_band: exemplar
+                    score_composite: 72.7
+                  - slug: paystack
+                    name: Paystack
+                    description: Paystack is an African payment processor (acquired by Stripe in 2020) that lets
+                      businesses accept payments in Nigeria, Ghana, South Africa, Kenya, Côte d'Ivoire, and Egypt
+                      across cards, bank transfers, USSD, QR, EFT, and mobile money channels. Its single REST API
+                      covers one-time charges, recurring s
+                    api_count: 21
+                    score_band: exemplar
+                    score_composite: 71.5
+                _type: region
+                members_note: Top 2 shown per list. Use find_providers?region=africa for the full, ranked, paginated
+                  set. view=full returns every member here.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /openapis:
@@ -931,10 +2095,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 97990
+                  page: 1
+                  limit: 2
+                  pages: 48995
+                  query:
+                    type: openapis
+                data:
+                - aid: 01-ai:01-ai-chat-api
+                  provider_slug: 01-ai
+                  name: 01.AI Chat API
+                  type: OpenAPI
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/openapi/01-ai-chat-api-openapi.yml
+                - aid: 0g-labs:0g-labs-account-api
+                  provider_slug: 0g-labs
+                  name: 0G Labs Account API
+                  type: OpenAPI
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/openapi/0g-labs-account-api-openapi.yml
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /asyncapis:
     get:
       operationId: listAsyncapis
@@ -960,10 +2151,75 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 2408
+                  page: 1
+                  limit: 2
+                  pages: 1204
+                  query:
+                    type: asyncapis
+                data:
+                - type: AsyncAPI
+                  slug: 10web-webhooks
+                  name: 10Web Webhooks
+                  provider_slug: 10web
+                  provider_name: 10Web
+                  description: '10Web Webhooks is an event-driven AsyncAPI specification published by [10Web](https://apis.io/providers/10web/)
+                    on the [APIs.io](https://apis.io/) network.
+
+
+                    Tagged areas include Company, Artificial In'
+                  tags:
+                  - Company
+                  - Artificial Intelligence
+                  - Website Builder
+                  - WordPress
+                  - Hosting
+                  - Website Generation
+                  - No-Code
+                  - AsyncAPI
+                  - Webhooks
+                  - Events
+                  url: https://raw.githubusercontent.com/api-evangelist/10web/refs/heads/main/asyncapi/10web-webhooks.yml
+                  meta:
+                    version: ''
+                - type: AsyncAPI
+                  slug: 180-insurance-webhooks
+                  name: 180 Insurance Webhooks
+                  provider_slug: 180-insurance
+                  provider_name: 180 Insurance
+                  description: '180 Insurance Webhooks is an event-driven AsyncAPI specification published by [180
+                    Insurance](https://apis.io/providers/180-insurance/) on the [APIs.io](https://apis.io/) network.
+
+
+                    Tagged areas includ'
+                  tags:
+                  - Company
+                  - Insurtech
+                  - Insurance
+                  - Embedded Insurance
+                  - Brazil
+                  - Fintech
+                  - Webhook
+                  - AsyncAPI
+                  - Webhooks
+                  - Events
+                  url: https://raw.githubusercontent.com/api-evangelist/180-insurance/refs/heads/main/asyncapi/180-insurance-webhooks.yml
+                  meta:
+                    version: ''
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /arazzo:
     get:
       operationId: listArazzo
@@ -989,10 +2245,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 4976
+                  page: 1
+                  limit: 2
+                  pages: 2488
+                  query:
+                    type: arazzo
+                data:
+                - type: Arazzo
+                  slug: 123formbuilder-authenticate-and-list-forms-workflow
+                  name: 123FormBuilder Authenticate and List Forms
+                  provider_slug: 123formbuilder
+                  provider_name: 123FormBuilder
+                  description: Obtain a JWT token and list the forms available to the authenticated user.
+                  tags:
+                  - Online Forms
+                  - Form Builder
+                  - Surveys
+                  - Workflows
+                  - Data Collection
+                  - Submissions
+                  - Webhook
+                  - HIPAA
+                  - GDPR
+                  - Payments
+                  - Arazzo
+                  - Workflows
+                  url: https://raw.githubusercontent.com/api-evangelist/123formbuilder/refs/heads/main/arazzo/123formbuilder-authenticate-and-list-forms-workflow.yml
+                  meta:
+                    version: 1.0.0
+                - type: Arazzo
+                  slug: 123formbuilder-browse-group-forms-workflow
+                  name: 123FormBuilder Browse a Group's Forms
+                  provider_slug: 123formbuilder
+                  provider_name: 123FormBuilder
+                  description: Authenticate, list groups, read a chosen group's details, and list the forms it contains.
+                  tags:
+                  - Online Forms
+                  - Form Builder
+                  - Surveys
+                  - Workflows
+                  - Data Collection
+                  - Submissions
+                  - Webhook
+                  - HIPAA
+                  - GDPR
+                  - Payments
+                  - Arazzo
+                  - Workflows
+                  url: https://raw.githubusercontent.com/api-evangelist/123formbuilder/refs/heads/main/arazzo/123formbuilder-browse-group-forms-workflow.yml
+                  meta:
+                    version: 1.0.0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /postman:
     get:
       operationId: listPostman
@@ -1018,10 +2335,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 2034
+                  page: 1
+                  limit: 2
+                  pages: 1017
+                  query:
+                    type: postman
+                data:
+                - aid: 100ms-live:100ms-live-active-rooms-api
+                  provider_slug: 100ms-live
+                  name: 100ms Active Rooms API
+                  type: Postman
+                  url: https://www.100ms.live/docs/server-side/v2/how-to-guides/set-up-postman
+                - aid: 100ms-live:100ms-live-analytics-api
+                  provider_slug: 100ms-live
+                  name: 100ms Analytics API
+                  type: Postman
+                  url: https://www.100ms.live/docs/server-side/v2/how-to-guides/set-up-postman
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /collections:
     get:
       operationId: listCollections
@@ -1047,10 +2391,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 123150
+                  page: 1
+                  limit: 2
+                  pages: 61575
+                  query:
+                    type: collections
+                data:
+                - type: Collection
+                  slug: postman-nfon-service-portal-api
+                  name: __Official Service Portal API Collection
+                  provider_slug: nfon
+                  provider_name: Nfon
+                  description: '__Official Service Portal API Collection is a Postman Collection published by [Nfon](https://apis.io/providers/nfon/)
+                    on the [APIs.io](https://apis.io/) network.
+
+
+                    The collection contains 379 requests '
+                  tags:
+                  - Company
+                  - Telecom
+                  - Cloud Telephony
+                  - UCaaS
+                  - CPaaS
+                  - VoIP
+                  - CTI
+                  - Call History
+                  - PBX
+                  - Communications
+                  - SIP
+                  - Germany
+                  - Postman Collection
+                  url: postman/nfon-service-portal-api.postman_collection.json
+                  meta:
+                    item_count: 379
+                - type: Collection
+                  slug: open-radius-applications-api
+                  name: .Core Management APIs ApiVersions Applications API
+                  provider_slug: radius
+                  provider_name: Radius
+                  description: .Core Management APIs ApiVersions Applications API is a Open Collection published
+                    by [Radius](https://apis.io/providers/radius/) on the [APIs.io](https://apis.io/) network, version
+                    2023-10-01-preview.
+                  tags:
+                  - Application Platform
+                  - Cloud-Native
+                  - Infrastructure
+                  - Multi-Cloud
+                  - Open Collection
+                  url: collections/radius-applications-api.opencollection.json
+                  meta:
+                    item_count: 6
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /graphql:
     get:
       operationId: listGraphql
@@ -1076,10 +2481,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 1032
+                  page: 1
+                  limit: 2
+                  pages: 516
+                  query:
+                    type: graphql
+                data:
+                - type: GraphQL
+                  slug: 100ms-live-graphql
+                  name: 100ms Live GraphQL Schema
+                  provider_slug: 100ms-live
+                  provider_name: 100ms
+                  description: This document describes a conceptual GraphQL schema for the 100ms live video and
+                    audio infrastructure platform. 100ms provides a REST API at `api.100ms.live/v2` for managing
+                    rooms, templates, roles, p
+                  tags:
+                  - Live Video
+                  - Live Streaming
+                  - Video Conferencing
+                  - WebRTC
+                  - HLS
+                  - RTMP
+                  - Recording
+                  - Real-Time Messaging
+                  - Live Infrastructure
+                  - India
+                  - GraphQL
+                  url: 100ms-live-graphql.md
+                - type: GraphQL
+                  slug: 15five-graphql
+                  name: 15Five GraphQL Schema
+                  provider_slug: 15five
+                  provider_name: 15Five
+                  description: 'This document describes a conceptual GraphQL schema for the 15Five continuous performance
+                    management platform. The schema is derived from the 15Five Public REST API and models the core
+                    domain objects '
+                  tags:
+                  - Performance Management
+                  - Employee Engagement
+                  - OKRs
+                  - Check-ins
+                  - HR
+                  - Human Resources
+                  - 1-on-1 Meetings
+                  - Pulse Surveys
+                  - GraphQL
+                  url: 15five-graphql.md
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /json-schemas:
     get:
       operationId: listJsonSchemas
@@ -1105,10 +2567,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 121244
+                  page: 1
+                  limit: 2
+                  pages: 60622
+                  query:
+                    type: json-schemas
+                data:
+                - type: JSONSchema
+                  slug: amazon-macie-__boolean
+                  name: __boolean
+                  provider_slug: amazon-macie
+                  provider_name: Amazon Macie
+                  description: __boolean schema from Amazon Macie API
+                  tags:
+                  - Data Security
+                  - Sensitive Data
+                  - Privacy
+                  - Compliance
+                  - Machine-Learning
+                  - S3
+                  url: https://raw.githubusercontent.com/api-evangelist/amazon-macie/refs/heads/main/json-schema/amazon-macie-__boolean-schema.json
+                - type: JSONSchema
+                  slug: mediaconnect-api-__boolean
+                  name: __boolean
+                  provider_slug: amazon-mediaconnect
+                  provider_name: Amazon MediaConnect
+                  description: __boolean schema from AWS Elemental MediaConnect API
+                  tags:
+                  - Broadcasting
+                  - Live Video
+                  - Media
+                  - Media Transport
+                  url: https://raw.githubusercontent.com/api-evangelist/amazon-mediaconnect/refs/heads/main/json-schema/mediaconnect-api-__boolean-schema.json
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /json-structures:
     get:
       operationId: listJsonStructures
@@ -1134,10 +2639,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 52952
+                  page: 1
+                  limit: 2
+                  pages: 26476
+                  query:
+                    type: json-structures
+                data:
+                - type: JSONStructure
+                  slug: 0x-gasless-trade-structure
+                  name: 0X Gasless Trade Structure
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 'Field-level documentation for the gasless trade lifecycle: quote → submit → status.'
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-structure/0x-gasless-trade-structure.json
+                  meta:
+                    property_count: 0
+                    struct_type: object
+                - type: JSONStructure
+                  slug: 0x-swap-quote-structure
+                  name: 0X Swap Quote Structure
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: Field-level documentation for the firm quote payload returned by /swap/allowance-holder/quote
+                    and /swap/permit2/quote.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-structure/0x-swap-quote-structure.json
+                  meta:
+                    property_count: 0
+                    struct_type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /json-ld:
     get:
       operationId: listJsonLd
@@ -1163,10 +2732,77 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5679
+                  page: 1
+                  limit: 2
+                  pages: 2840
+                  query:
+                    type: json-ld
+                data:
+                - type: JSONLD
+                  slug: 0x-context
+                  name: 0X Context
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: JSON-LD context defining the semantic vocabulary for 0X from 0x.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  - JSON-LD
+                  - Linked Data
+                  - Semantic Web
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-ld/0x-context.jsonld
+                  meta:
+                    class_count: 45
+                    property_count: 14
+                - type: JSONLD
+                  slug: 100ms-live-context
+                  name: 100Ms Live Context
+                  provider_slug: 100ms-live
+                  provider_name: 100ms
+                  description: JSON-LD context defining the semantic vocabulary for 100Ms Live from 100ms.
+                  tags:
+                  - Live Video
+                  - Live Streaming
+                  - Video Conferencing
+                  - WebRTC
+                  - HLS
+                  - RTMP
+                  - Recording
+                  - Real-Time Messaging
+                  - Live Infrastructure
+                  - India
+                  - JSON-LD
+                  - Linked Data
+                  - Semantic Web
+                  url: https://raw.githubusercontent.com/api-evangelist/100ms-live/refs/heads/main/json-ld/100ms-live-context.jsonld
+                  meta:
+                    class_count: 45
+                    property_count: 7
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /rules:
     get:
       operationId: listRules
@@ -1192,10 +2828,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5781
+                  page: 1
+                  limit: 2
+                  pages: 2891
+                  query:
+                    type: rules
+                data:
+                - type: Rules
+                  slug: aiignore-jsonschema-spectral-rules
+                  name: .AIIgnore API Rules
+                  provider_slug: aiignore
+                  provider_name: .AIIgnore
+                  description: Spectral linting rules defining API design standards and conventions for .AIIgnore.
+                  tags:
+                  - AI Agents
+                  - Configuration
+                  - Developer Workflow
+                  - Security
+                  - Privacy
+                  - Developer Tools
+                  - LLM
+                  - Secrets Management
+                  - Spectral
+                  - Linting
+                  - API Governance
+                  url: https://raw.githubusercontent.com/api-evangelist/aiignore/refs/heads/main/rules/aiignore-jsonschema-spectral-rules.yml
+                  meta:
+                    rule_count: 5
+                - type: Rules
+                  slug: clinerules-jsonschema-spectral-rules
+                  name: .clinerules API Rules
+                  provider_slug: clinerules
+                  provider_name: .clinerules
+                  description: Spectral linting rules defining API design standards and conventions for .clinerules.
+                  tags:
+                  - AI Agents
+                  - Cline
+                  - Coding Standards
+                  - Configuration
+                  - Developer Workflow
+                  - Prompt Engineering
+                  - Spectral
+                  - Linting
+                  - API Governance
+                  url: https://raw.githubusercontent.com/api-evangelist/clinerules/refs/heads/main/rules/clinerules-jsonschema-spectral-rules.yml
+                  meta:
+                    rule_count: 4
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /examples:
     get:
       operationId: listExamples
@@ -1221,10 +2914,73 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 62704
+                  page: 1
+                  limit: 2
+                  pages: 31352
+                  query:
+                    type: examples
+                data:
+                - type: Example
+                  slug: 0x-cross-chain-get-quotes-example
+                  name: 0X Cross Chain Get Quotes Example
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 0X Cross Chain Get Quotes Example is an example object payload from 0x, with 2 top-level
+                    fields. It illustrates the shape of data this provider's APIs accept or return.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/examples/0x-cross-chain-get-quotes-example.json
+                  meta:
+                    key_count: 2
+                - type: Example
+                  slug: 0x-gasless-get-quote-example
+                  name: 0X Gasless Get Quote Example
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 0X Gasless Get Quote Example is an example object payload from 0x, with 2 top-level
+                    fields. It illustrates the shape of data this provider's APIs accept or return.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/examples/0x-gasless-get-quote-example.json
+                  meta:
+                    key_count: 2
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /finops:
     get:
       operationId: listFinops
@@ -1250,10 +3006,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 7138
+                  page: 1
+                  limit: 2
+                  pages: 3569
+                  query:
+                    type: finops
+                data:
+                - type: FinOps
+                  slug: 01-ai-finops
+                  name: 01 Ai Finops
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: FOCUS-aligned FinOps profile for 01.AI / Lingyiwanwu. Pay-as-you-go usage billing
+                    against prepaid balance, plus free self-hosted open-weight option for Yi-34B and smaller variants.
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - FinOps
+                  - FOCUS
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/finops/01-ai-finops.yml
+                  meta:
+                    billing_model:
+                      billingCurrency: CNY/USD
+                      billingFrequency: On-Demand (Recharge)
+                      chargeCategories:
+                      - Usage
+                      - Purchase
+                      - Adjustment
+                      pricingCategory: Usage Based (Prepaid)
+                - type: FinOps
+                  slug: 0x-finops
+                  name: 0X Finops
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: FinOps Framework alignment for the 0x API surface. Maps the three streams of integrator
+                    cost — subscription fee, swap fee (and integrator-side monetisation), and trade-surplus capture
+                    — to the FOCUS d
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - FinOps
+                  - Cost Management
+                  - FOCUS
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/finops/0x-finops.yml
+                  meta:
+                    billing_model: {}
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /plans:
     get:
       operationId: listPlans
@@ -1279,10 +3093,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 8427
+                  page: 1
+                  limit: 2
+                  pages: 4214
+                  query:
+                    type: plans
+                data:
+                - type: Plans
+                  slug: 01-ai-plans-pricing
+                  name: 01 Ai Plans Pricing
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: 01.AI publishes pay-as-you-go per-token pricing on the Lingyiwanwu open platform.
+                    Yi-Lightning is the flagship at approximately $0.14 per million tokens; Yi-Lightning-Lite is
+                    cheaper. Yi open-source w
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - Plans
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/plans/01-ai-plans-pricing.yml
+                  meta:
+                    plan_count: 2
+                - type: Plans
+                  slug: 0x-plans-pricing
+                  name: 0X Plans Pricing
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 'Commercial pricing plans for the 0x API surface as published at https://0x.org/pricing.
+                    Two retail tiers (Standard and Custom) plus a free development tier. The 0x revenue model also
+                    includes a 0.15% '
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/plans/0x-plans-pricing.yml
+                  meta:
+                    plan_count: 3
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /rate-limits:
     get:
       operationId: listRateLimits
@@ -1308,10 +3173,67 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 8752
+                  page: 1
+                  limit: 2
+                  pages: 4376
+                  query:
+                    type: rate-limits
+                data:
+                - type: RateLimits
+                  slug: 01-ai-rate-limits
+                  name: 01 Ai Rate Limits
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: 01.AI / Lingyiwanwu does not publish a public English rate-limit table. Limits are
+                    tier-based on the platform console. Exponential backoff with Retry-After should be honored.
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - Rate Limiting
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/rate-limits/01-ai-rate-limits.yml
+                  meta:
+                    limit_count: 1
+                - type: RateLimits
+                  slug: 0g-labs-rate-limits
+                  name: 0G Labs Rate Limits
+                  provider_slug: 0g-labs
+                  provider_name: 0G Labs
+                  description: 0G Labs Rate Limits is the machine-readable rate-limit profile for [0G Labs](https://apis.io/providers/0g-labs/)
+                    on the [APIs.io](https://apis.io/) network, conforming to the [API Commons Rate Limits]
+                  tags:
+                  - Artificial Intelligence
+                  - AI Inference
+                  - LLM
+                  - GPU Compute
+                  - Decentralized Compute
+                  - Blockchain
+                  - Web3
+                  - EVM
+                  - Decentralized Storage
+                  - Data Availability
+                  - OpenAI-Compatible
+                  - Trusted Execution Environment
+                  - agent-native
+                  - Crypto Infrastructure
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/rate-limits/0g-labs-rate-limits.yml
+                  meta:
+                    limit_count: 0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /ratings:
     get:
       operationId: listRatings
@@ -1346,7 +3268,6 @@ paths:
           maxLength: 1024
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
       responses:
         '200':
           description: Ranked ratings leaderboard.
@@ -1354,6 +3275,85 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RatingList'
+              example:
+                scored_at: '2026-08-20'
+                schema_version: 0.12.0
+                meta:
+                  total: 26684
+                  page: 1
+                  limit: 2
+                  pages: 13342
+                  query:
+                    band: null
+                    sort: composite
+                data:
+                - slug: xquik-api
+                  name: Xquik
+                  composite: 92.8
+                  band: exemplar
+                  trend: flat
+                  delta: 0
+                  previous_composite: 92.8
+                  facets:
+                    discoverability: 100
+                    contract_quality: 80.9
+                    governance: 100
+                    contract_governance: 100
+                    operational_transparency: 81.6
+                    developer_ergonomics: 100
+                    commercial_clarity: 100
+                    access_clarity: 100
+                  provenance:
+                    mcp: first-party
+                    skills: first-party
+                    agentic_access: unknown
+                    conformance: first-party
+                    contracts:
+                      total: 1
+                      derived: 0
+                      marker_coverage: 100
+                      callable: 100
+                - slug: medplum
+                  name: Medplum
+                  composite: 91.4
+                  band: exemplar
+                  trend: flat
+                  delta: 0
+                  previous_composite: 91.4
+                  facets:
+                    discoverability: 83.3
+                    contract_quality: 79
+                    governance: 55.3
+                    contract_governance: 55.3
+                    operational_transparency: 97.4
+                    developer_ergonomics: 78
+                    commercial_clarity: 86.8
+                    access_clarity: 86.8
+                  regulatory:
+                    applies: true
+                    regime: Health
+                    regime_id: health
+                    score: 92.5
+                    matched_via: tags
+                  provenance:
+                    mcp: first-party
+                    skills: derived
+                    agentic_access: derived
+                    conformance: first-party
+                    contracts:
+                      total: 1
+                      derived: 0
+                      marker_coverage: 0
+                      callable: 100
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /ratings/rubric:
@@ -1371,10 +3371,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Rubric'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
-      x-tier: free
   /search:
     get:
       operationId: search
@@ -1430,10 +3438,105 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResults'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
+  /playground:
+    get:
+      operationId: getPlaygroundApis
       x-tier: free
+      x-mcp-tool: get_playground_apis
+      security: []
+      tags:
+      - Search
+      summary: Curated APIs that are safe to call while learning.
+      description: A hand-checked set of APIs that need no key (or an instant, free, self-serve one), cost nothing,
+        and have no real-world side effects. Every entry carries an `example_request` URL that returned HTTP 200
+        to an unauthenticated GET on the date shown, so an agent can call it immediately with no setup. The recommended
+        first call for a new client.
+      parameters:
+      - name: grouping
+        in: query
+        required: false
+        description: '`starter` (default) is the good-first-experience set; `deep-archive` is institutional/OAI-PMH
+          repositories.'
+        schema:
+          type: string
+          enum:
+          - starter
+          - deep-archive
+      - name: access
+        in: query
+        required: false
+        description: '`no-key` is callable right now; `instant-key` needs a free self-serve key.'
+        schema:
+          type: string
+          enum:
+          - no-key
+          - instant-key
+      - name: tag
+        in: query
+        required: false
+        description: Filter by subject tag, e.g. `weather`, `books`, `energy`.
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Curated APIs that are safe to call while learning.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+              example:
+                name: Agent Playground APIs
+                updated: '2026-08-24'
+                purpose: APIs an agent registered with the APIs.io network can safely call while learning — no key
+                  or an instant self-serve key, no cost, low blast radius, real data.
+                how_to_use: 'Every entry''s `example_request` is a URL that returned HTTP 200 to an unauthenticated
+                  GET on the date in `verified`. Call it directly — no key, no signup, no cost. `access: instant-key`
+                  means a key ex…'
+                safety: 'Curated to be safe to experiment with: no money movement, no health data, no messaging
+                  side-effects, no ad spend, no identity checks. Read-dominant surfaces only.'
+                docs: https://apis.io/playground
+                total: 13
+                apis:
+                - slug: scryfall
+                  name: Scryfall
+                  good_for: 'Magic: The Gathering card data. Large, clean, generous — a good first tool call.'
+                  access: no-key
+                  grouping: starter
+                  tags:
+                  - Games And Comics
+                  - Magic The Gathering
+                  kin_score: 57.6
+                  kin_band: strong
+                  mcp_server: false
+                  example_request: https://api.scryfall.com/bulk-data
+                  verified: '2026-08-24'
+                  provider_page: https://apis.io/provider/scryfall
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /channels:
     get:
       operationId: listChannels
@@ -1461,6 +3564,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5389
+                  page: 1
+                  limit: 2
+                  pages: 2695
+                  query:
+                    type: channels
+                data:
+                - type: Channel
+                  slug: miniticker-arr
+                  name: '!miniTicker@arr'
+                  provider_slug: binance.us
+                  provider_name: Binance.US
+                  description: 24hr rolling window mini-ticker statistics for all changed symbols. Update speed
+                    1000ms.
+                  tags: []
+                  url: https://github.com/api-evangelist/binance.us/blob/main/asyncapi/binance.us-websocket-streams-asyncapi.yml
+                  meta:
+                    address: '!miniTicker@arr'
+                    asyncapi_version: 2.6.0
+                - type: Channel
+                  slug: ticker-windowsize-arr
+                  name: '!ticker_{windowSize}@arr'
+                  provider_slug: binance.us
+                  provider_name: Binance.US
+                  description: Rolling window ticker statistics for all changed symbols. Update speed 1000ms.
+                  tags: []
+                  url: https://github.com/api-evangelist/binance.us/blob/main/asyncapi/binance.us-websocket-streams-asyncapi.yml
+                  meta:
+                    address: '!ticker_{windowSize}@arr'
+                    asyncapi_version: 2.6.0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -1490,6 +3634,45 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 4209
+                  page: 1
+                  limit: 2
+                  pages: 2105
+                  query:
+                    type: mcp
+                data:
+                - type: MCP
+                  slug: coasty-mcp
+                  name: '@coasty/mcp'
+                  provider_slug: coasty
+                  provider_name: Coasty
+                  description: First-party MCP server (npx -y @coasty/mcp; remote https://api.coasty.ai/mcp) exposing
+                    26 computer-use tools across predict, machines, schedules, account, and discovery groups.
+                  tags: []
+                  url: https://coasty.ai/.well-known/mcp/server-card.json
+                  meta:
+                    install_method: Documentation link
+                - type: MCP
+                  slug: 0g-router
+                  name: 0g-router
+                  provider_slug: 0g-labs
+                  provider_name: 0G Labs
+                  description: ''
+                  tags: []
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/mcp/0g-labs-mcp.yml
+                  meta:
+                    install_method: Candidate descriptor
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -1519,6 +3702,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 1582
+                  page: 1
+                  limit: 2
+                  pages: 791
+                  query:
+                    type: skills
+                data:
+                - type: AgentSkill
+                  slug: 7-powers-analysis
+                  name: 7-powers-analysis
+                  provider_slug: amplitude
+                  provider_name: Amplitude
+                  description: Analyze a business, product, or feature using Hamilton Helmer's 7 Powers framework
+                    to assess competitive advantage and strategic durability. Use when the user asks about competitive
+                    moats, strategic p
+                  tags: []
+                  url: https://github.com/amplitude/builder-skills/blob/main/product-skills/skills/7-powers/SKILL.md
+                - type: AgentSkill
+                  slug: acad-arx-wizard
+                  name: acad-arx-wizard
+                  provider_slug: autocad
+                  provider_name: AutoCAD
+                  description: Agentic ObjectARX project scaffolding for AutoCAD 2027 / Visual Studio 2026. Replaces
+                    the broken .vsz VsWizardEngine wizard with a PowerShell script that generates identical C++
+                    project files. Works f
+                  tags: []
+                  url: https://github.com/autodesk-platform-services/skills/blob/main/skills/acad-arx-wizard/SKILL.md
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -1549,6 +3770,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 2443
+                  page: 1
+                  limit: 2
+                  pages: 1222
+                  query:
+                    type: scopes
+                data:
+                - type: Scopes
+                  slug: 100-thieves-scopes
+                  name: 100 Thieves Scopes
+                  provider_slug: 100-thieves
+                  provider_name: 100 Thieves
+                  description: 100 Thieves publishes 4 OAuth 2.0 scopes via the authorizationCode flow. Scopes are
+                    the fine-grained permissions an application requests at authorization time to act against the
+                    100 Thieves API on a u
+                  tags:
+                  - Company
+                  - Esports
+                  - Gaming
+                  - Apparel
+                  - Retail
+                  - E-Commerce
+                  - Entertainment
+                  - Media
+                  - Direct to Consumer
+                  - Agentic Commerce
+                  url: https://raw.githubusercontent.com/api-evangelist/100-thieves/refs/heads/main/scopes/100-thieves-scopes.yml
+                  meta:
+                    scope_count: 4
+                - type: Scopes
+                  slug: 1komma5-scopes
+                  name: 1Komma5 Scopes
+                  provider_slug: 1komma5
+                  provider_name: 1KOMMA5°
+                  description: '1KOMMA5° publishes 14 OAuth 2.0 scopes via the authorizationCode, clientCredentials,
+                    and deviceCode flows. Scopes are the fine-grained permissions an application requests at authorization
+                    time to act '
+                  tags:
+                  - Company
+                  - Energy
+                  - Solar
+                  - Renewable Energy
+                  - Smart Home
+                  - Electric Vehicles
+                  - Heat Pumps
+                  - Virtual Power Plant
+                  - Energy Management
+                  - Germany
+                  url: https://raw.githubusercontent.com/api-evangelist/1komma5/refs/heads/main/scopes/1komma5-scopes.yml
+                  meta:
+                    scope_count: 14
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /security:
@@ -1579,6 +3862,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 40559
+                  page: 1
+                  limit: 2
+                  pages: 20280
+                  query:
+                    type: security
+                data:
+                - type: Security
+                  slug: 01-advisors-domain-security
+                  name: 01 Advisors Domain Security
+                  provider_slug: 01-advisors
+                  provider_name: 01 Advisors
+                  description: 'Domain security posture for 01 Advisors, probed live across 1 host(s) and 1 registrable
+                    domain(s). 1 host(s) serve HTTPS (up to TLSv1.3); 1 advertise HSTS. Email/DNS controls: DNSSEC
+                    absent, SPF prese'
+                  tags:
+                  - Company
+                  - Venture Capital
+                  - Venture Firm
+                  - Investor
+                  - Startups
+                  - Series B
+                  - San Francisco
+                  - New York
+                  - Advisory
+                  url: https://raw.githubusercontent.com/api-evangelist/01-advisors/refs/heads/main/security/01-advisors-domain-security.yml
+                - type: Security
+                  slug: 01-ai-authentication
+                  name: 01 Ai Authentication
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: 01.AI secures its APIs with http across 1 declared security scheme, as derived from
+                    its OpenAPI definitions.
+                  tags:
+                  - Artificial Intelligence
+                  - LLM
+                  - Yi
+                  - Open-Source
+                  - Foundation Models
+                  - Inference
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/authentication/01-ai-authentication.yml
+                  meta:
+                    scheme_count: 1
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /areas:
@@ -1615,6 +3952,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AreaList'
+              example:
+                meta:
+                  total: 77
+                  page: 1
+                  limit: 2
+                  pages: 39
+                  query: {}
+                data:
+                - slug: machine-learning
+                  name: Machine Learning
+                  short: ''
+                  description: An index and topic collection covering machine learning APIs, MLOps platforms, model
+                    serving infrastructure, and inference providers. Machine learning APIs span the full ML…
+                  aliases: []
+                  provider_count: 1121
+                  api_count: 480
+                  area_url: https://machine-learning.apievangelist.com
+                  area_host: machine-learning.apievangelist.com
+                  icon: https://machine-learning.apievangelist.com/icon-thumb.png
+                  _type: area
+                - slug: security
+                  name: Security
+                  short: ''
+                  description: An index and topic collection covering API security, identity, access management,
+                    secrets management, encryption, and threat protection. API security spans the full lifecycle
+                    of…
+                  aliases: []
+                  provider_count: 796
+                  api_count: 849
+                  area_url: https://security.apievangelist.com
+                  area_host: security.apievangelist.com
+                  icon: https://security.apievangelist.com/icon-thumb.png
+                  _type: area
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -1646,6 +4025,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Area'
+              example:
+                slug: machine-learning
+                name: Machine Learning
+                short: ''
+                description: An index and topic collection covering machine learning APIs, MLOps platforms, model
+                  serving infrastructure, and inference providers. Machine learning APIs span the full ML…
+                aliases: []
+                area_url: https://machine-learning.apievangelist.com
+                area_host: machine-learning.apievangelist.com
+                icon: https://machine-learning.apievangelist.com/icon-thumb.png
+                provider_count: 1121
+                api_count: 480
+                providers:
+                  total: 30
+                  top:
+                  - slug: anthropic
+                    name: Anthropic
+                    description: Anthropic is an AI safety company and creator of the Claude family of large language
+                      models (Opus, Sonnet, Haiku). The Claude API provides access to Claude models for text generation,
+                      vision, tool use, extended thinking, batch processing, and agentic workflows including managed
+                      agents, skills, memo…
+                    api_count: 24
+                    score_band: exemplar
+                    score_composite: 68.9
+                    shared: 1
+                  - slug: google-analytics
+                    name: Google Analytics
+                    description: Google Analytics provides data and insights about website and app usage, enabling
+                      businesses to understand their audience and optimize their digital properties through customer-centric
+                      measurement, machine learning insights, and cross-platform attribution.
+                    api_count: 13
+                    score_band: exemplar
+                    score_composite: 68.4
+                    shared: 1
+                _type: area
+                members_note: Top 2 shown per list. Use find_providers?area=machine-learning for the full, ranked,
+                  paginated set. view=full returns every member here.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           $ref: '#/components/responses/UpgradeRequired'
         '404':
@@ -1677,6 +4102,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -1714,6 +4148,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -1747,6 +4190,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -1785,6 +4237,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -1810,6 +4271,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1834,6 +4304,52 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: xquik-api
+                name: Xquik
+                website: https://xquik.com/apis.yml
+                portal: null
+                signup: https://dashboard.xquik.com/en/signup
+                documentation: https://docs.xquik.com
+                authentication: authentication/xquik-api-authentication.yml
+                pricing: https://xquik.com/en#pricing
+                baseURLs:
+                - https://xquik.com/mcp
+                - https://docs.xquik.com/mcp
+                - https://xquik.com/api/v1
+                artifact_types:
+                - APIReference
+                - APIsJSON
+                - AgenticAccess
+                - Authentication
+                - Documentation
+                - FinOps
+                - MCP
+                - MCPServer
+                - OAuthScopes
+                - OpenAPI
+                - OpenAPISource
+                - Plans
+                - RateLimits
+                - Rules
+                - Scopes
+                - Security
+                - ToolCrosswalk
+                first_steps:
+                - 'Sign up: https://dashboard.xquik.com/en/signup'
+                - 'Set up authentication: authentication/xquik-api-authentication.yml'
+                - Call the API at https://xquik.com/mcp
+                - 'Read the docs: https://docs.xquik.com'
+                note: Assembled from the provider registered links + API base URLs; not a full onboarding descriptor.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1858,6 +4374,47 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderList'
+              example:
+                meta:
+                  total: 2
+                  page: 1
+                  limit: 2
+                  pages: 1
+                  query:
+                    of: xquik-api
+                data:
+                - slug: clay-com
+                  name: Clay
+                  band: strong
+                  composite: 61.9
+                  similarity: 35
+                  shared_tags:
+                  - automation
+                  - webhook
+                  - mcp
+                  - agents
+                  - rest
+                  - openapi
+                - slug: adobe-suite
+                  name: Adobe Suite
+                  band: exemplar
+                  composite: 71.6
+                  similarity: 33
+                  shared_tags:
+                  - automation
+                  - webhook
+                  - mcp
+                  - agents
+                  - rest
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1883,6 +4440,27 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: xquik-api
+                name: Xquik
+                current:
+                  composite: 92.8
+                  band: exemplar
+                  trend: flat
+                previous:
+                  composite: 92.8
+                delta: 0
+                note: apis.io stores the current score plus week-over-week movement, not a full history. Previous
+                  is the implied prior-build point.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /apis/{aid}/artifacts:
@@ -1908,6 +4486,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1931,6 +4518,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiList'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1957,6 +4553,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -1988,6 +4593,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 2
+                  page: 1
+                  limit: 2
+                  pages: 1
+                  query:
+                    industry: aerospace
+                data:
+                - slug: airbus
+                  name: Airbus
+                  band: developing
+                  composite: 41.1
+                  api_count: 7
+                - slug: rtx
+                  name: RTX
+                  band: thin
+                  composite: 30.5
+                  api_count: 3
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /regions/{slug}/leaders:
@@ -2018,6 +4651,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 2
+                  page: 1
+                  limit: 2
+                  pages: 1
+                  query:
+                    region: africa
+                data:
+                - slug: peachpayments
+                  name: Peach Payments
+                  band: exemplar
+                  composite: 72.7
+                  api_count: 6
+                - slug: paystack
+                  name: Paystack
+                  band: exemplar
+                  composite: 70.6
+                  api_count: 21
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /areas/{slug}/leaders:
@@ -2048,6 +4709,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 2
+                  page: 1
+                  limit: 2
+                  pages: 1
+                  query:
+                    area: machine-learning
+                data:
+                - slug: anthropic
+                  name: Anthropic
+                  band: exemplar
+                  composite: 68.9
+                  api_count: 24
+                - slug: google-analytics
+                  name: Google Analytics
+                  band: exemplar
+                  composite: 68.4
+                  api_count: 13
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /ratings/movers:
@@ -2072,6 +4761,43 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                up:
+                - slug: anu
+                  name: Australian National University
+                  delta: 42.6
+                  composite: 60.4
+                  band: strong
+                  trend: rising
+                - slug: university-of-warwick
+                  name: University of Warwick
+                  delta: 42.1
+                  composite: 63.1
+                  band: strong
+                  trend: rising
+                down:
+                - slug: rmit
+                  name: RMIT University
+                  delta: -25.5
+                  composite: 17.5
+                  band: emerging
+                  trend: falling
+                - slug: monash
+                  name: Monash University
+                  delta: -22.9
+                  composite: 21.2
+                  band: emerging
+                  trend: falling
+                note: Rating movement vs the previous scoring build (week-over-week).
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /gaps/industry/{slug}:
     get:
       operationId: industryGapAnalysis
@@ -2107,6 +4833,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /stack/export:
@@ -2143,6 +4878,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /insights:
@@ -2161,8 +4905,76 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  generated_note: stamp date at deploy — Date.now() unavailable in this harness
+                  quarters:
+                  - q1-2026
+                  - q2-2026
+                  primary_quarter: q2-2026
+                  companies: 5804
+                  companies_f1000: 947
+                  companies_from_blogs: 4857
+                  companies_with_q1: 295
+                  q1_note: Q1 partial (~316 cos) + method-drifted vs Q2; served flagged, NOT diffed. See time-series.md.
+                  sources: jobs + press (F1000). Provider/blog corpus extraction pending — see ingestion-evaluation.md.
+                  matcher: hardened (word-boundary + stoplist, re-extracted from job corpus)
+                  adoption_basis: recomputed company counts from cleaned stacks
+                  corpus_audit:
+                    date: '2026-08-06'
+                    withheld_companies: 113
+                    reason: Attribution audit of all 879 job corpora found these accounts holding another company's
+                      job board — the pull matched on company NAME and followed a vendor or partner's board. Per-company
+                      demand figures for them are withheld.
+                    caveat: Aggregate figures below — dimensions, adoption and provider_demand — were computed before
+                      this audit and still include the withheld corpora. They are being rebuilt.
+                    reference: https://github.com/api-evangelist/roadmap/issues/17
+                top_dimensions:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+                - dimension: cloud
+                  total_signal: 24024
+                  companies_with_signal: 807
+                - dimension: roiBusinessMetrics
+                  total_signal: 22814
+                  companies_with_signal: 780
+                - dimension: governance
+                  total_signal: 22153
+                  companies_with_signal: 827
+                - dimension: automation
+                  total_signal: 21341
+                  companies_with_signal: 790
+                - dimension: code
+                  total_signal: 19564
+                  companies_with_signal: 832
+                - dimension: security
+                  total_signal: 18463
+                  companies_with_signal: 930
+                - dimension: ai
+                  total_signal: 15834
+                  companies_with_signal: 775
+                - dimension: services
+                  total_signal: 13682
+                  companies_with_signal: 833
+                counts:
+                  companies: 5804
+                  services: 566
+                  tools: 286
+                  industries: 50
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
@@ -2183,8 +4995,31 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 42
+                  page: 1
+                  limit: 2
+                  pages: 21
+                  query:
+                    quarter: q2-2026
+                data:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /insights/adoption:
     get:
       operationId: listInsightAdoption
@@ -2215,8 +5050,33 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 566
+                  page: 1
+                  limit: 2
+                  pages: 283
+                  query:
+                    type: services
+                data:
+                - name: Microsoft Office
+                  slug: microsoft-office
+                  companyCount: 731
+                  radarRing: Optimizing
+                - name: Microsoft Teams
+                  slug: microsoft-teams
+                  companyCount: 715
+                  radarRing: Optimizing
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /insights/industries:
     get:
       operationId: listInsightIndustries
@@ -2232,8 +5092,28 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 50
+                  page: 1
+                  limit: 2
+                  pages: 25
+                  query: {}
+                data:
+                - name: Industrial
+                  company_count: 138
+                - name: Technology
+                  company_count: 135
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /insights/companies:
     get:
       operationId: listInsightCompanies
@@ -2254,8 +5134,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 5804
+                  page: 1
+                  limit: 2
+                  pages: 2902
+                  query: {}
+                data:
+                - slug: goldman-sachs
+                  name: Goldman Sachs
+                  industry: Financial Technology
+                  sub_sector: Payment Processing
+                  readiness_total: 1756
+                - slug: leidos
+                  name: Leidos
+                  industry: Enterprise Software
+                  sub_sector: IT Service Management
+                  readiness_total: 1749
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
-      x-tier: free
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
@@ -2281,10 +5187,41 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: goldman-sachs
+                name: Goldman Sachs
+                industry: Financial Technology
+                sub_sector: Payment Processing
+                source: jobs
+                confidence: high
+                readiness_total: 1756
+                top_dimensions:
+                - key: data
+                  score: 193
+                - key: cloud
+                  score: 119
+                - key: operations
+                  score: 112
+                sample_gap:
+                  dimension: domainSpecialization
+                  score: 2
+                quarters:
+                - q2-2026
+                - q1-2026
+                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption stack,
+                  per-quarter history, gaps, and provider matches. https://apis.io/developer/plans/
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
-      x-tier: free
   /insights/company/{slug}/gaps:
     get:
       operationId: getCompanyGaps
@@ -2311,6 +5248,37 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: goldman-sachs
+                name: Goldman Sachs
+                industry: Financial Technology
+                readiness_total: 1756
+                gaps:
+                - dimension: domainSpecialization
+                  score: 2
+                - dimension: finOps
+                  score: 6
+                - dimension: talentOrganizationalDesign
+                  score: 6
+                - dimension: specifications
+                  score: 7
+                - dimension: partnershipsEcosystems
+                  score: 7
+                - dimension: saas
+                  score: 8
+                - dimension: mergersAndAcquisitions
+                  score: 9
+                - dimension: providerStrategy
+                  score: 9
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           description: Requires the Pro or Business tier.
           content:
@@ -2343,6 +5311,256 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: goldman-sachs
+                name: Goldman Sachs
+                matched_providers:
+                - from: Salesforce
+                  slug: salesforce
+                  name: Salesforce
+                  band: exemplar
+                  composite: 84.6
+                - from: Adobe Campaign
+                  slug: adobe-campaign
+                  name: Adobe Campaign
+                  band: exemplar
+                  composite: 77.8
+                - from: LinkedIn
+                  slug: linkedin
+                  name: LinkedIn
+                  band: exemplar
+                  composite: 75.3
+                - from: Google Analytics
+                  slug: google-analytics
+                  name: Google Analytics
+                  band: exemplar
+                  composite: 68.4
+                - from: Adobe Analytics
+                  slug: adobe-analytics
+                  name: Adobe Analytics
+                  band: exemplar
+                  composite: 67.9
+                - from: GitLab
+                  slug: gitlab
+                  name: GitLab
+                  band: strong
+                  composite: 65.5
+                - from: ServiceNow
+                  slug: servicenow
+                  name: ServiceNow
+                  band: strong
+                  composite: 65
+                - from: GitHub
+                  slug: github
+                  name: GitHub
+                  band: strong
+                  composite: 62.6
+                - from: Datadog
+                  slug: datadog
+                  name: Datadog
+                  band: strong
+                  composite: 57.1
+                - from: Shell
+                  slug: shell
+                  name: Shell
+                  band: developing
+                  composite: 52
+                - from: Oracle Cloud
+                  slug: oracle-cloud
+                  name: Oracle Cloud Infrastructure
+                  band: developing
+                  composite: 51.1
+                - from: Terraform
+                  slug: terraform
+                  name: Terraform
+                  band: developing
+                  composite: 50.9
+                - from: PeopleSoft
+                  slug: peoplesoft
+                  name: PeopleSoft
+                  band: developing
+                  composite: 49.4
+                - from: Azure Log Analytics
+                  slug: azure-log-analytics
+                  name: Azure Log Analytics
+                  band: developing
+                  composite: 49.1
+                - from: Adobe Creative Suite
+                  slug: adobe-creative-suite
+                  name: Adobe Creative Suite
+                  band: developing
+                  composite: 48.7
+                - from: Microsoft
+                  slug: microsoft
+                  name: Microsoft
+                  band: developing
+                  composite: 48.2
+                - from: Microsoft Word
+                  slug: microsoft-word
+                  name: Microsoft Word
+                  band: developing
+                  composite: 48.1
+                - from: Microsoft Office
+                  slug: microsoft-office
+                  name: Microsoft Office
+                  band: developing
+                  composite: 48.1
+                - from: Elasticsearch
+                  slug: elasticsearch
+                  name: Elasticsearch
+                  band: developing
+                  composite: 45.6
+                - from: Prometheus
+                  slug: prometheus
+                  name: Prometheus
+                  band: developing
+                  composite: 42.6
+                - from: Spring
+                  slug: spring
+                  name: Spring Framework
+                  band: developing
+                  composite: 41.9
+                - from: OpenTelemetry
+                  slug: opentelemetry
+                  name: OpenTelemetry
+                  band: developing
+                  composite: 40.7
+                - from: Azure Functions
+                  slug: azure-functions
+                  name: Azure Functions
+                  band: developing
+                  composite: 40.2
+                - from: SonarQube
+                  slug: sonarqube
+                  name: SonarQube
+                  band: developing
+                  composite: 39.4
+                - from: Instagram
+                  slug: instagram
+                  name: Instagram
+                  band: thin
+                  composite: 38.9
+                - from: PowerShell
+                  slug: powershell
+                  name: PowerShell
+                  band: thin
+                  composite: 38.8
+                - from: TensorFlow
+                  slug: tensorflow
+                  name: TensorFlow
+                  band: thin
+                  composite: 38.8
+                - from: Spring Boot
+                  slug: spring-boot
+                  name: Spring Boot
+                  band: thin
+                  composite: 37.1
+                - from: Open Policy Agent
+                  slug: open-policy-agent
+                  name: Open Policy Agent
+                  band: thin
+                  composite: 36.2
+                - from: Microsoft Project
+                  slug: microsoft-project
+                  name: Microsoft Project
+                  band: thin
+                  composite: 35.9
+                - from: Microsoft Visio
+                  slug: microsoft-visio
+                  name: Microsoft Visio
+                  band: thin
+                  composite: 34.5
+                - from: Apache NiFi
+                  slug: apache-nifi
+                  name: Apache NiFi
+                  band: thin
+                  composite: 33.8
+                - from: SharePoint
+                  slug: sharepoint
+                  name: Microsoft SharePoint
+                  band: thin
+                  composite: 33
+                - from: Apache Spark
+                  slug: apache-spark
+                  name: Apache Spark
+                  band: thin
+                  composite: 32.6
+                - from: Spring Framework
+                  slug: spring-framework
+                  name: Spring Framework
+                  band: thin
+                  composite: 30.9
+                - from: Microsoft Windows
+                  slug: microsoft-windows
+                  name: Microsoft Windows
+                  band: thin
+                  composite: 27.9
+                - from: Git
+                  slug: git
+                  name: Git
+                  band: emerging
+                  composite: 25.2
+                - from: Scala
+                  slug: scala
+                  name: Scala
+                  band: emerging
+                  composite: 20.4
+                - from: Angular
+                  slug: angular
+                  name: Angular
+                  band: emerging
+                  composite: 17.2
+                - from: Kotlin
+                  slug: kotlin
+                  name: Kotlin
+                  band: emerging
+                  composite: 14.1
+                - from: PostgreSQL
+                  slug: postgresql
+                  name: PostgreSQL
+                  band: emerging
+                  composite: 12.4
+                - from: NumPy
+                  slug: numpy
+                  name: NumPy
+                  band: emerging
+                  composite: 11.9
+                - from: Python
+                  slug: python
+                  name: Python Standard Library and Popular
+                  band: emerging
+                  composite: 11.2
+                - from: React
+                  slug: react
+                  name: React
+                  band: minimal
+                  composite: 10.7
+                - from: Node.js
+                  slug: node-js
+                  name: Node.js
+                  band: minimal
+                  composite: 10.2
+                - from: Perl
+                  slug: perl
+                  name: Perl
+                  band: minimal
+                  composite: 9
+                - from: Pandas
+                  slug: pandas
+                  name: pandas
+                  band: minimal
+                  composite: 7.6
+                note: apis.io providers whose product appears in this company's adopted stack, ranked by rating
+                  — the supply↔demand join.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           description: Requires the Pro or Business tier.
           content:
@@ -2374,9 +5592,17 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /enrich:
     get:
       operationId: enrichProvider
@@ -2408,9 +5634,17 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /vcs:
     get:
       operationId: listVcs
@@ -2461,7 +5695,131 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+              example:
+                meta:
+                  total: 107
+                  page: 1
+                  limit: 2
+                  pages: 54
+                  query: {}
+                data:
+                - slug: 500-global
+                  name: 500 Global
+                  category: Venture Capital
+                  image: https://500.co/favicon.ico
+                  description: 500 Global (formerly 500 Startups) is a global venture capital firm and startup accelerator
+                    founded in 2010 by Dave McClure and Christine Tsai and headquartered in Palo Alto / Silicon
+                    Valley, California. The firm invests from pre-seed to pre-IPO in globally ambitious technology
+                    f
+                  tags:
+                  - Venture Capital
+                  - Accelerator
+                  - Pre-Seed
+                  - Seed
+                  - Series A
+                  - Growth
+                  - Fintech
+                  - Software-as-a-Service
+                  - Developer Tools
+                  - Artificial Intelligence
+                  - Emerging Markets
+                  - Global
+                  - Silicon Valley
+                  overview: '500 Global has 2,108 portfolio companies tracked on the APIs.io network, of which 2,107
+                    (100%) publish APIs indexed here.
+
+
+                    Its highest-rated API providers on the network are DrChrono, Stripe, SendGrid, Flexpa, Iterable.'
+                  portfolio_total: 2108
+                  portfolio_on_network: 2107
+                  portfolio_other: 1
+                  portfolio_rating:
+                    agent_avg: 6.5
+                    agent_band: human-only
+                    agent_native: 19
+                    agent_raw: 6.5
+                    agent_ready: 170
+                    band: minimal
+                    composite_avg: 14.3
+                    composite_band: minimal
+                    composite_raw: 14.3
+                    developing: 144
+                    exemplar: 11
+                    rating: 11.2
+                    scored: 2099
+                    strength: 471
+                    strong: 43
+                  portfolio_bands:
+                    exemplar: 11
+                    strong: 43
+                    developing: 144
+                    thin: 154
+                    emerging: 501
+                    minimal: 1246
+                    unrated: 8
+                - slug: a16z
+                  name: Andreessen Horowitz
+                  category: Venture Capital
+                  image: https://a16z.com/favicon.ico
+                  description: Andreessen Horowitz (a16z) is a Silicon Valley venture capital firm founded in July
+                    2009 by Marc Andreessen and Ben Horowitz and headquartered in Menlo Park, California. The firm
+                    invests across the full lifecycle from seed to venture to growth-stage technology companies,
+                    deployin
+                  tags:
+                  - Venture Capital
+                  - Seed
+                  - Series A
+                  - Growth Equity
+                  - Artificial Intelligence
+                  - Crypto
+                  - Fintech
+                  - Enterprise
+                  - Infrastructure
+                  - Developer Tools
+                  - American Dynamism
+                  - Silicon Valley
+                  - North America
+                  overview: 'Andreessen Horowitz has 1,100 portfolio companies tracked on the APIs.io network, of
+                    which 1,097 (100%) publish APIs indexed here.
+
+
+                    Its highest-rated API providers on the network are Stripe, Svix, Mux, Optimizely, Ghost.'
+                  portfolio_total: 1100
+                  portfolio_on_network: 1097
+                  portfolio_other: 3
+                  portfolio_rating:
+                    agent_avg: 11.1
+                    agent_band: human-only
+                    agent_native: 22
+                    agent_raw: 11.1
+                    agent_ready: 141
+                    band: emerging
+                    composite_avg: 19.5
+                    composite_band: emerging
+                    composite_raw: 19.5
+                    developing: 126
+                    exemplar: 16
+                    rating: 16.1
+                    scored: 1085
+                    strength: 451
+                    strong: 46
+                  portfolio_bands:
+                    exemplar: 16
+                    strong: 46
+                    developing: 126
+                    thin: 140
+                    emerging: 225
+                    minimal: 532
+                    unrated: 12
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /vcs/{slug}:
     get:
       operationId: getVc
@@ -2492,9 +5850,17 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /vcs/{slug}/portfolio:
     get:
       operationId: getVcPortfolio
@@ -2552,9 +5918,45 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 2107
+                  page: 1
+                  limit: 2
+                  pages: 1054
+                  query:
+                    vc: 500-global
+                    of: 500 Global
+                data:
+                - slug: drchrono
+                  name: DrChrono
+                  in_network: true
+                  is_provider: true
+                  api_count: 7
+                  score_band: exemplar
+                  score_composite: 83.9
+                  agent_band: agent-ready
+                  agent_score: 41.2
+                - slug: stripe
+                  name: Stripe
+                  in_network: true
+                  is_provider: true
+                  api_count: 159
+                  score_band: exemplar
+                  score_composite: 82.8
+                  agent_band: agent-native
+                  agent_score: 58.1
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /providers/{slug}/investors:
     get:
       operationId: getProviderInvestors
@@ -2574,9 +5976,22 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: xquik-api
+                name: Xquik
+                investor_count: 0
+                investors: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
-      x-tier: free
   /me/searches:
     get:
       operationId: listSavedSearches
@@ -2596,6 +6011,17 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                searches: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -2662,6 +6088,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -2691,6 +6126,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/searches/{id}/results:
@@ -2722,6 +6166,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/searches/{id}/net_new:
@@ -2751,6 +6204,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/lists:
@@ -2771,6 +6233,17 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                lists: []
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -2809,6 +6282,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/lists/{id}:
@@ -2836,6 +6318,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
     delete:
@@ -2862,6 +6353,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/lists/{id}/entries:
@@ -2902,6 +6402,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /export:
@@ -2931,6 +6440,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /export/{dataset}:
@@ -2967,6 +6485,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           description: Unknown dataset; the response lists the valid names.
         '402':
@@ -2996,6 +6523,34 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 13296
+                  page: 1
+                  limit: 2
+                  pages: 6648
+                  query:
+                    type: apis-json
+                data:
+                - aid: 01-ai:platform
+                  provider_slug: 01-ai
+                  name: Lingyiwanwu Platform API
+                  type: APIsJSON
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/apis.yml
+                - aid: 0g-labs:0g-chain-json-rpc
+                  provider_slug: 0g-labs
+                  name: 0G Chain JSON-RPC
+                  type: APIsJSON
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/apis.yml
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
   /cohorts:
     get:
       operationId: listCohorts
@@ -3210,11 +6765,25 @@ paths:
       tags:
       - Cohorts
       summary: What every member publishes (Pro).
-      description: Per-member artifact counts by type plus the agent-readiness dimensions each one satisfies. Available
+      description: 'Per-member artifact counts by type plus the agent-readiness dimensions each one satisfies. Available
         even below the population floor, because a capability matrix is a list of facts rather than a statistic.
+
+
+        Large cohorts exceed one response — the biggest has ~15,000 members — so the roster is returned in byte-budgeted
+        chunks. While `complete` is `false`, call again with `cursor` set to `next_cursor` and merge `capabilities`;
+        `complete` is `true` on the last page, which is also the page where `next_cursor` is `null`. The slug-keyed
+        map now sits under a `capabilities` key alongside `count` / `returned` / `cursor` / `next_cursor` / `complete`
+        (changed 2026-08-24, when the unpaginated form 502''d on any cohort past ~9,000 members).'
       parameters:
       - *id003
       - *id004
+      - name: cursor
+        in: query
+        required: false
+        description: Resume offset taken from a previous response's `next_cursor`. Omit for the first page.
+        schema:
+          type: integer
+          minimum: 0
       responses:
         '200':
           description: What every member publishes (Pro).
@@ -3222,6 +6791,620 @@ paths:
             application/json:
               schema:
                 type: object
+              example:
+                airbus:
+                  name: Airbus
+                  api_count: 7
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    AgenticAccess: 0
+                    OpenAPI: 2
+                    Portal: 5
+                    AccountManagement: 1
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: true
+                    agentic_access: derived
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: true
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: verified
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: developing
+                  kin_score: 41.1
+                rtx:
+                  name: RTX
+                  api_count: 3
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Rules: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    AgenticAccess: 0
+                    OpenAPI: 3
+                    Documentation: 3
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: true
+                    agentic_access: derived
+                    reversibility_documented: na
+                    mcp_server: false
+                    auth_clarity: true
+                    idempotency: na
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: na
+                  band: thin
+                  kin_score: 31
+                general-dynamics:
+                  name: General Dynamics
+                  api_count: 2
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    AgenticAccess: 0
+                    OpenAPI: 2
+                    Documentation: 2
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: true
+                    agentic_access: derived
+                    reversibility_documented: na
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: na
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: na
+                  band: emerging
+                  kin_score: 18.7
+                honeywell:
+                  name: Honeywell
+                  api_count: 1
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    Documentation: 1
+                    Website: 1
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: emerging
+                  kin_score: 15.4
+                transdigm:
+                  name: TransDigm Group
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Rules: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: emerging
+                  kin_score: 12.7
+                boeing:
+                  name: Boeing
+                  api_count: 9
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    Documentation: 9
+                    Portal: 9
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: emerging
+                  kin_score: 12.3
+                bae-systems:
+                  name: BAE Systems
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 10.7
+                textron:
+                  name: Textron
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 9.6
+                heico:
+                  name: HEICO Corporation
+                  api_count: 1
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                    Documentation: 1
+                    APIsJSON: 1
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 9.3
+                l3harris-technologies:
+                  name: L3Harris Technologies
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 7.4
+                moog:
+                  name: Moog
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                    Plans: 0
+                    RateLimits: 0
+                    FinOps: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: documented
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 7.4
+                carpenter-technology:
+                  name: Carpenter Technology
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 6.4
+                rolls-royce:
+                  name: Rolls-Royce
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 6.4
+                spirit-aerosystems-holdings:
+                  name: Spirit AeroSystems Holdings
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 5.5
+                pratt-and-whitney:
+                  name: Pratt & Whitney
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 5
+                lockheed-martin:
+                  name: Lockheed Martin
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 4.9
+                ge-aerospace:
+                  name: GE Aerospace
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 4.8
+                parker-hannifin:
+                  name: Parker Hannifin
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 4.4
+                howmet-aerospace:
+                  name: Howmet Aerospace
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 4.1
+                northrop-grumman:
+                  name: northrop-grumman
+                  api_count: 0
+                  artifact_types: []
+                  artifact_counts: {}
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 3.9
+                curtiss-wright:
+                  name: Curtiss-Wright
+                  api_count: 0
+                  artifact_types:
+                  - Security
+                  artifact_counts:
+                    Security: 0
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 3.3
+                woodward:
+                  name: Woodward
+                  api_count: 0
+                  artifact_types: []
+                  artifact_counts: {}
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 3.1
+                garrett-motion:
+                  name: Garrett Motion
+                  api_count: 0
+                  artifact_types: []
+                  artifact_counts: {}
+                  agent_dimensions:
+                    spec_presence: false
+                    agentic_access: false
+                    reversibility_documented: false
+                    mcp_server: false
+                    auth_clarity: false
+                    idempotency: false
+                    error_semantics: false
+                    openapi_examples: false
+                    rate_limit_signal: false
+                    event_surface_described: false
+                    agent_skills: false
+                    well_known_catalog: false
+                    consent_identity: false
+                    agent_card: false
+                    dry_run_mode: false
+                  band: minimal
+                  kin_score: 2.6
         '402': *id005
         '404': *id002
   /providers/{slug}/rating/facets:
@@ -3473,7 +7656,8 @@ components:
       type: apiKey
       in: header
       name: X-API-Key
-      description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a breaking change.
+      description: Optional. A keyless request is served on the free tier; a key raises the rate limit and unlocks
+        the tier-gated resources. Metered at the gateway -- see /developer/plans.
   parameters:
     Q:
       name: q
@@ -4690,3 +8874,33 @@ components:
       required:
       - meta
       - data
+  headers:
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy
+        syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This
+        is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the
+        quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy
+        and treat 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitLimit:
+      description: The rolling daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one rolling day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    XRateLimitTier:
+      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`.
+        Keyless requests are `free`.
+      schema:
+        type: string
+        examples:
+        - free

@@ -29,6 +29,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "apis-io-v1-openapi.yml: protected first-party contract, not split or archived",
+    "apis-io-apis-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-areas-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-artifact-types-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-industries-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-insights-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-providers-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-ratings-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-regions-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-search-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-synthesis-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis-io-tags-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

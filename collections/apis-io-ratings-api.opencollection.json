@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/rating",
+            "url": "https://apis.io/api/v1/providers/:slug/rating",
             "params": [
               {
                 "name": "slug",
@@ -37,7 +37,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/ratings",
+            "url": "https://apis.io/api/v1/ratings",
             "params": [
               {
                 "name": "band",
@@ -116,7 +116,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/ratings/rubric"
+            "url": "https://apis.io/api/v1/ratings/rubric"
           },
           "docs": "Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block."
         },
@@ -127,7 +127,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/rating/history",
+            "url": "https://apis.io/api/v1/providers/:slug/rating/history",
             "params": [
               {
                 "name": "slug",
@@ -146,7 +146,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/ratings/movers",
+            "url": "https://apis.io/api/v1/ratings/movers",
             "params": [
               {
                 "name": "limit",

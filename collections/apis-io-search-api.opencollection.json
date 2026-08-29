@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/search/apis",
+            "url": "https://apis.io/api/v1/search/apis",
             "params": [
               {
                 "name": "search",
@@ -49,7 +49,7 @@
           },
           "http": {
             "method": "POST",
-            "url": "https://search-api.apis.io/search/apis",
+            "url": "https://apis.io/api/v1/search/apis",
             "body": {
               "type": "json",
               "data": "{}"
@@ -64,7 +64,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/search",
+            "url": "https://apis.io/api/v1/search",
             "params": [
               {
                 "name": "return",

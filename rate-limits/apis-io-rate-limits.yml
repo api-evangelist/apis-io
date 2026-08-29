@@ -1,95 +1,139 @@
+# HARVESTED 2026-08-21, replacing the 2026-05-04 bulk-sweep scaffold.
+#
+# The scaffold was wrong in both units and shape: it described requests per
+# MINUTE and quotas per MONTH across three tiers (free / professional /
+# enterprise). The enforced configuration is requests per SECOND and quotas per
+# DAY across four (free / starter / pro / business). It also declared five
+# response headers -- X-RateLimit-Limit/Remaining/Reset, Retry-After,
+# RateLimit-Policy -- none of which the API sent.
+#
+# Ground truth is the API Gateway usage plan configuration, which agrees exactly
+# with https://apis.io/developer/plans. The /developer/rate-limits page claimed
+# "there are no per-key quotas in v1"; it contradicted both and was corrected in
+# the same pass.
 specification: API Commons Rate Limits
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: APIs.io
 providerId: apis-io
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+method: harvested
+modified: '2026-08-21'
 tags:
-  - API Aggregation
-  - API Directory
-  - API Discovery
-  - API Indexing
-  - API Rating
-  - API Search
-  - APIs.json
-  - Search Engine
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the APIs.io API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+- API Aggregation
+- API Directory
+- API Discovery
+- API Indexing
+- API Rating
+- API Search
+- APIs.json
+- Search Engine
+- Rate Limiting
+- Quotas
+- Throttling
+description: 'Enforced rate limits for the APIs.io API. Metered per API key at the AWS API Gateway usage
+  plan bound by the request authorizer: a sustained per-second rate with a short burst ceiling, plus a
+  rolling daily quota. Exceeding either answers 429.'
+x-source:
+- apis-io-aws/lib/apis-io-stack.js (API Gateway usage plans — the enforced values)
+- https://apis.io/developer/plans
+x-enforced-by: AWS API Gateway usage plans, keyed on x-api-key via the request authorizer
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
   policy: RateLimit-Policy
+  limit: X-RateLimit-Limit
+  window: X-RateLimit-Window
+  tier: X-RateLimit-Tier
+x-headers-not-sent:
+  remaining: X-RateLimit-Remaining and RateLimit-Reset are NOT sent. They describe the state of a counter;
+    API Gateway owns that counter and does not expose it to the integration, and there is no per-key usage
+    accounting to read. Publishing a remaining value would mean inventing one.
 responseCodes:
   throttled: 429
   quotaExceeded: 429
+  tierGated: 402
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - APIs.io Search API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - APIs.io Search API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - APIs.io Search API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - APIs.io Search API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - APIs.io Search API
+- tier: free
+  name: Free Tier Rate
+  scope: api-key
+  metric: requests_per_second
+  limit: 5
+  burst: 10
+  timeFrame: second
+  applies:
+  - APIs.io API
+- tier: free
+  name: Free Tier Daily Quota
+  scope: api-key
+  metric: requests_per_day
+  limit: 1000
+  timeFrame: day
+  applies:
+  - APIs.io API
+- tier: starter
+  name: Starter Tier Rate
+  scope: api-key
+  metric: requests_per_second
+  limit: 20
+  burst: 40
+  timeFrame: second
+  applies:
+  - APIs.io API
+- tier: starter
+  name: Starter Tier Daily Quota
+  scope: api-key
+  metric: requests_per_day
+  limit: 10000
+  timeFrame: day
+  applies:
+  - APIs.io API
+- tier: pro
+  name: Pro Tier Rate
+  scope: api-key
+  metric: requests_per_second
+  limit: 100
+  burst: 200
+  timeFrame: second
+  applies:
+  - APIs.io API
+- tier: pro
+  name: Pro Tier Daily Quota
+  scope: api-key
+  metric: requests_per_day
+  limit: 100000
+  timeFrame: day
+  applies:
+  - APIs.io API
+- tier: business
+  name: Business Tier Rate
+  scope: api-key
+  metric: requests_per_second
+  limit: 400
+  burst: 800
+  timeFrame: second
+  applies:
+  - APIs.io API
+- tier: business
+  name: Business Tier Daily Quota
+  scope: api-key
+  metric: requests_per_day
+  limit: 1000000
+  timeFrame: day
+  applies:
+  - APIs.io API
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on 429. Retry-After is not currently
+    sent; back off on the documented policy rather than waiting for it.
+- name: Burst Handling
+  description: Short bursts above the sustained per-second rate are tolerated up to the burst ceiling
+    before throttling engages.
+- name: Quota Reset
+  description: The quota window is a rolling 24 hours enforced by the gateway, not a calendar month. The
+    per-second rate is a token bucket.
+- name: Tier Gating
+  description: Resources above a caller's tier answer 402, not 403 and not 429 — a payment signal, distinct
+    from being rate limited.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

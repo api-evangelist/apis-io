@@ -18,7 +18,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers",
+            "url": "https://apis.io/api/v1/providers",
             "params": [
               {
                 "name": "q",
@@ -127,7 +127,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug",
+            "url": "https://apis.io/api/v1/providers/:slug",
             "params": [
               {
                 "name": "slug",
@@ -152,7 +152,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/apis",
+            "url": "https://apis.io/api/v1/providers/:slug/apis",
             "params": [
               {
                 "name": "slug",
@@ -213,7 +213,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/artifacts",
+            "url": "https://apis.io/api/v1/providers/:slug/artifacts",
             "params": [
               {
                 "name": "slug",
@@ -232,7 +232,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/onboarding",
+            "url": "https://apis.io/api/v1/providers/:slug/onboarding",
             "params": [
               {
                 "name": "slug",
@@ -251,7 +251,7 @@
           },
           "http": {
             "method": "GET",
-            "url": "https://search-api.apis.io/providers/:slug/similar",
+            "url": "https://apis.io/api/v1/providers/:slug/similar",
             "params": [
               {
                 "name": "slug",

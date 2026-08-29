@@ -1,13 +1,17 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: .io Search APIs Tags API
+  title: .io Search Tags API
   description: This is the technical API contract for the search API for the APIs.io search engine.
   version: 0.1.0
   contact:
     name: Kin Lane
     email: info@apievangelist.com
 servers:
-- url: https://search-api.apis.io
+- url: https://apis.io/api/v1
+  description: Production server.
+security:
+- {}
+- api_key: []
 tags:
 - name: Tags
   description: The tag taxonomy, with network-wide ranking metadata.
@@ -67,6 +71,106 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TagList'
+              example:
+                meta:
+                  total: 13663
+                  page: 1
+                  limit: 2
+                  pages: 6832
+                  query: {}
+                data:
+                - slug: company
+                  name: Company
+                  composite: 70.7
+                  band: posture
+                  provider_count: 14964
+                  api_count: 72
+                  frequency: 100
+                  breadth: 100
+                  quality_lift: 28.6
+                  variants:
+                  - COMPANY
+                  - Company
+                  - company
+                  neighbors:
+                  - tag: Artificial Intelligence
+                    jaccard: 0.1803
+                    count: 2843
+                  - tag: Fintech
+                    jaccard: 0.0993
+                    count: 1524
+                  - tag: Healthcare
+                    jaccard: 0.0947
+                    count: 1451
+                  - tag: Consumer
+                    jaccard: 0.0876
+                    count: 1315
+                  - tag: E-Commerce
+                    jaccard: 0.0803
+                    count: 1230
+                  - tag: Payments
+                    jaccard: 0.0572
+                    count: 897
+                  - tag: Life Sciences
+                    jaccard: 0.0548
+                    count: 824
+                  - tag: Machine-Learning
+                    jaccard: 0.0529
+                    count: 807
+                  senses: null
+                  sense_unassigned: null
+                - slug: artificial-intelligence
+                  name: Artificial Intelligence
+                  composite: 58.5
+                  band: canonical
+                  provider_count: 3648
+                  api_count: 606
+                  frequency: 100
+                  breadth: 100
+                  quality_lift: 27.2
+                  variants:
+                  - AI
+                  - Ai
+                  - Artificial Intelligence
+                  - ArtificialIntelligence
+                  - ai
+                  - artificial-intelligence
+                  neighbors:
+                  - tag: Company
+                    jaccard: 0.1803
+                    count: 2843
+                  - tag: Machine-Learning
+                    jaccard: 0.1761
+                    count: 709
+                  - tag: Agents
+                    jaccard: 0.102
+                    count: 407
+                  - tag: MCP
+                    jaccard: 0.096
+                    count: 429
+                  - tag: Healthcare
+                    jaccard: 0.075
+                    count: 380
+                  - tag: AI Agents
+                    jaccard: 0.0688
+                    count: 283
+                  - tag: LLM
+                    jaccard: 0.0678
+                    count: 252
+                  - tag: Analytics
+                    jaccard: 0.0656
+                    count: 308
+                  senses: null
+                  sense_unassigned: null
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /tags/{slug}:
     get:
@@ -91,59 +195,135 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Tag'
+              example:
+                slug: company
+                name: Company
+                composite: 70.7
+                band: posture
+                provider_count: 14964
+                api_count: 72
+                frequency: 100
+                breadth: 100
+                quality_lift: 28.6
+                variants:
+                - COMPANY
+                - Company
+                - company
+                neighbors:
+                - tag: Artificial Intelligence
+                  jaccard: 0.1803
+                  count: 2843
+                - tag: Fintech
+                  jaccard: 0.0993
+                  count: 1524
+                - tag: Healthcare
+                  jaccard: 0.0947
+                  count: 1451
+                - tag: Consumer
+                  jaccard: 0.0876
+                  count: 1315
+                - tag: E-Commerce
+                  jaccard: 0.0803
+                  count: 1230
+                - tag: Payments
+                  jaccard: 0.0572
+                  count: 897
+                - tag: Life Sciences
+                  jaccard: 0.0548
+                  count: 824
+                - tag: Machine-Learning
+                  jaccard: 0.0529
+                  count: 807
+                senses: null
+                sense_unassigned: null
+                providers:
+                  total: 14964
+                  top:
+                  - slug: and-volume
+                    name: '&Volume'
+                  - slug: txt
+                    name: .txt
+                apis:
+                  total: 72
+                  top:
+                  - provider: 6sense
+                    slug: 6sense-company-api
+                    name: 6sense Company API
+                  - provider: altimate-ai
+                    slug: altimate-ai-company-api
+                    name: Altimate AI COMPANY API
+                _type: tag
+                members_note: Top 2 shown per list. Use find_apis?tags=company or find_providers?tags=company for the full, ranked, paginated set. view=full returns every member here.
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
 components:
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
-    Fields:
-      name: fields
-      in: query
-      description: Sparse fieldset — comma-separated property names to return.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
+  schemas:
+    Link:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          maxLength: 2048
+        title:
           type: string
           maxLength: 1024
-        maxItems: 1000
-  schemas:
-    Band:
-      type: string
-      description: Rating band derived from the composite score.
-      enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
-      maxLength: 1024
+      required:
+      - type
+      - url
+    ProviderScore:
+      type: object
+      description: A provider's rating, rubric v0.3.
+      properties:
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted composite of the six facets.
+          examples:
+          - 66.3
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+        delta:
+          type: number
+          description: Composite change since the previous snapshot.
+          examples:
+          - 0.0
+          maximum: 1000000000
+        previous_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        scored_at:
+          type: string
+          format: date
+          maxLength: 10
+        schema_version:
+          type: string
+          examples:
+          - '0.3'
+          maxLength: 1024
+        facets:
+          $ref: '#/components/schemas/Facets'
+      required:
+      - composite
+      - band
     Tag:
       type: object
       description: A tag in the taxonomy, with network-wide ranking metadata.
@@ -220,168 +400,50 @@ components:
       required:
       - slug
       - name
-    ProviderScore:
-      type: object
-      description: A provider's rating, rubric v0.3.
-      properties:
-        composite:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Weighted composite of the six facets.
-          examples:
-          - 66.3
-        band:
-          $ref: '#/components/schemas/Band'
-        trend:
-          $ref: '#/components/schemas/Trend'
-        delta:
-          type: number
-          description: Composite change since the previous snapshot.
-          examples:
-          - 0.0
-          maximum: 1000000000
-        previous_composite:
-          type: number
-          minimum: 0
-          maximum: 100
-        scored_at:
-          type: string
-          format: date
-          maxLength: 10
-        schema_version:
-          type: string
-          examples:
-          - '0.3'
-          maxLength: 1024
-        facets:
-          $ref: '#/components/schemas/Facets'
-      required:
-      - composite
-      - band
-    Link:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
-          maxLength: 1024
-        url:
-          type: string
-          format: uri
-          maxLength: 2048
-        title:
-          type: string
-          maxLength: 1024
-      required:
-      - type
-      - url
-    TagList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-    TagRef:
-      type: object
-      properties:
-        slug:
-          type: string
-          maxLength: 1024
-        name:
-          type: string
-          maxLength: 1024
-    Trend:
+    Band:
       type: string
-      description: Week-over-week movement in composite score (±5 thresholds).
+      description: Rating band derived from the composite score.
       enum:
-      - rising
-      - flat
-      - falling
+      - exemplar
+      - strong
+      - developing
+      - thin
+      - minimal
       maxLength: 1024
-    Problem:
+    Facets:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
+      description: The six facet scores, each 0–100.
       properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
-          maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-    Meta:
-      type: object
-      description: Pagination and echoed-query metadata for collection responses.
-      properties:
-        total:
-          type: integer
-          description: Total matching items across all pages.
-          maximum: 1000000
-        page:
-          type: integer
-          maximum: 1000000
-        limit:
-          type: integer
-          maximum: 1000
-        pages:
-          type: integer
-          description: Total number of pages.
-          maximum: 1000000
-        query:
-          type: object
-          additionalProperties: true
-          description: The effective query parameters, echoed back.
-      required:
-      - total
-      - page
-      - limit
-      - pages
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
     Provider:
       type: object
       description: An organization publishing one or more APIs.
@@ -445,40 +507,175 @@ components:
       required:
       - slug
       - name
-    Facets:
+    Problem:
       type: object
-      description: The six facet scores, each 0–100.
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
       properties:
-        discoverability:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Discoverability facet score (weight 0.10).
-        contract_quality:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Contract Quality facet score (weight 0.25).
-        governance:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Governance facet score (weight 0.12).
-        operational_transparency:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Operational Transparency facet score (weight 0.13).
-        developer_ergonomics:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Developer Ergonomics facet score (weight 0.20).
-        commercial_clarity:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Commercial Clarity facet score (weight 0.20).
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
+    TagList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    TagRef:
+      type: object
+      properties:
+        slug:
+          type: string
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+    Trend:
+      type: string
+      description: Week-over-week movement in composite score (±5 thresholds).
+      enum:
+      - rising
+      - flat
+      - falling
+      maxLength: 1024
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+      - total
+      - page
+      - limit
+      - pages
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+  headers:
+    XRateLimitTier:
+      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
+      schema:
+        type: string
+        examples:
+        - free
+    XRateLimitLimit:
+      description: The rolling daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one rolling day).
+      schema:
+        type: integer
+        examples:
+        - 86400
   responses:
     NotFound:
       description: Resource not found.

@@ -1,13 +1,17 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: .io Search APIs Artifact Types API
+  title: .io Search Artifact Types API
   description: This is the technical API contract for the search API for the APIs.io search engine.
   version: 0.1.0
   contact:
     name: Kin Lane
     email: info@apievangelist.com
 servers:
-- url: https://search-api.apis.io
+- url: https://apis.io/api/v1
+  description: Production server.
+security:
+- {}
+- api_key: []
 tags:
 - name: Artifact Types
   description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
@@ -35,6 +39,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 97990
+                  page: 1
+                  limit: 2
+                  pages: 48995
+                  query:
+                    type: openapis
+                data:
+                - aid: 01-ai:01-ai-chat-api
+                  provider_slug: 01-ai
+                  name: 01.AI Chat API
+                  type: OpenAPI
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/openapi/01-ai-chat-api-openapi.yml
+                - aid: 0g-labs:0g-labs-account-api
+                  provider_slug: 0g-labs
+                  name: 0G Labs Account API
+                  type: OpenAPI
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/openapi/0g-labs-account-api-openapi.yml
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -61,6 +93,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 2408
+                  page: 1
+                  limit: 2
+                  pages: 1204
+                  query:
+                    type: asyncapis
+                data:
+                - type: AsyncAPI
+                  slug: 10web-webhooks
+                  name: 10Web Webhooks
+                  provider_slug: 10web
+                  provider_name: 10Web
+                  description: '10Web Webhooks is an event-driven AsyncAPI specification published by [10Web](https://apis.io/providers/10web/) on the [APIs.io](https://apis.io/) network.
+
+
+                    Tagged areas include Company, Artificial In'
+                  tags:
+                  - Company
+                  - Artificial Intelligence
+                  - Website Builder
+                  - WordPress
+                  - Hosting
+                  - Website Generation
+                  - No-Code
+                  - AsyncAPI
+                  - Webhooks
+                  - Events
+                  url: https://raw.githubusercontent.com/api-evangelist/10web/refs/heads/main/asyncapi/10web-webhooks.yml
+                  meta:
+                    version: ''
+                - type: AsyncAPI
+                  slug: 180-insurance-webhooks
+                  name: 180 Insurance Webhooks
+                  provider_slug: 180-insurance
+                  provider_name: 180 Insurance
+                  description: '180 Insurance Webhooks is an event-driven AsyncAPI specification published by [180 Insurance](https://apis.io/providers/180-insurance/) on the [APIs.io](https://apis.io/) network.
+
+
+                    Tagged areas includ'
+                  tags:
+                  - Company
+                  - Insurtech
+                  - Insurance
+                  - Embedded Insurance
+                  - Brazil
+                  - Fintech
+                  - Webhook
+                  - AsyncAPI
+                  - Webhooks
+                  - Events
+                  url: https://raw.githubusercontent.com/api-evangelist/180-insurance/refs/heads/main/asyncapi/180-insurance-webhooks.yml
+                  meta:
+                    version: ''
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -87,6 +183,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 4976
+                  page: 1
+                  limit: 2
+                  pages: 2488
+                  query:
+                    type: arazzo
+                data:
+                - type: Arazzo
+                  slug: 123formbuilder-authenticate-and-list-forms-workflow
+                  name: 123FormBuilder Authenticate and List Forms
+                  provider_slug: 123formbuilder
+                  provider_name: 123FormBuilder
+                  description: Obtain a JWT token and list the forms available to the authenticated user.
+                  tags:
+                  - Online Forms
+                  - Form Builder
+                  - Surveys
+                  - Workflows
+                  - Data Collection
+                  - Submissions
+                  - Webhook
+                  - HIPAA
+                  - GDPR
+                  - Payments
+                  - Arazzo
+                  - Workflows
+                  url: https://raw.githubusercontent.com/api-evangelist/123formbuilder/refs/heads/main/arazzo/123formbuilder-authenticate-and-list-forms-workflow.yml
+                  meta:
+                    version: 1.0.0
+                - type: Arazzo
+                  slug: 123formbuilder-browse-group-forms-workflow
+                  name: 123FormBuilder Browse a Group's Forms
+                  provider_slug: 123formbuilder
+                  provider_name: 123FormBuilder
+                  description: Authenticate, list groups, read a chosen group's details, and list the forms it contains.
+                  tags:
+                  - Online Forms
+                  - Form Builder
+                  - Surveys
+                  - Workflows
+                  - Data Collection
+                  - Submissions
+                  - Webhook
+                  - HIPAA
+                  - GDPR
+                  - Payments
+                  - Arazzo
+                  - Workflows
+                  url: https://raw.githubusercontent.com/api-evangelist/123formbuilder/refs/heads/main/arazzo/123formbuilder-browse-group-forms-workflow.yml
+                  meta:
+                    version: 1.0.0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -113,6 +271,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 2034
+                  page: 1
+                  limit: 2
+                  pages: 1017
+                  query:
+                    type: postman
+                data:
+                - aid: 100ms-live:100ms-live-active-rooms-api
+                  provider_slug: 100ms-live
+                  name: 100ms Active Rooms API
+                  type: Postman
+                  url: https://www.100ms.live/docs/server-side/v2/how-to-guides/set-up-postman
+                - aid: 100ms-live:100ms-live-analytics-api
+                  provider_slug: 100ms-live
+                  name: 100ms Analytics API
+                  type: Postman
+                  url: https://www.100ms.live/docs/server-side/v2/how-to-guides/set-up-postman
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -139,6 +325,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 123150
+                  page: 1
+                  limit: 2
+                  pages: 61575
+                  query:
+                    type: collections
+                data:
+                - type: Collection
+                  slug: postman-nfon-service-portal-api
+                  name: __Official Service Portal API Collection
+                  provider_slug: nfon
+                  provider_name: Nfon
+                  description: '__Official Service Portal API Collection is a Postman Collection published by [Nfon](https://apis.io/providers/nfon/) on the [APIs.io](https://apis.io/) network.
+
+
+                    The collection contains 379 requests '
+                  tags:
+                  - Company
+                  - Telecom
+                  - Cloud Telephony
+                  - UCaaS
+                  - CPaaS
+                  - VoIP
+                  - CTI
+                  - Call History
+                  - PBX
+                  - Communications
+                  - SIP
+                  - Germany
+                  - Postman Collection
+                  url: postman/nfon-service-portal-api.postman_collection.json
+                  meta:
+                    item_count: 379
+                - type: Collection
+                  slug: open-radius-applications-api
+                  name: .Core Management APIs ApiVersions Applications API
+                  provider_slug: radius
+                  provider_name: Radius
+                  description: .Core Management APIs ApiVersions Applications API is a Open Collection published by [Radius](https://apis.io/providers/radius/) on the [APIs.io](https://apis.io/) network, version 2023-10-01-preview.
+                  tags:
+                  - Application Platform
+                  - Cloud-Native
+                  - Infrastructure
+                  - Multi-Cloud
+                  - Open Collection
+                  url: collections/radius-applications-api.opencollection.json
+                  meta:
+                    item_count: 6
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -165,6 +410,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 1032
+                  page: 1
+                  limit: 2
+                  pages: 516
+                  query:
+                    type: graphql
+                data:
+                - type: GraphQL
+                  slug: 100ms-live-graphql
+                  name: 100ms Live GraphQL Schema
+                  provider_slug: 100ms-live
+                  provider_name: 100ms
+                  description: This document describes a conceptual GraphQL schema for the 100ms live video and audio infrastructure platform. 100ms provides a REST API at `api.100ms.live/v2` for managing rooms, templates, roles, p
+                  tags:
+                  - Live Video
+                  - Live Streaming
+                  - Video Conferencing
+                  - WebRTC
+                  - HLS
+                  - RTMP
+                  - Recording
+                  - Real-Time Messaging
+                  - Live Infrastructure
+                  - India
+                  - GraphQL
+                  url: 100ms-live-graphql.md
+                - type: GraphQL
+                  slug: 15five-graphql
+                  name: 15Five GraphQL Schema
+                  provider_slug: 15five
+                  provider_name: 15Five
+                  description: 'This document describes a conceptual GraphQL schema for the 15Five continuous performance management platform. The schema is derived from the 15Five Public REST API and models the core domain objects '
+                  tags:
+                  - Performance Management
+                  - Employee Engagement
+                  - OKRs
+                  - Check-ins
+                  - HR
+                  - Human Resources
+                  - 1-on-1 Meetings
+                  - Pulse Surveys
+                  - GraphQL
+                  url: 15five-graphql.md
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -191,6 +490,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 121244
+                  page: 1
+                  limit: 2
+                  pages: 60622
+                  query:
+                    type: json-schemas
+                data:
+                - type: JSONSchema
+                  slug: amazon-macie-__boolean
+                  name: __boolean
+                  provider_slug: amazon-macie
+                  provider_name: Amazon Macie
+                  description: __boolean schema from Amazon Macie API
+                  tags:
+                  - Data Security
+                  - Sensitive Data
+                  - Privacy
+                  - Compliance
+                  - Machine-Learning
+                  - S3
+                  url: https://raw.githubusercontent.com/api-evangelist/amazon-macie/refs/heads/main/json-schema/amazon-macie-__boolean-schema.json
+                - type: JSONSchema
+                  slug: mediaconnect-api-__boolean
+                  name: __boolean
+                  provider_slug: amazon-mediaconnect
+                  provider_name: Amazon MediaConnect
+                  description: __boolean schema from AWS Elemental MediaConnect API
+                  tags:
+                  - Broadcasting
+                  - Live Video
+                  - Media
+                  - Media Transport
+                  url: https://raw.githubusercontent.com/api-evangelist/amazon-mediaconnect/refs/heads/main/json-schema/mediaconnect-api-__boolean-schema.json
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -217,6 +560,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 52952
+                  page: 1
+                  limit: 2
+                  pages: 26476
+                  query:
+                    type: json-structures
+                data:
+                - type: JSONStructure
+                  slug: 0x-gasless-trade-structure
+                  name: 0X Gasless Trade Structure
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 'Field-level documentation for the gasless trade lifecycle: quote → submit → status.'
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-structure/0x-gasless-trade-structure.json
+                  meta:
+                    property_count: 0
+                    struct_type: object
+                - type: JSONStructure
+                  slug: 0x-swap-quote-structure
+                  name: 0X Swap Quote Structure
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: Field-level documentation for the firm quote payload returned by /swap/allowance-holder/quote and /swap/permit2/quote.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-structure/0x-swap-quote-structure.json
+                  meta:
+                    property_count: 0
+                    struct_type: object
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -243,6 +650,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5679
+                  page: 1
+                  limit: 2
+                  pages: 2840
+                  query:
+                    type: json-ld
+                data:
+                - type: JSONLD
+                  slug: 0x-context
+                  name: 0X Context
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: JSON-LD context defining the semantic vocabulary for 0X from 0x.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  - JSON-LD
+                  - Linked Data
+                  - Semantic Web
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/json-ld/0x-context.jsonld
+                  meta:
+                    class_count: 45
+                    property_count: 14
+                - type: JSONLD
+                  slug: 100ms-live-context
+                  name: 100Ms Live Context
+                  provider_slug: 100ms-live
+                  provider_name: 100ms
+                  description: JSON-LD context defining the semantic vocabulary for 100Ms Live from 100ms.
+                  tags:
+                  - Live Video
+                  - Live Streaming
+                  - Video Conferencing
+                  - WebRTC
+                  - HLS
+                  - RTMP
+                  - Recording
+                  - Real-Time Messaging
+                  - Live Infrastructure
+                  - India
+                  - JSON-LD
+                  - Linked Data
+                  - Semantic Web
+                  url: https://raw.githubusercontent.com/api-evangelist/100ms-live/refs/heads/main/json-ld/100ms-live-context.jsonld
+                  meta:
+                    class_count: 45
+                    property_count: 7
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -269,6 +744,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -295,6 +779,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5781
+                  page: 1
+                  limit: 2
+                  pages: 2891
+                  query:
+                    type: rules
+                data:
+                - type: Rules
+                  slug: aiignore-jsonschema-spectral-rules
+                  name: .AIIgnore API Rules
+                  provider_slug: aiignore
+                  provider_name: .AIIgnore
+                  description: Spectral linting rules defining API design standards and conventions for .AIIgnore.
+                  tags:
+                  - AI Agents
+                  - Configuration
+                  - Developer Workflow
+                  - Security
+                  - Privacy
+                  - Developer Tools
+                  - LLM
+                  - Secrets Management
+                  - Spectral
+                  - Linting
+                  - API Governance
+                  url: https://raw.githubusercontent.com/api-evangelist/aiignore/refs/heads/main/rules/aiignore-jsonschema-spectral-rules.yml
+                  meta:
+                    rule_count: 5
+                - type: Rules
+                  slug: clinerules-jsonschema-spectral-rules
+                  name: .clinerules API Rules
+                  provider_slug: clinerules
+                  provider_name: .clinerules
+                  description: Spectral linting rules defining API design standards and conventions for .clinerules.
+                  tags:
+                  - AI Agents
+                  - Cline
+                  - Coding Standards
+                  - Configuration
+                  - Developer Workflow
+                  - Prompt Engineering
+                  - Spectral
+                  - Linting
+                  - API Governance
+                  url: https://raw.githubusercontent.com/api-evangelist/clinerules/refs/heads/main/rules/clinerules-jsonschema-spectral-rules.yml
+                  meta:
+                    rule_count: 4
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -321,6 +863,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 62704
+                  page: 1
+                  limit: 2
+                  pages: 31352
+                  query:
+                    type: examples
+                data:
+                - type: Example
+                  slug: 0x-cross-chain-get-quotes-example
+                  name: 0X Cross Chain Get Quotes Example
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 0X Cross Chain Get Quotes Example is an example object payload from 0x, with 2 top-level fields. It illustrates the shape of data this provider's APIs accept or return.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/examples/0x-cross-chain-get-quotes-example.json
+                  meta:
+                    key_count: 2
+                - type: Example
+                  slug: 0x-gasless-get-quote-example
+                  name: 0X Gasless Get Quote Example
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 0X Gasless Get Quote Example is an example object payload from 0x, with 2 top-level fields. It illustrates the shape of data this provider's APIs accept or return.
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  - Permit2
+                  - Liquidity
+                  - Trade Analytics
+                  - Web3
+                  - Settlement
+                  - Smart Contracts
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/examples/0x-gasless-get-quote-example.json
+                  meta:
+                    key_count: 2
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -347,6 +951,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 7138
+                  page: 1
+                  limit: 2
+                  pages: 3569
+                  query:
+                    type: finops
+                data:
+                - type: FinOps
+                  slug: 01-ai-finops
+                  name: 01 Ai Finops
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: FOCUS-aligned FinOps profile for 01.AI / Lingyiwanwu. Pay-as-you-go usage billing against prepaid balance, plus free self-hosted open-weight option for Yi-34B and smaller variants.
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - FinOps
+                  - FOCUS
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/finops/01-ai-finops.yml
+                  meta:
+                    billing_model:
+                      billingCurrency: CNY/USD
+                      billingFrequency: On-Demand (Recharge)
+                      chargeCategories:
+                      - Usage
+                      - Purchase
+                      - Adjustment
+                      pricingCategory: Usage Based (Prepaid)
+                - type: FinOps
+                  slug: 0x-finops
+                  name: 0X Finops
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: FinOps Framework alignment for the 0x API surface. Maps the three streams of integrator cost — subscription fee, swap fee (and integrator-side monetisation), and trade-surplus capture — to the FOCUS d
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - FinOps
+                  - Cost Management
+                  - FOCUS
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/finops/0x-finops.yml
+                  meta:
+                    billing_model: {}
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -373,6 +1033,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 8427
+                  page: 1
+                  limit: 2
+                  pages: 4214
+                  query:
+                    type: plans
+                data:
+                - type: Plans
+                  slug: 01-ai-plans-pricing
+                  name: 01 Ai Plans Pricing
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: 01.AI publishes pay-as-you-go per-token pricing on the Lingyiwanwu open platform. Yi-Lightning is the flagship at approximately $0.14 per million tokens; Yi-Lightning-Lite is cheaper. Yi open-source w
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - Plans
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/plans/01-ai-plans-pricing.yml
+                  meta:
+                    plan_count: 2
+                - type: Plans
+                  slug: 0x-plans-pricing
+                  name: 0X Plans Pricing
+                  provider_slug: 0x
+                  provider_name: 0x
+                  description: 'Commercial pricing plans for the 0x API surface as published at https://0x.org/pricing. Two retail tiers (Standard and Custom) plus a free development tier. The 0x revenue model also includes a 0.15% '
+                  tags:
+                  - Cryptocurrency
+                  - DeFi
+                  - DEX Aggregator
+                  - Swap
+                  - Gasless
+                  - Cross-Chain
+                  url: https://raw.githubusercontent.com/api-evangelist/0x/refs/heads/main/plans/0x-plans-pricing.yml
+                  meta:
+                    plan_count: 3
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -399,6 +1107,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 8752
+                  page: 1
+                  limit: 2
+                  pages: 4376
+                  query:
+                    type: rate-limits
+                data:
+                - type: RateLimits
+                  slug: 01-ai-rate-limits
+                  name: 01 Ai Rate Limits
+                  provider_slug: 01-ai
+                  provider_name: 01.AI
+                  description: 01.AI / Lingyiwanwu does not publish a public English rate-limit table. Limits are tier-based on the platform console. Exponential backoff with Retry-After should be honored.
+                  tags:
+                  - AI
+                  - LLM
+                  - Yi
+                  - Rate Limiting
+                  url: https://raw.githubusercontent.com/api-evangelist/01-ai/refs/heads/main/rate-limits/01-ai-rate-limits.yml
+                  meta:
+                    limit_count: 1
+                - type: RateLimits
+                  slug: 0g-labs-rate-limits
+                  name: 0G Labs Rate Limits
+                  provider_slug: 0g-labs
+                  provider_name: 0G Labs
+                  description: 0G Labs Rate Limits is the machine-readable rate-limit profile for [0G Labs](https://apis.io/providers/0g-labs/) on the [APIs.io](https://apis.io/) network, conforming to the [API Commons Rate Limits]
+                  tags:
+                  - Artificial Intelligence
+                  - AI Inference
+                  - LLM
+                  - GPU Compute
+                  - Decentralized Compute
+                  - Blockchain
+                  - Web3
+                  - EVM
+                  - Decentralized Storage
+                  - Data Availability
+                  - OpenAI-Compatible
+                  - Trusted Execution Environment
+                  - agent-native
+                  - Crypto Infrastructure
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/rate-limits/0g-labs-rate-limits.yml
+                  meta:
+                    limit_count: 0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -427,6 +1191,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 5389
+                  page: 1
+                  limit: 2
+                  pages: 2695
+                  query:
+                    type: channels
+                data:
+                - type: Channel
+                  slug: miniticker-arr
+                  name: '!miniTicker@arr'
+                  provider_slug: binance.us
+                  provider_name: Binance.US
+                  description: 24hr rolling window mini-ticker statistics for all changed symbols. Update speed 1000ms.
+                  tags: []
+                  url: https://github.com/api-evangelist/binance.us/blob/main/asyncapi/binance.us-websocket-streams-asyncapi.yml
+                  meta:
+                    address: '!miniTicker@arr'
+                    asyncapi_version: 2.6.0
+                - type: Channel
+                  slug: ticker-windowsize-arr
+                  name: '!ticker_{windowSize}@arr'
+                  provider_slug: binance.us
+                  provider_name: Binance.US
+                  description: Rolling window ticker statistics for all changed symbols. Update speed 1000ms.
+                  tags: []
+                  url: https://github.com/api-evangelist/binance.us/blob/main/asyncapi/binance.us-websocket-streams-asyncapi.yml
+                  meta:
+                    address: '!ticker_{windowSize}@arr'
+                    asyncapi_version: 2.6.0
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -455,6 +1259,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 4209
+                  page: 1
+                  limit: 2
+                  pages: 2105
+                  query:
+                    type: mcp
+                data:
+                - type: MCP
+                  slug: coasty-mcp
+                  name: '@coasty/mcp'
+                  provider_slug: coasty
+                  provider_name: Coasty
+                  description: First-party MCP server (npx -y @coasty/mcp; remote https://api.coasty.ai/mcp) exposing 26 computer-use tools across predict, machines, schedules, account, and discovery groups.
+                  tags: []
+                  url: https://coasty.ai/.well-known/mcp/server-card.json
+                  meta:
+                    install_method: Documentation link
+                - type: MCP
+                  slug: 0g-router
+                  name: 0g-router
+                  provider_slug: 0g-labs
+                  provider_name: 0G Labs
+                  description: ''
+                  tags: []
+                  url: https://raw.githubusercontent.com/api-evangelist/0g-labs/refs/heads/main/mcp/0g-labs-mcp.yml
+                  meta:
+                    install_method: Candidate descriptor
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -483,6 +1325,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 1582
+                  page: 1
+                  limit: 2
+                  pages: 791
+                  query:
+                    type: skills
+                data:
+                - type: AgentSkill
+                  slug: 7-powers-analysis
+                  name: 7-powers-analysis
+                  provider_slug: amplitude
+                  provider_name: Amplitude
+                  description: Analyze a business, product, or feature using Hamilton Helmer's 7 Powers framework to assess competitive advantage and strategic durability. Use when the user asks about competitive moats, strategic p
+                  tags: []
+                  url: https://github.com/amplitude/builder-skills/blob/main/product-skills/skills/7-powers/SKILL.md
+                - type: AgentSkill
+                  slug: acad-arx-wizard
+                  name: acad-arx-wizard
+                  provider_slug: autocad
+                  provider_name: AutoCAD
+                  description: Agentic ObjectARX project scaffolding for AutoCAD 2027 / Visual Studio 2026. Replaces the broken .vsz VsWizardEngine wizard with a PowerShell script that generates identical C++ project files. Works f
+                  tags: []
+                  url: https://github.com/autodesk-platform-services/skills/blob/main/skills/acad-arx-wizard/SKILL.md
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -512,6 +1388,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /security:
@@ -540,6 +1425,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ArtifactList'
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /providers/{slug}/artifacts:
@@ -562,6 +1456,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -586,6 +1489,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -610,119 +1522,144 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
 components:
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    Include:
-      name: include
-      in: query
-      description: Extra data to embed. `content` fetches and inlines artifact bodies.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          enum:
-          - content
-          maxLength: 1024
-        maxItems: 1000
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    Providers:
-      name: providers
-      in: query
-      description: Comma-separated provider slugs to scope results to.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
-    Aid:
-      name: aid
-      in: path
-      required: true
-      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
-      schema:
-        type: string
-        pattern: ^[^:]+:[^:]+$
-        maxLength: 1024
-    ProviderSlug:
-      name: slug
-      in: path
-      required: true
-      description: Provider slug (e.g. `twilio`).
-      schema:
-        type: string
-        maxLength: 1024
-    Tags:
-      name: tags
-      in: query
-      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
-      style: form
-      explode: false
-      example:
-      - Messaging
-      - Authentication
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    ArtifactSort:
-      name: sort
-      in: query
-      description: Sort order.
-      schema:
-        type: string
-        enum:
-        - relevance
-        - provider
-        - name
-        - updated
-        default: relevance
-        maxLength: 1024
-    Match:
-      name: match
-      in: query
-      description: Whether results must match `any` (default) or `all` of the supplied tags.
-      schema:
-        type: string
-        enum:
-        - any
-        - all
-        default: any
-        maxLength: 1024
   schemas:
+    ArtifactList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Artifact'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
+    ArtifactType:
+      type: string
+      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
+
+        common are listed here. Unknown values are allowed.
+
+        '
+      examples:
+      - OpenAPI
+      - JSONSchema
+      - Postman
+      enum:
+      - Documentation
+      - OpenAPI
+      - JSONSchema
+      - JSONStructure
+      - JSONLD
+      - Example
+      - GettingStarted
+      - APIReference
+      - Authentication
+      - SDK
+      - GitHubRepository
+      - Reference
+      - Pricing
+      - CodeExamples
+      - Website
+      - RateLimits
+      - Portal
+      - AsyncAPI
+      - Arazzo
+      - GitHub
+      - ChangeLog
+      - SourceCode
+      - Repository
+      - FAQ
+      - SignUp
+      - GraphQL
+      - Plans
+      - Vocabulary
+      - Specification
+      - Tutorials
+      - Sandbox
+      - FinOps
+      - SpectralRules
+      - Console
+      - GitHubOrganization
+      - ReleaseNotes
+      - Support
+      - TermsOfService
+      - Rules
+      - Webhooks
+      - Quickstart
+      - ProductPage
+      - Capabilities
+      - PostmanCollection
+      - Collection
+      - KubernetesCRD
+      - Hub
+      - NaftikoCapability
+      x-extensible-enum: true
+      maxLength: 1024
     Artifact:
       type: object
       description: A machine- or human-readable artifact attached to an API.
@@ -792,131 +1729,152 @@ components:
       - page
       - limit
       - pages
-    ArtifactType:
-      type: string
-      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
-
-        common are listed here. Unknown values are allowed.
-
-        '
-      examples:
-      - OpenAPI
-      - JSONSchema
-      - Postman
-      enum:
-      - Documentation
-      - OpenAPI
-      - JSONSchema
-      - JSONStructure
-      - JSONLD
-      - Example
-      - GettingStarted
-      - APIReference
+  parameters:
+    Providers:
+      name: providers
+      in: query
+      description: Comma-separated provider slugs to scope results to.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Aid:
+      name: aid
+      in: path
+      required: true
+      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
+      schema:
+        type: string
+        pattern: ^[^:]+:[^:]+$
+        maxLength: 1024
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024
+    Include:
+      name: include
+      in: query
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - content
+          maxLength: 1024
+        maxItems: 1000
+    Match:
+      name: match
+      in: query
+      description: Whether results must match `any` (default) or `all` of the supplied tags.
+      schema:
+        type: string
+        enum:
+        - any
+        - all
+        default: any
+        maxLength: 1024
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+      - Messaging
       - Authentication
-      - SDK
-      - GitHubRepository
-      - Reference
-      - Pricing
-      - CodeExamples
-      - Website
-      - RateLimits
-      - Portal
-      - AsyncAPI
-      - Arazzo
-      - GitHub
-      - ChangeLog
-      - SourceCode
-      - Repository
-      - FAQ
-      - SignUp
-      - GraphQL
-      - Plans
-      - Vocabulary
-      - Specification
-      - Tutorials
-      - Sandbox
-      - FinOps
-      - SpectralRules
-      - Console
-      - GitHubOrganization
-      - ReleaseNotes
-      - Support
-      - TermsOfService
-      - Rules
-      - Webhooks
-      - Quickstart
-      - ProductPage
-      - Capabilities
-      - PostmanCollection
-      - Collection
-      - KubernetesCRD
-      - Hub
-      - NaftikoCapability
-      x-extensible-enum: true
-      maxLength: 1024
-    Problem:
-      type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
-      properties:
-        type:
+      schema:
+        type: array
+        items:
           type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
           maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-    ArtifactList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Artifact'
-          maxItems: 1000
-      required:
-      - meta
-      - data
+        maxItems: 1000
+    ArtifactSort:
+      name: sort
+      in: query
+      description: Sort order.
+      schema:
+        type: string
+        enum:
+        - relevance
+        - provider
+        - name
+        - updated
+        default: relevance
+        maxLength: 1024
+  headers:
+    XRateLimitTier:
+      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
+      schema:
+        type: string
+        examples:
+        - free
+    XRateLimitLimit:
+      description: The rolling daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one rolling day).
+      schema:
+        type: integer
+        examples:
+        - 86400
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -930,18 +1888,6 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
   securitySchemes:
     api_key:
       type: apiKey

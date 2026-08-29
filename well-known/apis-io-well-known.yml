@@ -2,41 +2,6 @@ generated: '2026-08-10'
 method: searched
 source: https://apis.io/.well-known/
 host: https://apis.io
-documents:
-- path: /.well-known/api-catalog
-  standard: RFC 9727 linkset
-  status: 200
-  content_type: application/linkset+json
-  file: apis-io-api-catalog.json
-- path: /.well-known/mcp/server-card.json
-  standard: MCP server card 2025-11-05
-  status: 200
-  content_type: application/json
-  file: apis-io-mcp-server-card.json
-- path: /.well-known/agent-skills/index.json
-  standard: Agent Skills Discovery RFC v0.2.0
-  status: 200
-  content_type: application/json
-  file: apis-io-agent-skills-index.json
-- path: /.well-known/security.txt
-  standard: RFC 9116
-  status: 404
-- path: /.well-known/openid-configuration
-  status: 404
-- path: /.well-known/oauth-authorization-server
-  standard: RFC 8414
-  status: 404
-- path: /.well-known/oauth-protected-resource
-  standard: RFC 9728
-  status: 404
-- path: /.well-known/ai-plugin.json
-  status: 404
-- path: /.well-known/agent-card.json
-  standard: A2A 1.0.0
-  status: 404
-- path: /.well-known/agent.json
-  standard: A2A pre-0.3 legacy
-  status: 404
 other_discovery:
 - path: /llms.txt
   status: 200
@@ -46,18 +11,61 @@ other_discovery:
   status: 200
 - path: /robots.txt
   status: 200
-  note: >-
-    Carries Cloudflare Content-Signals (search=yes, ai-input=yes, ai-train=yes) and AIPREF
-    Content-Usage (search=y, ai-input=y, ai-train=y) — explicit agent/AI permission signals.
+  note: Carries Cloudflare Content-Signals (search=yes, ai-input=yes, ai-train=yes) and AIPREF Content-Usage
+    (search=y, ai-input=y, ai-train=y) — explicit agent/AI permission signals.
 notes:
-- >-
-  No security.txt is published. There is no OAuth/OIDC discovery because the v1 API is open and
-  read-only (see authentication/apis-io-authentication.yml).
-- >-
-  The OpenAPI servers[] host `search-api.apis.io` has no DNS record, so no /.well-known/ probe
-  was possible against it. The live host is apis.io.
+- 'A security.txt is now published at https://apis.io/.well-known/security.txt (RFC 9116), rendered
+  at build time so its mandatory Expires field cannot lapse. There is still no OAuth/OIDC discovery
+  for the v1 REST API — a key is optional there and raises the tier rather than granting access; the
+  MCP server does use OAuth. See authentication/apis-io-authentication.yml.'
+- 'The OpenAPI servers[] host `search-api.apis.io` had no DNS record, so no /.well-known/ probe was
+  possible against it. The live host is apis.io. Resolved 2026-08-21 — all 11 affected contracts now
+  declare https://apis.io/api/v1, applying the $.servers correction that had been written into
+  overlays/ on 2026-08-10 and never applied. Every contract was re-verified callable afterwards.'
 x-evidence:
   fetched: '2026-08-10'
   probed_hosts:
   - apis.io
   - search-api.apis.io
+hosts:
+- host: https://apis.io
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    file: apis-io-api-catalog.json
+    standard: RFC 9727 linkset
+    content_type: application/linkset+json
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    file: apis-io-mcp-server-card.json
+    standard: MCP server card 2025-11-05
+    content_type: application/json
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: apis-io-agent-skills-index.json
+    standard: Agent Skills Discovery RFC v0.2.0
+    content_type: application/json
+  - path: /.well-known/security.txt
+    status: 404
+    standard: RFC 9116
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    standard: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    standard: RFC 9728
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+    standard: A2A 1.0.0
+  - path: /.well-known/agent.json
+    status: 404
+    standard: A2A pre-0.3 legacy
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.

@@ -10,7 +10,7 @@ operational:
   apis:
     - namespace: apis-io-search
       version: "0.1.0"
-      baseUrl: https://search-api.apis.io
+      baseUrl: https://apis.io/api/v1
       status: active
       description: "APIs.io Search API for API discovery and submission"
 

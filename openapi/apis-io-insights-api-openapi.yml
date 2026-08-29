@@ -1,13 +1,17 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: .io Search APIs Insights API
+  title: .io Search Insights API
   description: This is the technical API contract for the search API for the APIs.io search engine.
   version: 0.1.0
   contact:
     name: Kin Lane
     email: info@apievangelist.com
 servers:
-- url: https://search-api.apis.io
+- url: https://apis.io/api/v1
+  description: Production server.
+security:
+- {}
+- api_key: []
 tags:
 - name: Insights
   description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
@@ -27,6 +31,72 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  generated_note: stamp date at deploy — Date.now() unavailable in this harness
+                  quarters:
+                  - q1-2026
+                  - q2-2026
+                  primary_quarter: q2-2026
+                  companies: 5804
+                  companies_f1000: 947
+                  companies_from_blogs: 4857
+                  companies_with_q1: 295
+                  q1_note: Q1 partial (~316 cos) + method-drifted vs Q2; served flagged, NOT diffed. See time-series.md.
+                  sources: jobs + press (F1000). Provider/blog corpus extraction pending — see ingestion-evaluation.md.
+                  matcher: hardened (word-boundary + stoplist, re-extracted from job corpus)
+                  adoption_basis: recomputed company counts from cleaned stacks
+                  corpus_audit:
+                    date: '2026-08-06'
+                    withheld_companies: 113
+                    reason: Attribution audit of all 879 job corpora found these accounts holding another company's job board — the pull matched on company NAME and followed a vendor or partner's board. Per-company demand figures for them are withheld.
+                    caveat: Aggregate figures below — dimensions, adoption and provider_demand — were computed before this audit and still include the withheld corpora. They are being rebuilt.
+                    reference: https://github.com/api-evangelist/roadmap/issues/17
+                top_dimensions:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+                - dimension: cloud
+                  total_signal: 24024
+                  companies_with_signal: 807
+                - dimension: roiBusinessMetrics
+                  total_signal: 22814
+                  companies_with_signal: 780
+                - dimension: governance
+                  total_signal: 22153
+                  companies_with_signal: 827
+                - dimension: automation
+                  total_signal: 21341
+                  companies_with_signal: 790
+                - dimension: code
+                  total_signal: 19564
+                  companies_with_signal: 832
+                - dimension: security
+                  total_signal: 18463
+                  companies_with_signal: 930
+                - dimension: ai
+                  total_signal: 15834
+                  companies_with_signal: 775
+                - dimension: services
+                  total_signal: 13682
+                  companies_with_signal: 833
+                counts:
+                  companies: 5804
+                  services: 566
+                  tools: 286
+                  industries: 50
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /insights/dimensions:
     get:
@@ -47,6 +117,30 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 42
+                  page: 1
+                  limit: 2
+                  pages: 21
+                  query:
+                    quarter: q2-2026
+                data:
+                - dimension: data
+                  total_signal: 40111
+                  companies_with_signal: 817
+                - dimension: operations
+                  total_signal: 27084
+                  companies_with_signal: 840
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /insights/adoption:
     get:
@@ -78,6 +172,32 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 566
+                  page: 1
+                  limit: 2
+                  pages: 283
+                  query:
+                    type: services
+                data:
+                - name: Microsoft Office
+                  slug: microsoft-office
+                  companyCount: 731
+                  radarRing: Optimizing
+                - name: Microsoft Teams
+                  slug: microsoft-teams
+                  companyCount: 715
+                  radarRing: Optimizing
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /insights/industries:
     get:
@@ -94,6 +214,27 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 50
+                  page: 1
+                  limit: 2
+                  pages: 25
+                  query: {}
+                data:
+                - name: Industrial
+                  company_count: 138
+                - name: Technology
+                  company_count: 135
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /insights/companies:
     get:
@@ -115,6 +256,33 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                meta:
+                  total: 5804
+                  page: 1
+                  limit: 2
+                  pages: 2902
+                  query: {}
+                data:
+                - slug: goldman-sachs
+                  name: Goldman Sachs
+                  industry: Financial Technology
+                  sub_sector: Payment Processing
+                  readiness_total: 1756
+                - slug: leidos
+                  name: Leidos
+                  industry: Enterprise Software
+                  sub_sector: IT Service Management
+                  readiness_total: 1749
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
       security: []
   /insights/company/{slug}:
     get:
@@ -140,6 +308,37 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+              example:
+                slug: goldman-sachs
+                name: Goldman Sachs
+                industry: Financial Technology
+                sub_sector: Payment Processing
+                source: jobs
+                confidence: high
+                readiness_total: 1756
+                top_dimensions:
+                - key: data
+                  score: 193
+                - key: cloud
+                  score: 119
+                - key: operations
+                  score: 112
+                sample_gap:
+                  dimension: domainSpecialization
+                  score: 2
+                quarters:
+                - q2-2026
+                - q1-2026
+                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption stack, per-quarter history, gaps, and provider matches. https://apis.io/developer/plans/
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -168,6 +367,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           description: Requires the Pro or Business tier.
           content:
@@ -200,6 +408,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '403':
           description: Requires the Pro or Business tier.
           content:
@@ -208,16 +425,39 @@ paths:
                 type: object
                 additionalProperties: true
 components:
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
+  headers:
+    XRateLimitTier:
+      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
+      schema:
+        type: string
+        examples:
+        - free
+    XRateLimitLimit:
+      description: The rolling daily request quota for the tier that served this response.
       schema:
         type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
+        examples:
+        - 1000
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one rolling day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
+  parameters:
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
     Page:
       name: page
       in: query
@@ -227,13 +467,15 @@ components:
         minimum: 1
         default: 1
         maximum: 1000000
-    Q:
-      name: q
+    Limit:
+      name: limit
       in: query
-      description: Free-text query over name and description (and tags where applicable).
+      description: Items per page.
       schema:
-        type: string
-        maxLength: 1024
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
   schemas:
     Problem:
       type: object

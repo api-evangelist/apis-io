@@ -1,13 +1,17 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: .io Search APIs Synthesis API
+  title: .io Search Synthesis API
   description: This is the technical API contract for the search API for the APIs.io search engine.
   version: 0.1.0
   contact:
     name: Kin Lane
     email: info@apievangelist.com
 servers:
-- url: https://search-api.apis.io
+- url: https://apis.io/api/v1
+  description: Production server.
+security:
+- {}
+- api_key: []
 tags:
 - name: Synthesis
   description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
@@ -38,6 +42,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -74,6 +87,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -106,6 +128,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
         '403':
@@ -142,6 +173,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
@@ -178,6 +218,15 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /stack/export:
@@ -213,19 +262,18 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
 components:
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
   responses:
     BadRequest:
       description: Malformed request (bad parameter value).
@@ -240,18 +288,6 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
     UpgradeRequired:
       description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
       content:
@@ -264,6 +300,43 @@ components:
             status: 403
             detail: The areas endpoint requires the Pro or Business tier.
             instance: /v1/areas
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
+  headers:
+    XRateLimitTier:
+      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
+      schema:
+        type: string
+        examples:
+        - free
+    XRateLimitLimit:
+      description: The rolling daily request quota for the tier that served this response.
+      schema:
+        type: integer
+        examples:
+        - 1000
+    XRateLimitWindow:
+      description: The quota window in seconds. Always 86400 (one rolling day).
+      schema:
+        type: integer
+        examples:
+        - 86400
+    RateLimitPolicy:
+      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
+      schema:
+        type: string
+        examples:
+        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
   schemas:
     Problem:
       type: object
@@ -314,6 +387,16 @@ components:
       - title
       - status
       additionalProperties: true
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
   securitySchemes:
     api_key:
       type: apiKey
