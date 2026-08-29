@@ -34,6 +34,21 @@ tags:
 - API Rating
 - API Search
 - APIs.json
+- Search Engines
+- API Catalog
+- Agent Discovery
+- MCP
+- Agent Skills
+- OpenAPI
+- API Governance
+tags_raw:
+- API Aggregation
+- API Directory
+- API Discovery
+- API Indexing
+- API Rating
+- API Search
+- APIs.json
 - Search Engine
 - API Catalog
 - Agent Discovery
@@ -51,7 +66,12 @@ apis:
   description: Index of HTTP application programming interfaces.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
+<<<<<<< HEAD
   tags: &id001
+=======
+  tags: []
+  tags_raw:
+>>>>>>> 9d1edc3 (Slug + MCP type corrections, rescore artifacts (2026-08-20))
   - APIs
   properties:
   - type: OpenAPI
