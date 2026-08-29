@@ -1,17 +1,20 @@
 openapi: 3.2.0
 info:
-  title: .io Search Providers API
-  description: This is the technical API contract for the search API for the APIs.io search engine.
-  version: 0.1.0
+  title: APIs.io Providers API
+  version: 1.5.0
+  description: 'Organizations publishing APIs on the network.
+
+
+    This is the Providers surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
-    name: Kin Lane
-    email: info@apievangelist.com
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
 servers:
 - url: https://apis.io/api/v1
   description: Production server.
-security:
-- {}
-- api_key: []
 tags:
 - name: Providers
   description: Organizations publishing APIs on the network.
@@ -52,6 +55,7 @@ paths:
       - $ref: '#/components/parameters/Fields'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
       responses:
         '200':
           description: A page of providers.
@@ -59,240 +63,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderList'
-              example:
-                meta:
-                  total: 26692
-                  page: 1
-                  limit: 2
-                  pages: 13346
-                  query:
-                    tags: null
-                data:
-                - slug: xquik-api
-                  name: Xquik
-                  description: Xquik is an independent third-party X data and automation platform. It provides public data reads, connected-account write actions, monitoring, signed webhooks, exports, hosted MCP servers, OAuth 2.1, API keys, 8 SDKs, a CLI, Agent Skills, and an OpenAPI 3.1 contract. Not affiliated with X Corp.
-                  api_count: 3
-                  artifact_types:
-                  - MCP
-                  - Security
-                  - Rules
-                  - Plans
-                  - RateLimits
-                  - FinOps
-                  - Scopes
-                  - AgenticAccess
-                  - MCPServer
-                  - ToolCrosswalk
-                  - OAuthScopes
-                  - Authentication
-                  - Documentation
-                  - OpenAPI
-                  - OpenAPISource
-                  - APIReference
-                  - APIsJSON
-                  tags:
-                  - social-media-data
-                  - X / Twitter
-                  - Social Listening
-                  - Data Extraction
-                  - Automation
-                  - Webhook
-                  - MCP
-                  - Developer API
-                  - Agents
-                  - Documentation
-                  - REST
-                  - OpenAPI
-                  score:
-                    composite: 92.8
-                    band: exemplar
-                    scored_at: '2026-08-20'
-                    schema_version: 0.12.0
-                    trend: flat
-                    delta: 0
-                    previous_composite: 92.8
-                    facets:
-                      discoverability: 100
-                      contract_quality: 80.9
-                      governance: 100
-                      contract_governance: 100
-                      operational_transparency: 81.6
-                      developer_ergonomics: 100
-                      commercial_clarity: 100
-                      access_clarity: 100
-                    provenance:
-                      mcp: first-party
-                      skills: first-party
-                      agentic_access: unknown
-                      conformance: first-party
-                      contracts:
-                        total: 1
-                        derived: 0
-                        marker_coverage: 100
-                        callable: 100
-                  agent_readiness:
-                    score: 84.9
-                    band: agent-native
-                    scored_at: '2026-08-20'
-                    schema_version: 0.2
-                    dimensions:
-                      spec_presence: true
-                      agentic_access: true
-                      reversibility_documented: false
-                      mcp_server: documented
-                      auth_clarity: true
-                      idempotency: documented
-                      error_semantics: verified
-                      openapi_examples: verified
-                      rate_limit_signal: verified
-                      event_surface_described: true
-                      agent_skills: true
-                      well_known_catalog: true
-                      consent_identity: true
-                      agent_card: conformant
-                      dry_run_mode: true
-                  access_model: null
-                  industries:
-                  - data-analytics
-                  - robotics
-                  regions: []
-                  areas:
-                  - ai-automation
-                  - workflow-automation
-                  image: https://xquik.com/logo-square.png
-                  created: '2026-04-14'
-                  modified: '2026-08-13'
-                  collections_count: 1
-                  common_count: 69
-                - slug: medplum
-                  name: Medplum
-                  description: Medplum is an Apache 2.0 open-source, FHIR-native developer platform for shipping clinical software. It bundles a FHIR R4 datastore, REST and GraphQL APIs, a TypeScript SDK, React component library, OAuth 2.0 / SMART on FHIR authentication, declarative Access Policies, Subscriptions, and TypeScript-based serverless Bots — sold as a hosted service at api.medplum.com and as a self-hostable monorepo on GitHub. Medplum is HIPAA, SOC 2 Type II, and ONC-certified.
-                  api_count: 4
-                  artifact_types:
-                  - MCP
-                  - Security
-                  - Rules
-                  - Plans
-                  - RateLimits
-                  - FinOps
-                  - Scopes
-                  - AgenticAccess
-                  - Arazzo
-                  - Documentation
-                  - JSONSchema
-                  - Examples
-                  - OpenAPI
-                  - APIReference
-                  - Authentication
-                  - MCPServer
-                  - ToolCrosswalk
-                  - JSONStructure
-                  - GraphQL
-                  - APIsJSON
-                  tags:
-                  - Healthcare
-                  - FHIR
-                  - Open-Source
-                  - Developer Platform
-                  - HIPAA
-                  - SMART on FHIR
-                  - Clinical
-                  - Interoperability
-                  - Bots
-                  - Automation
-                  - Serverless
-                  - Integration
-                  - GraphQL
-                  - Subscription
-                  - Webhook
-                  - Event
-                  score:
-                    composite: 91.4
-                    band: exemplar
-                    scored_at: '2026-08-20'
-                    schema_version: 0.12.0
-                    trend: flat
-                    delta: 0
-                    previous_composite: 91.4
-                    facets:
-                      discoverability: 83.3
-                      contract_quality: 79
-                      governance: 55.3
-                      contract_governance: 55.3
-                      operational_transparency: 97.4
-                      developer_ergonomics: 78
-                      commercial_clarity: 86.8
-                      access_clarity: 86.8
-                    regulatory:
-                      applies: true
-                      regime: Health
-                      regime_id: health
-                      score: 92.5
-                      matched_via: tags
-                    provenance:
-                      mcp: first-party
-                      skills: derived
-                      agentic_access: derived
-                      conformance: first-party
-                      contracts:
-                        total: 1
-                        derived: 0
-                        marker_coverage: 0
-                        callable: 100
-                  agent_readiness:
-                    score: 46.6
-                    band: agent-native
-                    scored_at: '2026-08-20'
-                    schema_version: 0.2
-                    dimensions:
-                      spec_presence: true
-                      agentic_access: derived
-                      reversibility_documented: false
-                      mcp_server: documented
-                      auth_clarity: true
-                      idempotency: documented
-                      error_semantics: documented
-                      openapi_examples: false
-                      rate_limit_signal: documented
-                      event_surface_described: true
-                      agent_skills: derived
-                      well_known_catalog: false
-                      consent_identity: false
-                      agent_card: false
-                      dry_run_mode: false
-                  access_model:
-                    confidence: high
-                    label: Freemium · Self-serve signup
-                    onboarding: self-serve
-                    pricing: freemium
-                    public: false
-                    source:
-                    - plans
-                    - authentication
-                    trial: false
-                    try_now: true
-                  industries:
-                  - developer-tools
-                  - digital-health
-                  regions: []
-                  areas: []
-                  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/medplum.png
-                  created: '2026-05-25'
-                  modified: '2026-08-17'
-                  collections_count: 3
-                  common_count: 65
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
+      x-tier: free
   /providers/{slug}:
     get:
       operationId: getProvider
@@ -310,135 +84,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Provider'
-              example:
-                slug: xquik-api
-                name: Xquik
-                description: Xquik is an independent third-party X data and automation platform. It provides public data reads, connected-account write actions, monitoring, signed webhooks, exports, hosted MCP servers, OAuth 2.1, API keys, 8 SDKs, a CLI, Agent Skills, and an OpenAPI 3.1 contract. Not affiliated with X Corp.
-                overview: 'Xquik publishes 1 API on the [APIs.io](https://apis.io/) network: REST API. Tagged areas include social-media-data, X / Twitter, Social Listening, Data Extraction, and Automation.
-
-
-                  The Xquik catalog on APIs.io includes 2 event-driven AsyncAPI specifications, 1 JSON-LD context, and 1 Spectral governance ruleset.
-
-
-                  Xquik''s developer surface includes authentication, documentation, API reference, getting-started guide, SDKs, CLI, sandbox, and 62 more developer resources.'
-                api_count: 3
-                apis:
-                - description: OpenAPI 3.1 REST API for public X data, connected-account write actions, monitoring, signed webhooks, exports, account management, and billing.
-                  name: Xquik REST API
-                  slug: xquik-rest-api
-                - description: Hosted MCP server for the Xquik API with OAuth 2.1 and API-key access.
-                  name: Xquik API MCP Server
-                  slug: xquik-api-mcp-server
-                - description: Read-only hosted MCP server for searching Xquik documentation.
-                  name: Xquik Docs MCP Server
-                  slug: xquik-docs-mcp-server
-                image: https://xquik.com/logo-square.png
-                url: https://xquik.com/apis.yml
-                screenshot: https://raw.githubusercontent.com/api-evangelist/xquik-api/refs/heads/main/screenshots/xquik-api-2026-08-17T075407.png
-                created: '2026-04-14'
-                modified: '2026-08-13'
-                score:
-                  composite: 92.8
-                  band: exemplar
-                  scored_at: '2026-08-20'
-                  schema_version: 0.12.0
-                  trend: flat
-                  delta: 0
-                  previous_composite: 92.8
-                  facets:
-                    discoverability: 100
-                    contract_quality: 80.9
-                    governance: 100
-                    contract_governance: 100
-                    operational_transparency: 81.6
-                    developer_ergonomics: 100
-                    commercial_clarity: 100
-                    access_clarity: 100
-                  provenance:
-                    mcp: first-party
-                    skills: first-party
-                    agentic_access: unknown
-                    conformance: first-party
-                    contracts:
-                      total: 1
-                      derived: 0
-                      marker_coverage: 100
-                      callable: 100
-                agent_readiness:
-                  score: 84.9
-                  band: agent-native
-                  scored_at: '2026-08-20'
-                  schema_version: 0.2
-                  dimensions:
-                    spec_presence: true
-                    agentic_access: true
-                    reversibility_documented: false
-                    mcp_server: documented
-                    auth_clarity: true
-                    idempotency: documented
-                    error_semantics: verified
-                    openapi_examples: verified
-                    rate_limit_signal: verified
-                    event_surface_described: true
-                    agent_skills: true
-                    well_known_catalog: true
-                    consent_identity: true
-                    agent_card: conformant
-                    dry_run_mode: true
-                access_model: null
-                tags:
-                - social-media-data
-                - X / Twitter
-                - Social Listening
-                - Data Extraction
-                - Automation
-                - Webhook
-                - MCP
-                - Developer API
-                - Agents
-                - Documentation
-                - REST
-                - OpenAPI
-                artifact_types:
-                - MCP
-                - Security
-                - Rules
-                - Plans
-                - RateLimits
-                - FinOps
-                - Scopes
-                - AgenticAccess
-                - MCPServer
-                - ToolCrosswalk
-                - OAuthScopes
-                - Authentication
-                - Documentation
-                - OpenAPI
-                - OpenAPISource
-                - APIReference
-                - APIsJSON
-                _type: provider
-                industries:
-                - data-analytics
-                - robotics
-                regions: []
-                areas:
-                - ai-automation
-                - workflow-automation
-                collections_count: 1
-                common_count: 69
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
+      x-tier: free
   /providers/{slug}/apis:
     get:
       operationId: listProviderApis
@@ -462,61 +111,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiList'
-              example:
-                meta:
-                  total: 3
-                  page: 1
-                  limit: 2
-                  pages: 2
-                  query:
-                    provider: xquik-api
-                data:
-                - aid: xquik-api:xquik-api-mcp-server
-                  slug: xquik-api-mcp-server
-                  name: Xquik API MCP Server
-                  description: Hosted MCP server for the Xquik API with OAuth 2.1 and API-key access.
-                  tags:
-                  - MCP
-                  - Agents
-                  - Automation
-                  provider_slug: xquik-api
-                  provider_name: Xquik
-                  artifact_types:
-                  - MCPServer
-                  - ToolCrosswalk
-                  - OAuthScopes
-                  - Authentication
-                  baseURL: https://xquik.com/mcp
-                  humanURL: https://docs.xquik.com/mcp/overview
-                  artifact_count: 0
-                - aid: xquik-api:xquik-docs-mcp-server
-                  slug: xquik-docs-mcp-server
-                  name: Xquik Docs MCP Server
-                  description: Read-only hosted MCP server for searching Xquik documentation.
-                  tags:
-                  - MCP
-                  - Documentation
-                  - Agents
-                  provider_slug: xquik-api
-                  provider_name: Xquik
-                  artifact_types:
-                  - MCPServer
-                  - Documentation
-                  baseURL: https://docs.xquik.com/mcp
-                  humanURL: https://docs.xquik.com/mcp/overview
-                  artifact_count: 0
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
+      x-tier: free
   /providers/{slug}/artifacts:
     get:
       operationId: getProviderArtifacts
@@ -537,15 +135,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -569,52 +158,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-              example:
-                slug: xquik-api
-                name: Xquik
-                website: https://xquik.com/apis.yml
-                portal: null
-                signup: https://dashboard.xquik.com/en/signup
-                documentation: https://docs.xquik.com
-                authentication: authentication/xquik-api-authentication.yml
-                pricing: https://xquik.com/en#pricing
-                baseURLs:
-                - https://xquik.com/mcp
-                - https://docs.xquik.com/mcp
-                - https://xquik.com/api/v1
-                artifact_types:
-                - APIReference
-                - APIsJSON
-                - AgenticAccess
-                - Authentication
-                - Documentation
-                - FinOps
-                - MCP
-                - MCPServer
-                - OAuthScopes
-                - OpenAPI
-                - OpenAPISource
-                - Plans
-                - RateLimits
-                - Rules
-                - Scopes
-                - Security
-                - ToolCrosswalk
-                first_steps:
-                - 'Sign up: https://dashboard.xquik.com/en/signup'
-                - 'Set up authentication: authentication/xquik-api-authentication.yml'
-                - Call the API at https://xquik.com/mcp
-                - 'Read the docs: https://docs.xquik.com'
-                note: Assembled from the provider registered links + API base URLs; not a full onboarding descriptor.
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
@@ -638,52 +181,468 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProviderList'
-              example:
-                meta:
-                  total: 2
-                  page: 1
-                  limit: 2
-                  pages: 1
-                  query:
-                    of: xquik-api
-                data:
-                - slug: clay-com
-                  name: Clay
-                  band: strong
-                  composite: 61.9
-                  similarity: 35
-                  shared_tags:
-                  - automation
-                  - webhook
-                  - mcp
-                  - agents
-                  - rest
-                  - openapi
-                - slug: adobe-suite
-                  name: Adobe Suite
-                  band: exemplar
-                  composite: 71.6
-                  similarity: 33
-                  shared_tags:
-                  - automation
-                  - webhook
-                  - mcp
-                  - agents
-                  - rest
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
+  /providers/{slug}/capabilities:
+    get:
+      operationId: getProviderCapabilities
+      x-tier: free
+      x-mcp-tool: get_provider_capabilities
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: What one provider publishes, counted.
+      description: Artifact counts by type with the agent dimensions the provider satisfies. Free — it is a fact about their own public surface.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: What one provider publishes, counted.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/operations:
+    get:
+      operationId: getProviderOperations
+      x-tier: free
+      x-mcp-tool: get_provider_operations
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every operation a provider exposes.
+      description: 'All operations across all of a provider''s OpenAPIs in one call — method, path, operationId, summary, the API each belongs to, and deprecation. The shortcut for "what can I actually call here?", which otherwise means fetching and parsing every spec they publish (159 documents for Stripe).
+
+
+        Where the provider publishes agentic-access, each operation carries its action class and consequence — the difference between a read and something that moves money — and `meta.coverage` states how many operations have it. An operation WITHOUT an `agentic` block was not profiled; that is not the same as safe.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: method
+        in: query
+        schema:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - HEAD
+          - OPTIONS
+      - name: api
+        in: query
+        schema:
+          type: string
+        description: Restrict to one API, by aid or api slug.
+      - name: path
+        in: query
+        schema:
+          type: string
+        description: Substring match on the operation path.
+      - name: consequence
+        in: query
+        schema:
+          type: string
+        description: Agentic consequence, e.g. read.
+      - name: action_class
+        in: query
+        schema:
+          type: string
+      - name: deprecated
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+        description: Only operations the provider marks deprecated.
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every operation a provider exposes.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/tools:
+    get:
+      operationId: getProviderTools
+      x-tier: free
+      x-mcp-tool: get_provider_tools
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every MCP tool a provider ships.
+      description: 'Each tool with the operation it wraps and its auth, plus provenance: `first-party` means the provider publishes that server; `derived` means API Evangelist generated a candidate tool list from their OpenAPI because no hosted server was found. Filter `?provenance=first-party` for a true picture — counting derived tools as the provider''s own is what overstates MCP adoption across the catalog.
+
+
+        A server whose tools could not be enumerated (auth-gated, for instance) appears in `meta.coverage.not_enumerable` with the reason, rather than being silently counted as zero.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: provenance
+        in: query
+        schema:
+          type: string
+          enum:
+          - first-party
+          - derived
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every MCP tool a provider ships.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/schema:
+    get:
+      operationId: getProviderSchema
+      x-tier: free
+      x-mcp-tool: get_provider_schema
+      x-agent-skill: integrate-provider
+      security: []
+      tags:
+      - Providers
+      summary: Every JSON Schema a provider publishes.
+      description: The data shapes a provider's API works in, in one list, without walking their artifacts.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
+      responses:
+        '200':
+          description: Every JSON Schema a provider publishes.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Trend:
+      type: string
+      description: Week-over-week movement in composite score (±5 thresholds).
+      enum:
+      - rising
+      - flat
+      - falling
+      maxLength: 1024
+    Facets:
+      type: object
+      description: The six facet scores, each 0–100.
+      properties:
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+      - exemplar
+      - strong
+      - developing
+      - thin
+      - minimal
+      maxLength: 1024
+    Link:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          maxLength: 2048
+        title:
+          type: string
+          maxLength: 1024
+      required:
+      - type
+      - url
+    FacetName:
+      type: string
+      description: One of the six rating facets.
+      enum:
+      - discoverability
+      - contract_quality
+      - governance
+      - operational_transparency
+      - developer_ergonomics
+      - commercial_clarity
+      maxLength: 1024
+    ProviderList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Provider'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
+    Provider:
+      type: object
+      description: An organization publishing one or more APIs.
+      properties:
+        slug:
+          type: string
+          examples:
+          - twilio
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        api_count:
+          type: integer
+          maximum: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        created:
+          type: string
+          format: date
+          maxLength: 10
+        common:
+          type: array
+          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
+          items:
+            $ref: '#/components/schemas/Link'
+          maxItems: 1000
+        apis:
+          type: array
+          description: Summary list of the provider's APIs.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+              description:
+                type: string
+                maxLength: 20000
+          maxItems: 1000
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+            maxLength: 1024
+          examples:
+          - - Messaging
+            - Authentication
+          maxItems: 1000
+        score:
+          $ref: '#/components/schemas/ProviderScore'
+      required:
+      - slug
+      - name
+    ArtifactType:
+      type: string
+      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
+
+        common are listed here. Unknown values are allowed.
+
+        '
+      examples:
+      - OpenAPI
+      - JSONSchema
+      - PostmanCollection
+      enum:
+      - Documentation
+      - OpenAPI
+      - JSONSchema
+      - JSONStructure
+      - JSONLD
+      - Example
+      - GettingStarted
+      - APIReference
+      - Authentication
+      - SDK
+      - GitHubRepository
+      - Reference
+      - Pricing
+      - CodeExamples
+      - Website
+      - RateLimits
+      - Portal
+      - AsyncAPI
+      - Arazzo
+      - GitHub
+      - ChangeLog
+      - SourceCode
+      - Repository
+      - FAQ
+      - SignUp
+      - GraphQL
+      - Plans
+      - Vocabulary
+      - Specification
+      - Tutorials
+      - Sandbox
+      - FinOps
+      - SpectralRules
+      - Console
+      - GitHubOrganization
+      - ReleaseNotes
+      - Support
+      - TermsOfService
+      - Rules
+      - Webhooks
+      - Quickstart
+      - ProductPage
+      - Capabilities
+      - PostmanCollection
+      - Collection
+      - KubernetesCRD
+      - Hub
+      - NaftikoCapability
+      x-extensible-enum: true
+      maxLength: 1024
+    ApiList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+      - total
+      - page
+      - limit
+      - pages
     Api:
       type: object
       description: An individual API owned by a provider.
@@ -751,312 +710,6 @@ components:
       - aid
       - name
       - provider_slug
-    Link:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
-          maxLength: 1024
-        url:
-          type: string
-          format: uri
-          maxLength: 2048
-        title:
-          type: string
-          maxLength: 1024
-      required:
-      - type
-      - url
-    ProviderScore:
-      type: object
-      description: A provider's rating, rubric v0.3.
-      properties:
-        composite:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Weighted composite of the six facets.
-          examples:
-          - 66.3
-        band:
-          $ref: '#/components/schemas/Band'
-        trend:
-          $ref: '#/components/schemas/Trend'
-        delta:
-          type: number
-          description: Composite change since the previous snapshot.
-          examples:
-          - 0.0
-          maximum: 1000000000
-        previous_composite:
-          type: number
-          minimum: 0
-          maximum: 100
-        scored_at:
-          type: string
-          format: date
-          maxLength: 10
-        schema_version:
-          type: string
-          examples:
-          - '0.3'
-          maxLength: 1024
-        facets:
-          $ref: '#/components/schemas/Facets'
-      required:
-      - composite
-      - band
-    Band:
-      type: string
-      description: Rating band derived from the composite score.
-      enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
-      maxLength: 1024
-    Facets:
-      type: object
-      description: The six facet scores, each 0–100.
-      properties:
-        discoverability:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Discoverability facet score (weight 0.10).
-        contract_quality:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Contract Quality facet score (weight 0.25).
-        governance:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Governance facet score (weight 0.12).
-        operational_transparency:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Operational Transparency facet score (weight 0.13).
-        developer_ergonomics:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Developer Ergonomics facet score (weight 0.20).
-        commercial_clarity:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Commercial Clarity facet score (weight 0.20).
-    Provider:
-      type: object
-      description: An organization publishing one or more APIs.
-      properties:
-        slug:
-          type: string
-          examples:
-          - twilio
-          maxLength: 1024
-        name:
-          type: string
-          maxLength: 1024
-        description:
-          type: string
-          maxLength: 20000
-        api_count:
-          type: integer
-          maximum: 1000
-        image:
-          type: string
-          format: uri
-          maxLength: 2048
-        created:
-          type: string
-          format: date
-          maxLength: 10
-        common:
-          type: array
-          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
-          items:
-            $ref: '#/components/schemas/Link'
-          maxItems: 1000
-        apis:
-          type: array
-          description: Summary list of the provider's APIs.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                maxLength: 1024
-              slug:
-                type: string
-                maxLength: 1024
-              description:
-                type: string
-                maxLength: 20000
-          maxItems: 1000
-        tags:
-          type: array
-          description: Tag names in Title Case (e.g. Messaging, Authentication).
-          items:
-            type: string
-            maxLength: 1024
-          examples:
-          - - Messaging
-            - Authentication
-          maxItems: 1000
-        score:
-          $ref: '#/components/schemas/ProviderScore'
-      required:
-      - slug
-      - name
-    FacetName:
-      type: string
-      description: One of the six rating facets.
-      enum:
-      - discoverability
-      - contract_quality
-      - governance
-      - operational_transparency
-      - developer_ergonomics
-      - commercial_clarity
-      maxLength: 1024
-    Problem:
-      type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
-      properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
-          maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-    ArtifactType:
-      type: string
-      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
-
-        common are listed here. Unknown values are allowed.
-
-        '
-      examples:
-      - OpenAPI
-      - JSONSchema
-      - Postman
-      enum:
-      - Documentation
-      - OpenAPI
-      - JSONSchema
-      - JSONStructure
-      - JSONLD
-      - Example
-      - GettingStarted
-      - APIReference
-      - Authentication
-      - SDK
-      - GitHubRepository
-      - Reference
-      - Pricing
-      - CodeExamples
-      - Website
-      - RateLimits
-      - Portal
-      - AsyncAPI
-      - Arazzo
-      - GitHub
-      - ChangeLog
-      - SourceCode
-      - Repository
-      - FAQ
-      - SignUp
-      - GraphQL
-      - Plans
-      - Vocabulary
-      - Specification
-      - Tutorials
-      - Sandbox
-      - FinOps
-      - SpectralRules
-      - Console
-      - GitHubOrganization
-      - ReleaseNotes
-      - Support
-      - TermsOfService
-      - Rules
-      - Webhooks
-      - Quickstart
-      - ProductPage
-      - Capabilities
-      - PostmanCollection
-      - Collection
-      - KubernetesCRD
-      - Hub
-      - NaftikoCapability
-      x-extensible-enum: true
-      maxLength: 1024
-    ProviderList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Provider'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-    Trend:
-      type: string
-      description: Week-over-week movement in composite score (±5 thresholds).
-      enum:
-      - rising
-      - flat
-      - falling
-      maxLength: 1024
     Artifact:
       type: object
       description: A machine- or human-readable artifact attached to an API.
@@ -1099,67 +752,63 @@ components:
       required:
       - type
       - url
-    Meta:
+    ProviderScore:
       type: object
-      description: Pagination and echoed-query metadata for collection responses.
+      description: A provider's rating, rubric v0.3.
       properties:
-        total:
-          type: integer
-          description: Total matching items across all pages.
-          maximum: 1000000
-        page:
-          type: integer
-          maximum: 1000000
-        limit:
-          type: integer
-          maximum: 1000
-        pages:
-          type: integer
-          description: Total number of pages.
-          maximum: 1000000
-        query:
-          type: object
-          additionalProperties: true
-          description: The effective query parameters, echoed back.
-      required:
-      - total
-      - page
-      - limit
-      - pages
-    ApiList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Api'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-  parameters:
-    RegionFilter:
-      name: region
-      in: query
-      description: Filter by one or more region slugs.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted composite of the six facets.
+          examples:
+          - 66.3
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+        delta:
+          type: number
+          description: Composite change since the previous snapshot.
+          examples:
+          - 0
+          maximum: 1000000000
+        previous_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        scored_at:
           type: string
+          format: date
+          maxLength: 10
+        schema_version:
+          type: string
+          examples:
+          - '0.3'
           maxLength: 1024
-        maxItems: 1000
-    MinScore:
-      name: min_score
+        facets:
+          $ref: '#/components/schemas/Facets'
+      required:
+      - composite
+      - band
+  parameters:
+    Format:
+      name: format
       in: query
-      description: Minimum composite score (0–100).
+      required: false
+      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
       schema:
-        type: number
-        minimum: 0
-        maximum: 100
+        type: string
+        enum:
+        - csv
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024
     Limit:
       name: limit
       in: query
@@ -1169,42 +818,91 @@ components:
         minimum: 1
         maximum: 100
         default: 25
-    ProviderSlug:
-      name: slug
-      in: path
-      required: true
-      description: Provider slug (e.g. `twilio`).
-      schema:
-        type: string
-        maxLength: 1024
-    Include:
-      name: include
+    Page:
+      name: page
       in: query
-      description: Extra data to embed. `content` fetches and inlines artifact bodies.
-      style: form
-      explode: false
+      description: 1-based page number.
       schema:
-        type: array
-        items:
-          type: string
-          enum:
-          - content
-          maxLength: 1024
-        maxItems: 1000
-    MinFacet:
-      name: min_facet
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    FacetFilter:
+      name: facet
       in: query
-      description: Minimum score (0–100) for the facet named by `facet`.
+      description: Facet to apply `min_facet` against.
       schema:
-        type: number
-        minimum: 0
-        maximum: 100
+        $ref: '#/components/schemas/FacetName'
     IndustryFilter:
       name: industry
       in: query
       description: Filter by one or more industry slugs.
       style: form
       explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+    BandFilter:
+      name: band
+      in: query
+      description: Filter by one or more rating bands.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Band'
+        maxItems: 1000
+    MinScore:
+      name: min_score
+      in: query
+      description: Minimum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    ArtifactTypes:
+      name: artifact_types
+      in: query
+      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ArtifactType'
+        maxItems: 1000
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+      - Messaging
+      - Authentication
       schema:
         type: array
         items:
@@ -1222,17 +920,26 @@ components:
         - all
         default: any
         maxLength: 1024
-    ArtifactTypes:
-      name: artifact_types
+    Include:
+      name: include
       in: query
-      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
       style: form
       explode: false
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/ArtifactType'
+          type: string
+          enum:
+          - content
+          maxLength: 1024
         maxItems: 1000
+    TrendFilter:
+      name: trend
+      in: query
+      description: Filter by trend marker.
+      schema:
+        $ref: '#/components/schemas/Trend'
     MaxScore:
       name: max_score
       in: query
@@ -1241,36 +948,10 @@ components:
         type: number
         minimum: 0
         maximum: 100
-    Page:
-      name: page
+    RegionFilter:
+      name: region
       in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    BandFilter:
-      name: band
-      in: query
-      description: Filter by one or more rating bands.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Band'
-        maxItems: 1000
-    FacetFilter:
-      name: facet
-      in: query
-      description: Facet to apply `min_facet` against.
-      schema:
-        $ref: '#/components/schemas/FacetName'
-    Fields:
-      name: fields
-      in: query
-      description: Sparse fieldset — comma-separated property names to return.
+      description: Filter by one or more region slugs.
       style: form
       explode: false
       schema:
@@ -1279,59 +960,14 @@ components:
           type: string
           maxLength: 1024
         maxItems: 1000
-    Q:
-      name: q
+    MinFacet:
+      name: min_facet
       in: query
-      description: Free-text query over name and description (and tags where applicable).
+      description: Minimum score (0–100) for the facet named by `facet`.
       schema:
-        type: string
-        maxLength: 1024
-    TrendFilter:
-      name: trend
-      in: query
-      description: Filter by trend marker.
-      schema:
-        $ref: '#/components/schemas/Trend'
-    Tags:
-      name: tags
-      in: query
-      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
-      style: form
-      explode: false
-      example:
-      - Messaging
-      - Authentication
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-  headers:
-    XRateLimitTier:
-      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
-      schema:
-        type: string
-        examples:
-        - free
-    XRateLimitLimit:
-      description: The rolling daily request quota for the tier that served this response.
-      schema:
-        type: integer
-        examples:
-        - 1000
-    RateLimitPolicy:
-      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
-      schema:
-        type: string
-        examples:
-        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
-    XRateLimitWindow:
-      description: The quota window in seconds. Always 86400 (one rolling day).
-      schema:
-        type: integer
-        examples:
-        - 86400
+        type: number
+        minimum: 0
+        maximum: 100
   responses:
     NotFound:
       description: Resource not found.
@@ -1358,8 +994,3 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-  securitySchemes:
-    api_key:
-      type: apiKey
-      name: x-api-key
-      in: header

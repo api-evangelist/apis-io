@@ -1,17 +1,20 @@
 openapi: 3.2.0
 info:
-  title: .io Search Industries API
-  description: This is the technical API contract for the search API for the APIs.io search engine.
-  version: 0.1.0
+  title: APIs.io Industries API
+  version: 1.5.0
+  description: 'Industry verticals grouping providers across the catalog.
+
+
+    This is the Industries surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
-    name: Kin Lane
-    email: info@apievangelist.com
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
 servers:
 - url: https://apis.io/api/v1
   description: Production server.
-security:
-- {}
-- api_key: []
 tags:
 - name: Industries
   description: Industry verticals grouping providers across the catalog.
@@ -19,7 +22,7 @@ paths:
   /industries:
     get:
       operationId: listIndustries
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: find_industries
       security: []
       tags:
@@ -49,48 +52,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IndustryList'
-              example:
-                meta:
-                  total: 72
-                  page: 1
-                  limit: 2
-                  pages: 36
-                  query: {}
-                data:
-                - slug: aerospace
-                  name: Aerospace
-                  short: Companies involved in the design, manufacturing, and maintenance of aircraft, spacecraft, and related systems and components.
-                  description: The Aerospace vertical on the APIs.io network is tracked across 2 sub-sectors — Aircraft Systems & Components and Aircraft Engines & Systems — mapping 23 companies from ongoing API Evangelist industry research to the providers and APIs they operate on the network.
-                  aliases:
-                  - Aircraft Systems & Components
-                  - Aircraft Engines & Systems
-                  provider_count: 23
-                  api_count: 23
-                  _type: industry
-                - slug: agriculture
-                  name: Agriculture
-                  short: Companies providing farming equipment, precision agriculture technologies, and agricultural solutions to improve crop yields and operational efficiency.
-                  description: The Agriculture vertical on the APIs.io network is tracked across 1 sub-sector — Farm Equipment & Precision Agriculture — mapping 18 companies from ongoing API Evangelist industry research to the providers and APIs they operate on the network.
-                  aliases:
-                  - Farm Equipment & Precision Agriculture
-                  provider_count: 18
-                  api_count: 47
-                  _type: industry
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
   /industries/{slug}:
     get:
       operationId: getIndustry
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: get_industry
       security: []
       tags:
@@ -113,44 +80,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Industry'
-              example:
-                slug: aerospace
-                name: Aerospace
-                short: Companies involved in the design, manufacturing, and maintenance of aircraft, spacecraft, and related systems and components.
-                description: The Aerospace vertical on the APIs.io network is tracked across 2 sub-sectors — Aircraft Systems & Components and Aircraft Engines & Systems — mapping 23 companies from ongoing API Evangelist industry research to the providers and APIs they operate on the network.
-                aliases:
-                - Aircraft Systems & Components
-                - Aircraft Engines & Systems
-                provider_count: 23
-                api_count: 23
-                providers:
-                  total: 23
-                  top:
-                  - slug: airbus
-                    name: Airbus
-                    description: A European multinational aerospace corporation designing, manufacturing, and selling commercial aircraft, helicopters, defense, and space products. Through its Space Solutions / OneAtlas division Airbus publishes a developer API portal for satellite imagery, mapping, and elevation data.
-                    api_count: 7
-                    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/airbus.png
-                    score_band: developing
-                    score_composite: 41.1
-                  - slug: rtx
-                    name: RTX
-                    description: 'RTX Corporation is a leading American aerospace and defense company comprising three market businesses: Collins Aerospace, Pratt & Whitney, and Raytheon. Raytheon develops the EAGLE (Enhanced Automated Graphical Logistics Environment) software platform for integrated logistics support and logistic s'
-                    api_count: 3
-                    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/rtx.png
-                    score_band: thin
-                    score_composite: 30.5
-                _type: industry
-                members_note: Top 2 shown per list. Use find_providers?industry=aerospace for the full, ranked, paginated set. view=full returns every member here.
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
   /industries/{slug}/leaders:
@@ -181,92 +110,48 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
-        '404':
-          $ref: '#/components/responses/NotFound'
-  /gaps/industry/{slug}:
-    get:
-      operationId: industryGapAnalysis
-      x-tier: pro
-      x-mcp-tool: industry_gap_analysis
-      x-agent-skill: audit-api-estate
-      security: []
-      tags:
-      - Industries
-      summary: Artifact gaps across a whole industry.
-      description: For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.
-      parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Industry slug (e.g. `financial-services`).
-        schema:
-          type: string
-          maxLength: 1024
-      - name: min_share
-        in: query
-        description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
-        schema:
-          type: number
-          maximum: 1000000000
-      responses:
-        '200':
-          description: The industry's valuable-artifact coverage and gaps.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
-          headers:
-            RateLimit-Policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            X-RateLimit-Limit:
-              $ref: '#/components/headers/XRateLimitLimit'
-            X-RateLimit-Window:
-              $ref: '#/components/headers/XRateLimitWindow'
-            X-RateLimit-Tier:
-              $ref: '#/components/headers/XRateLimitTier'
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
   schemas:
-    RankedProvider:
-      type: object
-      description: A provider summary as it appears in an industry or region membership list.
-      properties:
-        slug:
-          type: string
-          maxLength: 1024
-        name:
-          type: string
-          maxLength: 1024
-        description:
-          type: string
-          maxLength: 20000
-        api_count:
-          type: integer
-          maximum: 1000
-        image:
-          type: string
-          format: uri
-          maxLength: 2048
-        score_band:
-          $ref: '#/components/schemas/Band'
-        score_composite:
-          type: number
-          minimum: 0
-          maximum: 100
-      required:
-      - slug
-      - name
     Meta:
       type: object
       description: Pagination and echoed-query metadata for collection responses.
@@ -294,61 +179,6 @@ components:
       - page
       - limit
       - pages
-    IndustryList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Industry'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-    Industry:
-      type: object
-      description: An industry vertical grouping providers across the catalog.
-      properties:
-        slug:
-          type: string
-          examples:
-          - media-entertainment
-          maxLength: 1024
-        name:
-          type: string
-          examples:
-          - Media & Entertainment
-          maxLength: 1024
-        short:
-          type: string
-          description: One-line summary.
-          maxLength: 1024
-        description:
-          type: string
-          maxLength: 20000
-        aliases:
-          type: array
-          items:
-            type: string
-            maxLength: 1024
-          maxItems: 1000
-        provider_count:
-          type: integer
-          maximum: 1000
-        api_count:
-          type: integer
-          maximum: 1000
-        providers:
-          type: array
-          description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
-          items:
-            $ref: '#/components/schemas/RankedProvider'
-          maxItems: 1000
-      required:
-      - slug
-      - name
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -398,6 +228,77 @@ components:
       - title
       - status
       additionalProperties: true
+    RankedProvider:
+      type: object
+      description: A provider summary as it appears in an industry or region membership list.
+      properties:
+        slug:
+          type: string
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        api_count:
+          type: integer
+          maximum: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        score_band:
+          $ref: '#/components/schemas/Band'
+        score_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+      - slug
+      - name
+    Industry:
+      type: object
+      description: An industry vertical grouping providers across the catalog.
+      properties:
+        slug:
+          type: string
+          examples:
+          - media-entertainment
+          maxLength: 1024
+        name:
+          type: string
+          examples:
+          - Media & Entertainment
+          maxLength: 1024
+        short:
+          type: string
+          description: One-line summary.
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        aliases:
+          type: array
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        provider_count:
+          type: integer
+          maximum: 1000
+        api_count:
+          type: integer
+          maximum: 1000
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
+          items:
+            $ref: '#/components/schemas/RankedProvider'
+          maxItems: 1000
+      required:
+      - slug
+      - name
     Band:
       type: string
       description: Rating band derived from the composite score.
@@ -408,7 +309,32 @@ components:
       - thin
       - minimal
       maxLength: 1024
+    IndustryList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Industry'
+          maxItems: 1000
+      required:
+      - meta
+      - data
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -422,83 +348,3 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
-  headers:
-    XRateLimitTier:
-      description: The tier this request was served on -- `free`, `starter`, `pro`, `business`, `internal` or `owner`. Keyless requests are `free`.
-      schema:
-        type: string
-        examples:
-        - free
-    XRateLimitLimit:
-      description: The rolling daily request quota for the tier that served this response.
-      schema:
-        type: integer
-        examples:
-        - 1000
-    XRateLimitWindow:
-      description: The quota window in seconds. Always 86400 (one rolling day).
-      schema:
-        type: integer
-        examples:
-        - 86400
-    RateLimitPolicy:
-      description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331 quota-policy syntax: `"quota";q=1000;w=86400, "burst";q=5;w=1` -- a rolling daily quota and a per-second burst. This is the POLICY, not a live counter: `RateLimit-Remaining` and `RateLimit-Reset` are not sent, because the quota is enforced by the gateway and there is no per-key usage accounting to read. Pace against the policy and treat 429 as authoritative.'
-      schema:
-        type: string
-        examples:
-        - '"quota";q=1000;w=86400, "burst";q=5;w=1'
-  parameters:
-    Fields:
-      name: fields
-      in: query
-      description: Sparse fieldset — comma-separated property names to return.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-  securitySchemes:
-    api_key:
-      type: apiKey
-      name: x-api-key
-      in: header
