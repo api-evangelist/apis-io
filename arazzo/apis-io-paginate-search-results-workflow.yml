@@ -12,8 +12,8 @@ info:
     header, so the flow is self-describing.
   version: 1.0.0
 sourceDescriptions:
-- name: apisApi
-  url: ../openapi/apis-io-apis-api-openapi.yml
+- name: searchApi
+  url: ../openapi/apis-io-search-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: paginate-search-results

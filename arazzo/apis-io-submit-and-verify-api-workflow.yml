@@ -12,9 +12,6 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: apisApi
-  url: ../openapi/apis-io-apis-api-openapi.yml
-  type: openapi
 - name: searchApi
   url: ../openapi/apis-io-search-api-openapi.yml
   type: openapi
