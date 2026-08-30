@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: apis-io
-  schema_version: 0.15.1
-  scored_at: '2026-08-28'
-  run_ts: 2026-08-28T221322
+  schema_version: 0.16.0
+  scored_at: '2026-08-29'
+  run_ts: 2026-08-29T230545
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.15.1.yml; counts below let you verify that.
+    in rubric/scoring-0.16.0.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 68
-    partial: 12
-    missed: 26
+    earned: 61
+    partial: 16
+    missed: 29
     na: 24
   checks:
   - id: apis_json_self_hosted
@@ -19,6 +19,9 @@ kin_checks:
     status: missed
     detail: 0 of 11 openapi documents pass
   - id: openapi_3_0
+    status: missed
+    detail: 0 of 11 openapi documents pass
+  - id: security_applied
     status: missed
     detail: 0 of 11 openapi documents pass
   - id: webhooks_or_callbacks
@@ -30,6 +33,11 @@ kin_checks:
     status: missed
   - id: domain_standard_conformance
     status: missed
+  - id: overlay_published
+    status: missed
+  - id: status_page_present
+    status: missed
+    detail: pointer liveness 0.0
   - id: webhooks_advertised
     status: missed
   - id: examples_published
@@ -68,17 +76,25 @@ kin_checks:
     status: missed
   - id: agentic_commerce
     status: missed
+  - id: info_complete
+    status: partial
+    earned: 3.64
+    detail: 10 of 11 openapi documents pass
   - id: error_responses_documented
     status: partial
     earned: 3.64
     detail: 10 of 11 openapi documents pass
   - id: examples_present
     status: partial
-    earned: 2.56
+    earned: 0.26
   - id: components_reuse
     status: partial
     earned: 2.46
     detail: 9 of 11 openapi documents pass
+  - id: security_schemes_defined
+    status: partial
+    earned: 0.36
+    detail: 1 of 11 openapi documents pass
   - id: rules_present
     status: partial
     earned: 2.5
@@ -110,4 +126,12 @@ kin_checks:
   - id: error_semantics
     status: partial
     earned: 4.0
+    detail: 'grade: documented'
+  - id: openapi_examples
+    status: partial
+    earned: 3.5
+    detail: 'grade: partial'
+  - id: rate_limit_signal
+    status: partial
+    earned: 3.5
     detail: 'grade: documented'
