@@ -80,7 +80,8 @@ apis:
   description: Index of HTTP application programming interfaces.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
-  tags: &id001
+  tags: &id001 []
+  tags_raw:
   - APIs
   properties:
   - type: OpenAPI
