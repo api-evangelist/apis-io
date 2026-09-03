@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Areas API
+  description: |-
+    The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
+
+    This is the Areas surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
-
-
-    This is the Areas surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,11 +13,11 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Areas
-  description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
+  - name: Areas
+    description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
 paths:
   /areas:
     get:
@@ -26,36 +26,45 @@ paths:
       x-mcp-tool: find_areas
       security: []
       tags:
-      - Areas
+        - Areas
       summary: List and filter areas (Pro).
       description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Filter by free text; sort by provider count. Pro tier.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - name: sort
-        in: query
-        description: Sort order.
-        schema:
-          type: string
-          enum:
-          - provider_count
-          - api_count
-          - name
-          default: provider_count
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: List and filter areas.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AreaList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/UpgradeRequired'
+                $ref: "#/components/schemas/AreaList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /areas/{slug}:
     get:
       operationId: getArea
@@ -63,29 +72,38 @@ paths:
       x-mcp-tool: get_area
       security: []
       tags:
-      - Areas
+        - Areas
       summary: Get one area, with its ranked providers (Pro).
       description: Returns a single area by slug, including its description, site link, counts, and the member providers ranked by score. Pro tier.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Area slug (e.g. `authentication`).
-        schema:
-          type: string
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
+        - name: slug
+          in: path
+          required: true
+          description: Area slug (e.g. `authentication`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
       responses:
-        '200':
+        "200":
           description: Get one area, with its ranked providers.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Area'
-        '403':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/Area"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /areas/{slug}/leaders:
     get:
       operationId: getAreaLeaders
@@ -94,28 +112,39 @@ paths:
       x-agent-skill: shortlist-vendors
       security: []
       tags:
-      - Areas
+        - Areas
       summary: Top-rated providers in a curated area.
       description: Returns the highest-composite-scoring member providers of a curated API Evangelist area.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Area slug (e.g. `authentication`).
-        schema:
-          type: string
-          maxLength: 1024
-      - $ref: '#/components/parameters/Limit'
+        - name: slug
+          in: path
+          required: true
+          description: Area slug (e.g. `authentication`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of the area's top providers.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   parameters:
     Limit:
@@ -164,34 +193,41 @@ components:
           type: integer
           description: Total matching items across all pages.
           maximum: 1000000
+          examples:
+            - 1039
         page:
           type: integer
           maximum: 1000000
+          description: The 1-based page this response represents.
+          examples:
+            - 1
         limit:
           type: integer
           maximum: 1000
+          description: Items requested per page.
+          examples:
+            - 25
         pages:
           type: integer
           description: Total number of pages.
           maximum: 1000000
+          examples:
+            - 42
         query:
           type: object
           additionalProperties: true
           description: The effective query parameters, echoed back.
       required:
-      - total
-      - page
-      - limit
-      - pages
+        - total
+        - page
+        - limit
+        - pages
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -199,13 +235,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -213,24 +249,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
     RankedProvider:
       type: object
@@ -239,51 +281,73 @@ components:
         slug:
           type: string
           maxLength: 1024
+          description: Slug of the company
+          examples:
+            - twilio
         name:
           type: string
           maxLength: 1024
+          description: Display name of the company.
+          examples:
+            - Twilio
         description:
           type: string
           maxLength: 20000
+          description: What the company does.
+          examples:
+            - Twilio is a customer engagement platform exposing programmable messaging
         api_count:
           type: integer
           maximum: 1000
+          description: APIs this company publishes on the network.
+          examples:
+            - 3
         image:
           type: string
           format: uri
           maxLength: 2048
+          description: The company's logo.
+          examples:
+            - https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twilio.png
         score_band:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
+          description: The band the company's composite score falls into.
         score_composite:
           type: number
           minimum: 0
           maximum: 100
+          description: The company's composite Kin Score.
+          examples:
+            - 66.3
       required:
-      - slug
-      - name
+        - slug
+        - name
     Band:
       type: string
       description: Rating band derived from the composite score.
       enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
       maxLength: 1024
     AreaList:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: "#/components/schemas/Meta"
+          description: Pagination and echoed-query metadata for this page.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Area'
+            $ref: "#/components/schemas/Area"
           maxItems: 1000
+          description: The areas on this page.
       required:
-      - meta
-      - data
+        - meta
+        - data
+      description: A page of curated areas
     Area:
       type: object
       description: A curated API Evangelist area — a topic collection with its own scored provider index and dedicated site.
@@ -291,89 +355,170 @@ components:
         slug:
           type: string
           examples:
-          - authentication
+            - authentication
           maxLength: 1024
+          description: Slug of the area
         name:
           type: string
           examples:
-          - Authentication
+            - Authentication
           maxLength: 1024
+          description: Display name of the area.
         short:
           type: string
           description: One-line summary.
           maxLength: 1024
+          examples:
+            - Identity
         description:
           type: string
           maxLength: 20000
+          description: What the area covers.
+          examples:
+            - Identity
         aliases:
           type: array
           items:
             type: string
             maxLength: 1024
           maxItems: 1000
+          description: Other names this area is known by
         area_url:
           type: string
           description: The area's dedicated site.
           examples:
-          - https://authentication.apievangelist.com
+            - https://authentication.apievangelist.com
           format: uri
           maxLength: 2048
         area_host:
           type: string
           maxLength: 1024
+          description: Hostname of the area's dedicated site.
+          examples:
+            - authentication.apievangelist.com
         icon:
           type: string
           maxLength: 1024
+          description: Icon slug used for the area across the network.
+          examples:
+            - key
         provider_count:
           type: integer
           maximum: 1000
+          description: Providers that are members of this area.
+          examples:
+            - 118
         api_count:
           type: integer
           maximum: 1000
+          description: APIs belonging to providers in this area.
+          examples:
+            - 412
         providers:
           type: array
           description: Member providers, ranked by score. Returned on the single-area endpoint; omitted from list responses by default.
           items:
-            $ref: '#/components/schemas/RankedProvider'
+            $ref: "#/components/schemas/RankedProvider"
           maxItems: 1000
       required:
-      - slug
-      - name
+        - slug
+        - name
   responses:
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/upgrade-required
             title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     NotFound:
       description: Resource not found.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

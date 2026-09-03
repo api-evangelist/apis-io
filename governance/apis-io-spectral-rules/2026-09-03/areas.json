@@ -1,0 +1,154 @@
+{
+  "api": "APIs.io Areas API",
+  "file": "openapi/apis-io-areas-api-openapi.yml",
+  "operations": 3,
+  "lint": {
+    "format": "openapi",
+    "ruleCount": 72,
+    "passed": true,
+    "summary": {
+      "error": 0,
+      "warning": 0,
+      "info": 0,
+      "hint": 0,
+      "total": 0
+    },
+    "diagnostics": [],
+    "diagnostics_shown": 0,
+    "diagnostics_total": 0,
+    "top_rules": []
+  },
+  "coverage": {
+    "format": "openapi",
+    "totalNodes": 91,
+    "coveredNodes": 91,
+    "coveragePct": 100,
+    "avgRules": 4.252747252747253,
+    "thinNodes": 0,
+    "sections": [
+      {
+        "section": "info",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 9
+      },
+      {
+        "section": "servers",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 4
+      },
+      {
+        "section": "tags",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "paths",
+        "total": 3,
+        "covered": 3,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "operations",
+        "total": 3,
+        "covered": 3,
+        "pct": 100,
+        "avgRules": 13.666666666666666
+      },
+      {
+        "section": "parameters",
+        "total": 13,
+        "covered": 13,
+        "pct": 100,
+        "avgRules": 5.230769230769231
+      },
+      {
+        "section": "mediaTypes",
+        "total": 3,
+        "covered": 3,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "responses",
+        "total": 12,
+        "covered": 12,
+        "pct": 100,
+        "avgRules": 5.25
+      },
+      {
+        "section": "headers",
+        "total": 16,
+        "covered": 16,
+        "pct": 100,
+        "avgRules": 2.25
+      },
+      {
+        "section": "schemas",
+        "total": 6,
+        "covered": 6,
+        "pct": 100,
+        "avgRules": 3.6666666666666665
+      },
+      {
+        "section": "properties",
+        "total": 31,
+        "covered": 31,
+        "pct": 100,
+        "avgRules": 4
+      },
+      {
+        "section": "securitySchemes",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 2
+      }
+    ],
+    "gatedRules": 0,
+    "totalRules": 71,
+    "activeRules": 71,
+    "unresolvedGivens": 0,
+    "deadRules": [
+      "post-operations-have-request-body",
+      "request-body-content-required",
+      "request-body-description-required",
+      "request-body-json",
+      "request-body-required-declared"
+    ],
+    "deadRules_count": 5,
+    "ruleReach_count": 71,
+    "nodes_count": 91,
+    "note": "Summary view. Pass detail:true for the full per-rule ruleReach, dead-rule objects, and per-node coverage."
+  },
+  "scorecard": {
+    "overall": 100,
+    "grade": "A",
+    "dimensions": [
+      {
+        "name": "Design & style",
+        "score": 100,
+        "weight": 0.25,
+        "detail": "0 errors, 0 warnings over 91 governed nodes (0.0 warnings/node)"
+      },
+      {
+        "name": "Governance coverage",
+        "score": 100,
+        "weight": 0.15,
+        "detail": "100% of the description is inspected by the ruleset"
+      },
+      {
+        "name": "Documentation",
+        "score": 100,
+        "weight": 0.2,
+        "detail": "5/5 info fields, 100% of operations described"
+      }
+    ]
+  }
+}

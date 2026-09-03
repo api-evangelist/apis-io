@@ -1,0 +1,156 @@
+{
+  "api": "APIs.io Artifact Types API",
+  "file": "openapi/apis-io-artifact-types-api-openapi.yml",
+  "operations": 20,
+  "lint": {
+    "format": "openapi",
+    "ruleCount": 72,
+    "passed": true,
+    "summary": {
+      "error": 0,
+      "warning": 0,
+      "info": 0,
+      "hint": 0,
+      "total": 0
+    },
+    "diagnostics": [],
+    "diagnostics_shown": 0,
+    "diagnostics_total": 0,
+    "top_rules": []
+  },
+  "coverage": {
+    "format": "openapi",
+    "totalNodes": 385,
+    "coveredNodes": 385,
+    "coveragePct": 100,
+    "avgRules": 3.9532467532467535,
+    "thinNodes": 0,
+    "sections": [
+      {
+        "section": "info",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 9
+      },
+      {
+        "section": "servers",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 4
+      },
+      {
+        "section": "tags",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "paths",
+        "total": 20,
+        "covered": 20,
+        "pct": 100,
+        "avgRules": 3
+      },
+      {
+        "section": "operations",
+        "total": 20,
+        "covered": 20,
+        "pct": 100,
+        "avgRules": 13
+      },
+      {
+        "section": "parameters",
+        "total": 166,
+        "covered": 166,
+        "pct": 100,
+        "avgRules": 4.096385542168675
+      },
+      {
+        "section": "mediaTypes",
+        "total": 20,
+        "covered": 20,
+        "pct": 100,
+        "avgRules": 2
+      },
+      {
+        "section": "responses",
+        "total": 44,
+        "covered": 44,
+        "pct": 100,
+        "avgRules": 4.2272727272727275
+      },
+      {
+        "section": "headers",
+        "total": 84,
+        "covered": 84,
+        "pct": 100,
+        "avgRules": 2.0476190476190474
+      },
+      {
+        "section": "schemas",
+        "total": 5,
+        "covered": 5,
+        "pct": 100,
+        "avgRules": 3.6
+      },
+      {
+        "section": "properties",
+        "total": 22,
+        "covered": 22,
+        "pct": 100,
+        "avgRules": 4
+      },
+      {
+        "section": "securitySchemes",
+        "total": 1,
+        "covered": 1,
+        "pct": 100,
+        "avgRules": 2
+      }
+    ],
+    "gatedRules": 0,
+    "totalRules": 71,
+    "activeRules": 71,
+    "unresolvedGivens": 0,
+    "deadRules": [
+      "operation-get-by-id-documents-404",
+      "parameter-path-required-true",
+      "post-operations-have-request-body",
+      "request-body-content-required",
+      "request-body-description-required",
+      "request-body-json",
+      "request-body-required-declared"
+    ],
+    "deadRules_count": 7,
+    "ruleReach_count": 71,
+    "nodes_count": 385,
+    "note": "Summary view. Pass detail:true for the full per-rule ruleReach, dead-rule objects, and per-node coverage."
+  },
+  "scorecard": {
+    "overall": 100,
+    "grade": "A",
+    "dimensions": [
+      {
+        "name": "Design & style",
+        "score": 100,
+        "weight": 0.25,
+        "detail": "0 errors, 0 warnings over 385 governed nodes (0.0 warnings/node)"
+      },
+      {
+        "name": "Governance coverage",
+        "score": 100,
+        "weight": 0.15,
+        "detail": "100% of the description is inspected by the ruleset"
+      },
+      {
+        "name": "Documentation",
+        "score": 100,
+        "weight": 0.2,
+        "detail": "5/5 info fields, 100% of operations described"
+      }
+    ]
+  }
+}

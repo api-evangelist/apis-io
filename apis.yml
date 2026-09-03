@@ -490,7 +490,7 @@ apis:
   tags: *id001
   properties:
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-cohorts-openapi.yml
+    url: openapi/apis-io-cohorts-api-openapi.yml
   - type: SpectralRules
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-editorial-api
@@ -502,9 +502,60 @@ apis:
   tags: *id001
   properties:
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-editorial-openapi.yml
+    url: openapi/apis-io-editorial-api-openapi.yml
   - type: SpectralRules
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+- aid: apis-io:apis-io-export-api
+  name: APIs.io Export API
+  description: Bulk dataset pulls of the catalog — ratings and providers as one download (Business tier). 2 operations of
+    the APIs.io API, split out by tag so this surface is documented, rated, and governed on its own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-export-api-openapi.yml
+  - type: SpectralRules
+    url: rules/apis-io-spectral-rules.yml
+- aid: apis-io:apis-io-resolve-enrich-api
+  name: APIs.io Resolve & Enrich API
+  description: Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in
+    one call by choosing field groups. 2 operations of the APIs.io API, split out by tag so this surface is documented, rated,
+    and governed on its own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-resolve-enrich-api-openapi.yml
+  - type: SpectralRules
+    url: rules/apis-io-spectral-rules.yml
+- aid: apis-io:apis-io-saved-workspace-api
+  name: APIs.io Saved Workspace API
+  description: Saved searches and provider lists for a signed-in apis.io API key — save a query, re-run it, and watch what
+    is net-new. 10 operations of the APIs.io API, split out by tag so this surface is documented, rated, and governed on its
+    own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-saved-workspace-api-openapi.yml
+  - type: SpectralRules
+    url: rules/apis-io-spectral-rules.yml
+- aid: apis-io:apis-io-venture-capital-api
+  name: APIs.io Venture Capital API
+  description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated portfolio graph,
+    and the reverse edge from a provider to the VCs that back it. 4 operations of the APIs.io API, split out by tag so this
+    surface is documented, rated, and governed on its own.
+  humanURL: https://apis.io/developer/overview/
+  baseURL: https://apis.io/api/v1
+  tags: *id001
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-venture-capital-api-openapi.yml
+  - type: SpectralRules
+    url: rules/apis-io-spectral-rules.yml
 common:
 - type: IssueTracker
   url: https://github.com/apisio/apis.io/issues

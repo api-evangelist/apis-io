@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Resolve & Enrich API
+  description: |-
+    Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. Pro.
+
+    This is the Resolve & Enrich surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. Free (the rating and insights enrichment groups are Pro).
-
-
-    This is the Resolve & Enrich surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,80 +13,104 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Resolve & Enrich
-  description: Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. Free (the rating and insights enrichment groups are Pro).
+  - name: Resolve & Enrich
+    description: Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. Pro.
 paths:
   /resolve:
     get:
       operationId: resolveIdentifier
       x-mcp-tool: resolve
       tags:
-      - Resolve & Enrich
+        - Resolve & Enrich
       summary: Resolve any identifier (domain / URL / GitHub org) to a provider.
-      description: Given a website URL, bare domain (`stripe.com`), or GitHub org (`github.com/stripe`), return the apis.io provider that owns it. Use when you hold a URL, not a slug. Free.
+      description: Given a website URL, bare domain (`stripe.com`), or GitHub org (`github.com/stripe`), return the apis.io provider that owns it. Use when you hold a URL, not a slug. Pro.
       parameters:
-      - name: identifier
-        in: query
-        required: true
-        description: A domain, URL, or `github.com/<org>`.
-        schema:
-          type: string
+        - name: identifier
+          in: query
+          required: true
+          description: A domain, URL, or `github.com/<org>`.
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: The matched provider (slug, name, website, band, composite, match kind).
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: pro
+      security: []
   /enrich:
     get:
       operationId: enrichProvider
       x-mcp-tool: enrich_provider
       tags:
-      - Resolve & Enrich
+        - Resolve & Enrich
       summary: Enrich a provider in one call, choosing field groups.
-      description: 'Resolves a slug OR any identifier and returns exactly the requested field groups, instead of chaining several `get_provider*` calls. Groups `profile`, `onboarding`, `artifacts` are free; `rating` and `insights` require the Pro tier (returned as `{ gated: true }` for free callers).'
+      description: "Resolves a slug OR any identifier and returns exactly the requested field groups, instead of chaining several `get_provider*` calls. Groups `profile`, `onboarding`, `artifacts` are free; `rating` and `insights` require the Pro tier (returned as `{ gated: true }` for free callers)."
       parameters:
-      - name: id
-        in: query
-        required: true
-        description: Provider slug or any identifier `/resolve` accepts.
-        schema:
-          type: string
-      - name: fields
-        in: query
-        description: 'Comma-separated field groups: profile, onboarding, artifacts, rating, security, insights. Default: profile,onboarding,artifacts,rating.'
-        schema:
-          type: string
+        - name: id
+          in: query
+          required: true
+          description: Provider slug or any identifier `/resolve` accepts.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: fields
+          in: query
+          description: "Comma-separated field groups: profile, onboarding, artifacts, rating, security, insights. Default: profile,onboarding,artifacts,rating."
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: The requested field groups for the provider.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: pro
+      security: []
 components:
   schemas:
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -94,13 +118,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -108,24 +132,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
   responses:
     NotFound:
@@ -133,10 +163,74 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

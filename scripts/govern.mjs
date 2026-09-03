@@ -140,18 +140,25 @@ carries the full \`coverage\` payload — \`ruleReach\`, \`deadRules\`, \`thinNo
 | Run | What it is |
 | --- | --- |
 | \`apis-io-spectral-rules/\` | The ruleset we own. What we gate on. |
-| \`catalog/\` | The full best-of-breed catalog, unfiltered — kept as a deliberate contrast. It reports every spec passing with thousands of warnings and no errors; the 42 rules we own find the real ones. That gap is the argument for owning your ruleset. |
+| \`catalog/\` | The full best-of-breed catalog, unfiltered — kept as a deliberate contrast. It reports every spec passing with thousands of warnings and no errors; the ${rows[0]?.rules ?? 'owned'} rules we own find the real ones. That gap is the argument for owning your ruleset. |
 | \`owasp/\` | Recurring OWASP Top 10 runs. |
 
 ## Re-run
 
 \`\`\`bash
+node scripts/harden-openapi.mjs                                      # re-apply the conventions first
 node scripts/govern.mjs --ruleset rules/apis-io-spectral-rules.yml   # what we gate on
 node scripts/govern.mjs                                              # the catalog contrast
 \`\`\`
 
-Both are free and keyless. The contracts come from \`openapi/split-manifest.json\`, so
-re-run \`scripts/split-openapi.mjs\` first if the source contract changed.
+Both are free and keyless. The contracts come from \`openapi/split-manifest.json\`.
+The contracts are kept passing by \`scripts/harden-openapi.mjs\` + the authored copy in
+\`scripts/openapi-conventions.yml\` — corrections live there, not as hand edits to the
+generated contracts, so a regeneration can re-apply them. Spectral's own \`oas3-schema\`
+is off in the ruleset (it has no 3.2 document schema and misapplies the 3.0 one);
+structural validity is asserted by the ruleset's own structure rules and verified
+independently with \`openapi-spec-validator\`'s \`OpenAPIV32SpecValidator\` (17/17 valid,
+2026-09-03).
 `;
 writeFileSync(join(ROOT, 'governance', 'README.md'), readme);
 console.log(`\n  ${summary.totals.passing}/${summary.totals.apis} passing · ` +

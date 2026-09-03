@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Artifact Types API
+  description: |-
+    First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
+
+    This is the Artifact Types surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
-
-
-    This is the Artifact Types surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,417 +13,566 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Artifact Types
-  description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
+  - name: Artifact Types
+    description: First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type across all providers.
 paths:
   /openapis:
     get:
       operationId: listOpenapis
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List openapi specifications across the catalog.
       description: First-class collection of openapi specifications across every provider on the network. Surfaces and normalizes the `OpenAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of openapi specifications with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_openapis
   /asyncapis:
     get:
       operationId: listAsyncapis
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List asyncapi specifications across the catalog.
       description: First-class collection of asyncapi specifications across every provider on the network. Surfaces and normalizes the `AsyncAPI` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of asyncapi specifications with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_asyncapis
   /arazzo:
     get:
       operationId: listArazzo
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List arazzo workflows across the catalog.
       description: First-class collection of arazzo workflows across every provider on the network. Surfaces and normalizes the `Arazzo` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of arazzo workflows with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_arazzo
   /postman:
     get:
       operationId: listPostman
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List postman collections across the catalog.
       description: First-class collection of postman collections across every provider on the network. Surfaces and normalizes the `PostmanCollection` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of postman collections with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_postman
   /collections:
     get:
       operationId: listCollections
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List api collections across the catalog.
       description: First-class collection of api collections across every provider on the network. Surfaces and normalizes the `Collection`, `Collections` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of api collections with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_collections
   /graphql:
     get:
       operationId: listGraphql
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List graphql schemas across the catalog.
       description: First-class collection of graphql schemas across every provider on the network. Surfaces and normalizes the `GraphQL` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of graphql schemas with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_graphql
   /json-schemas:
     get:
       operationId: listJsonSchemas
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List json schema definitions across the catalog.
       description: First-class collection of json schema definitions across every provider on the network. Surfaces and normalizes the `JSONSchema` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of json schema definitions with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_json_schemas
   /json-structures:
     get:
       operationId: listJsonStructures
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List json structure definitions across the catalog.
       description: First-class collection of json structure definitions across every provider on the network. Surfaces and normalizes the `JSONStructure` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of json structure definitions with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_json_structures
   /json-ld:
     get:
       operationId: listJsonLd
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List json-ld contexts across the catalog.
       description: First-class collection of json-ld contexts across every provider on the network. Surfaces and normalizes the `JSONLD`, `JSONLDContext` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of json-ld contexts with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_json_ld
   /rules:
     get:
       operationId: listRules
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List governance rulesets across the catalog.
       description: First-class collection of governance rulesets across every provider on the network. Surfaces and normalizes the `Rules`, `SpectralRules`, `SpectralRuleset`, `Spectral` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of governance rulesets with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_rules
   /examples:
     get:
       operationId: listExamples
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List examples across the catalog.
       description: First-class collection of examples across every provider on the network. Surfaces and normalizes the `Example`, `Examples`, `CodeExamples` artifact types. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of examples with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_examples
   /finops:
     get:
       operationId: listFinops
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List finops artifacts across the catalog.
       description: First-class collection of finops artifacts across every provider on the network. Surfaces and normalizes the `FinOps` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of finops artifacts with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_finops
   /plans:
     get:
       operationId: listPlans
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List plans across the catalog.
       description: First-class collection of plans across every provider on the network. Surfaces and normalizes the `Plans` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of plans with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_plans
   /rate-limits:
     get:
       operationId: listRateLimits
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List rate limits across the catalog.
       description: First-class collection of rate limits across every provider on the network. Surfaces and normalizes the `RateLimits` artifact type. Filter by free text, provider, and tags; pass `include=content` to inline each artifact body.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of rate limits with owning API and provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: find_rate_limits
   /channels:
     get:
       operationId: listChannels
       x-tier: free
       x-mcp-tool: find_artifacts
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List AsyncAPI event channels across the catalog.
       description: First-class collection of AsyncAPI event channels across every provider — the finest-grained event/streaming discovery surface. Filter by free text, provider, and tags; `include=content` inlines each channel's spec.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of event channels with owning provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
   /mcp:
     get:
@@ -431,27 +580,36 @@ paths:
       x-tier: free
       x-mcp-tool: find_artifacts
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List published MCP servers across the catalog.
       description: First-class collection of provider MCP servers across the network. Filter by free text, provider, and tags; `include=content` inlines each server's card/manifest.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of MCP servers with owning provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
   /skills:
     get:
@@ -459,27 +617,36 @@ paths:
       x-tier: free
       x-mcp-tool: find_artifacts
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List published Agent Skills across the catalog.
       description: First-class collection of provider Agent Skills across the network. Filter by free text, provider, and tags; `include=content` inlines each skill.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of Agent Skills with owning provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
   /scopes:
     get:
@@ -488,27 +655,38 @@ paths:
       x-mcp-tool: find_artifacts
       security: []
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List OAuth scope sets across the catalog.
       description: PRO — first-class collection of OAuth scope definitions across every provider. Filter by free text, provider, and tags; `include=content` inlines each scope set.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of OAuth scope sets with owning provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /security:
     get:
       operationId: listSecurity
@@ -516,51 +694,74 @@ paths:
       x-mcp-tool: find_artifacts
       security: []
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: List security scheme definitions across the catalog.
       description: PRO — first-class collection of provider security/auth scheme definitions (authentication, domain security, VDP, trust center) across the network. Filter by free text, provider, and tags; `include=content` inlines each definition.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Match'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/ArtifactSort'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Match"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/ArtifactSort"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of security definitions with owning provider context.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ArtifactList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/ArtifactList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /apis-json:
     get:
       operationId: listApisJson
       x-tier: free
       x-mcp-tool: find_apis_json
       tags:
-      - Artifact Types
+        - Artifact Types
       summary: APIs.json indexes across the catalog.
       description: The APIs.json self-descriptions registered by APIs in the catalog, by reference. Pass `include=content` to inline each document.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - $ref: '#/components/parameters/Include'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - $ref: "#/components/parameters/Include"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of APIs.json references.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+      security: []
 components:
   parameters:
     Limit:
@@ -607,8 +808,8 @@ components:
       schema:
         type: string
         enum:
-        - any
-        - all
+          - any
+          - all
         default: any
         maxLength: 1024
     Tags:
@@ -618,8 +819,8 @@ components:
       style: form
       explode: false
       example:
-      - Messaging
-      - Authentication
+        - Messaging
+        - Authentication
       schema:
         type: array
         items:
@@ -637,7 +838,7 @@ components:
         items:
           type: string
           enum:
-          - content
+            - content
           maxLength: 1024
         maxItems: 1000
     ArtifactSort:
@@ -647,10 +848,10 @@ components:
       schema:
         type: string
         enum:
-        - relevance
-        - provider
-        - name
-        - updated
+          - relevance
+          - provider
+          - name
+          - updated
         default: relevance
         maxLength: 1024
   schemas:
@@ -662,25 +863,35 @@ components:
           type: integer
           description: Total matching items across all pages.
           maximum: 1000000
+          examples:
+            - 1039
         page:
           type: integer
           maximum: 1000000
+          description: The 1-based page this response represents.
+          examples:
+            - 1
         limit:
           type: integer
           maximum: 1000
+          description: Items requested per page.
+          examples:
+            - 25
         pages:
           type: integer
           description: Total number of pages.
           maximum: 1000000
+          examples:
+            - 42
         query:
           type: object
           additionalProperties: true
           description: The effective query parameters, echoed back.
       required:
-      - total
-      - page
-      - limit
-      - pages
+        - total
+        - page
+        - limit
+        - pages
     Artifact:
       type: object
       description: A machine- or human-readable artifact attached to an API.
@@ -689,14 +900,17 @@ components:
           type: string
           description: Stable artifact id, `aid::type::n`.
           examples:
-          - twilio:twilio-accounts-api::OpenAPI::0
+            - twilio:twilio-accounts-api::OpenAPI::0
           maxLength: 1024
         type:
-          $ref: '#/components/schemas/ArtifactType'
+          $ref: "#/components/schemas/ArtifactType"
+          description: The kind of artifact this is.
         name:
           type: string
           description: Optional human label for the artifact.
           maxLength: 1024
+          examples:
+            - Twilio Accounts API OpenAPI
         url:
           type: string
           format: uri
@@ -706,45 +920,57 @@ components:
           type: string
           description: aid of the owning API.
           maxLength: 1024
+          examples:
+            - twilio:twilio-accounts-api
         provider_slug:
           type: string
           maxLength: 1024
+          description: Slug of the company that published the artifact.
+          examples:
+            - twilio
         provider_name:
           type: string
           maxLength: 1024
+          description: Display name of the company that published the artifact.
+          examples:
+            - Twilio
         content:
           type: string
           description: Inlined artifact body. Present only when include=content.
           maxLength: 20000
+          examples:
+            - "openapi: 3.1.0"
         content_type:
           type: string
           description: Media type of the inlined content (e.g. application/yaml).
           maxLength: 20000
+          examples:
+            - application/yaml
       required:
-      - type
-      - url
+        - type
+        - url
     ArtifactList:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: "#/components/schemas/Meta"
+          description: Pagination and echoed-query metadata for this page.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Artifact'
+            $ref: "#/components/schemas/Artifact"
           maxItems: 1000
+          description: The artifacts on this page.
       required:
-      - meta
-      - data
+        - meta
+        - data
+      description: A page of artifacts
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -752,13 +978,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -766,85 +992,89 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
     ArtifactType:
       type: string
-      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
-
+      description: |
+        The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
         common are listed here. Unknown values are allowed.
-
-        '
       examples:
-      - OpenAPI
-      - JSONSchema
-      - PostmanCollection
+        - OpenAPI
+        - JSONSchema
+        - PostmanCollection
       enum:
-      - Documentation
-      - OpenAPI
-      - JSONSchema
-      - JSONStructure
-      - JSONLD
-      - Example
-      - GettingStarted
-      - APIReference
-      - Authentication
-      - SDK
-      - GitHubRepository
-      - Reference
-      - Pricing
-      - CodeExamples
-      - Website
-      - RateLimits
-      - Portal
-      - AsyncAPI
-      - Arazzo
-      - GitHub
-      - ChangeLog
-      - SourceCode
-      - Repository
-      - FAQ
-      - SignUp
-      - GraphQL
-      - Plans
-      - Vocabulary
-      - Specification
-      - Tutorials
-      - Sandbox
-      - FinOps
-      - SpectralRules
-      - Console
-      - GitHubOrganization
-      - ReleaseNotes
-      - Support
-      - TermsOfService
-      - Rules
-      - Webhooks
-      - Quickstart
-      - ProductPage
-      - Capabilities
-      - PostmanCollection
-      - Collection
-      - KubernetesCRD
-      - Hub
-      - NaftikoCapability
+        - Documentation
+        - OpenAPI
+        - JSONSchema
+        - JSONStructure
+        - JSONLD
+        - Example
+        - GettingStarted
+        - APIReference
+        - Authentication
+        - SDK
+        - GitHubRepository
+        - Reference
+        - Pricing
+        - CodeExamples
+        - Website
+        - RateLimits
+        - Portal
+        - AsyncAPI
+        - Arazzo
+        - GitHub
+        - ChangeLog
+        - SourceCode
+        - Repository
+        - FAQ
+        - SignUp
+        - GraphQL
+        - Plans
+        - Vocabulary
+        - Specification
+        - Tutorials
+        - Sandbox
+        - FinOps
+        - SpectralRules
+        - Console
+        - GitHubOrganization
+        - ReleaseNotes
+        - Support
+        - TermsOfService
+        - Rules
+        - Webhooks
+        - Quickstart
+        - ProductPage
+        - Capabilities
+        - PostmanCollection
+        - Collection
+        - KubernetesCRD
+        - Hub
+        - NaftikoCapability
       x-extensible-enum: true
       maxLength: 1024
   responses:
@@ -853,11 +1083,75 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

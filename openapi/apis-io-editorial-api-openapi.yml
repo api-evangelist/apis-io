@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Editorial API
+  description: |-
+    Story leads mined from catalog movement (owner tier).
+
+    This is the Editorial surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Story leads mined from catalog movement (owner tier).
-
-
-    This is the Editorial surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,11 +13,11 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Editorial
-  description: Story leads mined from catalog movement (owner tier).
+  - name: Editorial
+    description: Story leads mined from catalog movement (owner tier).
 paths:
   /story-leads:
     get:
@@ -26,18 +26,29 @@ paths:
       x-mcp-tool: story_leads
       security: []
       tags:
-      - Editorial
+        - Editorial
       summary: Story leads from catalog movement (owner).
       description: Movement in the catalog framed as editorial leads. Owner tier.
       parameters:
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Story leads from catalog movement (owner).
           content:
             application/json:
               schema:
                 type: object
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
 components:
   parameters:
     Limit:
@@ -49,3 +60,109 @@ components:
         minimum: 1
         maximum: 100
         default: 25
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.
+  schemas:
+    Problem:
+      type: object
+      description: A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457), served as `application/problem+json`.
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+            - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+            - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+            - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+          examples:
+            - /v1/search
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+          examples:
+            - match
+      required:
+        - type
+        - title
+        - status
+      additionalProperties: true
+  responses:
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"

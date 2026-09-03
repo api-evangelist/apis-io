@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Venture Capital API
+  description: |-
+    Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Pro, except the per-provider investor lookup.
+
+    This is the Venture Capital surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund''s portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
-
-
-    This is the Venture Capital surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,172 +13,242 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Venture Capital
-  description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Free discovery.
+  - name: Venture Capital
+    description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated PORTFOLIO GRAPH. Browse firms, walk a fund's portfolio (filter to API providers / by rating band), and follow the reverse edge from a provider to the VCs that back it. Pro, except the per-provider investor lookup.
 paths:
   /vcs:
     get:
       operationId: listVcs
       x-mcp-tool: find_vcs
       tags:
-      - Venture Capital
+        - Venture Capital
       summary: List / search venture-capital firms.
-      description: Venture-capital firms in the network, each with a network-matched, rated portfolio graph. Filter by text, thesis tags, or category; sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Free.
+      description: Venture-capital firms in the network, each with a network-matched, rated portfolio graph. Filter by text, thesis tags, or category; sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Pro.
       parameters:
-      - name: q
-        in: query
-        description: Free text over firm name + description.
-        schema:
-          type: string
-      - name: tags
-        in: query
-        description: Thesis tag slugs (comma-separated).
-        schema:
-          type: string
-      - name: category
-        in: query
-        schema:
-          type: string
-      - name: sort
-        in: query
-        schema:
-          type: string
-          enum:
-          - portfolio_on_network
-          - portfolio_total
-          - portfolio_rating
-          - name
-      - name: page
-        in: query
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        schema:
-          type: integer
+        - name: q
+          in: query
+          description: Free text over firm name + description.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: tags
+          in: query
+          description: Thesis tag slugs (comma-separated).
+          schema:
+            type: string
+            maxLength: 1024
+        - name: category
+          in: query
+          schema:
+            type: string
+            maxLength: 1024
+          description: Filter firms by category.
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - portfolio_on_network
+              - portfolio_total
+              - portfolio_rating
+              - name
+          description: Sort order.
+        - name: page
+          in: query
+          schema:
+            type: integer
+            maximum: 1000000
+          description: 1-based page number.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 1000000
+          description: Items per page.
       responses:
-        '200':
+        "200":
           description: A page of VC firms (identity + portfolio summary).
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-      x-tier: free
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+      x-tier: pro
+      security: []
   /vcs/{slug}:
     get:
       operationId: getVc
       x-mcp-tool: get_vc
       tags:
-      - Venture Capital
+        - Venture Capital
       summary: One VC firm — identity, fund facts, portfolio summary.
-      description: Identity, fund facts (properties), and portfolio summary (totals, band distribution, average rating). Pass view=full to inline the full portfolio graph. Free.
+      description: Identity, fund facts (properties), and portfolio summary (totals, band distribution, average rating). Pass view=full to inline the full portfolio graph. Pro.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: view
-        in: query
-        schema:
-          type: string
-          enum:
-          - summary
-          - full
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          description: Slug of the company, as it appears on its apis.io page.
+        - name: view
+          in: query
+          schema:
+            type: string
+            enum:
+              - summary
+              - full
+          description: How much of the record to return.
       responses:
-        '200':
+        "200":
           description: The VC firm.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: pro
+      security: []
   /vcs/{slug}/portfolio:
     get:
       operationId: getVcPortfolio
       x-mcp-tool: vc_portfolio
       tags:
-      - Venture Capital
+        - Venture Capital
       summary: A VC firm's portfolio graph.
-      description: The firm's portfolio companies, each matched to the network and rated. Filter is_provider=true (only API providers), in_network=true, band, or min_score; sort by score (default), api_count, or name. Free.
+      description: The firm's portfolio companies, each matched to the network and rated. Filter is_provider=true (only API providers), in_network=true, band, or min_score; sort by score (default), api_count, or name. Pro.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: is_provider
-        in: query
-        description: Only companies that publish an API on the network.
-        schema:
-          type: boolean
-      - name: in_network
-        in: query
-        schema:
-          type: boolean
-      - name: band
-        in: query
-        schema:
-          type: string
-      - name: min_score
-        in: query
-        schema:
-          type: number
-      - name: sort
-        in: query
-        schema:
-          type: string
-          enum:
-          - score
-          - api_count
-          - name
-      - name: page
-        in: query
-        schema:
-          type: integer
-      - name: limit
-        in: query
-        schema:
-          type: integer
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          description: Slug of the company, as it appears on its apis.io page.
+        - name: is_provider
+          in: query
+          description: Only companies that publish an API on the network.
+          schema:
+            type: boolean
+        - name: in_network
+          in: query
+          schema:
+            type: boolean
+          description: Only portfolio companies already profiled on the network.
+        - name: band
+          in: query
+          schema:
+            type: string
+            maxLength: 1024
+          description: Filter to companies in this rating band.
+        - name: min_score
+          in: query
+          schema:
+            type: number
+            maximum: 1000000
+          description: Only results at or above this composite score.
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - score
+              - api_count
+              - name
+          description: Sort order.
+        - name: page
+          in: query
+          schema:
+            type: integer
+            maximum: 1000000
+          description: 1-based page number.
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            maximum: 1000000
+          description: Items per page.
       responses:
-        '200':
+        "200":
           description: A page of portfolio companies with network match + rating.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
-      x-tier: free
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      x-tier: pro
+      security: []
   /providers/{slug}/investors:
     get:
       operationId: getProviderInvestors
       x-mcp-tool: find_investors
       tags:
-      - Venture Capital
+        - Venture Capital
       summary: Which VC firms back this provider (reverse portfolio edge).
       description: The venture-capital firms in the network whose portfolio includes this provider/company. The reverse of the VC portfolio graph. Free.
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: The backing VC firms.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "404":
+          $ref: "#/components/responses/NotFound"
       x-tier: free
+      security: []
 components:
   responses:
     NotFound:
@@ -186,23 +256,50 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
   schemas:
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -210,13 +307,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -224,24 +321,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
   parameters:
     ProviderSlug:
@@ -252,3 +355,37 @@ components:
       schema:
         type: string
         maxLength: 1024
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

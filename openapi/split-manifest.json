@@ -1,121 +1,121 @@
 [
   {
-    "tag": "Providers",
-    "slug": "providers",
-    "file": "openapi/apis-io-v1-providers-openapi.yml",
-    "operations": 10,
-    "schemas": 14
-  },
-  {
     "tag": "APIs",
     "slug": "apis",
-    "file": "openapi/apis-io-v1-apis-openapi.yml",
+    "file": "openapi/apis-io-apis-api-openapi.yml",
     "operations": 5,
     "schemas": 7
   },
   {
-    "tag": "Tags",
-    "slug": "tags",
-    "file": "openapi/apis-io-v1-tags-openapi.yml",
-    "operations": 2,
-    "schemas": 11
-  },
-  {
-    "tag": "Industries",
-    "slug": "industries",
-    "file": "openapi/apis-io-v1-industries-openapi.yml",
-    "operations": 3,
-    "schemas": 6
-  },
-  {
-    "tag": "Regions",
-    "slug": "regions",
-    "file": "openapi/apis-io-v1-regions-openapi.yml",
-    "operations": 3,
-    "schemas": 6
-  },
-  {
     "tag": "Areas",
     "slug": "areas",
-    "file": "openapi/apis-io-v1-areas-openapi.yml",
+    "file": "openapi/apis-io-areas-api-openapi.yml",
     "operations": 3,
     "schemas": 6
-  },
-  {
-    "tag": "Synthesis",
-    "slug": "synthesis",
-    "file": "openapi/apis-io-v1-synthesis-openapi.yml",
-    "operations": 6,
-    "schemas": 1
-  },
-  {
-    "tag": "Ratings",
-    "slug": "ratings",
-    "file": "openapi/apis-io-v1-ratings-openapi.yml",
-    "operations": 8,
-    "schemas": 10
   },
   {
     "tag": "Artifact Types",
     "slug": "artifact-types",
-    "file": "openapi/apis-io-v1-artifact-types-openapi.yml",
+    "file": "openapi/apis-io-artifact-types-api-openapi.yml",
     "operations": 20,
     "schemas": 5
   },
   {
-    "tag": "Search",
-    "slug": "search",
-    "file": "openapi/apis-io-v1-search-openapi.yml",
-    "operations": 1,
-    "schemas": 14
-  },
-  {
-    "tag": "Insights",
-    "slug": "insights",
-    "file": "openapi/apis-io-v1-insights-openapi.yml",
-    "operations": 8,
-    "schemas": 1
-  },
-  {
-    "tag": "Venture Capital",
-    "slug": "venture-capital",
-    "file": "openapi/apis-io-v1-venture-capital-openapi.yml",
-    "operations": 4,
-    "schemas": 1
-  },
-  {
-    "tag": "Resolve & Enrich",
-    "slug": "resolve-enrich",
-    "file": "openapi/apis-io-v1-resolve-enrich-openapi.yml",
-    "operations": 2,
-    "schemas": 1
-  },
-  {
-    "tag": "Saved Workspace",
-    "slug": "saved-workspace",
-    "file": "openapi/apis-io-v1-saved-workspace-openapi.yml",
-    "operations": 10,
-    "schemas": 1
-  },
-  {
-    "tag": "Export",
-    "slug": "export",
-    "file": "openapi/apis-io-v1-export-openapi.yml",
-    "operations": 2,
-    "schemas": 1
-  },
-  {
     "tag": "Cohorts",
     "slug": "cohorts",
-    "file": "openapi/apis-io-v1-cohorts-openapi.yml",
+    "file": "openapi/apis-io-cohorts-api-openapi.yml",
     "operations": 7,
     "schemas": 1
   },
   {
     "tag": "Editorial",
     "slug": "editorial",
-    "file": "openapi/apis-io-v1-editorial-openapi.yml",
+    "file": "openapi/apis-io-editorial-api-openapi.yml",
     "operations": 1,
-    "schemas": 0
+    "schemas": 1
+  },
+  {
+    "tag": "Export",
+    "slug": "export",
+    "file": "openapi/apis-io-export-api-openapi.yml",
+    "operations": 2,
+    "schemas": 1
+  },
+  {
+    "tag": "Industries",
+    "slug": "industries",
+    "file": "openapi/apis-io-industries-api-openapi.yml",
+    "operations": 3,
+    "schemas": 6
+  },
+  {
+    "tag": "Insights",
+    "slug": "insights",
+    "file": "openapi/apis-io-insights-api-openapi.yml",
+    "operations": 8,
+    "schemas": 1
+  },
+  {
+    "tag": "Providers",
+    "slug": "providers",
+    "file": "openapi/apis-io-providers-api-openapi.yml",
+    "operations": 10,
+    "schemas": 14
+  },
+  {
+    "tag": "Ratings",
+    "slug": "ratings",
+    "file": "openapi/apis-io-ratings-api-openapi.yml",
+    "operations": 8,
+    "schemas": 10
+  },
+  {
+    "tag": "Regions",
+    "slug": "regions",
+    "file": "openapi/apis-io-regions-api-openapi.yml",
+    "operations": 3,
+    "schemas": 6
+  },
+  {
+    "tag": "Resolve & Enrich",
+    "slug": "resolve-enrich",
+    "file": "openapi/apis-io-resolve-enrich-api-openapi.yml",
+    "operations": 2,
+    "schemas": 1
+  },
+  {
+    "tag": "Saved Workspace",
+    "slug": "saved-workspace",
+    "file": "openapi/apis-io-saved-workspace-api-openapi.yml",
+    "operations": 10,
+    "schemas": 1
+  },
+  {
+    "tag": "Search",
+    "slug": "search",
+    "file": "openapi/apis-io-search-api-openapi.yml",
+    "operations": 1,
+    "schemas": 14
+  },
+  {
+    "tag": "Synthesis",
+    "slug": "synthesis",
+    "file": "openapi/apis-io-synthesis-api-openapi.yml",
+    "operations": 6,
+    "schemas": 1
+  },
+  {
+    "tag": "Tags",
+    "slug": "tags",
+    "file": "openapi/apis-io-tags-api-openapi.yml",
+    "operations": 2,
+    "schemas": 11
+  },
+  {
+    "tag": "Venture Capital",
+    "slug": "venture-capital",
+    "file": "openapi/apis-io-venture-capital-api-openapi.yml",
+    "operations": 4,
+    "schemas": 1
   }
 ]

@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Ratings API
+  description: |-
+    The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
+
+    This is the Ratings surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider''s public API surface is. Rubric v0.3.
-
-
-    This is the Ratings surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,11 +13,11 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Ratings
-  description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
+  - name: Ratings
+    description: The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and integration-ready each provider's public API surface is. Rubric v0.3.
 paths:
   /providers/{slug}/rating:
     get:
@@ -26,20 +26,31 @@ paths:
       x-mcp-tool: get_provider_rating
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: One provider's rating.
       description: Returns the full rating breakdown for a single provider — composite, band, trend, delta, and all six facet scores.
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: One provider's rating.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProviderScore'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/ProviderScore"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /ratings:
     get:
       operationId: listRatings
@@ -47,59 +58,80 @@ paths:
       x-mcp-tool: find_ratings
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: Ranked ratings leaderboard.
       description: Providers ranked by composite score, highest first. Filter by band, score range, trend, or a facet threshold (`facet` + `min_facet`), and scope to providers or tags. Each entry carries rank, composite, band, trend, and the six facet scores.
       parameters:
-      - $ref: '#/components/parameters/BandFilter'
-      - $ref: '#/components/parameters/MinScore'
-      - $ref: '#/components/parameters/MaxScore'
-      - $ref: '#/components/parameters/TrendFilter'
-      - $ref: '#/components/parameters/FacetFilter'
-      - $ref: '#/components/parameters/MinFacet'
-      - $ref: '#/components/parameters/Providers'
-      - $ref: '#/components/parameters/Tags'
-      - name: sort
-        in: query
-        description: Sort order (composite descending by default).
-        schema:
-          type: string
-          enum:
-          - composite
-          - trend
-          - name
-          default: composite
-          maxLength: 1024
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
+        - $ref: "#/components/parameters/BandFilter"
+        - $ref: "#/components/parameters/MinScore"
+        - $ref: "#/components/parameters/MaxScore"
+        - $ref: "#/components/parameters/TrendFilter"
+        - $ref: "#/components/parameters/FacetFilter"
+        - $ref: "#/components/parameters/MinFacet"
+        - $ref: "#/components/parameters/Providers"
+        - $ref: "#/components/parameters/Tags"
+        - name: sort
+          in: query
+          description: Sort order (composite descending by default).
+          schema:
+            type: string
+            enum:
+              - composite
+              - trend
+              - name
+            default: composite
+            maxLength: 1024
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Format"
       responses:
-        '200':
+        "200":
           description: Ranked ratings leaderboard.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RatingList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/RatingList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /ratings/rubric:
     get:
       operationId: getRatingRubric
       tags:
-      - Ratings
+        - Ratings
       summary: The rating rubric.
       description: Returns the versioned rubric behind every score — the five bands and their thresholds, the six facets and their weights, and the trend thresholds. Use it to interpret any `score` block.
       responses:
-        '200':
+        "200":
           description: The rating rubric.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Rubric'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/Rubric"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
       x-tier: free
+      x-mcp-tool: get_rating_rubric
   /providers/{slug}/rating/history:
     get:
       operationId: getRatingHistory
@@ -108,21 +140,32 @@ paths:
       x-agent-skill: track-api-changes
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: A provider's rating movement.
       description: Returns a provider's current score/band/trend and the implied previous-build point. apis.io stores the current score plus week-over-week movement, not a full time series.
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: The provider's rating history.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /ratings/movers:
     get:
       operationId: findRatingMovers
@@ -131,19 +174,30 @@ paths:
       x-agent-skill: track-api-changes
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: The biggest rating movers.
       description: Returns the providers whose composite score moved most (up and down) versus the previous scoring build.
       parameters:
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Up and down movers.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /providers/{slug}/rating/facets:
     get:
       operationId: getProviderFacets
@@ -151,22 +205,31 @@ paths:
       x-mcp-tool: get_provider_facets
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: One provider's score at facet depth (Pro).
       description: The facets the composite is built from, plus any regulatory regime that applies and how it was matched. The composite is one number; these are the parts a team can act on.
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: One provider's score at facet depth (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /providers/{slug}/agent-readiness:
     get:
       operationId: getProviderAgentReadiness
@@ -174,22 +237,31 @@ paths:
       x-mcp-tool: get_agent_readiness
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: Agent-readiness dimensions (Pro).
       description: The dimension-by-dimension agent readiness of one provider — spec presence, MCP server, auth clarity, idempotency, error semantics, rate-limit signal, well-known catalog, consent identity and the rest. A standalone score, not a slice of the composite.
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: Agent-readiness dimensions (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /providers/{slug}/evidence:
     get:
       operationId: getProviderEvidence
@@ -197,29 +269,38 @@ paths:
       x-mcp-tool: get_provider_evidence
       security: []
       tags:
-      - Ratings
+        - Ratings
       summary: How the score was established.
-      description: 'Provenance for each part of a provider''s score: first-party (they published it), verified (we fetched and confirmed it), or derived (we inferred it), plus contract coverage and callability. Free and deliberately ungated — the basis for a claim should never sit behind the claim. Call this before quoting or disputing a score.'
+      description: "Provenance for each part of a provider's score: first-party (they published it), verified (we fetched and confirmed it), or derived (we inferred it), plus contract coverage and callability. Free and deliberately ungated — the basis for a claim should never sit behind the claim. Call this before quoting or disputing a score."
       parameters:
-      - $ref: '#/components/parameters/ProviderSlug'
+        - $ref: "#/components/parameters/ProviderSlug"
       responses:
-        '200':
+        "200":
           description: How the score was established.
           content:
             application/json:
               schema:
                 type: object
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   schemas:
     Trend:
       type: string
       description: Week-over-week movement in composite score (±5 thresholds).
       enum:
-      - rising
-      - flat
-      - falling
+        - rising
+        - flat
+        - falling
       maxLength: 1024
     Facets:
       type: object
@@ -230,61 +311,70 @@ components:
           minimum: 0
           maximum: 100
           description: Discoverability facet score (weight 0.10).
+          examples:
+            - 59
         contract_quality:
           type: number
           minimum: 0
           maximum: 100
           description: Contract Quality facet score (weight 0.25).
+          examples:
+            - 82
         governance:
           type: number
           minimum: 0
           maximum: 100
           description: Governance facet score (weight 0.12).
+          examples:
+            - 48
         operational_transparency:
           type: number
           minimum: 0
           maximum: 100
           description: Operational Transparency facet score (weight 0.13).
+          examples:
+            - 66
         developer_ergonomics:
           type: number
           minimum: 0
           maximum: 100
           description: Developer Ergonomics facet score (weight 0.20).
+          examples:
+            - 64
         commercial_clarity:
           type: number
           minimum: 0
           maximum: 100
           description: Commercial Clarity facet score (weight 0.20).
+          examples:
+            - 71
     Band:
       type: string
       description: Rating band derived from the composite score.
       enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
       maxLength: 1024
     FacetName:
       type: string
       description: One of the six rating facets.
       enum:
-      - discoverability
-      - contract_quality
-      - governance
-      - operational_transparency
-      - developer_ergonomics
-      - commercial_clarity
+        - discoverability
+        - contract_quality
+        - governance
+        - operational_transparency
+        - developer_ergonomics
+        - commercial_clarity
       maxLength: 1024
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -292,13 +382,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -306,24 +396,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
     Rubric:
       type: object
@@ -332,67 +428,91 @@ components:
         schema_version:
           type: string
           examples:
-          - '0.3'
+            - "0.3"
           maxLength: 1024
+          description: Version of this rubric.
         bands:
           type: array
           items:
             type: object
             properties:
               label:
-                $ref: '#/components/schemas/Band'
+                $ref: "#/components/schemas/Band"
+                description: The band's name.
               min:
                 type: number
                 description: Inclusive lower bound of the composite range.
                 maximum: 1000000000
+                examples:
+                  - 80
               description:
                 type: string
                 maxLength: 20000
+                description: What the band means.
+                examples:
+                  - Publishes a complete
           maxItems: 1000
+          description: The bands a composite score falls into
         facets:
           type: array
           items:
             type: object
             properties:
               name:
-                $ref: '#/components/schemas/FacetName'
+                $ref: "#/components/schemas/FacetName"
+                description: The facet's stable name.
               label:
                 type: string
                 maxLength: 1024
+                description: Display name of the facet.
+                examples:
+                  - Contract quality
               weight:
                 type: number
                 description: Share of the composite (the six weights sum to 1.0).
                 maximum: 1000000000
+                examples:
+                  - 0.25
               description:
                 type: string
                 maxLength: 20000
+                description: What the facet measures.
+                examples:
+                  - Whether the contract is present
           maxItems: 1000
+          description: The facets that compose a score
         trending:
           type: object
           properties:
             rising_threshold:
               type: number
               examples:
-              - 5
+                - 5
               maximum: 1000000000
+              description: Composite-score gain since the previous run at or above which a provider counts as rising.
             falling_threshold:
               type: number
               examples:
-              - -5
+                - -5
               maximum: 1000000000
+              description: Composite-score loss since the previous run at or below which a provider counts as falling.
+          description: The thresholds that decide whether a score counts as rising or falling.
     RatingList:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: "#/components/schemas/Meta"
+          description: Pagination and echoed-query metadata for this page.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/RatingEntry'
+            $ref: "#/components/schemas/RatingEntry"
           maxItems: 1000
+          description: The rated providers on this page
       required:
-      - meta
-      - data
+        - meta
+        - data
+      description: A page of rated providers
     Meta:
       type: object
       description: Pagination and echoed-query metadata for collection responses.
@@ -401,25 +521,35 @@ components:
           type: integer
           description: Total matching items across all pages.
           maximum: 1000000
+          examples:
+            - 1039
         page:
           type: integer
           maximum: 1000000
+          description: The 1-based page this response represents.
+          examples:
+            - 1
         limit:
           type: integer
           maximum: 1000
+          description: Items requested per page.
+          examples:
+            - 25
         pages:
           type: integer
           description: Total number of pages.
           maximum: 1000000
+          examples:
+            - 42
         query:
           type: object
           additionalProperties: true
           description: The effective query parameters, echoed back.
       required:
-      - total
-      - page
-      - limit
-      - pages
+        - total
+        - page
+        - limit
+        - pages
     ProviderScore:
       type: object
       description: A provider's rating, rubric v0.3.
@@ -430,35 +560,45 @@ components:
           maximum: 100
           description: Weighted composite of the six facets.
           examples:
-          - 66.3
+            - 66.3
         band:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
+          description: The band the composite score falls into.
         trend:
-          $ref: '#/components/schemas/Trend'
+          $ref: "#/components/schemas/Trend"
+          description: Which way the score has moved since the previous run.
         delta:
           type: number
           description: Composite change since the previous snapshot.
           examples:
-          - 0
+            - 0
           maximum: 1000000000
         previous_composite:
           type: number
           minimum: 0
           maximum: 100
+          description: The composite from the previous scoring run
+          examples:
+            - 66.3
         scored_at:
           type: string
           format: date
           maxLength: 10
+          description: When this score was computed.
+          examples:
+            - 2026-08-27
         schema_version:
           type: string
           examples:
-          - '0.3'
+            - "0.3"
           maxLength: 1024
+          description: Version of the scoring rubric this score was computed under.
         facets:
-          $ref: '#/components/schemas/Facets'
+          $ref: "#/components/schemas/Facets"
+          description: The facet scores that compose the composite.
       required:
-      - composite
-      - band
+        - composite
+        - band
     RatingEntry:
       type: object
       description: A ranked provider in the ratings leaderboard.
@@ -467,26 +607,40 @@ components:
           type: integer
           description: 1-based position in the filtered, score-sorted list.
           maximum: 2147483647
+          examples:
+            - 1
         provider_slug:
           type: string
           maxLength: 1024
+          description: Slug of the rated company.
+          examples:
+            - twilio
         provider_name:
           type: string
           maxLength: 1024
+          description: Display name of the rated company.
+          examples:
+            - Twilio
         composite:
           type: number
           minimum: 0
           maximum: 100
+          description: The company's composite Kin Score.
+          examples:
+            - 66.3
         band:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
+          description: The band this composite score falls into.
         trend:
-          $ref: '#/components/schemas/Trend'
+          $ref: "#/components/schemas/Trend"
+          description: Which way this score has moved since the previous run.
         facets:
-          $ref: '#/components/schemas/Facets'
+          $ref: "#/components/schemas/Facets"
+          description: The facet scores that compose the composite.
       required:
-      - provider_slug
-      - composite
-      - band
+        - provider_slug
+        - composite
+        - band
   parameters:
     Format:
       name: format
@@ -496,7 +650,7 @@ components:
       schema:
         type: string
         enum:
-        - csv
+          - csv
     ProviderSlug:
       name: slug
       in: path
@@ -528,7 +682,7 @@ components:
       in: query
       description: Facet to apply `min_facet` against.
       schema:
-        $ref: '#/components/schemas/FacetName'
+        $ref: "#/components/schemas/FacetName"
     BandFilter:
       name: band
       in: query
@@ -538,7 +692,7 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
         maxItems: 1000
     MinScore:
       name: min_score
@@ -555,8 +709,8 @@ components:
       style: form
       explode: false
       example:
-      - Messaging
-      - Authentication
+        - Messaging
+        - Authentication
       schema:
         type: array
         items:
@@ -568,7 +722,7 @@ components:
       in: query
       description: Filter by trend marker.
       schema:
-        $ref: '#/components/schemas/Trend'
+        $ref: "#/components/schemas/Trend"
     MaxScore:
       name: max_score
       in: query
@@ -603,35 +757,96 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/upgrade-required
             title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

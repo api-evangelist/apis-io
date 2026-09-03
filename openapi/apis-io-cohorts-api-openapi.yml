@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Cohorts API
+  description: |-
+    Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution, rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
+
+    This is the Cohorts surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution, rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
-
-
-    This is the Cohorts surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,62 +13,74 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Cohorts
-  description: Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution, rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
+  - name: Cohorts
+    description: Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution, rankings, facet scores, and capability matrix that a Trend or Portfolio Report is built from.
 paths:
   /cohorts:
     get:
       operationId: listCohorts
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: find_cohorts
       x-agent-skill: state-of-report
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: Every scored cohort in the catalog.
-      description: 'Tags, industries, regions, areas and VC portfolios as one browsable index of scored populations. Each row carries its population, its promotion tier, and — for tags — the breadth that decides whether it is a market or a structural label. Free: knowing a cohort exists is discovery.'
+      description: Tags, industries, regions, areas and VC portfolios as one browsable index of scored populations. Each row carries its population, its promotion tier, and — for tags — the breadth that decides whether it is a market or a structural label. Pro.
       parameters:
-      - name: kind
-        in: query
-        schema:
-          type: string
-          enum:
-          - tag
-          - industry
-          - region
-          - area
-          - vc
-        description: Restrict to one roster source.
-      - name: min_providers
-        in: query
-        schema:
-          type: integer
-        description: Only cohorts with at least this many providers.
-      - name: tier
-        in: query
-        schema:
-          type: string
-          enum:
-          - report
-          - brief
-          - data
-        description: Promotion tier. `report` needs 100+ providers, `brief` 25+, and neither promotes a stale or structural roster.
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
+        - name: kind
+          in: query
+          schema:
+            type: string
+            enum:
+              - tag
+              - industry
+              - region
+              - area
+              - vc
+          description: Restrict to one roster source.
+        - name: min_providers
+          in: query
+          schema:
+            type: integer
+            maximum: 1000000
+          description: Only cohorts with at least this many providers.
+        - name: tier
+          in: query
+          schema:
+            type: string
+            enum:
+              - report
+              - brief
+              - data
+          description: Promotion tier. `report` needs 100+ providers, `brief` 25+, and neither promotes a stale or structural roster.
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Format"
       responses:
-        '200':
+        "200":
           description: Every scored cohort in the catalog.
           content:
             application/json:
               schema:
                 type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /cohorts/compare:
     get:
       operationId: compareCohorts
@@ -76,61 +88,83 @@ paths:
       x-mcp-tool: compare_cohorts
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: Two cohorts side by side (Pro).
       description: Both distributions on one rubric, plus the deltas on composite, agent readiness, every facet and every adoption rate. Pass each cohort as `<kind>:<slug>`. A question the report format cannot answer, because a report only ever covers one market.
       parameters:
-      - name: a
-        in: query
-        required: true
-        schema:
-          type: string
-        example: tag:payments
-        description: First cohort as <kind>:<slug>.
-      - name: b
-        in: query
-        required: true
-        schema:
-          type: string
-        example: industry:banking
-        description: Second cohort as <kind>:<slug>.
+        - name: a
+          in: query
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          example: tag:payments
+          description: First cohort as <kind>:<slug>.
+        - name: b
+          in: query
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          example: industry:banking
+          description: Second cohort as <kind>:<slug>.
       responses:
-        '200':
+        "200":
           description: Two cohorts side by side (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /cohorts/{kind}/{slug}:
     get:
       operationId: getCohort
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: get_cohort
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: One cohort and its member roster.
-      description: Identity, population and every member with its Kin Score and agent readiness. Reports both the DECLARED roster size and the number actually resolved against the catalog — the gap is a coverage fact, not a rounding error. Free.
+      description: Identity, population and every member with its Kin Score and agent readiness. Reports both the DECLARED roster size and the number actually resolved against the catalog — the gap is a coverage fact, not a rounding error. Pro.
       parameters:
-      - $ref: '#/components/parameters/CohortKind'
-      - $ref: '#/components/parameters/CohortSlug'
+        - $ref: "#/components/parameters/CohortKind"
+        - $ref: "#/components/parameters/CohortSlug"
       responses:
-        '200':
+        "200":
           description: One cohort and its member roster.
           content:
             application/json:
               schema:
                 type: object
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /cohorts/{kind}/{slug}/stats:
     get:
       operationId: getCohortStats
@@ -139,25 +173,34 @@ paths:
       x-agent-skill: state-of-report
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: The distribution for a whole market (Pro).
       description: Kin Score mean, median, min, max and population standard deviation; agent-readiness spread; band split; per-facet averages with the member count behind each; and artifact adoption rates. Always carries a `coverage` block stating how much of the roster is actually scored, because a mean over half a roster is a different claim from a mean over all of it.
       parameters:
-      - $ref: '#/components/parameters/CohortKind'
-      - $ref: '#/components/parameters/CohortSlug'
+        - $ref: "#/components/parameters/CohortKind"
+        - $ref: "#/components/parameters/CohortSlug"
       responses:
-        '200':
+        "200":
           description: The distribution for a whole market (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '422':
-          $ref: '#/components/responses/InsufficientPopulation'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/InsufficientPopulation"
   /cohorts/{kind}/{slug}/rankings:
     get:
       operationId: getCohortRankings
@@ -166,28 +209,37 @@ paths:
       x-agent-skill: state-of-report
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: The leaderboard, on two axes (Pro).
       description: Every scored member ranked by Kin Score composite AND, separately, by agent readiness. The two orders differ, and the distance between a provider's two ranks is usually the story.
       parameters:
-      - $ref: '#/components/parameters/CohortKind'
-      - $ref: '#/components/parameters/CohortSlug'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
+        - $ref: "#/components/parameters/CohortKind"
+        - $ref: "#/components/parameters/CohortSlug"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Format"
       responses:
-        '200':
+        "200":
           description: The leaderboard, on two axes (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '422':
-          $ref: '#/components/responses/InsufficientPopulation'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/InsufficientPopulation"
   /cohorts/{kind}/{slug}/scores:
     get:
       operationId: getCohortScores
@@ -196,28 +248,37 @@ paths:
       x-agent-skill: state-of-report
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: Facet-level scores, cohort-relative (Pro).
       description: One row per provider per facet, each carrying the cohort average and the delta against it. A 60 in governance means nothing until you know the market sits at 45.
       parameters:
-      - $ref: '#/components/parameters/CohortKind'
-      - $ref: '#/components/parameters/CohortSlug'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
+        - $ref: "#/components/parameters/CohortKind"
+        - $ref: "#/components/parameters/CohortSlug"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Format"
       responses:
-        '200':
+        "200":
           description: Facet-level scores, cohort-relative (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '422':
-          $ref: '#/components/responses/InsufficientPopulation'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/InsufficientPopulation"
   /cohorts/{kind}/{slug}/capabilities:
     get:
       operationId: getCohortCapabilities
@@ -226,23 +287,32 @@ paths:
       x-agent-skill: state-of-report
       security: []
       tags:
-      - Cohorts
+        - Cohorts
       summary: What every member publishes (Pro).
       description: Per-member artifact counts by type plus the agent-readiness dimensions each one satisfies. Available even below the population floor, because a capability matrix is a list of facts rather than a statistic.
       parameters:
-      - $ref: '#/components/parameters/CohortKind'
-      - $ref: '#/components/parameters/CohortSlug'
+        - $ref: "#/components/parameters/CohortKind"
+        - $ref: "#/components/parameters/CohortSlug"
       responses:
-        '200':
+        "200":
           description: What every member publishes (Pro).
           content:
             application/json:
               schema:
                 type: object
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   parameters:
     Format:
@@ -253,7 +323,7 @@ components:
       schema:
         type: string
         enum:
-        - csv
+          - csv
     Limit:
       name: limit
       in: query
@@ -270,6 +340,7 @@ components:
       description: The cohort slug within its kind.
       schema:
         type: string
+        maxLength: 1024
     Page:
       name: page
       in: query
@@ -287,11 +358,11 @@ components:
       schema:
         type: string
         enum:
-        - tag
-        - industry
-        - region
-        - area
-        - vc
+          - tag
+          - industry
+          - region
+          - area
+          - vc
     Q:
       name: q
       in: query
@@ -302,13 +373,10 @@ components:
   schemas:
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -316,13 +384,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -330,80 +398,153 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
   responses:
     InsufficientPopulation:
-      description: The cohort has too few scored members for distribution statistics to be meaningful. The roster and capability matrix remain available.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: insufficient_population
-              detail:
-                type: string
-              member_count:
-                type: integer
-              minimum:
-                type: integer
-              available:
-                type: array
-                items:
-                  type: string
-    UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: The cohort has too few scored members for distribution statistics to be meaningful. Carries `member_count`, `minimum` and `available` extension members; the roster and capability matrix remain available.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/insufficient-population
+            title: Insufficient population
+            status: 422
+            detail: This cohort holds 3 scored members; distribution statistics need 5.
+            instance: /v1/cohorts/tag/quantum-computing/stats
+            member_count: 3
+            minimum: 5
+            available:
+              - roster
+              - capabilities
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/upgrade-required
             title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     NotFound:
       description: Resource not found.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

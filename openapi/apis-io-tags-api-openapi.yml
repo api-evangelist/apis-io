@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Tags API
+  description: |-
+    The tag taxonomy, with network-wide ranking metadata.
+
+    This is the Tags surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'The tag taxonomy, with network-wide ranking metadata.
-
-
-    This is the Tags surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,106 +13,125 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Tags
-  description: The tag taxonomy, with network-wide ranking metadata.
+  - name: Tags
+    description: The tag taxonomy, with network-wide ranking metadata.
 paths:
   /tags:
     get:
       operationId: listTags
       tags:
-      - Tags
+        - Tags
       summary: List and rank tags.
-      description: 'The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,
-
+      description: |
+        The tag taxonomy with network-wide ranking metadata (`composite`, `frequency`,
         `breadth`, `quality_lift`, `band`). Default sort is by `composite` score.
-
-        '
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - name: band
-        in: query
-        description: Filter by quality band.
-        schema:
-          type: string
-          enum:
-          - strong
-          - healthy
-          - stale
-          - weak
-          maxLength: 1024
-      - name: min_api_count
-        in: query
-        description: Only tags applied to at least this many APIs.
-        schema:
-          type: integer
-          minimum: 0
-          maximum: 1000
-      - name: sort
-        in: query
-        schema:
-          type: string
-          enum:
-          - composite
-          - frequency
-          - breadth
-          - quality_lift
-          - api_count
-          - provider_count
-          - name
-          default: composite
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
-      - $ref: '#/components/parameters/Format'
+        - $ref: "#/components/parameters/Q"
+        - name: band
+          in: query
+          description: Filter by quality band.
+          schema:
+            type: string
+            enum:
+              - strong
+              - healthy
+              - stale
+              - weak
+            maxLength: 1024
+        - name: min_api_count
+          in: query
+          description: Only tags applied to at least this many APIs.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 1000
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum:
+              - composite
+              - frequency
+              - breadth
+              - quality_lift
+              - api_count
+              - provider_count
+              - name
+            default: composite
+            maxLength: 1024
+          description: Sort order.
+        - $ref: "#/components/parameters/Fields"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Format"
       responses:
-        '200':
+        "200":
           description: A page of tags.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TagList'
+                $ref: "#/components/schemas/TagList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
       security: []
       x-tier: free
+      x-mcp-tool: find_tags
   /tags/{slug}:
     get:
       operationId: getTag
       tags:
-      - Tags
+        - Tags
       summary: Get one tag, with its linked providers, APIs, and neighbors.
       description: Returns a single tag by slug, including its network-wide ranking metadata, name variants, neighbor tags, and the providers and APIs it is applied to.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Tag slug (e.g. `messaging`).
-        schema:
-          type: string
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
+        - name: slug
+          in: path
+          required: true
+          description: Tag slug (e.g. `messaging`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
       responses:
-        '200':
+        "200":
           description: The tag.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tag'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/Tag"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "404":
+          $ref: "#/components/responses/NotFound"
       security: []
       x-tier: free
+      x-mcp-tool: get_tag
 components:
   schemas:
     Trend:
       type: string
       description: Week-over-week movement in composite score (±5 thresholds).
       enum:
-      - rising
-      - flat
-      - falling
+        - rising
+        - flat
+        - falling
       maxLength: 1024
     Tag:
       type: object
@@ -121,57 +140,79 @@ components:
         slug:
           type: string
           examples:
-          - messaging
+            - messaging
           maxLength: 1024
+          description: Slug of the tag
         name:
           type: string
           examples:
-          - Messaging
+            - Messaging
           maxLength: 1024
+          description: Display name of the tag.
         composite:
           type: number
           description: Composite ranking score.
           maximum: 1000000000
+          examples:
+            - 62.4
         band:
           type: string
           enum:
-          - strong
-          - healthy
-          - stale
-          - weak
+            - strong
+            - healthy
+            - stale
+            - weak
           maxLength: 1024
+          description: How the tag is behaving across the network.
         frequency:
           type: number
           maximum: 1000000000
+          description: How often the tag appears across the network
+          examples:
+            - 94
         breadth:
           type: number
           maximum: 1000000000
+          description: How widely the tag spreads across providers
+          examples:
+            - 40.8
         quality_lift:
           type: number
           maximum: 1000000000
+          description: How much better than average the providers carrying this tag score.
+          examples:
+            - 34.8
         provider_count:
           type: integer
           maximum: 1000
+          description: Providers carrying this tag.
+          examples:
+            - 1473
         api_count:
           type: integer
           maximum: 1000
+          description: APIs carrying this tag.
+          examples:
+            - 896
         variants:
           type: array
           items:
             type: string
             maxLength: 1024
           maxItems: 1000
+          description: Spellings of this tag seen in the wild
         neighbors:
           type: array
           description: Related tags.
           items:
-            $ref: '#/components/schemas/TagRef'
+            $ref: "#/components/schemas/TagRef"
           maxItems: 1000
         providers:
           type: array
           items:
-            $ref: '#/components/schemas/Provider'
+            $ref: "#/components/schemas/Provider"
           maxItems: 1000
+          description: Providers carrying this tag.
         apis:
           type: array
           items:
@@ -180,16 +221,26 @@ components:
               provider:
                 type: string
                 maxLength: 1024
+                description: Slug of the company that publishes the API.
+                examples:
+                  - twilio
               slug:
                 type: string
                 maxLength: 1024
+                description: Slug of the API within its provider.
+                examples:
+                  - twilio-messaging-api
               name:
                 type: string
                 maxLength: 1024
+                description: Display name of the API.
+                examples:
+                  - Twilio Messaging API
           maxItems: 1000
+          description: APIs carrying this tag.
       required:
-      - slug
-      - name
+        - slug
+        - name
     ProviderScore:
       type: object
       description: A provider's rating, rubric v0.3.
@@ -200,35 +251,45 @@ components:
           maximum: 100
           description: Weighted composite of the six facets.
           examples:
-          - 66.3
+            - 66.3
         band:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
+          description: The band the composite score falls into.
         trend:
-          $ref: '#/components/schemas/Trend'
+          $ref: "#/components/schemas/Trend"
+          description: Which way the score has moved since the previous run.
         delta:
           type: number
           description: Composite change since the previous snapshot.
           examples:
-          - 0
+            - 0
           maximum: 1000000000
         previous_composite:
           type: number
           minimum: 0
           maximum: 100
+          description: The composite from the previous scoring run
+          examples:
+            - 66.3
         scored_at:
           type: string
           format: date
           maxLength: 10
+          description: When this score was computed.
+          examples:
+            - 2026-08-27
         schema_version:
           type: string
           examples:
-          - '0.3'
+            - "0.3"
           maxLength: 1024
+          description: Version of the scoring rubric this score was computed under.
         facets:
-          $ref: '#/components/schemas/Facets'
+          $ref: "#/components/schemas/Facets"
+          description: The facet scores that compose the composite.
       required:
-      - composite
-      - band
+        - composite
+        - band
     Meta:
       type: object
       description: Pagination and echoed-query metadata for collection responses.
@@ -237,34 +298,41 @@ components:
           type: integer
           description: Total matching items across all pages.
           maximum: 1000000
+          examples:
+            - 1039
         page:
           type: integer
           maximum: 1000000
+          description: The 1-based page this response represents.
+          examples:
+            - 1
         limit:
           type: integer
           maximum: 1000
+          description: Items requested per page.
+          examples:
+            - 25
         pages:
           type: integer
           description: Total number of pages.
           maximum: 1000000
+          examples:
+            - 42
         query:
           type: object
           additionalProperties: true
           description: The effective query parameters, echoed back.
       required:
-      - total
-      - page
-      - limit
-      - pages
+        - total
+        - page
+        - limit
+        - pages
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -272,13 +340,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -286,24 +354,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
     TagRef:
       type: object
@@ -311,9 +385,16 @@ components:
         slug:
           type: string
           maxLength: 1024
+          description: Slug of the tag.
+          examples:
+            - messaging
         name:
           type: string
           maxLength: 1024
+          description: Display name of the tag.
+          examples:
+            - Messaging
+      description: A pointer to another tag in the taxonomy
     Provider:
       type: object
       description: An organization publishing one or more APIs.
@@ -321,30 +402,46 @@ components:
         slug:
           type: string
           examples:
-          - twilio
+            - twilio
           maxLength: 1024
+          description: Slug of the company
         name:
           type: string
           maxLength: 1024
+          description: Display name of the company.
+          examples:
+            - Twilio
         description:
           type: string
           maxLength: 20000
+          description: What the company does
+          examples:
+            - Twilio is a customer engagement platform exposing programmable messaging
         api_count:
           type: integer
           maximum: 1000
+          description: APIs this company publishes on the network.
+          examples:
+            - 3
         image:
           type: string
           format: uri
           maxLength: 2048
+          description: The company's logo.
+          examples:
+            - https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twilio.png
         created:
           type: string
           format: date
           maxLength: 10
+          description: When the company was first profiled on the network.
+          examples:
+            - 2024-04-14
         common:
           type: array
           description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
           items:
-            $ref: '#/components/schemas/Link'
+            $ref: "#/components/schemas/Link"
           maxItems: 1000
         apis:
           type: array
@@ -355,12 +452,21 @@ components:
               name:
                 type: string
                 maxLength: 1024
+                description: Display name of the API.
+                examples:
+                  - Twilio Messaging API
               slug:
                 type: string
                 maxLength: 1024
+                description: Slug of the API within this provider.
+                examples:
+                  - twilio-messaging-api
               description:
                 type: string
                 maxLength: 20000
+                description: What the API does.
+                examples:
+                  - Programmable messaging across SMS
           maxItems: 1000
         tags:
           type: array
@@ -369,14 +475,15 @@ components:
             type: string
             maxLength: 1024
           examples:
-          - - Messaging
-            - Authentication
+            - - Messaging
+              - Authentication
           maxItems: 1000
         score:
-          $ref: '#/components/schemas/ProviderScore'
+          $ref: "#/components/schemas/ProviderScore"
+          description: The company's Kin Score.
       required:
-      - slug
-      - name
+        - slug
+        - name
     Facets:
       type: object
       description: The six facet scores, each 0–100.
@@ -386,40 +493,52 @@ components:
           minimum: 0
           maximum: 100
           description: Discoverability facet score (weight 0.10).
+          examples:
+            - 59
         contract_quality:
           type: number
           minimum: 0
           maximum: 100
           description: Contract Quality facet score (weight 0.25).
+          examples:
+            - 82
         governance:
           type: number
           minimum: 0
           maximum: 100
           description: Governance facet score (weight 0.12).
+          examples:
+            - 48
         operational_transparency:
           type: number
           minimum: 0
           maximum: 100
           description: Operational Transparency facet score (weight 0.13).
+          examples:
+            - 66
         developer_ergonomics:
           type: number
           minimum: 0
           maximum: 100
           description: Developer Ergonomics facet score (weight 0.20).
+          examples:
+            - 64
         commercial_clarity:
           type: number
           minimum: 0
           maximum: 100
           description: Commercial Clarity facet score (weight 0.20).
+          examples:
+            - 71
     Band:
       type: string
       description: Rating band derived from the composite score.
       enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
       maxLength: 1024
     Link:
       type: object
@@ -428,29 +547,41 @@ components:
           type: string
           description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
           maxLength: 1024
+          examples:
+            - Documentation
         url:
           type: string
           format: uri
           maxLength: 2048
+          description: Where the link points.
+          examples:
+            - https://www.twilio.com/docs/usage/api
         title:
           type: string
           maxLength: 1024
+          description: Human-readable label for the link.
+          examples:
+            - API Reference
       required:
-      - type
-      - url
+        - type
+        - url
+      description: A named link off a provider or API — its documentation
     TagList:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: "#/components/schemas/Meta"
+          description: Pagination and echoed-query metadata for this page.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Tag'
+            $ref: "#/components/schemas/Tag"
           maxItems: 1000
+          description: The tags on this page.
       required:
-      - meta
-      - data
+        - meta
+        - data
+      description: A page of tags
   parameters:
     Format:
       name: format
@@ -460,7 +591,7 @@ components:
       schema:
         type: string
         enum:
-        - csv
+          - csv
     Limit:
       name: limit
       in: query
@@ -504,10 +635,53 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

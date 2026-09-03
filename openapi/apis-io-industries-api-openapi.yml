@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Industries API
+  description: |-
+    Industry verticals grouping providers across the catalog.
+
+    This is the Industries surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Industry verticals grouping providers across the catalog.
-
-
-    This is the Industries surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,11 +13,11 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Industries
-  description: Industry verticals grouping providers across the catalog.
+  - name: Industries
+    description: Industry verticals grouping providers across the catalog.
 paths:
   /industries:
     get:
@@ -26,34 +26,43 @@ paths:
       x-mcp-tool: find_industries
       security: []
       tags:
-      - Industries
+        - Industries
       summary: List and filter industries.
       description: The industry taxonomy — verticals grouping providers across the catalog. Filter by free text; sort by provider or API count.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - name: sort
-        in: query
-        description: Sort order.
-        schema:
-          type: string
-          enum:
-          - provider_count
-          - api_count
-          - name
-          default: provider_count
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - name: sort
+          in: query
+          description: Sort order.
+          schema:
+            type: string
+            enum:
+              - provider_count
+              - api_count
+              - name
+            default: provider_count
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: List and filter industries.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IndustryList'
-        '400':
-          $ref: '#/components/responses/BadRequest'
+                $ref: "#/components/schemas/IndustryList"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
   /industries/{slug}:
     get:
       operationId: getIndustry
@@ -61,27 +70,36 @@ paths:
       x-mcp-tool: get_industry
       security: []
       tags:
-      - Industries
+        - Industries
       summary: Get one industry, with its ranked providers.
       description: Returns a single industry by slug, including its aliases, counts, and the member providers ranked by score.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Industrie slug (e.g. `media-entertainment`).
-        schema:
-          type: string
-          maxLength: 1024
-      - $ref: '#/components/parameters/Fields'
+        - name: slug
+          in: path
+          required: true
+          description: Industrie slug (e.g. `media-entertainment`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Fields"
       responses:
-        '200':
+        "200":
           description: Get one industry, with its ranked providers.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Industry'
-        '404':
-          $ref: '#/components/responses/NotFound'
+                $ref: "#/components/schemas/Industry"
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /industries/{slug}/leaders:
     get:
       operationId: getIndustryLeaders
@@ -90,28 +108,39 @@ paths:
       x-agent-skill: shortlist-vendors
       security: []
       tags:
-      - Industries
+        - Industries
       summary: Top-rated providers in an industry.
       description: Returns the highest-composite-scoring member providers of an industry vertical.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Industry slug (e.g. `financial-services`).
-        schema:
-          type: string
-          maxLength: 1024
-      - $ref: '#/components/parameters/Limit'
+        - name: slug
+          in: path
+          required: true
+          description: Industry slug (e.g. `financial-services`).
+          schema:
+            type: string
+            maxLength: 1024
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: A page of the industry's top providers.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   parameters:
     Limit:
@@ -160,34 +189,41 @@ components:
           type: integer
           description: Total matching items across all pages.
           maximum: 1000000
+          examples:
+            - 1039
         page:
           type: integer
           maximum: 1000000
+          description: The 1-based page this response represents.
+          examples:
+            - 1
         limit:
           type: integer
           maximum: 1000
+          description: Items requested per page.
+          examples:
+            - 25
         pages:
           type: integer
           description: Total number of pages.
           maximum: 1000000
+          examples:
+            - 42
         query:
           type: object
           additionalProperties: true
           description: The effective query parameters, echoed back.
       required:
-      - total
-      - page
-      - limit
-      - pages
+        - total
+        - page
+        - limit
+        - pages
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -195,13 +231,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -209,24 +245,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
     RankedProvider:
       type: object
@@ -235,28 +277,47 @@ components:
         slug:
           type: string
           maxLength: 1024
+          description: Slug of the company
+          examples:
+            - twilio
         name:
           type: string
           maxLength: 1024
+          description: Display name of the company.
+          examples:
+            - Twilio
         description:
           type: string
           maxLength: 20000
+          description: What the company does.
+          examples:
+            - Twilio is a customer engagement platform exposing programmable messaging
         api_count:
           type: integer
           maximum: 1000
+          description: APIs this company publishes on the network.
+          examples:
+            - 3
         image:
           type: string
           format: uri
           maxLength: 2048
+          description: The company's logo.
+          examples:
+            - https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twilio.png
         score_band:
-          $ref: '#/components/schemas/Band'
+          $ref: "#/components/schemas/Band"
+          description: The band the company's composite score falls into.
         score_composite:
           type: number
           minimum: 0
           maximum: 100
+          description: The company's composite Kin Score.
+          examples:
+            - 66.3
       required:
-      - slug
-      - name
+        - slug
+        - name
     Industry:
       type: object
       description: An industry vertical grouping providers across the catalog.
@@ -264,87 +325,177 @@ components:
         slug:
           type: string
           examples:
-          - media-entertainment
+            - media-entertainment
           maxLength: 1024
+          description: Slug of the industry
         name:
           type: string
           examples:
-          - Media & Entertainment
+            - Media & Entertainment
           maxLength: 1024
+          description: Display name of the industry.
         short:
           type: string
           description: One-line summary.
           maxLength: 1024
+          examples:
+            - Model providers
         description:
           type: string
           maxLength: 20000
+          description: What the industry covers.
+          examples:
+            - Companies whose product is media
         aliases:
           type: array
           items:
             type: string
             maxLength: 1024
           maxItems: 1000
+          description: Other names this industry is known by
         provider_count:
           type: integer
           maximum: 1000
+          description: Providers that are members of this industry.
+          examples:
+            - 287
         api_count:
           type: integer
           maximum: 1000
+          description: APIs belonging to providers in this industry.
+          examples:
+            - 1204
         providers:
           type: array
           description: Member providers, ranked by score. Returned on the single-industry endpoint; omitted from list responses by default.
           items:
-            $ref: '#/components/schemas/RankedProvider'
+            $ref: "#/components/schemas/RankedProvider"
           maxItems: 1000
       required:
-      - slug
-      - name
+        - slug
+        - name
     Band:
       type: string
       description: Rating band derived from the composite score.
       enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - minimal
+        - exemplar
+        - strong
+        - developing
+        - thin
+        - minimal
       maxLength: 1024
     IndustryList:
       type: object
       properties:
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: "#/components/schemas/Meta"
+          description: Pagination and echoed-query metadata for this page.
         data:
           type: array
           items:
-            $ref: '#/components/schemas/Industry'
+            $ref: "#/components/schemas/Industry"
           maxItems: 1000
+          description: The industries on this page.
       required:
-      - meta
-      - data
+        - meta
+        - data
+      description: A page of industries
   responses:
     NotFound:
       description: Resource not found.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

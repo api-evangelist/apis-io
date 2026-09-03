@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Insights API
+  description: |-
+    Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Pro — from the overview down to per-company depth, gaps, and provider matches.
+
+    This is the Insights surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
-
-
-    This is the Insights surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,149 +13,217 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Insights
-  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+  - name: Insights
+    description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Pro — from the overview down to per-company depth, gaps, and provider matches.
 paths:
   /insights:
     get:
       operationId: getInsightsSummary
       tags:
-      - Insights
+        - Insights
       summary: Insights overview.
-      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free.
+      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Pro.
       responses:
-        '200':
+        "200":
           description: Insights summary.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
       security: []
-      x-tier: free
+      x-tier: pro
+      x-mcp-tool: insights_overview
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
       x-mcp-tool: insights_dimensions
       tags:
-      - Insights
+        - Insights
       summary: Rank the investment dimensions.
-      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free.
+      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Pro.
       parameters:
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Dimension cross-section.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/adoption:
     get:
       operationId: listInsightAdoption
       x-mcp-tool: insights_adoption
       tags:
-      - Insights
+        - Insights
       summary: Services / tools / standards by adoption.
-      description: Technologies ranked by how many companies adopt them. Free.
+      description: Technologies ranked by how many companies adopt them. Pro.
       parameters:
-      - name: type
-        in: query
-        description: Which adoption graph to return.
-        schema:
-          type: string
-          enum:
-          - service
-          - tool
-          - standard
-          default: service
-          maxLength: 1024
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - name: type
+          in: query
+          description: Which adoption graph to return.
+          schema:
+            type: string
+            enum:
+              - service
+              - tool
+              - standard
+            default: service
+            maxLength: 1024
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Adoption ranking.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/industries:
     get:
       operationId: listInsightIndustries
       tags:
-      - Insights
+        - Insights
       summary: Industry rollup.
-      description: Profiled sectors with company counts. Free.
+      description: Profiled sectors with company counts. Pro.
       responses:
-        '200':
+        "200":
           description: Industry rollup.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
       security: []
-      x-tier: free
+      x-tier: pro
+      x-mcp-tool: insights_industries
   /insights/companies:
     get:
       operationId: listInsightCompanies
       x-mcp-tool: find_company_insights
       tags:
-      - Insights
+        - Insights
       summary: Browse profiled companies.
-      description: Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields).
+      description: Companies ranked by overall technology-readiness signal; filter by name. Pro.
       parameters:
-      - $ref: '#/components/parameters/Q'
-      - $ref: '#/components/parameters/Page'
-      - $ref: '#/components/parameters/Limit'
+        - $ref: "#/components/parameters/Q"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Company list.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
       x-mcp-tool: get_company_insight
       tags:
-      - Insights
+        - Insights
       summary: One company's demand-side profile.
-      description: Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history.
+      description: Pro — the full 40-dimension profile, adopted stack, and per-quarter history.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Company slug (e.g. `citi`).
-        schema:
-          type: string
-          maxLength: 1024
+        - name: slug
+          in: path
+          required: true
+          description: Company slug (e.g. `citi`).
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: Company profile (preview or full by tier).
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/company/{slug}/gaps:
     get:
       operationId: getCompanyGaps
@@ -163,31 +231,38 @@ paths:
       x-mcp-tool: company_gaps
       security: []
       tags:
-      - Insights
+        - Insights
       summary: A company's weakest dimensions.
       description: The lowest-scoring investment dimensions — where a company is thin and a vendor could sell in. Pro.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-          maxLength: 1024
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          description: Slug of the company, as it appears on its apis.io page.
       responses:
-        '200':
+        "200":
           description: Company gaps.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '403':
-          description: Requires the Pro or Business tier.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /insights/company/{slug}/match:
     get:
       operationId: matchCompanyProviders
@@ -195,31 +270,38 @@ paths:
       x-mcp-tool: match_providers
       security: []
       tags:
-      - Insights
+        - Insights
       summary: Match providers to a company's stack (the supply↔demand join).
       description: apis.io providers whose product appears in a company's adopted stack, ranked by rating. Pro.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-          maxLength: 1024
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+            maxLength: 1024
+          description: Slug of the company, as it appears on its apis.io page.
       responses:
-        '200':
+        "200":
           description: Matched providers.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '403':
-          description: Requires the Pro or Business tier.
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: true
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
   parameters:
     Limit:
@@ -250,13 +332,10 @@ components:
   schemas:
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -264,13 +343,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -278,24 +357,30 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
   responses:
     NotFound:
@@ -303,10 +388,74 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+    UpgradeRequired:
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+      content:
+        application/problem+json:
+          schema:
+            $ref: "#/components/schemas/Problem"
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

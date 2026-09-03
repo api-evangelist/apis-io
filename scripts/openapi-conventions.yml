@@ -1,0 +1,563 @@
+# APIs.io OpenAPI conventions — the authored half of scripts/harden-openapi.mjs.
+#
+# The contracts in openapi/ are generated. Everything a human decided about them
+# lives here, keyed so one entry serves every contract that carries the shape:
+# a property description written once for `Meta.total` lands in the nine
+# contracts that expose a paginated collection.
+#
+# Provenance for the measured entries — probed against the live API 2026-09-03:
+#   - gated calls answer 402 (GET /ratings, /compare, /insights/company/{slug}/gaps,
+#     /areas/{slug}/leaders all 402 keyless); 403 is never returned.
+#   - every response carries ratelimit-policy, x-ratelimit-tier,
+#     x-ratelimit-limit and x-ratelimit-window.
+#   - search-api.apis.io is NXDOMAIN, which is why /search/apis is dropped.
+
+info:
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+    email: info@apievangelist.com
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+  # /refine-openapis derives a title from the filename and mangled two of them.
+  titles:
+    apis-io-apis-api-openapi.yml: APIs.io APIs API
+    apis-io-search-api-openapi.yml: APIs.io Search API
+  summaries: {}
+  descriptions: {}
+
+# One production host. The path-level overrides the merge introduced pointed at
+# search-api.apis.io, which no longer resolves.
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+
+tags:
+  Search: Unified search across the APIs.io catalog — apis, providers, tags and artifacts from one endpoint.
+
+# Rate-limit headers every apis.io response actually carries. Measured, not
+# assumed: curl -D - against a 200, a 404 and a 402 all returned all four.
+headers:
+  attach: [ratelimit-policy, x-ratelimit-tier, x-ratelimit-limit, x-ratelimit-window]
+  names:
+    ratelimit-policy: RateLimitPolicy
+    x-ratelimit-tier: RateLimitTier
+    x-ratelimit-limit: RateLimitLimit
+    x-ratelimit-window: RateLimitWindow
+  components:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: '"quota";q=500;w=86400, "burst";q=5;w=1'
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum: [free, pro, business]
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+
+securityScheme:
+  name: ApiKeyAuth
+  definition:
+    type: apiKey
+    in: header
+    name: X-API-Key
+    description: >-
+      Send a plan key to be served above the free tier. Keyless callers get the free tier;
+      a call that needs a paid tier answers 402 rather than refusing the connection.
+
+# The dead half of the search contract. search-api.apis.io is NXDOMAIN, and the
+# same paths on apis.io/api/v1 return the unified-search payload, not the
+# APIs.json submit/search shapes these operations documented.
+dropPaths:
+  apis-io-search-api-openapi.yml:
+    - /search/apis
+
+# Once the legacy half is gone the _2 suffixes the merge created are free.
+renames:
+  apis-io-search-api-openapi.yml:
+    schemas:
+      Link_2: Link
+      Tag_2: Tag
+      Meta_2: Meta
+      Problem_2: Problem
+    responses:
+      BadRequest_2: BadRequest
+    parameters:
+      Limit_2: Limit
+      Page_2: Page
+
+# operationId -> the MCP tool that serves the same call. apis.io ships an MCP
+# server whose tools map 1:1 to operations; a missing x-mcp-tool is a hole in
+# that map, not an operation without a tool.
+mcpTools:
+  listApis: find_apis
+  getApi: get_api
+  listOpenapis: find_openapis
+  listAsyncapis: find_asyncapis
+  listArazzo: find_arazzo
+  listPostman: find_postman
+  listCollections: find_collections
+  listGraphql: find_graphql
+  listJsonSchemas: find_json_schemas
+  listJsonStructures: find_json_structures
+  listJsonLd: find_json_ld
+  listRules: find_rules
+  listExamples: find_examples
+  listFinops: find_finops
+  listPlans: find_plans
+  listRateLimits: find_rate_limits
+  getInsightsSummary: insights_overview
+  listInsightIndustries: insights_industries
+  listProviders: find_providers
+  getProvider: get_provider
+  listProviderApis: get_provider_apis
+  getRatingRubric: get_rating_rubric
+  search: apis_io_search
+  listTags: find_tags
+  getTag: get_tag
+
+# Operations that never declared one. Every apis.io operation is callable
+# keyless — a gated one answers 402 rather than refusing — so the network-wide
+# convention is an empty requirement. The saved workspace is the exception and
+# already declares ApiKeyAuth on all ten of its operations.
+security: {}
+
+# Measured 2026-09-03: every one of these answered 402 keyless while its
+# contract said free. The gating matches the platform's own published tier map
+# (synthesis surfaces — insights, cohorts, resolve/enrich, the VC graph — need a
+# plan); the per-operation stamps had lagged behind it.
+tiers:
+  getInsightsSummary: pro
+  listInsightDimensions: pro
+  listInsightAdoption: pro
+  listInsightIndustries: pro
+  listInsightCompanies: pro
+  getCompanyInsight: pro
+  listVcs: pro
+  getVc: pro
+  getVcPortfolio: pro
+  listCohorts: pro
+  getCohort: pro
+  resolveIdentifier: pro
+  enrichProvider: pro
+
+# Copy corrected by the same measurements — sentences that promise Free where
+# the live API answers 402. Exact substrings, replaced wherever they appear in
+# the named contract.
+copyFixes:
+  apis-io-insights-api-openapi.yml:
+    - ["Discovery is free; per-company depth, gaps, and provider matches are Pro.", "Pro — from the overview down to per-company depth, gaps, and provider matches."]
+    - ["the top investment dimensions across the profiled set. Free.", "the top investment dimensions across the profiled set. Pro."]
+    - ["ranked by how many companies show signal. Free.", "ranked by how many companies show signal. Pro."]
+    - ["ranked by how many companies adopt them. Free.", "ranked by how many companies adopt them. Pro."]
+    - ["Profiled sectors with company counts. Free.", "Profiled sectors with company counts. Pro."]
+    - ["filter by name. Free (top-line fields).", "filter by name. Pro."]
+    - ["Free returns a thin preview; Pro returns the full 40-dimension profile", "Pro — the full 40-dimension profile"]
+  apis-io-venture-capital-api-openapi.yml:
+    - ["follow the reverse edge from a provider to the VCs that back it. Free discovery.", "follow the reverse edge from a provider to the VCs that back it. Pro, except the per-provider investor lookup."]
+    - ["sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Free.", "sort by portfolio_on_network (default), portfolio_total, portfolio_rating, or name. Pro."]
+    - ["Pass view=full to inline the full portfolio graph. Free.", "Pass view=full to inline the full portfolio graph. Pro."]
+    - ["sort by score (default), api_count, or name. Free.", "sort by score (default), api_count, or name. Pro."]
+  apis-io-cohorts-api-openapi.yml:
+    - ["Free: knowing a cohort exists is discovery.", "Pro."]
+    - ["the gap is a coverage fact, not a rounding error. Free.", "the gap is a coverage fact, not a rounding error. Pro."]
+  apis-io-resolve-enrich-api-openapi.yml:
+    - ["choosing field groups. Free (the rating and insights enrichment groups are Pro).", "choosing field groups. Pro."]
+    - ["Use when you hold a URL, not a slug. Free.", "Use when you hold a URL, not a slug. Pro."]
+
+# Shared error components, created where a contract needs one it never carried.
+# The unreachability prune drops any template nothing references.
+componentTemplates:
+  Problem:
+    type: object
+    description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457), served as `application/problem+json`.'
+    properties:
+      type:
+        type: string
+        format: uri
+        default: about:blank
+        description: A URI identifying the problem type; dereferences to human-readable docs.
+        examples: ['https://apis.io/problems/invalid-parameter']
+        maxLength: 2048
+      title:
+        type: string
+        description: A short, human-readable summary of the problem type.
+        examples: [Invalid parameter]
+        maxLength: 1024
+      status:
+        type: integer
+        minimum: 100
+        maximum: 599
+        description: The HTTP status code, repeated for convenience.
+        examples: [400]
+      detail:
+        type: string
+        description: A human-readable explanation specific to this occurrence.
+        maxLength: 20000
+      instance:
+        type: string
+        format: uri-reference
+        description: A URI reference identifying the specific occurrence (typically the request path).
+        maxLength: 2048
+      parameter:
+        type: string
+        description: Extension member — the offending query/path parameter, when applicable.
+        maxLength: 1024
+    required: [type, title, status]
+    additionalProperties: true
+  UpgradeRequired:
+    description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+    content:
+      application/problem+json:
+        schema:
+          $ref: '#/components/schemas/Problem'
+        example:
+          type: https://apis.io/problems/upgrade-required
+          title: Upgrade required
+          status: 402
+          detail: This endpoint requires the Understanding or Influence plan.
+          instance: /v1/ratings
+  NotFound:
+    description: Resource not found.
+    content:
+      application/problem+json:
+        schema:
+          $ref: '#/components/schemas/Problem'
+        example:
+          type: https://apis.io/problems/not-found
+          title: Resource not found
+          status: 404
+          detail: No API found with aid `twilio:nope`.
+          instance: /v1/apis/twilio:nope
+  BadRequest:
+    description: Malformed request (bad parameter value).
+    content:
+      application/problem+json:
+        schema:
+          $ref: '#/components/schemas/Problem'
+        example:
+          type: https://apis.io/problems/invalid-parameter
+          title: Invalid parameter
+          status: 400
+          detail: '`match` must be one of: any, all.'
+          instance: /v1/search
+          parameter: match
+
+# The two shared failure responses still answering in plain application/json.
+# They move to problem+json + the Problem schema; their extension members live
+# on in the example (legal per RFC 9457 — Problem is additionalProperties: true).
+responseConversions:
+  InsufficientPopulation:
+    description: The cohort has too few scored members for distribution statistics to be meaningful. Carries `member_count`, `minimum` and `available` extension members; the roster and capability matrix remain available.
+    example:
+      type: https://apis.io/problems/insufficient-population
+      title: Insufficient population
+      status: 422
+      detail: This cohort holds 3 scored members; distribution statistics need 5.
+      instance: /v1/cohorts/tag/quantum-computing/stats
+      member_count: 3
+      minimum: 5
+      available: [roster, capabilities]
+  AuthRequired:
+    description: The saved workspace needs a signed-in apis.io API key — get one at https://apis.io/developer/.
+    example:
+      type: https://apis.io/problems/auth-required
+      title: Authentication required
+      status: 401
+      detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+      instance: /v1/me/lists
+
+operationDescriptions:
+  listLists: The saved lists in your workspace, each with its members and when it was last changed. Requires a signed-in apis.io API key.
+
+parameterDescriptions:
+  path:dataset: The dataset to export.
+  path:id: Identifier of the saved search or list, as returned when it was created.
+  path:slug: Slug of the company, as it appears on its apis.io page.
+  query:action_class: Filter operations by what class of action they perform.
+  query:band: Filter to companies in this rating band.
+  query:category: Filter firms by category.
+  query:in_network: Only portfolio companies already profiled on the network.
+  query:limit: Items per page.
+  query:method: Filter operations by HTTP method.
+  query:min_score: Only results at or above this composite score.
+  query:page: 1-based page number.
+  query:provenance: Filter tools by whether the provider published them or the network derived them.
+  query:sort: Sort order.
+  query:view: How much of the record to return.
+
+# A parameter or a string field with no upper bound is an unbounded field on the
+# wire. These are the ceilings the rest of the contracts already use.
+parameterBounds:
+  stringMaxLength: 1024
+  integerMaximum: 1000000
+  numberMaximum: 1000000
+  arrayMaxItems: 1000
+
+requestBodies:
+  post /me/searches: The search to save — a name plus the filters the search runs with.
+  post /me/lists: The list to create — a name and, optionally, its first members.
+  post /me/lists/{id}/entries: The members to add to the list.
+
+responseDescriptions:
+  '200': Success.
+  '201': Created.
+  '400': Malformed request (bad parameter value).
+  '401': No API key was sent, or it is not valid.
+  '402': This operation needs a paid tier.
+  '404': Resource not found.
+  '422': Not enough population to compute a result.
+  '429': Rate limit exceeded.
+  '500': Server error.
+
+# Forced onto the component responses, because 403 -> 402 changed what the
+# example has to say.
+responseOverrides:
+  UpgradeRequired:
+    description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
+    example:
+      type: https://apis.io/problems/upgrade-required
+      title: Upgrade required
+      status: 402
+      detail: This endpoint requires the Understanding or Influence plan.
+      instance: /v1/ratings
+
+responseExamples:
+  BadRequest:
+    type: https://apis.io/problems/invalid-parameter
+    title: Invalid parameter
+    status: 400
+    detail: '`match` must be one of: any, all.'
+    instance: /v1/search
+    parameter: match
+  NotFound:
+    type: https://apis.io/problems/not-found
+    title: Resource not found
+    status: 404
+    detail: No API found with aid `twilio:nope`.
+    instance: /v1/apis/twilio:nope
+  AuthRequired:
+    type: https://apis.io/problems/auth-required
+    title: Authentication required
+    status: 401
+    detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+    instance: /v1/me/lists
+  InsufficientPopulation:
+    type: https://apis.io/problems/insufficient-population
+    title: Insufficient population
+    status: 422
+    detail: This cohort holds too few scored providers to rank.
+    instance: /v1/cohorts/industry/quantum-computing/rankings
+
+# Component schema descriptions and, where the merge dropped it, the type.
+schemas:
+  ApiList: {description: A page of APIs, with the pagination metadata for the query that produced it., type: object}
+  AreaList: {description: A page of curated areas, with the pagination metadata for the query that produced it., type: object}
+  ArtifactList: {description: A page of artifacts, with the pagination metadata for the query that produced it., type: object}
+  IndustryList: {description: A page of industries, with the pagination metadata for the query that produced it., type: object}
+  ProviderList: {description: A page of providers, with the pagination metadata for the query that produced it., type: object}
+  RatingList: {description: A page of rated providers, ranked, with the pagination metadata for the query that produced it., type: object}
+  RegionList: {description: A page of regions, with the pagination metadata for the query that produced it., type: object}
+  TagList: {description: A page of tags, with the pagination metadata for the query that produced it., type: object}
+  Link: {description: A named link off a provider or API — its documentation, pricing page, status page, repository, and so on., type: object}
+  TagRef: {description: A pointer to another tag in the taxonomy, by slug and display name., type: object}
+  SearchResults: {description: A page of search results of the requested kind, with the pagination metadata for the query that produced it., type: object}
+  Meta: {description: Pagination and echoed-query metadata for collection responses., type: object}
+  Problem: {description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457), served as `application/problem+json`.', type: object}
+  Rubric: {description: The published Kin Score rubric — the facets that make up a composite score, their weights, and the bands the score falls into., type: object}
+  Trend: {description: Which way a provider's composite score has moved since the previous scoring run., type: object}
+  Facets: {description: The six facets that compose a Kin Score, each scored 0-100., type: object}
+  Band: {description: Rating band derived from the composite score., type: string}
+  Artifact: {description: One machine-readable artifact published by a provider — an OpenAPI, a Postman collection, a pricing page, an MCP server definition., type: object}
+  ArtifactType: {description: The kind of artifact, from the APIs.io artifact-type vocabulary., type: string}
+  RankedProvider: {description: A provider summary as it appears in an industry, region or area membership list., type: object}
+  RatingEntry: {description: One provider's place in the ranked ratings table., type: object}
+  ProviderScore: {description: A provider's Kin Score — the composite, its facets, the band it falls in, and how it moved., type: object}
+  FacetName: {description: The name of one Kin Score facet., type: string}
+
+# Property copy, keyed <SchemaName>.<property>. `description` fills a missing
+# description; `example` becomes `examples: [value]` when the property has
+# neither. Values are real catalog values, not invented ones.
+properties:
+  # Copy the first lint pass surfaced as still missing.
+  Area.slug: {description: Slug of the area, as it appears in its site URL., example: authentication}
+  Area.name: {description: Display name of the area., example: Authentication}
+  Area.short: {description: One-line summary of the area., example: Identity, keys, tokens and the sign-in surface of an API.}
+  Industry.slug: {description: Slug of the industry, as it appears on its apis.io page., example: artificial-intelligence}
+  Industry.name: {description: Display name of the industry., example: Artificial Intelligence}
+  Industry.short: {description: One-line summary of the industry., example: Model providers, ML platforms, and AI-native applications.}
+  Region.slug: {description: Slug of the region, as it appears on its apis.io page., example: north-america}
+  Region.name: {description: Display name of the region., example: North America}
+  Region.short: {description: One-line summary of the region., example: Companies headquartered in the United States and Canada.}
+  Tag.slug: {description: Slug of the tag, as it appears on its apis.io page., example: messaging}
+  Tag.name: {description: Display name of the tag., example: Messaging}
+  Tag.apis: {description: APIs carrying this tag.}
+  Provider.slug: {description: Slug of the company, as it appears on its apis.io page., example: twilio}
+  ProviderScore.schema_version: {description: Version of the scoring rubric this score was computed under., example: '0.3'}
+  Rubric.schema_version: {description: Version of this rubric., example: '0.3'}
+  Api.overview: {description: A longer editorial overview of the API, where one has been written., example: The account-management surface of the Twilio platform — subaccounts, auth tokens, and account-level resources.}
+  Artifact.name: {description: Display name of the artifact., example: Twilio Accounts API OpenAPI}
+  Artifact.aid: {description: The API the artifact belongs to — `<provider-slug>:<api-slug>`., example: 'twilio:twilio-accounts-api'}
+  Artifact.content: {description: The artifact's body, inlined only when the request asked for `include=content`., example: 'openapi: 3.1.0'}
+  Artifact.content_type: {description: Media type of the artifact's body., example: application/yaml}
+  Link.type: {description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing)., example: Documentation}
+  Tag.composite: {description: Composite ranking score for the tag across the network., example: 62.4}
+  RatingEntry.rank: {description: The provider's 1-based position in this ranking., example: 1}
+
+  Api.aid: {description: Stable identifier for the API — `<provider-slug>:<api-slug>`.}
+  Api.baseURL: {description: The API's base URL, as the provider publishes it., example: 'https://api.twilio.com/2010-04-01'}
+  Api.description: {description: What the API does, as the provider describes it., example: Programmable messaging across SMS, MMS and WhatsApp.}
+  Api.humanURL: {example: 'https://www.twilio.com/docs/iam/api/account'}
+  Api.name: {description: Display name of the API., example: Twilio Accounts API}
+  Api.provider_name: {description: Display name of the company that publishes the API., example: Twilio}
+  Api.provider_slug: {description: Slug of the company that publishes the API., example: twilio}
+  Api.sibling_apis[].name: {description: Display name of the sibling API., example: Twilio Messaging API}
+  Api.sibling_apis[].slug: {description: Slug of the sibling API within the same provider., example: twilio-messaging-api}
+  ApiList.data: {description: The APIs on this page.}
+  ApiList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Area.aliases: {description: Other names this area is known by, used when matching text to the taxonomy.}
+  Area.api_count: {description: APIs belonging to providers in this area., example: 238}
+  Area.area_host: {description: Hostname of the area's dedicated site., example: authentication.apievangelist.com}
+  Area.description: {description: What the area covers., example: Identity, keys, tokens and the authentication surface of an API.}
+  Area.icon: {description: The area's icon image., example: 'https://authentication.apievangelist.com/icon-thumb.png'}
+  Area.provider_count: {description: Providers that are members of this area., example: 388}
+  AreaList.data: {description: The areas on this page.}
+  AreaList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Artifact.provider_name: {description: Display name of the company that published the artifact., example: Twilio}
+  Artifact.provider_slug: {description: Slug of the company that published the artifact., example: twilio}
+  Artifact.type: {description: The kind of artifact this is.}
+  ArtifactList.data: {description: The artifacts on this page.}
+  ArtifactList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Facets.commercial_clarity: {example: 71}
+  Facets.contract_quality: {example: 82}
+  Facets.developer_ergonomics: {example: 64}
+  Facets.discoverability: {example: 59}
+  Facets.governance: {example: 48}
+  Facets.operational_transparency: {example: 66}
+
+  Industry.aliases: {description: Other names this industry is known by, used when matching text to the taxonomy.}
+  Industry.api_count: {description: APIs belonging to providers in this industry., example: 23762}
+  Industry.description: {description: What the industry covers., example: Companies whose product is machine intelligence — model providers, ML platforms, and AI-native applications.}
+  Industry.provider_count: {description: Providers that are members of this industry., example: 5467}
+  IndustryList.data: {description: The industries on this page.}
+  IndustryList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Link.title: {description: Human-readable label for the link., example: API Reference}
+  Link.url: {description: Where the link points., example: 'https://www.twilio.com/docs/usage/api'}
+
+  Meta.limit: {description: Items requested per page., example: 25}
+  Meta.page: {description: The 1-based page this response represents., example: 1}
+  Meta.pages: {example: 42}
+  Meta.total: {example: 1039}
+
+  Problem.detail: {example: '`match` must be one of: any, all.'}
+  Problem.instance: {example: /v1/search}
+  Problem.parameter: {example: match}
+
+  Provider.api_count: {description: APIs this company publishes on the network., example: 3}
+  Provider.apis[].description: {description: What the API does., example: Programmable messaging across SMS, MMS and WhatsApp.}
+  Provider.apis[].name: {description: Display name of the API., example: Twilio Messaging API}
+  Provider.apis[].slug: {description: Slug of the API within this provider., example: twilio-messaging-api}
+  Provider.created: {description: When the company was first profiled on the network., example: '2024-04-14'}
+  Provider.description: {description: What the company does, as it describes itself., example: Twilio is a customer engagement platform exposing programmable messaging, voice and email APIs.}
+  Provider.image: {description: The company's logo., example: 'https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twilio.png'}
+  Provider.name: {description: Display name of the company., example: Twilio}
+  Provider.score: {description: The company's Kin Score.}
+  ProviderList.data: {description: The providers on this page.}
+  ProviderList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  ProviderScore.band: {description: The band the composite score falls into.}
+  ProviderScore.facets: {description: The facet scores that compose the composite.}
+  ProviderScore.previous_composite: {description: The composite from the previous scoring run, which `delta` is measured against., example: 66.3}
+  ProviderScore.scored_at: {description: When this score was computed., example: '2026-08-27'}
+  ProviderScore.trend: {description: Which way the score has moved since the previous run.}
+
+  RankedProvider.api_count: {description: APIs this company publishes on the network., example: 3}
+  RankedProvider.description: {description: What the company does., example: Twilio is a customer engagement platform exposing programmable messaging, voice and email APIs.}
+  RankedProvider.image: {description: The company's logo., example: 'https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/twilio.png'}
+  RankedProvider.name: {description: Display name of the company., example: Twilio}
+  RankedProvider.score_band: {description: The band the company's composite score falls into.}
+  RankedProvider.score_composite: {description: The company's composite Kin Score., example: 66.3}
+  RankedProvider.slug: {description: Slug of the company, as it appears on its apis.io page., example: twilio}
+
+  RatingEntry.band: {description: The band this composite score falls into.}
+  RatingEntry.composite: {description: The company's composite Kin Score., example: 66.3}
+  RatingEntry.facets: {description: The facet scores that compose the composite.}
+  RatingEntry.provider_name: {description: Display name of the rated company., example: Twilio}
+  RatingEntry.provider_slug: {description: Slug of the rated company., example: twilio}
+  RatingEntry.trend: {description: Which way this score has moved since the previous run.}
+  RatingList.data: {description: The rated providers on this page, in rank order.}
+  RatingList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Region.aliases: {description: Other names this region is known by, used when matching text to the taxonomy.}
+  Region.api_count: {description: APIs belonging to providers in this region., example: 7845}
+  Region.description: {description: What the region covers., example: Companies headquartered in the United States and Canada.}
+  Region.provider_count: {description: Providers that are members of this region., example: 2681}
+  RegionList.data: {description: The regions on this page.}
+  RegionList.meta: {description: Pagination and echoed-query metadata for this page.}
+
+  Rubric.bands: {description: The bands a composite score falls into, from the highest floor down.}
+  Rubric.bands[].description: {description: What the band means., example: Publishes a complete, current, machine-readable surface.}
+  Rubric.bands[].label: {description: The band's name.}
+  Rubric.facets: {description: The facets that compose a score, and what each is worth.}
+  Rubric.facets[].description: {description: What the facet measures., example: Whether the contract is present, current and machine-readable.}
+  Rubric.facets[].label: {description: Display name of the facet., example: Contract quality}
+  Rubric.facets[].name: {description: The facet's stable name.}
+  Rubric.trending: {description: The thresholds that decide whether a score counts as rising or falling.}
+  Rubric.trending.rising_threshold: {description: Composite-score gain since the previous run at or above which a provider counts as rising.}
+  Rubric.trending.falling_threshold: {description: Composite-score loss since the previous run at or below which a provider counts as falling.}
+  Rubric.bands[].min: {description: The lowest composite score that still falls in this band., example: 80}
+  Rubric.facets[].weight: {description: The facet's weight in the composite, between 0 and 1., example: 0.25}
+
+  SearchResults.data: {description: The matching records, of the kind asked for in `return`.}
+  SearchResults.meta: {description: Pagination and echoed-query metadata for this page.}
+  SearchResults.meta.return: {description: The kind of record `data` holds — echoed from the `return` parameter.}
+
+  Tag.api_count: {description: APIs carrying this tag., example: 896}
+  Tag.apis[].name: {description: Display name of the API., example: Twilio Messaging API}
+  Tag.apis[].provider: {description: Slug of the company that publishes the API., example: twilio}
+  Tag.apis[].slug: {description: Slug of the API within its provider., example: twilio-messaging-api}
+  Tag.band: {description: How the tag is behaving across the network.}
+  Tag.breadth: {description: How widely the tag spreads across providers, 0-100., example: 40.8}
+  Tag.frequency: {description: How often the tag appears across the network, 0-100., example: 94}
+  Tag.provider_count: {description: Providers carrying this tag., example: 1473}
+  Tag.providers: {description: Providers carrying this tag.}
+  Tag.quality_lift: {description: How much better than average the providers carrying this tag score., example: 34.8}
+  Tag.variants: {description: Spellings of this tag seen in the wild, all folded into this one.}
+  TagList.data: {description: The tags on this page.}
+  TagList.meta: {description: Pagination and echoed-query metadata for this page.}
+  TagRef.name: {description: Display name of the tag., example: Messaging}
+  TagRef.slug: {description: Slug of the tag., example: messaging}
+
+  # Inline request bodies on the saved workspace.
+  'body:post /me/lists.name': {description: Name for the list., example: Payments shortlist}
+  'body:post /me/lists/{id}/entries.members': {description: Provider slugs or API aids to add to the list.}
+  'body:post /me/searches.area': {description: Restrict the search to these curated areas.}
+  'body:post /me/searches.artifact_types': {description: Restrict the search to records publishing these artifact types.}
+  'body:post /me/searches.band': {description: Restrict the search to these rating bands.}
+  'body:post /me/searches.industry': {description: Restrict the search to these industries.}
+  'body:post /me/searches.match': {description: Whether a record must carry any of the tags or all of them., example: any}
+  'body:post /me/searches.min_score': {description: Only results at or above this composite score., example: 60}
+  'body:post /me/searches.name': {description: Name for the saved search., example: Messaging APIs, exemplar only}
+  'body:post /me/searches.q': {description: Free-text query the saved search runs with., example: messaging}
+  'body:post /me/searches.region': {description: Restrict the search to these regions.}
+  'body:post /me/searches.tags': {description: Restrict the search to records carrying these tags.}

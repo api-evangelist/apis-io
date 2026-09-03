@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Synthesis API
+  description: |-
+    Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+
+    This is the Synthesis surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
   version: 1.5.0
-  description: 'Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
-
-
-    This is the Synthesis surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,11 +13,11 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-- url: https://apis.io/api/v1
-  description: Production server.
+  - url: https://apis.io/api/v1
+    description: Production server.
 tags:
-- name: Synthesis
-  description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+  - name: Synthesis
+    description: Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
 paths:
   /compare:
     get:
@@ -26,29 +26,38 @@ paths:
       x-mcp-tool: compare_providers
       security: []
       tags:
-      - Synthesis
+        - Synthesis
       summary: Compare providers side by side (Pro).
       description: Compares 2+ providers — composite/band, per-facet leaders, and an artifact-coverage matrix. Pro tier.
       parameters:
-      - name: providers
-        in: query
-        required: true
-        description: Comma-separated provider slugs to compare (2+).
-        schema:
-          type: string
-          maxLength: 1024
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs to compare (2+).
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: Side-by-side comparison of the requested providers.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/UpgradeRequired'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /gaps:
     get:
       operationId: gapAnalysis
@@ -56,35 +65,44 @@ paths:
       x-mcp-tool: gap_analysis
       security: []
       tags:
-      - Synthesis
+        - Synthesis
       summary: Artifact + score gap analysis for a provider or stack (Pro).
       description: For each provider — the high-value artifacts it lacks, what its peers commonly publish but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Pro tier.
       parameters:
-      - name: providers
-        in: query
-        required: true
-        description: Comma-separated provider slugs (1+). Multiple = treat as a stack.
-        schema:
-          type: string
-          maxLength: 1024
-      - name: min_share
-        in: query
-        description: Peer-share threshold for a gap (0–1, default 0.25).
-        schema:
-          type: number
-          maximum: 1000000000
+        - name: providers
+          in: query
+          required: true
+          description: Comma-separated provider slugs (1+). Multiple = treat as a stack.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: min_share
+          in: query
+          description: Peer-share threshold for a gap (0–1, default 0.25).
+          schema:
+            type: number
+            maximum: 1000000000
       responses:
-        '200':
+        "200":
           description: Per-provider and stack-level gaps.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/UpgradeRequired'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /changes:
     get:
       operationId: whatsChanged
@@ -92,31 +110,40 @@ paths:
       x-mcp-tool: whats_changed
       security: []
       tags:
-      - Synthesis
+        - Synthesis
       summary: What changed in the catalog since a date (Pro).
       description: Providers added/updated since a date, plus rating movement (up/down) from the latest scoring build. Pro tier.
       parameters:
-      - name: since
-        in: query
-        required: true
-        description: Cutoff date, YYYY-MM-DD.
-        schema:
-          type: string
-          format: date
-          maxLength: 10
-      - $ref: '#/components/parameters/Limit'
+        - name: since
+          in: query
+          required: true
+          description: Cutoff date, YYYY-MM-DD.
+          schema:
+            type: string
+            format: date
+            maxLength: 10
+        - $ref: "#/components/parameters/Limit"
       responses:
-        '200':
+        "200":
           description: Catalog changes since the given date.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '403':
-          $ref: '#/components/responses/UpgradeRequired'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
   /stack:
     get:
       operationId: recommendStack
@@ -124,33 +151,42 @@ paths:
       x-mcp-tool: recommend_stack
       x-agent-skill: assemble-api-stack
       tags:
-      - Synthesis
+        - Synthesis
       summary: Design a recommended API stack per capability.
       description: Decompose a domain into capabilities, then get the best-rated catalog provider per capability assembled into a stack. FREE returns a preview (top pick per capability); PRO returns alternatives, per-pick artifact gaps, and an exportable APIs.json + Arazzo hint.
       parameters:
-      - name: capabilities
-        in: query
-        required: true
-        description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
-        schema:
-          type: string
-          maxLength: 1024
-      - name: region
-        in: query
-        description: Optional region slug to prefer, e.g. `europe`.
-        schema:
-          type: string
-          maxLength: 1024
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity,observability`.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: region
+          in: query
+          description: Optional region slug to prefer, e.g. `europe`.
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: A recommended stack (preview for free callers; full for Pro).
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
       security: []
   /gaps/industry/{slug}:
     get:
@@ -160,33 +196,44 @@ paths:
       x-agent-skill: audit-api-estate
       security: []
       tags:
-      - Synthesis
+        - Synthesis
       summary: Artifact gaps across a whole industry.
       description: For an industry vertical, reports which valuable artifact types (MCP, Arazzo, Rules, Skills…) most member providers lack — where the vertical is under-served.
       parameters:
-      - name: slug
-        in: path
-        required: true
-        description: Industry slug (e.g. `financial-services`).
-        schema:
-          type: string
-          maxLength: 1024
-      - name: min_share
-        in: query
-        description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
-        schema:
-          type: number
-          maximum: 1000000000
+        - name: slug
+          in: path
+          required: true
+          description: Industry slug (e.g. `financial-services`).
+          schema:
+            type: string
+            maxLength: 1024
+        - name: min_share
+          in: query
+          description: Coverage threshold below which a type counts as an industry gap (0–1, default 0.5).
+          schema:
+            type: number
+            maximum: 1000000000
       responses:
-        '200':
+        "200":
           description: The industry's valuable-artifact coverage and gaps.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '404':
-          $ref: '#/components/responses/NotFound'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
+        "404":
+          $ref: "#/components/responses/NotFound"
   /stack/export:
     get:
       operationId: exportStack
@@ -195,33 +242,44 @@ paths:
       x-agent-skill: assemble-api-stack
       security: []
       tags:
-      - Synthesis
+        - Synthesis
       summary: Export a designed stack as APIs.json.
       description: Given a set of capabilities, returns the designed stack as an adoptable APIs.json document (with an Arazzo hint) the team can commit.
       parameters:
-      - name: capabilities
-        in: query
-        required: true
-        description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
-        schema:
-          type: string
-          maxLength: 1024
-      - name: region
-        in: query
-        description: Optional region slug to prefer.
-        schema:
-          type: string
-          maxLength: 1024
+        - name: capabilities
+          in: query
+          required: true
+          description: Comma-separated capabilities the stack needs, e.g. `payments,email,identity`.
+          schema:
+            type: string
+            maxLength: 1024
+        - name: region
+          in: query
+          description: Optional region slug to prefer.
+          schema:
+            type: string
+            maxLength: 1024
       responses:
-        '200':
+        "200":
           description: The exportable stack.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-        '400':
-          $ref: '#/components/responses/BadRequest'
+          headers:
+            ratelimit-policy:
+              $ref: "#/components/headers/RateLimitPolicy"
+            x-ratelimit-tier:
+              $ref: "#/components/headers/RateLimitTier"
+            x-ratelimit-limit:
+              $ref: "#/components/headers/RateLimitLimit"
+            x-ratelimit-window:
+              $ref: "#/components/headers/RateLimitWindow"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "402":
+          $ref: "#/components/responses/UpgradeRequired"
 components:
   parameters:
     Limit:
@@ -236,13 +294,10 @@ components:
   schemas:
     Problem:
       type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
+      description: |
+        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
         Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
         added alongside the standard fields.
-
-        '
       properties:
         type:
           type: string
@@ -250,13 +305,13 @@ components:
           default: about:blank
           description: A URI identifying the problem type; dereferences to human-readable docs.
           examples:
-          - https://apis.io/problems/invalid-parameter
+            - https://apis.io/problems/invalid-parameter
           maxLength: 2048
         title:
           type: string
           description: A short, human-readable summary of the problem type.
           examples:
-          - Invalid parameter
+            - Invalid parameter
           maxLength: 1024
         status:
           type: integer
@@ -264,60 +319,127 @@ components:
           maximum: 599
           description: The HTTP status code, repeated for convenience.
           examples:
-          - 400
+            - 400
         detail:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
+          examples:
+            - "`match` must be one of: any, all."
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
+          examples:
+            - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
+          examples:
+            - match
       required:
-      - type
-      - title
-      - status
+        - type
+        - title
+        - status
       additionalProperties: true
   responses:
     UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/upgrade-required
             title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
+            status: 402
+            detail: This endpoint requires the Understanding or Influence plan.
+            instance: /v1/ratings
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     NotFound:
       description: Resource not found.
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/Problem'
+            $ref: "#/components/schemas/Problem"
           example:
             type: https://apis.io/problems/invalid-parameter
             title: Invalid parameter
             status: 400
-            detail: '`match` must be one of: any, all.'
+            detail: "`match` must be one of: any, all."
             instance: /v1/search
             parameter: match
+      headers:
+        ratelimit-policy:
+          $ref: "#/components/headers/RateLimitPolicy"
+        x-ratelimit-tier:
+          $ref: "#/components/headers/RateLimitTier"
+        x-ratelimit-limit:
+          $ref: "#/components/headers/RateLimitLimit"
+        x-ratelimit-window:
+          $ref: "#/components/headers/RateLimitWindow"
+  headers:
+    RateLimitPolicy:
+      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
+      schema:
+        type: string
+        maxLength: 1024
+      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
+    RateLimitTier:
+      description: The tier the call was served at. Keyless callers are served `free`.
+      schema:
+        type: string
+        enum:
+          - free
+          - pro
+          - business
+      example: free
+    RateLimitLimit:
+      description: Requests allowed in the current quota window.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 500
+    RateLimitWindow:
+      description: Length of the quota window, in seconds.
+      schema:
+        type: integer
+        maximum: 1000000
+      example: 86400
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.
