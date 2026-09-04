@@ -37,7 +37,10 @@ accessModel:
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apis-io.png
 tags:
@@ -75,6 +78,16 @@ created: '2026-03-26'
 modified: '2026-08-20'
 specificationVersion: '0.23'
 apis:
+- name: APIs.io Submit API
+  description: Discover a domain's machine-readable API surface and submit a provider for review — the Add-API door, documented first-party from the serving Lambda.
+  humanURL: https://apis.io/add/
+  baseURL: https://apis.io
+  tags:
+  - Submissions
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-submit-api-openapi.yml
 - aid: apis-io:apis-io-apis-api
   name: APIs.io APIs API
   description: Index of HTTP application programming interfaces.
