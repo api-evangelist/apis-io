@@ -1,0 +1,75 @@
+generated: '2026-09-09'
+method: probed
+source: https://apis.io/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: apis.io
+  http_status: 200
+  content_type: application/json
+  etag: '4df9e80892a90131c088a6549c6c7f0e'
+  last_modified: 'Mon, 07 Sep 2026 21:07:24 GMT'
+  misses:
+  - host: apis.io
+    path: /.well-known/agent.json
+    http_status: 404
+    note: the pre-0.3 alias is not served; only the 0.3 canonical path exists
+  - host: developer.apis.io
+    path: /.well-known/agent-card.json
+    http_status: 301
+    rejected: true
+    reason: >-
+      redirects to https://apis.io/developer/.well-known/agent-card.json, which is a 404.
+      Every apis.io subdomain rewrites the path rather than resolving to the apex card, so a
+      client probing a subdomain finds nothing rather than being sent to the real document.
+  - host: mcp.apis.io
+    path: /.well-known/agent-card.json
+    http_status: 301
+    rejected: true
+    reason: same subdomain path-rewrite as developer.apis.io
+conformance:
+  spec: A2A 1.0.0
+  grade: near-conformant
+  protocol_version: '0.3'
+  preferred_transport: MCP
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  # GRADED near-conformant, NOT conformant, and the distinction is deliberate.
+  #
+  # All three hard checks pass and every top-level key is an A2A key — there are no invented
+  # fields. But `preferredTransport: MCP` is not a transport A2A defines, and `url` points at an
+  # MCP endpoint rather than an A2A one. An A2A client can PARSE this card and cannot DRIVE this
+  # service with it, which is more than a naming deviation.
+  #
+  # This is our own listing, scored with the rubric we sell, on the one dimension the rubric says
+  # cannot be derived on a provider's behalf. Grading it `conformant` because the structure is
+  # clean would be exactly the flattery the dimension exists to prevent.
+  deviations:
+  - id: no-native-a2a-endpoint
+    detail: >-
+      APIs.io serves no A2A JSON-RPC endpoint. The card describes the interfaces the service
+      actually offers — MCP at /mcp and REST at /api/v1 — and says so in the interface
+      description rather than advertising an endpoint that does not exist.
+  - id: nonstandard-preferred-transport
+    detail: >-
+      preferredTransport is "MCP", which A2A does not define. The honest value for a service that
+      does not speak A2A; a defined one would name a transport we do not serve.
+  - id: no-pre-0.3-alias
+    detail: >-
+      /.well-known/agent.json is not served. Clients pinned to the pre-0.3 path find nothing.
+  - id: subdomain-probes-miss
+    detail: >-
+      Subdomains rewrite the well-known path instead of resolving to the apex card, so a probe of
+      developer.apis.io or mcp.apis.io 301s into a 404.
+observed:
+  name: APIs.io
+  provider: API Evangelist
+  skills: 5
+  security_schemes: [oauth2, apiKey]
+  additional_interfaces: [MCP, HTTP+JSON]
+  agentic_registration: >-
+    The card advertises OAuth 2.1 with PKCE, RFC 7591 Dynamic Client Registration and a
+    client_credentials flow, so an agent can register itself and obtain a token with no human.
+    Verified separately against the live authorization server (roadmap#103).
