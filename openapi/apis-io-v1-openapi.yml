@@ -3,30 +3,36 @@ info:
   title: APIs.io API
   version: 1.6.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated
-    dimensions — with a free discovery tier and a Pro synthesis tier.
-  description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\nThe
-    catalog is assembled from per-provider repositories and exposed here as the\n**providers**, **apis**,
-    and **tags** resources, a **first-class collection per\nartifact type** (`/openapis`, `/asyncapis`,
-    `/arazzo`, `/postman`, `/json-schemas`, …),\nand a unified `/search` endpoint that spans them.\n\nDesign
-    notes:\n- **Identifiers.** `aid` is the stable id. A provider is `twilio`; an API is\n  `twilio:twilio-accounts-api`
-    (`<provider>:<api-slug>`).\n- **Artifacts by reference.** API records carry a `properties` list of
-    artifacts\n  (`type` + `url`). By default only references are returned; pass `include=content`\n  to
-    inline an artifact's body.\n- **Selectable artifacts.** Use `artifact_types` to return only the artifact
-    types\n  you care about (e.g. `OpenAPI,Postman`).\n- **Free, Pro, and Business tiers.** Raw discovery
-    — `/search`, `/providers`, `/apis`, `/tags`,\n  the curated taxonomy dimensions (`/industries`, `/regions`,
-    `/areas`), `/resolve`, `/enrich`,\n  `/vcs`, `/insights`, and most artifact-type collections (`/openapis`,
-    `/mcp`, `/skills`,\n  `/examples`, `/json-schemas`, …) — is **free**. The rating **data** (`/ratings`,\n
-    \ `/providers/{slug}/rating`), the ranked `…/leaders` views within a dimension, the synthesis\n  composites
-    (`/compare`, `/gaps`, `/changes`), the per-company insight depth, the saved\n  workspace (`/me/*`),
-    and the high-value security artifact collections (`/scopes`, `/security`)\n  are **Pro**. `/stack`
-    is freemium: free callers get the top pick per capability, Pro gets the\n  full blueprint and `/stack/export`.
-    Bulk dataset pulls (`/export`) are **Business**, the\n  license tier above Pro. Each operation declares
-    its tier via `x-tier`; the rubric\n  (`/ratings/rubric`) stays free. Send `X-API-Key` for a paid tier;
-    keyless callers get the free\n  tier. A gated call returns **402 Payment Required** (not 403 — CloudFront
-    rewrites 403/404).\n  See `x-apis-io` for the full tier / MCP-tool / skill map.\n- **Also an MCP server
-    + Agent Skills.** Every operation maps 1:1 to an MCP tool at\n  `https://apis.io/mcp` (see each operation's
-    `x-mcp-tool`) and, where one exists, an\n  Agent Skill (`x-agent-skill`). This is the API → MCP →
-    Agent-Skill experience chain.\n"
+    dimensions — free to explore, with synthesis and decision plans above it.
+  description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\n\
+    The catalog is assembled from per-provider repositories and exposed here as the\n**providers**, **apis**,\
+    \ and **tags** resources, a **first-class collection per\nartifact type** (`/openapis`, `/asyncapis`,\
+    \ `/arazzo`, `/postman`, `/json-schemas`, …),\nand a unified `/search` endpoint that spans them.\n\
+    \nDesign notes:\n- **Identifiers.** `aid` is the stable id. A provider is `twilio`; an API is\n  `twilio:twilio-accounts-api`\
+    \ (`<provider>:<api-slug>`).\n- **Artifacts by reference.** API records carry a `properties` list\
+    \ of artifacts\n  (`type` + `url`). By default only references are returned; pass `include=content`\n\
+    \  to inline an artifact's body.\n- **Selectable artifacts.** Use `artifact_types` to return only\
+    \ the artifact types\n  you care about (e.g. `OpenAPI,Postman`).\n- **Four plans: Explore, Learn,\
+    \ Understanding, Influence.** The plans are display names;\n  the wire values are `free`, `starter`,\
+    \ `pro`, `business`, and that is what `x-tier`,\n  `X-RateLimit-Tier` and the `tier` field of a 402\
+    \ carry.\n  **Explore (free)** is the catalog itself: `/search`, `/providers`, `/apis`, `/tags`,\n\
+    \  `/tag-groups`, the taxonomy dimensions (`/industries`, `/regions`, `/areas`), most\n  artifact-type\
+    \ collections (`/openapis`, `/mcp`, `/skills`, `/examples`, `/json-schemas`, …),\n  `/playground`\
+    \ (the curated no-key starter set — gating it would gate learning to call an API\n  at all), and everything\
+    \ hanging off ONE provider or ONE api, including its own Kin Score and\n  agent-readiness score. **Learn**\
+    \ is the same surface with your own key and more headroom.\n  **Understanding** is everything that\
+    \ synthesises across records: the rating data\n  (`/ratings`, `/providers/{slug}/rating`, `/ratings/rubric`),\
+    \ the ranked `…/leaders` views,\n  `/changes`, `/cohorts`, `/capabilities`, `/insights`, `/stack`,\
+    \ `/vcs`, `/resolve`,\n  `/enrich`, the saved workspace (`/me/*`), and the high-value security\n \
+    \ artifact collections (`/scopes`, `/security`). **Influence** is the decision layer:\n  `/compare`,\
+    \ `/gaps`, `/agent-readiness`, the cohort analysis parts, per-company insight\n  depth, `/providers/{slug}/investors`,\
+    \ the remediation surface, `/checks`, and bulk dataset\n  pulls (`/export`). Each operation declares\
+    \ its own plan via `x-tier`. Send `X-API-Key` for\n  a paid plan; keyless callers get Explore access,\
+    \ metered per IP rather than by a usage\n  plan. A gated call returns **402 Payment Required** (not\
+    \ 403 — CloudFront rewrites\n  403/404). See `x-apis-io` for the full plan / MCP-tool / skill map.\n\
+    - **Also an MCP server + Agent Skills.** Every operation maps 1:1 to an MCP tool at\n  `https://apis.io/mcp`\
+    \ (see each operation's `x-mcp-tool`) and, where one exists, an\n  Agent Skill (`x-agent-skill`).\
+    \ This is the API → MCP → Agent-Skill experience chain.\n"
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -69,7 +75,8 @@ x-apis-io:
     - get_provider
   - name: design_api_stack
     tier: pro
-    description: PRO — Design a recommended API stack for a team, domain, or company, exportable as APIs.json.
+    description: UNDERSTANDING — Design a recommended API stack for a team, domain, or company, exportable
+      as APIs.json.
     uses:
     - find_providers
     - apis_io_search
@@ -78,7 +85,7 @@ x-apis-io:
     - recommend_stack
   - name: vendor_shortlist
     tier: pro
-    description: PRO — Build a scored vendor shortlist for one capability, with tradeoffs.
+    description: UNDERSTANDING — Build a scored vendor shortlist for one capability, with tradeoffs.
     uses:
     - find_providers
     - apis_io_search
@@ -100,7 +107,7 @@ x-apis-io:
     - get_provider_rating
   - name: audit_api_estate
     tier: pro
-    description: PRO — Inventory, score, and gap a set of providers.
+    description: UNDERSTANDING — Inventory, score, and gap a set of providers.
     uses:
     - compare_providers
     - gap_analysis
@@ -108,21 +115,22 @@ x-apis-io:
     - industry_gap_analysis
   - name: find_alternatives
     tier: pro
-    description: PRO — Find and compare alternatives to a provider for a migration decision.
+    description: UNDERSTANDING — Find and compare alternatives to a provider for a migration decision.
     uses:
     - find_similar_providers
     - compare_providers
     - get_provider_rating
   - name: build_agent_toolset
     tier: pro
-    description: PRO — Assemble the providers, MCP servers, and skills an agent needs for a job.
+    description: UNDERSTANDING — Assemble the providers, MCP servers, and skills an agent needs for a
+      job.
     uses:
     - recommend_stack
     - find_artifacts
     - export_stack
   - name: track_provider_changes
     tier: pro
-    description: PRO — Monitor a chosen set of providers for catalog and rating movement.
+    description: UNDERSTANDING — Monitor a chosen set of providers for catalog and rating movement.
     uses:
     - whats_changed
     - find_rating_movers
@@ -144,8 +152,8 @@ x-apis-io:
     operation: getProvider
   - uri: apis://provider/{slug}/dossier
     tier: pro
-    description: 'PRO — the full provider dossier: profile + every API + sampled artifact bodies, as one
-      document.'
+    description: 'UNDERSTANDING — the full provider dossier: profile + every API + sampled artifact bodies,
+      as one document.'
     operation: getProvider
   - uri: apis://provider/{slug}/openapi
     tier: free
@@ -157,23 +165,24 @@ x-apis-io:
     operation: getTag
   - uri: apis://industry/{slug}
     tier: pro
-    description: PRO — an industry vertical with its ranked member providers.
+    description: UNDERSTANDING — an industry vertical with its ranked member providers.
     operation: getIndustry
   - uri: apis://region/{slug}
     tier: pro
-    description: PRO — a region with its ranked member providers.
+    description: UNDERSTANDING — a region with its ranked member providers.
     operation: getRegion
   - uri: apis://area/{slug}
     tier: pro
-    description: PRO — a curated area with its ranked member providers.
+    description: UNDERSTANDING — a curated area with its ranked member providers.
     operation: getArea
   - uri: apis://stack/{capabilities}
     tier: pro
-    description: PRO — a designed capability stack exported as an adoptable APIs.json.
+    description: UNDERSTANDING — a designed capability stack exported as an adoptable APIs.json.
     operation: exportStack
   - uri: apis://changes
     tier: pro
-    description: 'PRO — recent catalog changes (last 30 days): additions + rating movement, as a feed.'
+    description: 'UNDERSTANDING — recent catalog changes (last 30 days): additions + rating movement,
+      as a feed.'
     operation: whatsChanged
   operations:
     listProviders:
@@ -497,9 +506,19 @@ tags:
   description: A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability
     the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace.
     Requires an API key.
+- name: Capabilities
+  description: 'The business-capability model: what the catalog''s APIs let a business DO, and the quoted
+    contract fragments that evidence each claim.'
+- name: Your listing
+  description: 'The surface a company uses on its own entry in the catalog: claiming it, asking for the
+    artifacts it is being marked down for not having, correcting what we say, and changing how visible
+    it is. Every operation is a request worked by a person.'
+- name: Checks
+  description: 'The remediation intake: asking APIs.io to re-profile a listing, and reading where that
+    request stands.'
 - name: Export
   description: Bulk data export — the license tier above Pro. The whole ratings or providers dataset in
-    one pull, with the attribution string a published figure must carry. Business tier.
+    one pull, with the attribution string a published figure must carry. Influence plan.
 security:
 - {}
 - ApiKeyAuth: []
@@ -507,6 +526,8 @@ paths:
   /providers:
     get:
       operationId: listProviders
+      x-mcp-tool: find_providers
+      x-tier: free
       tags:
       - Providers
       summary: List and filter providers.
@@ -793,6 +814,8 @@ paths:
   /providers/{slug}:
     get:
       operationId: getProvider
+      x-mcp-tool: get_provider
+      x-tier: free
       tags:
       - Providers
       summary: Get one provider.
@@ -948,6 +971,8 @@ paths:
   /providers/{slug}/apis:
     get:
       operationId: listProviderApis
+      x-mcp-tool: get_provider_apis
+      x-tier: free
       tags:
       - Providers
       - APIs
@@ -1088,6 +1113,8 @@ paths:
   /apis:
     get:
       operationId: listApis
+      x-mcp-tool: find_apis
+      x-tier: free
       tags:
       - APIs
       summary: List and filter APIs across the network.
@@ -1191,6 +1218,8 @@ paths:
   /apis/{aid}:
     get:
       operationId: getApi
+      x-mcp-tool: get_api
+      x-tier: free
       tags:
       - APIs
       summary: Get one API by aid.
@@ -1223,6 +1252,8 @@ paths:
   /tags:
     get:
       operationId: listTags
+      x-mcp-tool: find_tags
+      x-tier: free
       tags:
       - Tags
       summary: List and rank tags.
@@ -1239,10 +1270,12 @@ paths:
         schema:
           type: string
           enum:
-          - strong
-          - healthy
+          - canonical
+          - established
+          - emerging
+          - niche
           - stale
-          - weak
+          - posture
           maxLength: 1024
       - name: min_api_count
         in: query
@@ -1379,6 +1412,8 @@ paths:
   /tags/{slug}:
     get:
       operationId: getTag
+      x-mcp-tool: get_tag
+      x-tier: free
       tags:
       - Tags
       summary: Get one tag, with its linked providers, APIs, and neighbors.
@@ -1691,6 +1726,18 @@ paths:
       x-mcp-tool: tag_group_tags
       security: []
       tags:
+      - name: country
+        in: query
+        description: Providers whose derived country membership includes these slugs (e.g. `united-kingdom`).
+          Membership is partial — a count is a floor, not a census.
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
       - Tag groups
       summary: The tags inside one group.
       description: The member tags of a group, each with its catalog counts — the paginated view of what
@@ -2087,6 +2134,8 @@ paths:
   /openapis:
     get:
       operationId: listOpenapis
+      x-mcp-tool: find_openapis
+      x-tier: free
       tags:
       - Artifact Types
       summary: List openapi specifications across the catalog.
@@ -2143,6 +2192,8 @@ paths:
   /asyncapis:
     get:
       operationId: listAsyncapis
+      x-mcp-tool: find_asyncapis
+      x-tier: free
       tags:
       - Artifact Types
       summary: List asyncapi specifications across the catalog.
@@ -2238,6 +2289,8 @@ paths:
   /arazzo:
     get:
       operationId: listArazzo
+      x-mcp-tool: find_arazzo
+      x-tier: free
       tags:
       - Artifact Types
       summary: List arazzo workflows across the catalog.
@@ -2329,6 +2382,8 @@ paths:
   /postman:
     get:
       operationId: listPostman
+      x-mcp-tool: find_postman
+      x-tier: free
       tags:
       - Artifact Types
       summary: List postman collections across the catalog.
@@ -2385,6 +2440,8 @@ paths:
   /collections:
     get:
       operationId: listCollections
+      x-mcp-tool: find_collections
+      x-tier: free
       tags:
       - Artifact Types
       summary: List api collections across the catalog.
@@ -2475,6 +2532,8 @@ paths:
   /graphql:
     get:
       operationId: listGraphql
+      x-mcp-tool: find_graphql
+      x-tier: free
       tags:
       - Artifact Types
       summary: List graphql schemas across the catalog.
@@ -2561,6 +2620,8 @@ paths:
   /json-schemas:
     get:
       operationId: listJsonSchemas
+      x-mcp-tool: find_json_schemas
+      x-tier: free
       tags:
       - Artifact Types
       summary: List json schema definitions across the catalog.
@@ -2633,6 +2694,8 @@ paths:
   /json-structures:
     get:
       operationId: listJsonStructures
+      x-mcp-tool: find_json_structures
+      x-tier: free
       tags:
       - Artifact Types
       summary: List json structure definitions across the catalog.
@@ -2727,6 +2790,8 @@ paths:
   /json-ld:
     get:
       operationId: listJsonLd
+      x-mcp-tool: find_json_ld
+      x-tier: free
       tags:
       - Artifact Types
       summary: List json-ld contexts across the catalog.
@@ -2823,6 +2888,8 @@ paths:
   /rules:
     get:
       operationId: listRules
+      x-mcp-tool: find_rules
+      x-tier: free
       tags:
       - Artifact Types
       summary: List governance rulesets across the catalog.
@@ -2911,6 +2978,8 @@ paths:
   /examples:
     get:
       operationId: listExamples
+      x-mcp-tool: find_examples
+      x-tier: free
       tags:
       - Artifact Types
       summary: List examples across the catalog.
@@ -3005,6 +3074,8 @@ paths:
   /finops:
     get:
       operationId: listFinops
+      x-mcp-tool: find_finops
+      x-tier: free
       tags:
       - Artifact Types
       summary: List finops artifacts across the catalog.
@@ -3093,6 +3164,8 @@ paths:
   /plans:
     get:
       operationId: listPlans
+      x-mcp-tool: find_plans
+      x-tier: free
       tags:
       - Artifact Types
       summary: List plans across the catalog.
@@ -3173,6 +3246,8 @@ paths:
   /rate-limits:
     get:
       operationId: listRateLimits
+      x-mcp-tool: find_rate_limits
+      x-tier: free
       tags:
       - Artifact Types
       summary: List rate limits across the catalog.
@@ -3383,6 +3458,8 @@ paths:
   /ratings/rubric:
     get:
       operationId: getRatingRubric
+      x-mcp-tool: get_rating_rubric
+      x-tier: pro
       tags:
       - Ratings
       summary: The rating rubric.
@@ -3410,14 +3487,17 @@ paths:
   /search:
     get:
       operationId: search
+      x-mcp-tool: apis_io_search
+      x-tier: free
       tags:
       - Search
       summary: Unified search across apis, providers, tags, and artifacts.
-      description: "The power endpoint. Choose what kind of object to return with `return`\n(`apis` by
-        default), then constrain with any combination of `q`, `tags`\n(`match=any|all`), `providers`,
-        and `artifact_types`. Use `fields` for sparse\nresponses and `include=content` to inline artifacts.\n\nExample
-        — messaging APIs across providers that ship an OpenAPI, returning just the\nspec and pricing artifacts:\n\n
-        \   /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing\n           &fields=aid,name,provider_slug,properties\n"
+      description: "The power endpoint. Choose what kind of object to return with `return`\n(`apis` by\
+        \ default), then constrain with any combination of `q`, `tags`\n(`match=any|all`), `providers`,\
+        \ and `artifact_types`. Use `fields` for sparse\nresponses and `include=content` to inline artifacts.\n\
+        \nExample — messaging APIs across providers that ship an OpenAPI, returning just the\nspec and\
+        \ pricing artifacts:\n\n    /search?return=apis&tags=Messaging&artifact_types=OpenAPI,Pricing\n\
+        \           &fields=aid,name,provider_slug,properties\n"
       parameters:
       - name: return
         in: query
@@ -3566,7 +3646,7 @@ paths:
     get:
       operationId: listChannels
       x-tier: free
-      x-mcp-tool: find_artifacts
+      x-mcp-tool: find_channels
       tags:
       - Artifact Types
       summary: List AsyncAPI event channels across the catalog.
@@ -3638,7 +3718,7 @@ paths:
     get:
       operationId: listMcpServers
       x-tier: free
-      x-mcp-tool: find_artifacts
+      x-mcp-tool: find_mcp
       tags:
       - Artifact Types
       summary: List published MCP servers across the catalog.
@@ -3707,7 +3787,7 @@ paths:
     get:
       operationId: listSkills
       x-tier: free
-      x-mcp-tool: find_artifacts
+      x-mcp-tool: find_skills
       tags:
       - Artifact Types
       summary: List published Agent Skills across the catalog.
@@ -3774,13 +3854,13 @@ paths:
     get:
       operationId: listScopes
       x-tier: pro
-      x-mcp-tool: find_artifacts
+      x-mcp-tool: find_scopes
       security: []
       tags:
       - Artifact Types
       summary: List OAuth scope sets across the catalog.
-      description: PRO — first-class collection of OAuth scope definitions across every provider. Filter
-        by free text, provider, and tags; `include=content` inlines each scope set.
+      description: UNDERSTANDING — first-class collection of OAuth scope definitions across every provider.
+        Filter by free text, provider, and tags; `include=content` inlines each scope set.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Providers'
@@ -3865,14 +3945,14 @@ paths:
     get:
       operationId: listSecurity
       x-tier: pro
-      x-mcp-tool: find_artifacts
+      x-mcp-tool: find_security
       security: []
       tags:
       - Artifact Types
       summary: List security scheme definitions across the catalog.
-      description: PRO — first-class collection of provider security/auth scheme definitions (authentication,
-        domain security, VDP, trust center) across the network. Filter by free text, provider, and tags;
-        `include=content` inlines each definition.
+      description: UNDERSTANDING — first-class collection of provider security/auth scheme definitions
+        (authentication, domain security, VDP, trust center) across the network. Filter by free text,
+        provider, and tags; `include=content` inlines each definition.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Providers'
@@ -3945,6 +4025,135 @@ paths:
               $ref: '#/components/headers/XRateLimitTier'
         '400':
           $ref: '#/components/responses/BadRequest'
+  /extensions:
+    get:
+      operationId: listExtensions
+      x-tier: free
+      x-mcp-tool: find_extensions
+      security: []
+      tags:
+      - Extensions
+      summary: List and filter harvested OpenAPI specification extensions.
+      description: 'Every `x-` specification extension found while harvesting OpenAPI documents across
+        the catalog, with the provenance the OpenAPI Initiative''s own registry does not carry: which
+        providers publish it, in how many documents, how many times, where in the document it appears,
+        and what shape the value takes. Filter by free text; sort by occurrences. Free — an extension
+        without an origin is folklore, and provenance behind a paywall helps nobody.'
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - name: sort
+        in: query
+        description: Sort order.
+        schema:
+          type: string
+          enum:
+          - occurrences
+          - documents
+          - provider_count
+          - name
+          default: occurrences
+          maxLength: 1024
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List and filter OpenAPI specification extensions.
+          content:
+            application/json:
+              schema:
+                type: object
+  /extensions/{slug}:
+    get:
+      operationId: getExtension
+      x-tier: free
+      x-mcp-tool: get_extension
+      security: []
+      tags:
+      - Extensions
+      summary: Get one OpenAPI specification extension, with its publishers and provenance.
+      description: 'Returns a single extension by key, including the providers that publish it, occurrence
+        and document counts, where in the document it appears, the value shapes observed, and whether
+        API Evangelist is itself the publisher. Check `is_api_evangelist` before treating a key as provider-originated:
+        some of these are ours. Free.'
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Extension key (e.g. `x-mcp-group`).
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Get one OpenAPI specification extension.
+          content:
+            application/json:
+              schema:
+                type: object
+  /countries:
+    get:
+      operationId: listCountries
+      x-tier: free
+      x-mcp-tool: find_countries
+      security: []
+      tags:
+      - Countries
+      summary: List and filter countries.
+      description: 'The country dimension — the finest of the four place taxonomies (country, region,
+        industry, area) and the one a buyer usually names. Membership is DERIVED and known to be partial:
+        read a provider count as a floor, not a census. Free.'
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - name: sort
+        in: query
+        description: Sort order.
+        schema:
+          type: string
+          enum:
+          - provider_count
+          - api_count
+          - name
+          default: provider_count
+          maxLength: 1024
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List and filter countries.
+          content:
+            application/json:
+              schema:
+                type: object
+  /countries/{slug}:
+    get:
+      operationId: getCountry
+      x-tier: free
+      x-mcp-tool: get_country
+      security: []
+      tags:
+      - Countries
+      summary: Get one country, with its ranked providers.
+      description: Returns a single country by slug, including counts and the member providers ranked
+        by score. Membership is derived and partial. Free.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Country slug (e.g. `united-kingdom`).
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/Fields'
+      responses:
+        '200':
+          description: Get one country, with its ranked providers.
+          content:
+            application/json:
+              schema:
+                type: object
   /areas:
     get:
       operationId: listAreas
@@ -3956,7 +4165,7 @@ paths:
       summary: List and filter areas (Pro).
       description: The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks,
         payments, …), each a scored provider index with its own site. Filter by free text; sort by provider
-        count. Pro tier.
+        count. Free.
       parameters:
       - $ref: '#/components/parameters/Q'
       - name: sort
@@ -4027,6 +4236,32 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '403':
           $ref: '#/components/responses/UpgradeRequired'
+  /countries/{slug}/leaders:
+    get:
+      operationId: getCountryLeaders
+      x-tier: pro
+      x-mcp-tool: get_country_leaders
+      tags:
+      - Countries
+      summary: Top-rated providers in one country (Pro).
+      description: Ranked leaders for a country. Membership is derived and partial, so this is the best
+        of what has been placed there rather than a national league table.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: Country slug (e.g. `united-kingdom`).
+        schema:
+          type: string
+          maxLength: 1024
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Top-rated providers in one country.
+          content:
+            application/json:
+              schema:
+                type: object
   /areas/{slug}:
     get:
       operationId: getArea
@@ -4037,7 +4272,7 @@ paths:
       - Areas
       summary: Get one area, with its ranked providers (Pro).
       description: Returns a single area by slug, including its description, site link, counts, and the
-        member providers ranked by score. Pro tier.
+        member providers ranked by score. Free.
       parameters:
       - name: slug
         in: path
@@ -4146,6 +4381,53 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '403':
           $ref: '#/components/responses/UpgradeRequired'
+  /gaps/report:
+    post:
+      operationId: reportGap
+      x-mcp-tool: report_gap
+      summary: Report a catalog gap — the consumer door
+      description: 'Free and keyless (roadmap#166): "I needed X and you did not have it." One required
+        field; lands in the hand-worked queue a person reads daily. Key-shaped strings are stripped before
+        storage and the text is never echoed into any listing.'
+      tags:
+      - Feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - looked_for
+              properties:
+                looked_for:
+                  type: string
+                  maxLength: 500
+                  description: What you were looking for
+                  in your own words.: null
+                needed_for:
+                  type: string
+                  maxLength: 500
+                  description: 'Optional: the task you needed it for.'
+                found:
+                  type: string
+                  enum:
+                  - nothing
+                  - wrong thing
+                  - listed but unusable
+                provider:
+                  type: string
+                  description: Optional slug when the gap concerns an existing listing.
+                contact:
+                  type: string
+                  maxLength: 200
+                  description: Optional email to hear back when the catalog can answer this.
+      responses:
+        '202':
+          description: Queued for a human; id returned, trackable via /checks/{id} when a contact was
+            left.
+        '422':
+          description: looked_for missing.
   /gaps:
     get:
       operationId: gapAnalysis
@@ -4156,7 +4438,8 @@ paths:
       - Synthesis
       summary: Artifact + score gap analysis for a provider or stack (Pro).
       description: For each provider — the high-value artifacts it lacks, what its peers commonly publish
-        but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Pro tier.
+        but it lacks, and its score vs the peer median — plus stack-level gaps across the set. Influence
+        plan.
       parameters:
       - name: providers
         in: query
@@ -4202,7 +4485,7 @@ paths:
       - Synthesis
       summary: What changed in the catalog since a date (Pro).
       description: Providers added/updated since a date, plus rating movement (up/down) from the latest
-        scoring build. Pro tier.
+        scoring build. Understanding plan.
       parameters:
       - name: since
         in: query
@@ -4237,7 +4520,7 @@ paths:
   /stack:
     get:
       operationId: recommendStack
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: recommend_stack
       x-agent-skill: assemble-api-stack
       tags:
@@ -4925,11 +5208,13 @@ paths:
   /insights:
     get:
       operationId: getInsightsSummary
+      x-mcp-tool: insights_overview
+      x-tier: pro
       tags:
       - Insights
       summary: Insights overview.
       description: Company/dimension/adoption counts and the top investment dimensions across the profiled
-        set. Free.
+        set. Understanding plan.
       responses:
         '200':
           description: Insights summary.
@@ -5013,12 +5298,13 @@ paths:
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
+      x-tier: pro
       x-mcp-tool: insights_dimensions
       tags:
       - Insights
       summary: Rank the investment dimensions.
       description: The 40 tracked technology & organizational dimensions ranked by how many companies
-        show signal. Free.
+        show signal. Understanding plan.
       parameters:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -5058,11 +5344,12 @@ paths:
   /insights/adoption:
     get:
       operationId: listInsightAdoption
+      x-tier: pro
       x-mcp-tool: insights_adoption
       tags:
       - Insights
       summary: Services / tools / standards by adoption.
-      description: Technologies ranked by how many companies adopt them. Free.
+      description: Technologies ranked by how many companies adopt them. Understanding plan.
       parameters:
       - name: type
         in: query
@@ -5115,10 +5402,12 @@ paths:
   /insights/industries:
     get:
       operationId: listInsightIndustries
+      x-mcp-tool: insights_industries
+      x-tier: pro
       tags:
       - Insights
       summary: Industry rollup.
-      description: Profiled sectors with company counts. Free.
+      description: Profiled sectors with company counts. Understanding plan.
       responses:
         '200':
           description: Industry rollup.
@@ -5152,6 +5441,7 @@ paths:
   /insights/companies:
     get:
       operationId: listInsightCompanies
+      x-tier: pro
       x-mcp-tool: find_company_insights
       tags:
       - Insights
@@ -5201,6 +5491,7 @@ paths:
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
+      x-tier: pro
       x-mcp-tool: get_company_insight
       tags:
       - Insights
@@ -5316,7 +5607,7 @@ paths:
             X-RateLimit-Tier:
               $ref: '#/components/headers/XRateLimitTier'
         '403':
-          description: Requires the Pro or Business tier.
+          description: Requires the Pro or Influence plan.
           content:
             application/json:
               schema:
@@ -5599,7 +5890,7 @@ paths:
             X-RateLimit-Tier:
               $ref: '#/components/headers/XRateLimitTier'
         '403':
-          description: Requires the Pro or Business tier.
+          description: Requires the Pro or Influence plan.
           content:
             application/json:
               schema:
@@ -5608,12 +5899,13 @@ paths:
   /resolve:
     get:
       operationId: resolveIdentifier
+      x-tier: pro
       x-mcp-tool: resolve
       tags:
       - Resolve & Enrich
       summary: Resolve any identifier (domain / URL / GitHub org) to a provider.
       description: Given a website URL, bare domain (`stripe.com`), or GitHub org (`github.com/stripe`),
-        return the apis.io provider that owns it. Use when you hold a URL, not a slug. Free.
+        return the apis.io provider that owns it. Use when you hold a URL, not a slug. Understanding plan.
       parameters:
       - name: identifier
         in: query
@@ -5643,14 +5935,15 @@ paths:
   /enrich:
     get:
       operationId: enrichProvider
+      x-tier: pro
       x-mcp-tool: enrich_provider
       tags:
       - Resolve & Enrich
       summary: Enrich a provider in one call, choosing field groups.
       description: 'Resolves a slug OR any identifier and returns exactly the requested field groups,
         instead of chaining several `get_provider*` calls. Groups `profile`, `onboarding`, `artifacts`
-        are free; `rating` and `insights` require the Pro tier (returned as `{ gated: true }` for free
-        callers).'
+        are free; `rating` and `insights` require the Understanding plan (returned as `{ gated: true }`
+        for free callers).'
       parameters:
       - name: id
         in: query
@@ -5686,13 +5979,14 @@ paths:
   /vcs:
     get:
       operationId: listVcs
+      x-tier: pro
       x-mcp-tool: find_vcs
       tags:
       - Venture Capital
       summary: List / search venture-capital firms.
       description: Venture-capital firms in the network, each with a network-matched, rated portfolio
         graph. Filter by text, thesis tags, or category; sort by portfolio_on_network (default), portfolio_total,
-        portfolio_rating, or name. Free.
+        portfolio_rating, or name. Understanding plan.
       parameters:
       - name: q
         in: query
@@ -5863,12 +6157,13 @@ paths:
   /vcs/{slug}:
     get:
       operationId: getVc
+      x-tier: pro
       x-mcp-tool: get_vc
       tags:
       - Venture Capital
       summary: One VC firm — identity, fund facts, portfolio summary.
       description: Identity, fund facts (properties), and portfolio summary (totals, band distribution,
-        average rating). Pass view=full to inline the full portfolio graph. Free.
+        average rating). Pass view=full to inline the full portfolio graph. Understanding plan.
       parameters:
       - name: slug
         in: path
@@ -5904,13 +6199,14 @@ paths:
   /vcs/{slug}/portfolio:
     get:
       operationId: getVcPortfolio
+      x-tier: pro
       x-mcp-tool: vc_portfolio
       tags:
       - Venture Capital
       summary: A VC firm's portfolio graph.
       description: The firm's portfolio companies, each matched to the network and rated. Filter is_provider=true
         (only API providers), in_network=true, band, or min_score; sort by score (default), api_count,
-        or name. Free.
+        or name. Understanding plan.
       parameters:
       - name: slug
         in: path
@@ -6000,12 +6296,15 @@ paths:
   /providers/{slug}/investors:
     get:
       operationId: getProviderInvestors
+      x-tier: pro
       x-mcp-tool: find_investors
       tags:
       - Venture Capital
       summary: Which VC firms back this provider (reverse portfolio edge).
       description: The venture-capital firms in the network whose portfolio includes this provider/company.
-        The reverse of the VC portfolio graph. Free.
+        The reverse of the VC portfolio graph. Answers 200 at any tier — `investor_count` is free, while
+        the named firms are replaced by a `detail` object naming the tier that returns them. Influence
+        plan.
       parameters:
       - $ref: '#/components/parameters/ProviderSlug'
       responses:
@@ -6149,7 +6448,7 @@ paths:
           a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
           to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
           true.'
-        schema: &id001
+        schema:
           type: string
           maxLength: 200
         example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
@@ -6353,7 +6652,9 @@ paths:
           a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
           to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
           true.'
-        schema: *id001
+        schema:
+          type: string
+          maxLength: 200
         example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
   /me/lists/{id}:
     get:
@@ -6450,7 +6751,9 @@ paths:
           a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
           to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
           true.'
-        schema: *id001
+        schema:
+          type: string
+          maxLength: 200
         example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
       requestBody:
         required: true
@@ -6626,7 +6929,7 @@ paths:
   /cohorts:
     get:
       operationId: listCohorts
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: find_cohorts
       x-agent-skill: state-of-report
       security: []
@@ -6674,7 +6977,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': &id002
+        '400': &id001
           $ref: '#/components/responses/BadRequest'
   /cohorts/compare:
     get:
@@ -6710,15 +7013,15 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': *id002
-        '402': &id006
+        '400': *id001
+        '402': &id005
           $ref: '#/components/responses/UpgradeRequired'
-        '404': &id003
+        '404': &id002
           $ref: '#/components/responses/NotFound'
   /cohorts/{kind}/{slug}:
     get:
       operationId: getCohort
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: get_cohort
       security: []
       tags:
@@ -6726,11 +7029,11 @@ paths:
       summary: One cohort and its member roster.
       description: Identity, population and every member with its Kin Score and agent readiness. Reports
         both the DECLARED roster size and the number actually resolved against the catalog — the gap is
-        a coverage fact, not a rounding error. Free.
+        a coverage fact, not a rounding error. Understanding plan.
       parameters:
-      - &id004
+      - &id003
         $ref: '#/components/parameters/CohortKind'
-      - &id005
+      - &id004
         $ref: '#/components/parameters/CohortSlug'
       responses:
         '200':
@@ -6739,8 +7042,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': *id002
-        '404': *id003
+        '400': *id001
+        '404': *id002
   /cohorts/{kind}/{slug}/stats:
     get:
       operationId: getCohortStats
@@ -6756,8 +7059,8 @@ paths:
         rates. Always carries a `coverage` block stating how much of the roster is actually scored, because
         a mean over half a roster is a different claim from a mean over all of it.
       parameters:
+      - *id003
       - *id004
-      - *id005
       responses:
         '200':
           description: The distribution for a whole market (Pro).
@@ -6765,8 +7068,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/rankings:
@@ -6782,8 +7085,8 @@ paths:
       description: Every scored member ranked by Kin Score composite AND, separately, by agent readiness.
         The two orders differ, and the distance between a provider's two ranks is usually the story.
       parameters:
+      - *id003
       - *id004
-      - *id005
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Format'
@@ -6794,8 +7097,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/scores:
@@ -6811,8 +7114,8 @@ paths:
       description: One row per provider per facet, each carrying the cohort average and the delta against
         it. A 60 in governance means nothing until you know the market sits at 45.
       parameters:
+      - *id003
       - *id004
-      - *id005
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Format'
@@ -6823,8 +7126,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/capabilities:
@@ -6849,8 +7152,8 @@ paths:
         / `returned` / `cursor` / `next_cursor` / `complete` (changed 2026-08-24, when the unpaginated
         form 502''d on any cohort past ~9,000 members).'
       parameters:
+      - *id003
       - *id004
-      - *id005
       - name: cursor
         in: query
         required: false
@@ -7480,8 +7783,8 @@ paths:
                     dry_run_mode: false
                   band: minimal
                   kin_score: 2.6
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
   /providers/{slug}/rating/facets:
     get:
       operationId: getProviderFacets
@@ -7502,12 +7805,12 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
   /providers/{slug}/agent-readiness:
     get:
       operationId: getProviderAgentReadiness
-      x-tier: pro
+      x-tier: free
       x-mcp-tool: get_agent_readiness
       security: []
       tags:
@@ -7525,8 +7828,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id006
-        '404': *id003
+        '402': *id005
+        '404': *id002
   /providers/{slug}/capabilities:
     get:
       operationId: getProviderCapabilities
@@ -7548,7 +7851,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id003
+        '404': *id002
   /providers/{slug}/evidence:
     get:
       operationId: getProviderEvidence
@@ -7571,7 +7874,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id003
+        '404': *id002
   /story-leads:
     get:
       operationId: storyLeads
@@ -7662,7 +7965,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': &id007
+        '404': &id006
           $ref: '#/components/responses/NotFound'
   /providers/{slug}/tools:
     get:
@@ -7702,7 +8005,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id007
+        '404': *id006
   /providers/{slug}/schema:
     get:
       operationId: getProviderSchema
@@ -7727,7 +8030,1280 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id007
+        '404': *id006
+  /checks:
+    post:
+      operationId: requestCheck
+      x-tier: business
+      x-mcp-tool: request_check
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Checks
+      summary: Ask APIs.io to (re)check a provider listing.
+      description: 'File a request against a listing — a listing is wrong or stale, a score looks incorrect,
+        or a company is not in the catalog yet. A check can target a PROVIDER (the default) or a slice
+        of the catalog — an `industry`, `tag`, `area`, or a company''s `estate` — for an industry roster
+        missing an obvious member, a tag that has drifted, or an area whose ranking looks wrong. A slug
+        the catalog does not hold is never refused: for any target type it is queued as a request to ADD
+        that thing, with near matches returned alongside so a typo is still visible. This does NOT score
+        anything on the spot. A check means re-profiling the provider and running the full enrichment
+        pipeline against their live surface, which a person runs by hand, so it queues work rather than
+        returning an answer. Influence plan. Reporting an error costs nothing — the `report_correction`
+        MCP tool and an issue on the provider''s own repo at github.com/api-evangelist/{slug} need no
+        key and no plan; what the Influence plan buys is queueing the re-profiling work itself.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: One of `slug` or `url` is required. A non-provider target needs a `slug` —
+                a url cannot name an industry.
+              properties:
+                target_type:
+                  type: string
+                  enum:
+                  - provider
+                  - industry
+                  - tag
+                  - area
+                  - estate
+                  default: provider
+                  description: What `slug` names. Defaults to `provider`. `estate` is named for the company
+                    the estate roots at (e.g. `cisco`) — the API has no estates resource, so that root
+                    company is what gets validated, not the estate's membership.
+                slug:
+                  type: string
+                  description: The target slug. A provider slug (e.g. `stripe`) by default, or an industry/tag/area/estate
+                    slug when `target_type` says so.
+                url:
+                  type: string
+                  description: The company or developer-portal URL — use this when there is no listing
+                    yet. Providers only.
+                kind:
+                  type: string
+                  enum:
+                  - recheck
+                  - profile
+                  - correction
+                  description: Defaults to `recheck` when the slug is already in the catalog and `profile`
+                    when it is not. A slug we do not hold is a request to profile it, not an error.
+                contact:
+                  type: string
+                  description: Email to notify when the status changes. Optional, and validated if given;
+                    without it there is nothing to notify, so keep the returned id and poll.
+                notes:
+                  type: string
+                  description: What is wrong, or what to look at. The more specific, the faster it is
+                    worked.
+            example:
+              slug: stripe
+              kind: recheck
+              contact: dev@example.com
+              notes: Our OpenAPI moved to /openapi.json and the catalog still points at the old path.
+      responses:
+        '201':
+          description: Queued. The returned id is the capability for reading the status back.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  queued:
+                    type: boolean
+                  id:
+                    type: string
+                  status:
+                    type: string
+                  kind:
+                    type: string
+                  target_type:
+                    type: string
+                    enum:
+                    - provider
+                    - industry
+                    - tag
+                    - area
+                    - estate
+                  target:
+                    type: object
+                    description: 'The resolved target, present for non-provider types. Echoed back so
+                      a caller sees which request they actually filed — `known: false` means the catalog
+                      does not hold this yet and the request is to ADD it.'
+                    properties:
+                      type:
+                        type: string
+                      slug:
+                        type: string
+                      name:
+                        type: string
+                      known:
+                        type: boolean
+                        description: Whether the catalog already holds this target.
+                  did_you_mean:
+                    type: array
+                    description: Near matches, present only when the slug did not resolve. The request
+                      is queued regardless — a miss is as likely to be a new thing worth adding as a typo,
+                      so the caller gets both the queued request and the alternatives, and decides.
+                    items:
+                      type: object
+                      properties:
+                        slug:
+                          type: string
+                        name:
+                          type: string
+                  known_provider:
+                    type: boolean
+                    description: Whether the slug was already in the catalog, so you can tell a re-check
+                      from a new profile. Meaningful for provider targets; true by construction for the
+                      rest, which are resolved before the request is accepted.
+                  status_url:
+                    type: string
+                  detail:
+                    type: string
+                  note:
+                    type: string
+                    description: Present only when no contact was supplied.
+              example:
+                ok: true
+                queued: true
+                id: chk_01J8Z2
+                status: queued
+                kind: recheck
+                known_provider: true
+                status_url: /v1/checks/chk_01J8Z2
+        '200':
+          description: 'The queue was unreachable, so nothing was filed. Deliberately a 200 with `queued:
+            false` and the human fallback rather than a 5xx — a request for a correction is never dropped
+            silently.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                  queued:
+                    type: boolean
+                  detail:
+                    type: string
+              example:
+                ok: false
+                queued: false
+                detail: The check queue is not reachable right now. Email info@apis.io with the provider
+                  and what is wrong, and it will be worked by hand.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /checks/mine:
+    get:
+      operationId: listMyChecks
+      x-tier: business
+      x-mcp-tool: my_checks
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Checks
+      summary: The check requests you filed.
+      description: Your own check requests, newest first. Requires a key or login to have an identity
+        at all — an anonymous caller has no list to scope, and should read a single request by its id
+        instead. Influence plan.
+      responses:
+        '200':
+          description: Your check requests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Check'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /checks/{id}:
+    get:
+      operationId: getCheckStatus
+      x-tier: business
+      x-mcp-tool: check_status
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Checks
+      summary: The status of one check request.
+      description: Where a check stands, with any notes an operator marked shareable. Internal triage
+        notes are never returned — they are written candidly, and publishing them by default would make
+        them either useless or unkind. Influence plan.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The id returned when the check was filed.
+      responses:
+        '200':
+          description: The check record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Check'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /:
+    get:
+      operationId: getServiceRoot
+      x-tier: pro
+      tags:
+      - Search
+      summary: The service record and catalog counts.
+      description: Name, version, and how many providers, APIs, tags and artifacts the catalog holds.
+        The cheapest way to confirm you are talking to the right service and to see its size before paging
+        anything.
+      responses:
+        '200':
+          description: The service record.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  service:
+                    type: string
+                  version:
+                    type: string
+                  counts:
+                    type: object
+                    additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /me:
+    get:
+      operationId: getWorkspace
+      x-tier: pro
+      x-mcp-tool: my_workspace
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Saved Workspace
+      summary: Your workspace root — plan, counts, and where things live.
+      description: 'What you have saved here and where to find it, plus the plan you are on. NOT the account:
+        login, API key, usage and billing live at `/v1/auth/me`, which authenticates with a session rather
+        than a key. Counts rather than contents — a root that inlined every saved search would be the
+        heaviest response here for a caller who mostly wants to know where things are. A count that cannot
+        be read comes back as `null` with a note, never as a zero and never as an error: the urls are
+        still true when the store is not reachable.'
+      responses:
+        '200':
+          description: The workspace root.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                  plan:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: The plan display name, e.g. Understanding.
+                      tier:
+                        type: string
+                        description: The wire name, e.g. pro. Branch on this.
+                  workspace:
+                    type: object
+                    additionalProperties:
+                      type: object
+                      properties:
+                        count:
+                          type: integer
+                          nullable: true
+                          description: null when the store could not be read; never a substitute zero.
+                        url:
+                          type: string
+                  note:
+                    type: string
+                  hints:
+                    type: object
+                    additionalProperties: true
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /capabilities:
+    get:
+      operationId: findCapabilities
+      x-tier: pro
+      x-mcp-tool: find_capabilities
+      tags:
+      - Capabilities
+      summary: The business-capability model.
+      description: What the catalog's APIs let a business DO — top-level capabilities across every industry,
+        each with how many providers reach it. The entry point for "what can I actually build from this
+        catalog", as opposed to "who is in it".
+      parameters:
+      - name: q
+        in: query
+        schema:
+          type: string
+        description: Free-text filter.
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The capability model.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  model:
+                    type: string
+                  meta:
+                    type: object
+                    additionalProperties: true
+                  capabilities:
+                    type: array
+                    items:
+                      type: object
+                      additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /capabilities/{id}:
+    get:
+      operationId: getCapability
+      x-tier: pro
+      x-mcp-tool: get_capability
+      tags:
+      - Capabilities
+      summary: One capability, its sub-capabilities, and who reaches it.
+      description: A capability's definition, the sub-capabilities under it, the external authorities
+        it cites, and which providers reach it with their ratings. Accepts a slug or a BC id.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The capability.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /capabilities/{id}/edges:
+    get:
+      operationId: getCapabilityEdges
+      x-tier: pro
+      x-mcp-tool: get_capability_edges
+      tags:
+      - Capabilities
+      summary: The evidence behind a capability.
+      description: 'Every edge landing on a capability: the provider, the tag, the exact OpenAPI file,
+        a calibrated confidence, and THE QUOTED FRAGMENT OF THE PROVIDER''S OWN CONTRACT that justifies
+        the claim. Only edges at confidence >= 0.7 whose evidence was found verbatim in the source are
+        published, so an edge here is checkable rather than asserted. This is what you cite when someone
+        asks "says who?".'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The edge table.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/business-capabilities:
+    get:
+      operationId: getProviderBusinessCapabilities
+      x-tier: pro
+      x-mcp-tool: get_provider_business_capabilities
+      tags:
+      - Capabilities
+      summary: What one vendor's APIs let a business do.
+      description: One provider's published APIs rolled up by capability, with the tag-level evidence
+        under each. Answers "what is this vendor actually for" from its own contracts rather than its
+        marketing. NOT `/providers/{slug}/capabilities`, which is artifact counts and agent-readiness
+        dimensions and is free — the names predate this section.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The provider's capability map.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /agent-readiness:
+    get:
+      operationId: findAgentReadiness
+      x-tier: pro
+      x-mcp-tool: find_agent_readiness
+      tags:
+      - Ratings
+      summary: The agent-readiness leaderboard across the catalog.
+      description: Rank providers by agent readiness, and filter to those that DO satisfy (`has`) or do
+        NOT satisfy (`missing`) specific dimensions — `has=mcp_server,protected_resource_metadata` is
+        the OAuth-capable MCP cohort, `missing=agent_card` is the addressable market for a fix. ONE provider's
+        own readiness stays free at `/providers/{slug}/agent-readiness`; this is the catalog-wide read.
+      parameters:
+      - name: has
+        in: query
+        schema:
+          type: string
+        description: Comma-separated dimensions the provider must satisfy.
+      - name: missing
+        in: query
+        schema:
+          type: string
+        description: Comma-separated dimensions the provider must NOT satisfy.
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: The leaderboard.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /agent-readiness/dimensions:
+    get:
+      operationId: agentReadinessDimensions
+      x-tier: pro
+      x-mcp-tool: agent_readiness_dimensions
+      tags:
+      - Ratings
+      summary: How far each agent-readiness dimension has diffused.
+      description: For each dimension, how many scored providers satisfy it, out of how many, as a share.
+        The denominator every "the agent web is/is not here yet" claim needs and almost never has.
+      responses:
+        '200':
+          description: Diffusion per dimension.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /providers/{slug}/remediation:
+    get:
+      operationId: getProviderRemediation
+      x-tier: business
+      x-mcp-tool: what_can_i_fix
+      tags:
+      - Ratings
+      summary: Ranked, costed remediation for one provider.
+      description: Which specific rubric checks a provider fails, what each is worth, and in what order
+        to fix them. The free `improve_my_score` prompt names the weakest FACET; this names the check.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The remediation plan.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/gates:
+    get:
+      operationId: getProviderGates
+      x-tier: business
+      x-mcp-tool: readiness_gates
+      tags:
+      - Ratings
+      summary: Band gates before points.
+      description: Which bands a provider is gated out of regardless of score. Some bands are not reachable
+        by collecting points at all, and a plan that ignores that spends engineering time for nothing.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The gate verdict per band.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/projection:
+    get:
+      operationId: getProviderProjection
+      x-tier: business
+      x-mcp-tool: simulate_fixes
+      tags:
+      - Ratings
+      summary: Where a score lands if named fixes are made.
+      description: Project score and band before committing engineering time. Pass `fixes` as a comma-separated
+        list of check ids, or POST them.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: fixes
+        in: query
+        schema:
+          type: string
+        description: Comma-separated check ids to simulate.
+      responses:
+        '200':
+          description: The projected score and band.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      operationId: simulateProviderFixes
+      x-tier: business
+      x-mcp-tool: simulate_fixes
+      tags:
+      - Ratings
+      summary: Where a score lands if named fixes are made.
+      description: The primary form, and the one the MCP `simulate_fixes` tool calls. Identical to the
+        GET, which takes the same ids as a comma-separated query string for convenience; a list of check
+        ids belongs in a body rather than in a URL once there are more than a handful of them. Projects
+        score and band before any engineering time is committed, and re-applies the band gate to the projected
+        state — so it will tell you when buying points still leaves you demoted. Kin Score facets are
+        refused rather than estimated.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - fixes
+              properties:
+                fixes:
+                  type: array
+                  items:
+                    type: string
+                  description: Agent-readiness dimension ids to assume fixed, e.g. ["idempotency","mcp_server"].
+            example:
+              fixes:
+              - idempotency
+              - mcp_server
+      responses:
+        '200':
+          description: The projected score and band.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /operations:
+    get:
+      operationId: findOperations
+      x-tier: pro
+      x-mcp-tool: find_operations
+      tags:
+      - Search
+      summary: Catalog-wide operation search.
+      description: 'Which providers expose a path matching your terms. "Who has a POST /refunds" had no
+        answer before this: you could ask what ONE provider exposes, and you could search tags, but a
+        tag is what a company says about itself while a path is what its API accepts. Terms match path
+        SEGMENTS and all of them must appear, so `q=payment intents` finds `/payments/v1/intents`. One
+        row per real operation — a provider''s spec is split per tag, so the same call can live in several
+        of its documents, and `apis` lists them. Matching providers'' surfaces are read up to `max_providers`;
+        when more matched than were read, `meta.query.truncated` says so rather than a partial answer
+        passing as a complete one.'
+      parameters:
+      - name: q
+        in: query
+        required: true
+        schema:
+          type: string
+        description: Path words, all of which must appear.
+      - name: method
+        in: query
+        schema:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - HEAD
+          - OPTIONS
+      - name: deprecated
+        in: query
+        schema:
+          type: string
+          enum:
+          - 'true'
+        description: Only operations the provider marked deprecated.
+      - name: max_providers
+        in: query
+        schema:
+          type: integer
+          default: 40
+          maximum: 100
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - csv
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Matching operations, deduped per provider+method+path.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    additionalProperties: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        provider_slug:
+                          type: string
+                        provider_name:
+                          type: string
+                        method:
+                          type: string
+                        path:
+                          type: string
+                        operationId:
+                          type: string
+                        summary:
+                          type: string
+                        apis:
+                          type: array
+                          items:
+                            type: string
+                          description: Every document of the provider's in which this operation appears.
+                        api_count:
+                          type: integer
+                        deprecated:
+                          type: boolean
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '503':
+          description: The operation index could not be read. One provider at a time still works.
+  /operations/deprecated:
+    get:
+      operationId: listDeprecatedOperations
+      x-tier: pro
+      x-mcp-tool: deprecated_operations
+      tags:
+      - Search
+      summary: Providers with operations marked deprecated.
+      description: Every provider publishing at least one operation its own OpenAPI marks deprecated,
+        ranked by how many — the lifecycle view of the catalog. Invisible before this, because a provider's
+        own `?deprecated=true` filter needs you to already suspect that provider. Drill in with `/providers/{slug}/operations?deprecated=true`.
+      parameters:
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - csv
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Providers ranked by deprecated operation count.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /cohorts/{kind}/{slug}/history:
+    get:
+      operationId: getCohortHistory
+      x-tier: pro
+      x-mcp-tool: cohort_history
+      tags:
+      - Cohorts
+      summary: How a whole market's scores moved over time.
+      description: The set-level time series. There was a per-provider series and a whole-dataset licence
+        and nothing between them, so "how has banking moved over six months" had no answer. Returns the
+        MEAN over members present on each date, with `members_scored` beside it — membership changes as
+        the catalog grows, and a move you cannot attribute to scores rather than population is not a finding,
+        so the denominator is published rather than left implied.
+      parameters:
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - tag
+          - industry
+          - region
+          - area
+          - vc
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The cohort series.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cohort:
+                    type: string
+                  name:
+                    type: string
+                  members_in_history:
+                    type: integer
+                  members_total:
+                    type: integer
+                  dates:
+                    type: array
+                    items:
+                      type: string
+                  composite_mean:
+                    type: array
+                    items:
+                      type: number
+                  agent_readiness_mean:
+                    type: array
+                    items:
+                      type: number
+                      nullable: true
+                  members_scored:
+                    type: array
+                    items:
+                      type: integer
+                    description: How many members were scored on each date. Read this beside any move.
+                  movement:
+                    type: object
+                    additionalProperties: true
+                  method:
+                    type: string
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '503':
+          description: The history shard could not be read.
+  /cohorts/{kind}/{slug}/failures:
+    get:
+      operationId: getCohortFailures
+      x-tier: pro
+      x-mcp-tool: cohort_failures
+      tags:
+      - Cohorts
+      summary: The checks a whole market most commonly fails.
+      description: 'The inverse of gap analysis. Gaps say where a market is under-served; this says where
+        it is failing the rubric — which agent-readiness checks the most members miss, ranked by what
+        fixing each would move the cohort mean. Turns "fix your OpenAPI" into "this industry does not
+        publish OpenAPI". NAMED CHECKS ONLY: facet scores are rollups and cannot name the checks underneath
+        them, so aggregating those would assert precision the rubric does not have.'
+      parameters:
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - tag
+          - industry
+          - region
+          - area
+          - vc
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - csv
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Checks ranked by cohort-level worth.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    additionalProperties: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        check:
+                          type: string
+                        label:
+                          type: string
+                        layer:
+                          type: string
+                        failing:
+                          type: integer
+                        partial:
+                          type: integer
+                        share:
+                          type: number
+                          description: Percentage of scored members missing this check.
+                        score_gain_each:
+                          type: number
+                        cohort_score_gain:
+                          type: number
+                          description: What the cohort mean would move if every member fixed this one
+                            check.
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/claim:
+    post:
+      operationId: claimListing
+      x-tier: business
+      x-mcp-tool: claim_listing
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Ask to claim a listing as yours.
+      description: Returns a token and the hosts it will be checked against. Publish it as a DNS TXT record
+        on one of those hosts, or as a file at `/.well-known/apis-io-challenge`, and leave it up — a person
+        verifies it and emails you. There is nothing else to call. The hosts come from the website we
+        hold for you, never from anything sent in the request, so a claim cannot be pointed at a domain
+        the claimant already controls.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '422':
+          description: We hold no website for this provider, so a claim cannot be checked against anything.
+            Correct that first with a facts request.
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/generate:
+    post:
+      operationId: listGeneratableArtifacts
+      x-mcp-tool: generate_artifact
+      x-tier: business
+      tags:
+      - Your listing
+      summary: What we can generate for you.
+      description: Every artifact that can be requested, what file it produces, and what it is for.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: The available artifacts.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /providers/{slug}/generate/{artifact}:
+    post:
+      operationId: requestArtifact
+      x-tier: business
+      x-mcp-tool: generate_artifact
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Request an artifact you are being marked down for not having.
+      description: A person generates it against your live surface, checks it, and sends it to you. NOTHING
+        IS PUBLISHED ON YOUR BEHALF — your score moves when you commit the file to your own repo. `apis-json`
+        and `agent-card` are built from your catalog record; `mcp` and `arazzo` from the operations we
+        have already parsed; `rules` is a Spectral ruleset scoped to the checks you are currently failing;
+        `scopes` and `security` are read out of your live OpenAPI.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      - name: artifact
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - apis-json
+          - agent-card
+          - mcp
+          - arazzo
+          - rules
+          - scopes
+          - security
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          description: No such artifact. The response lists the ones that exist.
+  /providers/{slug}/submit:
+    post:
+      operationId: submitArtifact
+      x-tier: business
+      x-mcp-tool: submit_artifact
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Tell us about an artifact you publish.
+      description: Rather than waiting for us to find it. A person fetches it, checks it, and re-runs
+        the enrichment pipeline against it.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type
+              - url
+              properties:
+                type:
+                  type: string
+                  description: e.g. OpenAPI, AsyncAPI, MCP.
+                url:
+                  type: string
+                contact:
+                  type: string
+                  description: Email to notify when the status changes.
+            example:
+              type: OpenAPI
+              url: https://example.com/openapi.yaml
+              contact: dev@example.com
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /providers/{slug}/facts:
+    post:
+      operationId: correctFacts
+      x-tier: business
+      x-mcp-tool: correct_facts
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Propose corrections to what we say about you.
+      description: 'Name, description, url, industries and tags. Applied by a person, not on the call:
+        an API that let an owner rewrite their own description unreviewed would be a marketing surface
+        rather than a catalog. Score and band are NOT settable this way and are ignored if sent.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: At least one of the listed fields.
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                industries:
+                  type: array
+                  items:
+                    type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+                contact:
+                  type: string
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /providers/{slug}/dispute:
+    post:
+      operationId: disputeFinding
+      x-tier: business
+      x-mcp-tool: dispute_finding
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Tell us a finding about you is wrong.
+      description: '"You say we lack X, here it is." Send the claim in words and a URL that evidences
+        it; a person fetches your evidence, checks it against what we hold, and emails you either way.
+        Open to any paying caller rather than verified owners only — you should not have to prove ownership
+        before you can tell us our data is wrong.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - claim
+              properties:
+                claim:
+                  type: string
+                  description: What we have wrong
+                  in words.: null
+                evidence_url:
+                  type: string
+                  description: A URL that demonstrates it.
+                contact:
+                  type: string
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /providers/{slug}/visibility:
+    post:
+      operationId: setVisibility
+      x-tier: business
+      x-mcp-tool: set_visibility
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Ask to be shown less, or not at all.
+      description: '`restricted` keeps a name, a description and a link to your own site, unrated and
+        out of every ranked view. `delisted` removes you from the catalog entirely. Applied by a person:
+        it strips artifacts, pages and rollups across the network, which is not an irreversible change
+        to make on one API call.'
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - visibility
+              properties:
+                visibility:
+                  type: string
+                  enum:
+                  - restricted
+                  - delisted
+                reason:
+                  type: string
+                contact:
+                  type: string
+      responses:
+        '202':
+          $ref: '#/components/responses/RequestAccepted'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /me/watch:
+    get:
+      operationId: listWatches
+      x-mcp-tool: list_watches
+      x-tier: business
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: The listings you are watching.
+      responses:
+        '200':
+          description: Your watches.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /me/watch/{slug}:
+    post:
+      operationId: watchListing
+      x-tier: business
+      x-mcp-tool: watch_listing
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Be told when a listing moves.
+      description: Score changes, band changes, or a check closing. REGISTRATION ONLY — the scoring pipeline
+        sends the mail; this records what you want to hear about and does not itself deliver.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                events:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - score
+                    - band
+                    - check
+                  description: Defaults to all three.
+      responses:
+        '201':
+          description: Registered.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: unwatchListing
+      x-mcp-tool: unwatch_listing
+      x-tier: business
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Your listing
+      summary: Stop watching a listing.
+      parameters:
+      - $ref: '#/components/parameters/ProviderSlug'
+      responses:
+        '200':
+          description: Removed.
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -7736,6 +9312,26 @@ components:
       name: X-API-Key
       description: Optional. A keyless request is served on the free tier; a key raises the rate limit
         and unlocks the tier-gated resources. Metered at the gateway -- see /developer/plans.
+    OAuth2:
+      type: oauth2
+      description: The machine path to the same tiers, and the better of the two options for an agent.
+        APIs.io runs its own OAuth 2.1 authorization server -- RFC 8414 metadata at /.well-known/oauth-authorization-server,
+        a JWKS at /.well-known/jwks.json, PKCE (S256 only), RFC 7591 dynamic client registration, and
+        RFC 8707 resource indicators -- so a client can earn access through a protocol handshake instead
+        of a human pasting a key. An access token resolves to the same tier and the same per-user quota
+        as that user's API key. Declared here as of 2026-08-30; the server has been live since before
+        that, and an agent reading this contract to decide how to authenticate could not previously discover
+        it.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://apis.io/api/v1/auth/authorize
+          tokenUrl: https://apis.io/api/v1/auth/token
+          refreshUrl: https://apis.io/api/v1/auth/token
+          scopes:
+            apis:read: Read the catalog. Granted to every caller.
+            apis:pro: The tier-gated resources -- ratings, insights, demand depth, the Saved Workspace.
+            offline_access: Issue a refresh token. Authorization-server scope only; no resource asks for
+              it.
   parameters:
     Q:
       name: q
@@ -7866,7 +9462,6 @@ components:
         - relevance
         - provider
         - name
-        - updated
         default: relevance
         maxLength: 1024
     BandFilter:
@@ -7971,6 +9566,49 @@ components:
         enum:
         - csv
   responses:
+    RequestAccepted:
+      description: Received, not completed. Every request on this surface is worked by a person — a check
+        means re-profiling you and re-running the enrichment pipeline, a claim means someone confirming
+        a record you published is really yours, a generated artifact is one we have looked at before sending.
+        None of those can be done in the time it takes to answer a request, so the response says so rather
+        than implying otherwise with a 200.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              received:
+                type: boolean
+                description: Always true. The request is in the queue.
+              completed:
+                type: boolean
+                description: Always false. A person still has to do the work.
+              request_type:
+                type: string
+                enum:
+                - check
+                - claim
+                - generate
+                - submit
+                - facts
+                - dispute
+                - visibility
+              id:
+                type: string
+              status:
+                type: string
+              status_url:
+                type: string
+                description: Poll this, or leave a contact and we email you.
+              detail:
+                type: string
+          example:
+            received: true
+            completed: false
+            request_type: facts
+            id: 7f3c1e02-...
+            status: queued
+            status_url: /v1/checks/7f3c1e02-...
     AuthRequired:
       description: The Saved Workspace needs a signed-in apis.io API key.
       content:
@@ -8007,7 +9645,7 @@ components:
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
     UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      description: Free — no key required.
       content:
         application/problem+json:
           schema:
@@ -8016,7 +9654,7 @@ components:
             type: https://apis.io/problems/upgrade-required
             title: Upgrade required
             status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
+            detail: The areas endpoint requires the Pro or Influence plan.
             instance: /v1/areas
     InsufficientPopulation:
       description: The cohort has too few scored members for distribution statistics to be meaningful.
@@ -8040,6 +9678,54 @@ components:
                 items:
                   type: string
   schemas:
+    Check:
+      type: object
+      description: A remediation request and where it stands. Only notes an operator marked shareable
+        appear.
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - queued
+          - in_review
+          - running
+          - done
+          - rejected
+          - needs_info
+        kind:
+          type: string
+          enum:
+          - recheck
+          - profile
+          - correction
+        slug:
+          type: string
+          nullable: true
+        url:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+        updated_at:
+          type: string
+        closed_at:
+          type: string
+          description: Present only once the request is closed.
+        notes:
+          type: array
+          description: Operator notes explicitly marked shareable. Internal triage notes are never included.
+          items:
+            type: object
+            properties:
+              at:
+                type: string
+              note:
+                type: string
+        queue:
+          type: string
+          description: A standing reminder that checks are worked by hand, not computed on demand.
     Meta:
       type: object
       description: Pagination and echoed-query metadata for collection responses.
