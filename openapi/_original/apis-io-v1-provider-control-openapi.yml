@@ -1,0 +1,472 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Provider Control API
+  version: 1.0.0
+  description: |-
+    The surface a provider uses to act on their own listing: claim it, correct it, submit artifacts, dispute a finding, ask what to fix, and simulate a fix before doing the work.
+
+    This is the Provider Control surface of the [APIs.io API](https://apis.io/api/v1) — one of the contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+
+    DOCUMENTED AS BUILT (roadmap#288). Every operation here was live and sold before it was described, which for a company whose product is making APIs legible to agents was the wrong way round: an agent could not read our own contract and find the operations we charge for. Request and response shapes below were taken from the running service, not from intent — where an operation is not idempotent, this says so rather than implying it is.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Provider Control
+    description: Claim, correct and improve your own listing. Most operations require the Influence plan; reporting that our data is wrong is free and always will be.
+paths:
+  /providers/{slug}/correction:
+    post:
+      operationId: reportCorrection
+      summary: Report that the catalog has this provider wrong
+      description: |-
+        Free, unmetered and keyless. Correcting our own error is not a paid feature.
+
+        NOT IDEMPOTENT. Each call files a new correction; sending the same body twice queues it twice. There is no caller-declared match key and the response does not distinguish a created record from an amended one, because amending is not currently possible.
+      x-tier: free
+      x-mcp-tool: report_correction
+      tags: [Provider Control]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [wrong]
+              properties:
+                wrong: { type: string, description: What is incorrect. Name the field if you can. }
+                correct: { type: string, description: What it should say instead. }
+                evidence: { type: string, format: uri, description: A URL that shows it — your own docs or site. This is what makes a correction actionable rather than a claim. }
+                field:
+                  type: string
+                  description: Optional field name.
+                  enum: [website, image, api_count, tags, score, access_model, apis]
+                relationship:
+                  type: string
+                  enum: [provider, customer, observer]
+                  description: Never gates the report; it sets priority.
+                contact: { type: string, description: Where to reply. Omitted means poll status_url instead. }
+            example:
+              wrong: our error_semantics dimension reads false
+              correct: we publish one error schema referenced across operations
+              evidence: https://example.com/docs/errors
+              field: score
+              relationship: provider
+      responses:
+        '202':
+          description: Queued for a person.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/QueuedRequest' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/claim:
+    post:
+      operationId: claimListing
+      summary: Claim this listing as its owner
+      description: |-
+        Ownership is proved against a host we already hold for the provider. A provider with no website on file cannot be claimed until a correction supplies one — the 422 says so rather than failing opaquely.
+      x-tier: business
+      x-mcp-tool: claim_listing
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact: { type: string }
+      responses:
+        '202':
+          description: Claim queued for verification.
+          content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '422':
+          description: No provable host on file, so the claim cannot be checked.
+          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/facts:
+    post:
+      operationId: correctFacts
+      summary: Propose corrected facts for this listing
+      description: |-
+        Structured corrections an operator applies by hand. Send one or more of the fields below.
+
+        NOT IDEMPOTENT and NOT AN UPSERT. A second call files a second request rather than amending the pending one, and the response does not say whether an earlier request exists. Whether a repeat submission should amend is undecided (roadmap#288).
+      x-tier: business
+      x-mcp-tool: correct_facts
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              minProperties: 1
+              description: One or more of the properties below.
+              properties:
+                name: { type: string }
+                description: { type: string }
+                url: { type: string, format: uri }
+                industries: { type: array, items: { type: string } }
+                tags: { type: array, items: { type: string } }
+                contact: { type: string }
+      responses:
+        '202': { description: Queued., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/submit:
+    post:
+      operationId: submitArtifact
+      summary: Submit an artifact URL for this listing
+      description: |-
+        Point us at an artifact you publish — an OpenAPI, an AsyncAPI, a rules file — and it is fetched and wired by an operator.
+
+        NOT AN UPSERT. Submitting a type the provider already has a pointer for files a new request; whether that should replace, version or be rejected is undecided (roadmap#288).
+      x-tier: business
+      x-mcp-tool: submit_artifact
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, url]
+              properties:
+                type: { type: string, description: Artifact type, e.g. OpenAPI, AsyncAPI, Rules. }
+                url: { type: string, format: uri }
+                contact: { type: string }
+            example: { type: OpenAPI, url: 'https://example.com/openapi.yml' }
+      responses:
+        '202': { description: Queued., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/visibility:
+    post:
+      operationId: setVisibility
+      summary: Request restricted listing or removal
+      description: A person applies this — it strips artifacts, pages and rollups across the network.
+      x-tier: business
+      x-mcp-tool: set_visibility
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [visibility]
+              properties:
+                visibility:
+                  type: string
+                  enum: [restricted, delisted]
+                  description: restricted — name, description and a link to your own site, unrated and out of every ranked view. delisted — removed from the catalog entirely.
+                reason: { type: string }
+                contact: { type: string }
+      responses:
+        '202': { description: Queued and prioritised., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/dispute:
+    post:
+      operationId: disputeFinding
+      summary: Dispute something the rating says about this provider
+      description: |-
+        "You say I lack X, here it is." Open to any paying caller rather than owners only: requiring a claim first would mean the people most motivated to fix a wrong score have to wait on a manual verification before they can tell us we are wrong.
+      x-tier: business
+      x-mcp-tool: dispute_finding
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [claim]
+              properties:
+                claim: { type: string }
+                evidence_url: { type: string, format: uri }
+                contact: { type: string }
+            example: { claim: you say we have no OpenAPI, evidence_url: 'https://example.com/openapi.yml' }
+      responses:
+        '202': { description: Filed. A person fetches your evidence and emails you either way., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /providers/{slug}/generate:
+    post:
+      operationId: generateArtifacts
+      summary: What APIs.io can generate on this provider's behalf
+      description: Reports which artifacts we can author for this provider and how to ask for them. Read-only despite the verb.
+      x-tier: business
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: What is available.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slug: { type: string }
+                  name: { type: string }
+                  available: { type: array, items: { type: string } }
+                  usage: { type: string }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /providers/{slug}/projection:
+    post:
+      operationId: simulateFixes
+      summary: What a set of fixes would move the score to
+      description: |-
+        A dry run. Nothing is stored and nothing is queued — the verb is POST because the fix list is a body, not because this writes.
+      x-tier: business
+      x-mcp-tool: simulate_fixes
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [fixes]
+              properties:
+                fixes: { type: array, items: { type: string }, description: Check or dimension ids, as returned by /remediation. }
+            example: { fixes: [error_semantics] }
+      responses:
+        '200':
+          description: The projected score, and which fixes were rejected as unmodellable.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slug: { type: string }
+                  applied: { type: array, items: { type: string } }
+                  rejected: { type: array, items: { type: string } }
+                  from: { type: number }
+                  to: { type: number }
+                  score_gain: { type: number }
+                  band_changed: { type: boolean }
+                  model_drift: { type: string }
+                  model_drift_note: { type: string }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /providers/{slug}/remediation:
+    get:
+      operationId: whatCanIFix
+      summary: The ranked, costed punch list for this provider
+      description: |-
+        One ordered list across both rating layers. `do_first` prefers a band gate over any amount of points, because points cannot clear a gate.
+      x-tier: business
+      x-mcp-tool: what_can_i_fix
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: Ranked items, gates, and the headline.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slug: { type: string }
+                  current: { type: object }
+                  do_first: { type: object }
+                  gates: { type: object }
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kind: { type: string, enum: [check, facet], description: A named check, or a facet rollup where no check data explains that facet. }
+                        layer: { type: string, enum: [kin_score, agent_readiness] }
+                        id: { type: string }
+                        score_gain: { type: number, description: Composite points, not raw rubric points. }
+                        what_satisfies_it: { type: string }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /providers/{slug}/gates:
+    get:
+      operationId: readinessGates
+      summary: Band gates for this provider, and what is unmet
+      x-tier: business
+      x-mcp-tool: readiness_gates
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: Current band, the next band, and every gate requirement with its status.
+          content: { application/json: { schema: { type: object } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+  /providers/{slug}/rating/checks:
+    get:
+      operationId: providerRatingChecks
+      summary: Per-check Kin Score results for this provider
+      description: |-
+        Actionable checks only — missed and partial. `counts` reports all four statuses so a reader can verify nothing is hidden. Ordered by points available.
+      x-tier: business
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The per-check results, joined against the rubric.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  slug: { type: string }
+                  scored_at: { type: string }
+                  rubric_version: { type: string }
+                  counts: { type: object }
+                  checks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        status: { type: string, enum: [missed, partial] }
+                        label: { type: string }
+                        facet: { type: string }
+                        points_available: { type: number }
+                        what_satisfies_it: { type: string }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '503':
+          description: Per-check results are not loaded for this build. A gap in our data, not a statement that you failed nothing.
+          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  /checks:
+    post:
+      operationId: requestCheck
+      summary: Ask for a provider, industry, tag or area to be re-profiled
+      description: |-
+        A check means re-running the enrichment pipeline against a live surface — a human-supervised job. The request takes a place in a queue rather than returning an answer.
+      x-tier: business
+      x-mcp-tool: request_check
+      tags: [Provider Control]
+      security: [{ ApiKeyAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slug: { type: string }
+                url: { type: string, format: uri }
+                targetType: { type: string, enum: [provider, industry, tag, area, estate, catalog] }
+                kind: { type: string }
+                notes: { type: string }
+                contact: { type: string }
+      responses:
+        '200': { description: Queued., content: { application/json: { schema: { type: object, properties: { ok: { type: boolean }, queued: { type: boolean }, detail: { type: string } } } } } }
+        '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+  /gaps/report:
+    post:
+      operationId: reportGap
+      summary: Tell us what you looked for and did not find
+      description: Keyless and free on purpose — a gap report that must be paid for is a report we do not get.
+      x-tier: free
+      x-mcp-tool: report_gap
+      tags: [Provider Control]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [looked_for]
+              properties:
+                looked_for: { type: string }
+                context: { type: string }
+                contact: { type: string }
+      responses:
+        '202': { description: Received., content: { application/json: { schema: { type: object, properties: { received: { type: boolean } } } } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '503': { $ref: '#/components/responses/QueueUnreachable' }
+components:
+  parameters:
+    Slug:
+      name: slug
+      in: path
+      required: true
+      description: The provider slug the record is filed under.
+      schema: { type: string }
+      example: apis-io
+  schemas:
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+        detail: { type: string }
+    QueuedRequest:
+      type: object
+      description: Every write here is a REQUEST, not a completed action. `completed` is always false on acceptance.
+      properties:
+        received: { type: boolean }
+        completed: { type: boolean }
+        request_type: { type: string }
+        slug: { type: string }
+        id: { type: string, description: Poll status_url with this. }
+        status: { type: string }
+        status_url: { type: string }
+        detail: { type: string }
+  responses:
+    BadRequest:
+      description: The body did not carry what this operation needs. The response names the fields.
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    NotFound:
+      description: No such provider, or nothing stored for it.
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    UpgradeRequired:
+      description: A valid credential below the required plan. An unauthenticated caller gets 401 with a bootstrap challenge instead.
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    QueueUnreachable:
+      description: The request queue is not reachable. The response says where else to reach us — a request here is never dropped silently.
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
