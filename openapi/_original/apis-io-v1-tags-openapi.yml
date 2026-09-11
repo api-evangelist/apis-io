@@ -172,6 +172,7 @@ components:
         - strong
         - developing
         - thin
+        - emerging
         - minimal
       maxLength: 1024
     Facets:
