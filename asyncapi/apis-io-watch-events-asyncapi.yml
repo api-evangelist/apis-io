@@ -1,0 +1,183 @@
+asyncapi: 3.0.0
+
+info:
+  title: APIs.io Watch Events
+  version: 1.0.0
+  description: >-
+    Events APIs.io sends to a provider watching their own listing.
+
+    Register with `POST /v1/me/watch/{slug}` (Influence), supplying `callback_url` for the
+    signed-webhook delivery described here, `contact` for email, or both. Re-registering the same
+    slug replaces its event set.
+
+    THE FIRST PASS AFTER REGISTRATION SENDS NOTHING. It records where the provider stood, so the
+    first delivery you receive is about a real move rather than a backlog you never asked for.
+
+    Changes are measured against the state you were last SENT, not against the scorer's own
+    `delta`. That makes a replayed nightly silent, and it makes a band change detectable even when
+    the composite did not move — which happens under a rubric release.
+
+    THIS DOCUMENT DESCRIBES ONLY WHAT IS SENT. Three events are implemented. Request-queue status
+    changes are delivered by the request queue as email, not through this channel, and
+    saved-search and new-provider events are not implemented — they are deliberately absent here
+    rather than specified ahead of a sender.
+  contact:
+    name: APIs.io
+    url: https://apis.io/developer/
+    email: info@apis.io
+  license:
+    name: CC BY-NC-SA 4.0
+    url: https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+defaultContentType: application/json
+
+servers:
+  subscriber:
+    host: 'your-host.example.com'
+    protocol: https
+    description: >-
+      YOUR endpoint, supplied as `callback_url` at registration. APIs.io POSTs to it; it is not a
+      host APIs.io operates. Must be https — the signature below is worthless over plaintext.
+
+channels:
+  watchDelivery:
+    address: '/'
+    title: Watch delivery
+    description: >-
+      One POST per watched provider per run, carrying every event that provider produced for you
+      in that run. Batched per provider rather than per event, so a provider whose score and band
+      both moved is one delivery and one row in your log.
+    servers:
+      - $ref: '#/servers/subscriber'
+    messages:
+      watchEvents:
+        $ref: '#/components/messages/WatchEvents'
+
+operations:
+  sendWatchEvents:
+    action: send
+    channel:
+      $ref: '#/channels/watchDelivery'
+    title: Deliver watch events
+    description: >-
+      Retried twice on 5xx and on transport failure, with backoff. NOT retried on 4xx — a receiver
+      saying the payload is malformed will say it again. A delivery that never succeeds does not
+      advance your last-notified state, so the next run re-sends rather than dropping the event.
+    messages:
+      - $ref: '#/channels/watchDelivery/messages/watchEvents'
+
+components:
+  messages:
+    WatchEvents:
+      name: watchEvents
+      title: Watch events for one provider
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          x-apis-io-signature:
+            type: string
+            pattern: '^t=[0-9]+,v1=[0-9a-f]{64}$'
+            description: >-
+              `t=<unix seconds>,v1=<hex>`, where the hex is HMAC-SHA256 over the exact bytes
+              `<t>.<raw request body>` keyed with your signing secret. Verify before trusting the
+              payload, and reject on `t` age to refuse a replay. Compare with a constant-time
+              comparison, not string equality.
+            examples:
+              - 't=1789200000,v1=3f1a...'
+          user-agent:
+            type: string
+            examples: ['apis.io-webhooks/1']
+      payload:
+        $ref: '#/components/schemas/WatchEnvelope'
+
+  schemas:
+    WatchEnvelope:
+      type: object
+      required: [slug, run_ts, events]
+      additionalProperties: false
+      properties:
+        slug:
+          type: string
+          description: The watched provider.
+          examples: ['apis-io']
+        run_ts:
+          type: string
+          description: >-
+            The scoring run this delivery reports on. Idempotency key — the same slug and run_ts
+            will not be delivered twice once a delivery has succeeded.
+          examples: ['2026-09-11T06:00:00.000Z']
+        events:
+          type: array
+          minItems: 1
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/ScoreChanged'
+              - $ref: '#/components/schemas/BandChanged'
+              - $ref: '#/components/schemas/AgentBandChanged'
+            discriminator: event
+
+    ScoreChanged:
+      type: object
+      required: [event, slug, name, composite, previous_composite, delta]
+      properties:
+        event: { type: string, const: provider.score.changed }
+        slug: { type: string, examples: ['apis-io'] }
+        name: { type: string, examples: ['APIs.io'] }
+        composite: { type: number, description: Kin Score composite now., examples: [71.9] }
+        previous_composite:
+          type: number
+          description: What you were last told, not necessarily the previous scoring run.
+          examples: [72.6]
+        delta: { type: number, examples: [-0.7] }
+        scored_at: { type: [string, 'null'], examples: ['2026-09-10'] }
+
+    BandChanged:
+      type: object
+      required: [event, slug, name, band, previous_band]
+      description: >-
+        Sent when the band moves, INCLUDING when the composite did not. A rubric release can
+        reprice thresholds without changing a single score.
+      properties:
+        event: { type: string, const: provider.band.changed }
+        slug: { type: string }
+        name: { type: string }
+        band:
+          type: string
+          enum: [exemplar, strong, developing, emerging, thin]
+        previous_band:
+          type: string
+          enum: [exemplar, strong, developing, emerging, thin]
+        composite: { type: [number, 'null'] }
+        scored_at: { type: [string, 'null'] }
+
+    AgentBandChanged:
+      type: object
+      required: [event, slug, name, agent_band, previous_agent_band]
+      description: >-
+        The event worth registering for. When an agent band is held below what the points earned,
+        `band_gated_from` and `gate_unmet` say which gate did it — a fact a provider cannot compute
+        about their own listing, because it is the rubric's band gate applied to their dimensions.
+      properties:
+        event: { type: string, const: provider.agent_band.changed }
+        slug: { type: string }
+        name: { type: string }
+        agent_band:
+          type: string
+          enum: [agent-native, agent-ready, agent-aware, human-only]
+        previous_agent_band:
+          type: string
+          enum: [agent-native, agent-ready, agent-aware, human-only]
+        agent_score: { type: [number, 'null'], examples: [44.5] }
+        band_gated_from:
+          type: string
+          description: >-
+            Present only when the score cleared a higher band's threshold and an unmet gate held it
+            below. Absent means the band is what the points say.
+          examples: ['agent-native']
+        gate_unmet:
+          type: array
+          items: { type: string }
+          description: The gate checks still unsatisfied.
+          examples: [['idempotency']]
+        scored_at: { type: [string, 'null'] }

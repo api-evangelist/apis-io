@@ -441,6 +441,57 @@ paths:
         '202': { description: Received., content: { application/json: { schema: { type: object, properties: { received: { type: boolean } } } } } }
         '400': { $ref: '#/components/responses/BadRequest' }
         '503': { $ref: '#/components/responses/QueueUnreachable' }
+# ---- webhooks: what APIs.io SENDS to a provider watching their own listing -------------------
+#
+# Registered with POST /v1/me/watch/{slug} by supplying `callback_url`. The full event contract,
+# including the signature scheme and the retry policy, is in
+# asyncapi/apis-io-watch-events-asyncapi.yml.
+#
+# Only the three events that are actually sent are declared here. Request-queue status changes go
+# out as email from the queue, not through this channel.
+webhooks:
+  watchEvents:
+    post:
+      operationId: receiveWatchEvents
+      summary: Watch events for one provider
+      description: >-
+        One POST per watched provider per scoring run, carrying every event that provider produced
+        for you in that run. Signed with `X-APIs-Io-Signature: t=<unix>,v1=<hmac-sha256 of
+        "<t>.<raw body>">`; verify it before trusting the payload and reject on the age of `t` to
+        refuse a replay. Retried twice on 5xx and on transport failure, never on 4xx. Return any
+        2xx to acknowledge.
+      tags: [Watches]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [slug, run_ts, events]
+              properties:
+                slug:
+                  type: string
+                  examples: [apis-io]
+                run_ts:
+                  type: string
+                  description: The scoring run this reports on; the idempotency key for the delivery.
+                  examples: ['2026-09-11T06:00:00.000Z']
+                events:
+                  type: array
+                  minItems: 1
+                  items:
+                    oneOf:
+                      - $ref: '#/components/schemas/WatchScoreChanged'
+                      - $ref: '#/components/schemas/WatchBandChanged'
+                      - $ref: '#/components/schemas/WatchAgentBandChanged'
+      responses:
+        '2XX':
+          description: Acknowledged. Any 2xx stops the retry.
+        '4XX':
+          description: >-
+            Rejected. Not retried — a receiver that calls the payload malformed will call it
+            malformed again.
+
 components:
   parameters:
     Slug:
@@ -483,6 +534,52 @@ components:
         status: { type: string }
         status_url: { type: string }
         detail: { type: string }
+    WatchScoreChanged:
+      type: object
+      required: [event, slug, name, composite, previous_composite, delta]
+      properties:
+        event: { type: string, const: provider.score.changed }
+        slug: { type: string }
+        name: { type: string }
+        composite: { type: number, examples: [71.9] }
+        previous_composite:
+          type: number
+          description: What you were last TOLD, which is not necessarily the previous scoring run.
+          examples: [72.6]
+        delta: { type: number, examples: [-0.7] }
+        scored_at: { type: [string, 'null'] }
+    WatchBandChanged:
+      type: object
+      required: [event, slug, name, band, previous_band]
+      description: Sent when the band moves, including when the composite did not.
+      properties:
+        event: { type: string, const: provider.band.changed }
+        slug: { type: string }
+        name: { type: string }
+        band: { type: string, enum: [exemplar, strong, developing, emerging, thin] }
+        previous_band: { type: string, enum: [exemplar, strong, developing, emerging, thin] }
+        composite: { type: [number, 'null'] }
+        scored_at: { type: [string, 'null'] }
+    WatchAgentBandChanged:
+      type: object
+      required: [event, slug, name, agent_band, previous_agent_band]
+      description: >-
+        Carries the band gate when one applies. `band_gated_from` with `gate_unmet` means the score
+        cleared a higher band and an unmet gate held it below — the one thing about their own
+        listing a provider cannot work out for themselves.
+      properties:
+        event: { type: string, const: provider.agent_band.changed }
+        slug: { type: string }
+        name: { type: string }
+        agent_band: { type: string, enum: [agent-native, agent-ready, agent-aware, human-only] }
+        previous_agent_band: { type: string, enum: [agent-native, agent-ready, agent-aware, human-only] }
+        agent_score: { type: [number, 'null'], examples: [44.5] }
+        band_gated_from: { type: string, examples: [agent-native] }
+        gate_unmet:
+          type: array
+          items: { type: string }
+          examples: [[idempotency]]
+        scored_at: { type: [string, 'null'] }
   responses:
     BadRequest:
       description: The body did not carry what this operation needs. The response names the fields.
