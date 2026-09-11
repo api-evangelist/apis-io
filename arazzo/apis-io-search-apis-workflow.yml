@@ -48,7 +48,7 @@ workflows:
     description: >-
       Search across all indexed APIs by the supplied keyword, returning a page
       of matches along with the result metadata and pagination links.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header
@@ -90,7 +90,7 @@ workflows:
       Confirm the top match by re-reading the first page of the same keyword
       search so the matched API and its source URLs can be returned to the
       caller.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header
@@ -118,7 +118,7 @@ workflows:
     description: >-
       Re-run the search confirming the empty result set so the caller can be
       told no APIs matched the keyword and prompt for a new search term.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header

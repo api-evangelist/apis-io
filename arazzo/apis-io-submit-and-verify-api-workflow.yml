@@ -15,6 +15,9 @@ sourceDescriptions:
 - name: searchApi
   url: ../openapi/apis-io-search-api-openapi.yml
   type: openapi
+- name: submitApi
+  url: ../openapi/apis-io-submit-api-openapi.yml
+  type: openapi
 workflows:
 - workflowId: submit-and-verify-api
   summary: Add an APIs.json to APIs.io and confirm the new API is searchable.
@@ -77,7 +80,7 @@ workflows:
     description: >-
       Search the APIs.io index for the submitted service name to confirm it has
       been ingested, then branch on whether it is already discoverable.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header

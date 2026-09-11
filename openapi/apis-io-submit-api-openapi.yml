@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: APIs.io Submit API
+  description: >-
+    The Add-API door: discover what a domain already publishes (apis.json, api-catalog,
+    OpenAPI, AID onboarding descriptor), then submit a provider for review. Documented
+    first-party from the serving Lambda (apis-io-aws/lambdas/submit/index.mjs) —
+    written 2026-09-03 because the catalog held Arazzo flows exercising this surface
+    while the surface itself had no published contract (roadmap#211).
+  version: 1.0.0
+  contact:
+    name: APIs.io
+    url: https://apis.io
+servers:
+- url: https://apis.io
+paths:
+  /api/v1/submit/discover:
+    get:
+      operationId: discoverSubmission
+      summary: Discover a domain's machine-readable API surface before submitting
+      description: >-
+        Probes the domain for apis.json (root and .well-known), the API onboarding
+        descriptor, /.well-known/api-catalog, and common OpenAPI locations. Returns a
+        preview, the discovered artifacts, a draft apis.json, and a preliminary rating
+        estimate. No key required.
+      parameters:
+      - name: url
+        in: query
+        required: true
+        schema:
+          type: string
+        description: A domain, site URL, or direct apis.json URL.
+      responses:
+        '200':
+          description: Discovery result with preview, discovered artifacts, and a draft apis.json.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  input: {type: string}
+                  origin: {type: string}
+                  preview: {type: object}
+                  discovered: {type: array, items: {type: object}}
+                  artifacts: {type: object}
+                  rating: {type: object}
+                  apisjson: {type: object}
+        '400':
+          description: Missing or unusable url parameter.
+  /api/v1/submit:
+    post:
+      operationId: addAPI
+      summary: Submit an API provider for review and listing
+      description: >-
+        Queues a structured submission for review. Minimum bar is a name plus a contact
+        email — the build worker can research a provider from the name alone, but a
+        submission we cannot answer is a dead end for both sides. A URL, when given,
+        seeds the research and skips discovery.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, contact]
+              properties:
+                name:
+                  type: string
+                  maxLength: 200
+                  description: API or provider name.
+                contact:
+                  type: string
+                  format: email
+                  maxLength: 200
+                  description: Email used to tell you when the listing is live. Required.
+                url:
+                  type: string
+                  maxLength: 500
+                  description: apis.json URL (or the confirmed one from discovery).
+                docsUrl:
+                  type: string
+                  maxLength: 500
+                provider:
+                  type: string
+                  maxLength: 200
+                notes:
+                  type: string
+                  maxLength: 1000
+                newsletter:
+                  type: boolean
+                tags:
+                  type: array
+                  maxItems: 20
+                  items: {type: string, maxLength: 40}
+                apisjson:
+                  type: object
+                  description: The confirmed draft apis.json from the discover step.
+      responses:
+        '200':
+          description: Submission accepted into the review queue.
+        '400':
+          description: Body is not valid JSON (error invalid_json).
+        '422':
+          description: >-
+            Below the minimum bar — errors insufficient (no name), contact_required, or
+            contact_invalid.

@@ -47,7 +47,7 @@ workflows:
     description: >-
       Search the index for the primary keyword and read the total page count and
       top match.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header
@@ -71,7 +71,7 @@ workflows:
     description: >-
       Search the index for the alternate keyword and read its total page count
       and top match, then branch on which keyword has broader coverage.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header

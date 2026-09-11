@@ -43,7 +43,7 @@ workflows:
     description: >-
       Fetch the first page of results for the keyword and read the total page
       count and the next-page link from the response metadata.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header
@@ -81,7 +81,7 @@ workflows:
     description: >-
       Fetch the second page of results for the same keyword so results can be
       accumulated beyond the first page.
-    operationId: searchAPIs
+    operationId: search
     parameters:
     - name: x-api-key
       in: header

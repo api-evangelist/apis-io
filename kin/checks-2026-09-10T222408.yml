@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: apis-io
-  schema_version: 0.18.2
-  scored_at: '2026-09-04'
-  run_ts: 2026-09-04T062714
+  schema_version: 0.20.0
+  scored_at: '2026-09-10'
+  run_ts: 2026-09-10T222408
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.2.yml; counts below let you verify that.
+    in rubric/scoring-0.20.0.yml; counts below let you verify that.
   counts:
-    total: 132
-    earned: 63
-    partial: 16
-    missed: 27
+    total: 136
+    earned: 64
+    partial: 18
+    missed: 28
     na: 26
   checks:
   - id: apis_json_self_hosted
@@ -32,9 +32,6 @@ kin_checks:
     status: missed
   - id: overlay_published
     status: missed
-  - id: status_page_present
-    status: missed
-    detail: pointer liveness 0.0
   - id: webhooks_advertised
     status: missed
   - id: examples_published
@@ -53,13 +50,17 @@ kin_checks:
     status: missed
   - id: reg_compliance_published
     status: missed
-  - id: idempotency
+  - id: upsert_outcome_discriminator
+    status: missed
+  - id: upsert_alternate_key
+    status: missed
+  - id: upsert_named
+    status: missed
+  - id: upsert_declared_conflict
     status: missed
   - id: event_surface_described
     status: missed
   - id: consent_identity
-    status: missed
-  - id: agent_card
     status: missed
   - id: dry_run_mode
     status: missed
@@ -77,7 +78,7 @@ kin_checks:
     detail: 17 of 18 openapi documents pass
   - id: examples_present
     status: partial
-    earned: 0.09
+    earned: 0.11
   - id: components_reuse
     status: partial
     earned: 1.5
@@ -102,6 +103,10 @@ kin_checks:
   - id: conformance_declared
     status: partial
     earned: 1.5
+  - id: status_page_present
+    status: partial
+    earned: 3.0
+    detail: pointer liveness 0.5
   - id: github_org_present
     status: partial
     earned: 1.0
@@ -130,3 +135,7 @@ kin_checks:
     status: partial
     earned: 3.5
     detail: 'grade: partial'
+  - id: agent_card
+    status: partial
+    earned: 4.8
+    detail: 'grade: near-conformant'
