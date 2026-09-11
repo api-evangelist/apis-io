@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apisio"
+version = "0.1.0"
+description = "Python client and CLI for the apis.io API catalog"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+authors = [{ name = "API Evangelist", email = "info@apievangelist.com" }]
+keywords = ["apis.io", "api", "catalog", "openapi", "apis.json", "discovery", "agents"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+# No runtime dependencies, deliberately. A catalog client that drags in a dependency tree is a
+# worse thing to add to somebody's project than the four lines of urllib it replaces.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pyyaml"]          # generate.py only; not needed to USE the client
+
+[project.urls]
+Homepage = "https://apis.io"
+Documentation = "https://apis.io/developer/"
+Source = "https://github.com/api-evangelist/apis-io/tree/main/sdk/python"
+
+[project.scripts]
+apisio = "apisio.cli:main"
+
+[tool.setuptools]
+packages = ["apisio"]
