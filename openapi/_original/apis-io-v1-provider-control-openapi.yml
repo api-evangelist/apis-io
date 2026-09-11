@@ -72,9 +72,11 @@ paths:
   /providers/{slug}/claim:
     post:
       operationId: claimListing
-      summary: Claim this listing as its owner
+      summary: Create or return your claim on this listing
       description: |-
         Ownership is proved against a host we already hold for the provider. A provider with no website on file cannot be claimed until a correction supplies one — the 422 says so rather than failing opaquely.
+
+        IDEMPOTENT FOR YOU, CONTESTED ACROSS PARTIES. Claiming again when you already have an open claim returns that claim (`outcome: already_claimed`), not a second one. A claim on a listing ANOTHER party has already claimed is a 409 — that is a dispute a person decides, and telling you your claim was progressing when it is someone else's would be a lie.
       x-tier: business
       x-mcp-tool: claim_listing
       tags: [Provider Control]
@@ -93,7 +95,13 @@ paths:
         '202':
           description: Claim queued for verification.
           content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } }
+        '200':
+          description: You already have an open claim on this listing. This is that claim.
+          content: { application/json: { schema: { $ref: '#/components/schemas/UpsertResult' } } }
         '402': { $ref: '#/components/responses/UpgradeRequired' }
+        '409':
+          description: Another party has an open claim on this listing. A person decides it.
+          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
         '422':
           description: No provable host on file, so the claim cannot be checked.
           content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
@@ -101,11 +109,13 @@ paths:
   /providers/{slug}/facts:
     post:
       operationId: correctFacts
-      summary: Propose corrected facts for this listing
+      summary: Create or update your pending fact correction for this listing
       description: |-
         Structured corrections an operator applies by hand. Send one or more of the fields below.
 
-        NOT IDEMPOTENT and NOT AN UPSERT. A second call files a second request rather than amending the pending one, and the response does not say whether an earlier request exists. Whether a repeat submission should amend is undecided (roadmap#288).
+        AN UPSERT, scoped to you. While you have an open correction for this provider a second call AMENDS it in place and keeps its id, so you keep polling the same status_url and an operator works one currently-correct row rather than reconciling three. `outcome` says which happened: `created` (202) or `amended` (200), with `previous` carrying what was replaced.
+
+        Scoped to the submitter deliberately: a different person correcting the same provider files their own request, because two people disagreeing about a listing is something a human must see rather than a silent overwrite.
       x-tier: business
       x-mcp-tool: correct_facts
       tags: [Provider Control]
@@ -128,18 +138,21 @@ paths:
                 tags: { type: array, items: { type: string } }
                 contact: { type: string }
       responses:
-        '202': { description: Queued., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '200':
+          description: Your open correction for this provider was amended in place. Same id.
+          content: { application/json: { schema: { $ref: '#/components/schemas/UpsertResult' } } }
+        '202': { description: Filed as a new request., content: { application/json: { schema: { $ref: '#/components/schemas/UpsertResult' } } } }
         '400': { $ref: '#/components/responses/BadRequest' }
         '402': { $ref: '#/components/responses/UpgradeRequired' }
         '503': { $ref: '#/components/responses/QueueUnreachable' }
   /providers/{slug}/submit:
     post:
       operationId: submitArtifact
-      summary: Submit an artifact URL for this listing
+      summary: Create or update an artifact pointer for this listing
       description: |-
         Point us at an artifact you publish — an OpenAPI, an AsyncAPI, a rules file — and it is fetched and wired by an operator.
 
-        NOT AN UPSERT. Submitting a type the provider already has a pointer for files a new request; whether that should replace, version or be rejected is undecided (roadmap#288).
+        UPSERT ON (type, url). Submitting a pointer we already hold — same type AND same url — is a no-op that says so (`outcome: unchanged`), and nothing is queued. Submitting a NEW url of a type we already hold is an ADDITION, not a replacement: providers legitimately publish several specs, and silently replacing one would remove an artifact you are already scored for, so a submission meant to raise a score would lower it. `existing_of_type` tells you how many we already hold.
       x-tier: business
       x-mcp-tool: submit_artifact
       tags: [Provider Control]
@@ -159,7 +172,10 @@ paths:
                 contact: { type: string }
             example: { type: OpenAPI, url: 'https://example.com/openapi.yml' }
       responses:
-        '202': { description: Queued., content: { application/json: { schema: { $ref: '#/components/schemas/QueuedRequest' } } } }
+        '200':
+          description: We already hold that exact pointer. Nothing was queued.
+          content: { application/json: { schema: { $ref: '#/components/schemas/UpsertResult' } } }
+        '202': { description: Queued as an addition., content: { application/json: { schema: { $ref: '#/components/schemas/UpsertResult' } } } }
         '400': { $ref: '#/components/responses/BadRequest' }
         '402': { $ref: '#/components/responses/UpgradeRequired' }
         '503': { $ref: '#/components/responses/QueueUnreachable' }
@@ -440,6 +456,21 @@ components:
       properties:
         error: { type: string }
         detail: { type: string }
+    UpsertResult:
+      type: object
+      description: |-
+        A write whose repeat behaviour is defined. `outcome` names which branch ran, so a caller retrying after a timeout can tell what the server did without re-reading the record.
+      allOf:
+        - $ref: '#/components/schemas/QueuedRequest'
+        - type: object
+          properties:
+            outcome:
+              type: string
+              enum: [created, amended, unchanged, already_claimed]
+              description: created — a new request. amended — your open one was replaced, same id. unchanged — we already hold this, nothing queued. already_claimed — your existing claim, not a second.
+            previous: { type: object, description: On an amend, what the request held before. }
+            revisions: { type: integer, description: How many times this request has been amended. }
+            existing_of_type: { type: integer, description: On submit, how many pointers of this type we already hold. }
     QueuedRequest:
       type: object
       description: Every write here is a REQUEST, not a completed action. `completed` is always false on acceptance.
