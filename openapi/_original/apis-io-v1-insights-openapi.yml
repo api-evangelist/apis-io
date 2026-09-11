@@ -32,8 +32,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/InsightsSummary"
       security: []
       x-tier: free
   /insights/dimensions:
@@ -53,8 +52,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/InsightDimensionList"
       security: []
       x-tier: free
   /insights/adoption:
@@ -85,8 +83,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/InsightAdoptionList"
       security: []
       x-tier: free
   /insights/industries:
@@ -102,8 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/InsightIndustryList"
       security: []
       x-tier: free
   /insights/companies:
@@ -124,8 +120,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/InsightCompanyList"
       security: []
       x-tier: free
   /insights/company/{slug}:
@@ -150,8 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/CompanyInsight"
         "404":
           $ref: "#/components/responses/NotFound"
       security: []
@@ -179,8 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/CompanyGaps"
         "403":
           description: Requires the Pro or Business tier.
           content:
@@ -211,8 +204,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/CompanyProviderMatch"
         "403":
           description: Requires the Pro or Business tier.
           content:
@@ -306,4 +298,168 @@ components:
         - type
         - title
         - status
+      additionalProperties: true
+
+    InsightsMeta:
+      type: object
+      description: Pagination and echoed-query metadata for insights collections.
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        limit: { type: integer }
+        pages: { type: integer }
+        query: { type: object, additionalProperties: true }
+      additionalProperties: true
+    InsightsSummary:
+      type: object
+      description: >-
+        The insights corpus in one call — what it covers, how it was assembled, and which
+        dimensions carry the most signal. Read `meta` before quoting any number from it: this
+        corpus is joined from company research rather than measured from contracts, and `meta`
+        is where its basis and caveats are stated.
+      properties:
+        counts:
+          type: object
+          description: Size of the corpus, by kind.
+          properties:
+            companies: { type: integer }
+            industries: { type: integer }
+            services: { type: integer }
+            tools: { type: integer }
+          additionalProperties: true
+        top_dimensions:
+          type: array
+          description: Dimensions ranked by total signal across the corpus.
+          items:
+            type: object
+            properties:
+              dimension: { type: string, maxLength: 256 }
+              total_signal: { type: integer, description: Summed signal for this dimension. }
+              companies_with_signal:
+                type: integer
+                description: How many companies contributed any signal to it.
+            additionalProperties: true
+        meta:
+          type: object
+          description: >-
+            Provenance and caveats — how companies were joined, which quarter is primary, what
+            the adoption basis is, and what the numbers do NOT mean.
+          additionalProperties: true
+      additionalProperties: true
+    InsightDimensionList:
+      type: object
+      description: The dimensions the insights corpus is organised by, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/InsightsMeta" }
+        data: { type: array, items: { type: object, additionalProperties: true } }
+      additionalProperties: true
+    InsightAdoptionList:
+      type: object
+      description: Adoption signal per dimension, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/InsightsMeta" }
+        data: { type: array, items: { type: object, additionalProperties: true } }
+      additionalProperties: true
+    InsightCompanyList:
+      type: object
+      description: Companies in the insights corpus, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/InsightsMeta" }
+        data: { type: array, items: { type: object, additionalProperties: true } }
+      additionalProperties: true
+    InsightIndustryList:
+      type: object
+      description: >-
+        Industries in the insights corpus. Carries `counts` and `scope` alongside the page,
+        because "how many companies are profiled" is the question this endpoint is usually asked.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/InsightsMeta" }
+        data: { type: array, items: { type: object, additionalProperties: true } }
+        counts:
+          type: object
+          description: Corpus coverage for this scope.
+          properties:
+            company_count: { type: integer }
+            profiled_count: { type: integer, description: Companies with a profile. }
+            unprofiled_count: { type: integer, description: Companies without one. }
+          additionalProperties: true
+        scope: { type: string, description: What this listing covers., maxLength: 256 }
+        note: { type: string, maxLength: 2048 }
+      additionalProperties: true
+    CompanyInsight:
+      type: object
+      description: >-
+        One company's technology signal — what the corpus observed, by quarter. This is RESEARCH,
+        not a contract measurement: `confidence` and `source` say how far to trust it, and `note`
+        carries the caveat that applies to this particular company.
+      required: [slug, name]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        industry: { type: string, maxLength: 256 }
+        sub_sector: { type: string, maxLength: 256 }
+        confidence:
+          type: string
+          description: How well evidenced this company's signal is.
+          maxLength: 64
+        source: { type: string, description: Where the signal came from., maxLength: 256 }
+        current:
+          type: object
+          description: The most recent quarter's signal — totals plus the leading tools and standards.
+          additionalProperties: true
+        quarters:
+          type: object
+          description: Signal by quarter, keyed by quarter id such as `q2-2026`.
+          additionalProperties: true
+        note: { type: string, maxLength: 2048 }
+      additionalProperties: true
+    CompanyGaps:
+      type: object
+      description: >-
+        Where a company's observed signal is thin, by dimension — the gaps an integrator or a
+        vendor would care about.
+      required: [slug, name, gaps]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        industry: { type: string, maxLength: 256 }
+        readiness_total: { type: integer, description: Summed readiness across dimensions. }
+        gaps:
+          type: array
+          description: One entry per dimension, lowest score first.
+          items:
+            type: object
+            properties:
+              dimension: { type: string, maxLength: 256 }
+              score: { type: integer, description: Observed signal for this dimension. }
+            additionalProperties: true
+      additionalProperties: true
+    CompanyProviderMatch:
+      type: object
+      description: >-
+        Catalogued providers matched to a company's observed signal — the bridge from "this
+        company uses X" to "X is this provider in the catalog".
+      required: [slug, name, matched_providers]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        matched_providers:
+          type: array
+          items:
+            type: object
+            properties:
+              from:
+                type: string
+                description: The observed signal that produced this match.
+                maxLength: 256
+              slug: { type: string, description: Matched provider slug., maxLength: 128 }
+              name: { type: string, maxLength: 256 }
+              band: { type: string, maxLength: 128 }
+              composite: { type: number, minimum: 0, maximum: 100 }
+            additionalProperties: true
+        note: { type: string, maxLength: 2048 }
       additionalProperties: true

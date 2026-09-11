@@ -119,8 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/RatingHistory"
         "404":
           $ref: "#/components/responses/NotFound"
   /ratings/movers:
@@ -142,8 +141,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/RatingMovers"
   /providers/{slug}/rating/facets:
     get:
       operationId: getProviderFacets
@@ -162,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderFacets"
         "402": &a1
           $ref: "#/components/responses/UpgradeRequired"
         "404": &a2
@@ -185,7 +183,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/AgentReadiness"
         "402": *a1
         "404": *a2
   /providers/{slug}/evidence:
@@ -206,7 +204,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderEvidence"
         "404": *a2
 components:
   parameters:
@@ -630,3 +628,199 @@ components:
         - flat
         - falling
       maxLength: 1024
+
+    AgentReadiness:
+      type: object
+      description: >-
+        A provider's Agent Readiness — the standalone layer, scored and banded separately from
+        the composite rating and never folded into it. It answers whether an agent can drive this
+        API safely, which is a different question from whether the API is well described.
+      required: [slug, name, score, band, dimensions]
+      properties:
+        slug: { type: string, description: Provider slug., maxLength: 128 }
+        name: { type: string, description: Provider display name., maxLength: 256 }
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Agent Readiness score. Additive across the dimensions below, then banded.
+        band: { $ref: "#/components/schemas/AgentBand" }
+        dimensions:
+          type: object
+          description: >-
+            One entry per scored dimension, keyed by dimension id. A graded dimension reports
+            `verified` (the behaviour is in the contract), `documented` (only a provider-level
+            link asserts it), or false. Dimension ids move with the rubric, so this is an open map
+            rather than a fixed set — read `rubric_version` to know which revision produced it.
+          additionalProperties: true
+        rubric:
+          type: string
+          description: URL of the published rubric revision that produced this score.
+          maxLength: 2048
+        rubric_version:
+          type: number
+          description: >-
+            Version of the AGENT READINESS layer — not the composite rubric. Served as a NUMBER
+            here and as a string on /rating/facets and /evidence, which is roadmap#314; do not
+            compare the two without normalising.
+        scored_at:
+          type: string
+          format: date
+          description: Date this provider was last scored.
+      additionalProperties: true
+    AgentBand:
+      type: string
+      description: Agent Readiness band, derived from the score and subject to the band gate.
+      enum: [agent-native, agent-ready, agent-aware, human-only]
+      maxLength: 1024
+    ProviderFacets:
+      type: object
+      description: >-
+        The facet breakdown behind a provider's composite score.
+      required: [slug, name, composite, band, facets]
+      properties:
+        slug: { type: string, description: Provider slug., maxLength: 128 }
+        name: { type: string, description: Provider display name., maxLength: 256 }
+        composite: { type: number, minimum: 0, maximum: 100, description: Weighted composite. }
+        band: { $ref: "#/components/schemas/Band" }
+        facets:
+          type: object
+          description: >-
+            Facet scores, each 0-100, keyed by facet name. NOTE that renamed facets are currently
+            emitted under BOTH their rubric key and a label-derived alias carrying the identical
+            value — `commercial_clarity` and `access_clarity`, `governance` and
+            `contract_governance`. Read a facet by name; do NOT sum this object, or two of them
+            are counted twice. Tracked as roadmap#315.
+          additionalProperties: { type: number, minimum: 0, maximum: 100 }
+        regulatory:
+          type: object
+          description: >-
+            The conditional regulatory facet. Present for every provider; `applies` says whether
+            it counted. It is NOT inside `facets` above.
+          properties:
+            applies: { type: boolean, description: Whether a regime matched this provider. }
+            regime: { type: string, description: Human name of the matched regime., maxLength: 256 }
+            regime_id: { type: string, description: Stable regime identifier., maxLength: 128 }
+            score: { type: number, minimum: 0, maximum: 100 }
+            matched_via:
+              type: string
+              description: How the regime was matched — e.g. by tag.
+              maxLength: 128
+            jurisdictions:
+              type: array
+              description: Jurisdictions the regime covers.
+              items: { type: string, maxLength: 128 }
+            jurisdictions_satisfied:
+              type: array
+              description: Jurisdictions this provider satisfies.
+              items: { type: string, maxLength: 128 }
+          additionalProperties: true
+        rubric_version:
+          type: string
+          description: Composite rubric revision that produced these facets.
+          maxLength: 32
+        scored_at: { type: string, format: date }
+      additionalProperties: true
+    ProviderEvidence:
+      type: object
+      description: >-
+        What a provider's score RESTED ON — the provenance behind each artifact class, so a reader
+        can tell a signal the provider published from one API Evangelist generated for them.
+      required: [slug, name, provenance]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        provenance:
+          type: object
+          description: >-
+            Provenance class per artifact family (mcp, skills, agentic_access, conformance,
+            contracts). Values are the classes named in `legend`; `contracts` carries counts
+            rather than a class.
+          additionalProperties: true
+        legend:
+          type: object
+          description: What each provenance class means, so the values above are readable alone.
+          additionalProperties: { type: string, maxLength: 1024 }
+        rubric: { type: string, maxLength: 2048 }
+        rubric_version: { type: string, maxLength: 32 }
+        scored_at: { type: string, format: date }
+      additionalProperties: true
+    RatingHistory:
+      type: object
+      description: >-
+        A provider's scoring history as a time series, plus a summary of how far it has moved.
+      required: [slug, name, current, series]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        current:
+          type: object
+          description: Where the provider stands now.
+          properties:
+            composite: { type: number, minimum: 0, maximum: 100 }
+            band: { $ref: "#/components/schemas/Band" }
+            trend: { $ref: "#/components/schemas/Trend" }
+          additionalProperties: true
+        delta:
+          type: number
+          description: Change in composite since the first point in the series.
+        series:
+          type: array
+          description: One point per scoring pass, oldest first.
+          items:
+            type: object
+            required: [date, composite]
+            properties:
+              date: { type: string, format: date }
+              composite: { type: number, minimum: 0, maximum: 100 }
+              agent_readiness: { type: number, minimum: 0, maximum: 100 }
+            additionalProperties: true
+        summary:
+          type: object
+          description: >-
+            The series reduced to the numbers a reader usually wants — endpoints, direction, and
+            the single largest move with the date it happened.
+          properties:
+            points: { type: integer, description: Number of points in the series. }
+            first: { type: string, format: date }
+            last: { type: string, format: date }
+            from: { type: number, description: Composite at the first point. }
+            to: { type: number, description: Composite at the last point. }
+            change: { type: number, description: to minus from. }
+            direction: { type: string, maxLength: 32 }
+            largest_move: { type: number, description: Biggest single-pass change. }
+            largest_move_at: { type: string, format: date }
+          additionalProperties: true
+        note:
+          type: string
+          description: A caveat about this particular history, when one applies.
+          maxLength: 2048
+      additionalProperties: true
+    RatingMovers:
+      type: object
+      description: >-
+        Providers whose composite moved most between the two most recent scoring passes.
+      required: [up, down]
+      properties:
+        up:
+          type: array
+          description: Biggest risers, largest first.
+          items: { $ref: "#/components/schemas/Mover" }
+        down:
+          type: array
+          description: Biggest fallers, largest drop first.
+          items: { $ref: "#/components/schemas/Mover" }
+        note: { type: string, maxLength: 2048 }
+      additionalProperties: true
+    Mover:
+      type: object
+      description: One provider's movement between passes.
+      required: [slug, name, delta]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        delta: { type: number, description: Change in composite. Negative for a faller. }
+        composite: { type: number, minimum: 0, maximum: 100, description: Composite after the move. }
+        band: { $ref: "#/components/schemas/Band" }
+        trend: { $ref: "#/components/schemas/Trend" }
+      additionalProperties: true

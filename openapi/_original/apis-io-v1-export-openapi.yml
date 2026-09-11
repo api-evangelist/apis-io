@@ -41,8 +41,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/DatasetExport"
         "402":
           $ref: "#/components/responses/UpgradeRequired"
   /export/{dataset}:
@@ -75,8 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/DatasetExport"
         "400":
           description: Unknown dataset; the response lists the valid names.
         "402":
@@ -141,4 +139,50 @@ components:
         - type
         - title
         - status
+      additionalProperties: true
+
+    DatasetExport:
+      type: object
+      description: >-
+        A bulk dataset export. CURSOR-PAGED, not page-numbered like the rest of the API: follow
+        `next_url` until `complete` is true, and do not assume one call returns everything. A
+        single page of the providers dataset is several megabytes.
+      required: [dataset, data, count, returned, complete]
+      properties:
+        dataset:
+          type: string
+          description: Which dataset this is.
+          maxLength: 128
+        data:
+          type: array
+          description: The records. Shape depends on `dataset`.
+          items: { type: object, additionalProperties: true }
+        count: { type: integer, description: Total records in the dataset. }
+        returned: { type: integer, description: Records in THIS page. }
+        cursor: { type: integer, description: Cursor this page started at. }
+        next_cursor:
+          type: integer
+          description: Cursor for the next page. Meaningless once `complete` is true.
+        complete:
+          type: boolean
+          description: True when this page is the last one.
+        next_url:
+          type: string
+          description: Fully-formed URL for the next page, so a client need not build the cursor.
+          maxLength: 2048
+        license:
+          type: string
+          description: >-
+            The terms this data is released under. Read it before redistributing an export —
+            it is the whole reason a bulk route states one.
+          maxLength: 2048
+        schema_version:
+          type: string
+          description: Rubric revision behind any scores in the records.
+          maxLength: 32
+        scored_at: { type: string, format: date }
+        rubric:
+          type: object
+          description: Pointer to the published rubric that produced the scores.
+          additionalProperties: true
       additionalProperties: true

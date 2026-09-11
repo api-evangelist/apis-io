@@ -65,8 +65,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/VcList"
       x-tier: free
   /vcs/{slug}:
     get:
@@ -174,8 +173,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/ProviderInvestors"
         "404":
           $ref: "#/components/responses/NotFound"
       x-tier: free
@@ -248,4 +246,30 @@ components:
         - type
         - title
         - status
+      additionalProperties: true
+
+    VcList:
+      type: object
+      description: Venture capital firms tracked against the catalog, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { type: object, additionalProperties: true }
+        data: { type: array, items: { type: object, additionalProperties: true } }
+      additionalProperties: true
+    ProviderInvestors:
+      type: object
+      description: The investors recorded against a provider.
+      required: [slug, name, investors]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        investor_count: { type: integer }
+        investors:
+          type: array
+          items:
+            type: object
+            properties:
+              slug: { type: string, maxLength: 128 }
+              name: { type: string, maxLength: 256 }
+            additionalProperties: true
       additionalProperties: true

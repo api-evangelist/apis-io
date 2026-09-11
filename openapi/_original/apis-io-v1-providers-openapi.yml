@@ -133,8 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/ProviderArtifacts"
         "404":
           $ref: "#/components/responses/NotFound"
       security: []
@@ -156,8 +155,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/ProviderOnboarding"
         "404":
           $ref: "#/components/responses/NotFound"
       security: []
@@ -203,7 +201,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderCapabilities"
         "404":
           $ref: "#/components/responses/NotFound"
   /providers/{slug}/operations:
@@ -270,7 +268,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderOperationList"
         "404": &a1
           $ref: "#/components/responses/NotFound"
   /providers/{slug}/tools:
@@ -305,7 +303,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderToolList"
         "404": *a1
   /providers/{slug}/schema:
     get:
@@ -330,7 +328,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/ProviderSchemaList"
         "404": *a1
 components:
   parameters:
@@ -988,3 +986,131 @@ components:
         - flat
         - falling
       maxLength: 1024
+
+    ProviderArtifacts:
+      type: object
+      description: >-
+        Every artifact API Evangelist holds for a provider, with the type vocabulary and a count
+        per type so a reader can see the shape of a provider's surface before fetching any of it.
+      required: [slug, name, artifacts]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        artifact_types:
+          type: array
+          description: Distinct artifact types this provider publishes.
+          items: { type: string, maxLength: 128 }
+        by_type_counts:
+          type: object
+          description: >-
+            Count of artifacts per type. An open map — the type vocabulary grows, and a fixed
+            enum here would go stale the way the band enum did (roadmap#311).
+          additionalProperties: { type: integer }
+        artifacts:
+          type: array
+          description: The artifacts themselves.
+          items:
+            type: object
+            required: [type, url]
+            properties:
+              type: { type: string, description: Artifact type., maxLength: 128 }
+              url: { type: string, description: Where the artifact is published., maxLength: 2048 }
+              scope:
+                type: string
+                description: Whether the artifact describes the provider or one of its APIs.
+                maxLength: 64
+            additionalProperties: true
+      additionalProperties: true
+    ProviderCapabilities:
+      type: object
+      description: >-
+        What a provider can DO, as counts rather than documents — the artifact census plus the
+        agent-readiness dimensions, for deciding whether a provider is worth a closer look.
+      required: [slug, name]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        api_count: { type: integer, description: APIs catalogued for this provider. }
+        artifact_types:
+          type: array
+          items: { type: string, maxLength: 128 }
+        artifact_counts:
+          type: object
+          description: Count per artifact type.
+          additionalProperties: { type: integer }
+        agent_dimensions:
+          type: object
+          description: >-
+            The agent-readiness dimensions, keyed by dimension id. Same open map and same caveat
+            as AgentReadiness.dimensions on /providers/{slug}/agent-readiness.
+          additionalProperties: true
+      additionalProperties: true
+    ProviderOnboarding:
+      type: object
+      description: >-
+        The shortest path from "I found this provider" to a first call — the links a developer or
+        an agent needs, gathered in one place instead of spread across the record.
+      required: [slug, name]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        website: { type: string, description: Provider home page., maxLength: 2048 }
+        portal: { type: string, description: Developer portal, when one is published., maxLength: 2048 }
+        documentation: { type: string, maxLength: 2048 }
+        signup: { type: string, description: Where to get credentials., maxLength: 2048 }
+        pricing: { type: string, maxLength: 2048 }
+        authentication:
+          type: string
+          description: How the API authenticates, in a sentence.
+          maxLength: 2048
+        baseURLs:
+          type: array
+          description: Base URLs the provider's APIs answer on.
+          items: { type: string, maxLength: 2048 }
+        first_steps:
+          type: array
+          description: Ordered steps to a first successful call.
+          items: { type: string, maxLength: 2048 }
+        artifact_types:
+          type: array
+          items: { type: string, maxLength: 128 }
+        note:
+          type: string
+          description: A caveat about this provider's onboarding, when one applies.
+          maxLength: 2048
+      additionalProperties: true
+    ProviderOperationList:
+      type: object
+      description: >-
+        Operations across a provider's contracts, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/Meta" }
+        data:
+          type: array
+          description: One entry per operation.
+          items: { type: object, additionalProperties: true }
+      additionalProperties: true
+    ProviderToolList:
+      type: object
+      description: >-
+        A provider's operations expressed as agent TOOLS — the subset an agent can call, named and
+        described for tool selection rather than for reading.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/Meta" }
+        data:
+          type: array
+          items: { type: object, additionalProperties: true }
+      additionalProperties: true
+    ProviderSchemaList:
+      type: object
+      description: >-
+        The data models a provider's contracts define, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/Meta" }
+        data:
+          type: array
+          items: { type: object, additionalProperties: true }
+      additionalProperties: true

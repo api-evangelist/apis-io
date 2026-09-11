@@ -559,8 +559,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/ApisJsonList"
 components:
   parameters:
     ArtifactSort:
@@ -855,4 +854,13 @@ components:
         - type
         - title
         - status
+      additionalProperties: true
+
+    ApisJsonList:
+      type: object
+      description: APIs.json documents in the catalog, as a paged collection.
+      required: [data, meta]
+      properties:
+        meta: { $ref: "#/components/schemas/Meta" }
+        data: { type: array, items: { type: object, additionalProperties: true } }
       additionalProperties: true

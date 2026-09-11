@@ -39,8 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/SavedSearchList"
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -238,8 +237,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
+                $ref: "#/components/schemas/SavedListList"
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -470,6 +468,27 @@ components:
       - type
       - title
       - status
+      additionalProperties: true
+
+    SavedSearchList:
+      type: object
+      description: >-
+        The caller's saved searches. Keyed under `searches` rather than `data` — this is a
+        personal workspace, not a catalog collection, and it is not paged.
+      required: [searches]
+      properties:
+        searches:
+          type: array
+          items: { type: object, additionalProperties: true }
+      additionalProperties: true
+    SavedListList:
+      type: object
+      description: The caller's saved lists. Keyed under `lists`, and not paged.
+      required: [lists]
+      properties:
+        lists:
+          type: array
+          items: { type: object, additionalProperties: true }
       additionalProperties: true
   securitySchemes:
     ApiKeyAuth:

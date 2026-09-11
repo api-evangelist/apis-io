@@ -367,7 +367,7 @@ class Operations:
 
         ``GET /providers/{slug}/operations``
         """
-        return self.get(f"/providers/{slug}/operations", **params)
+        return self.page(f"/providers/{slug}/operations", **params)
 
     def get_provider_rating(self, slug: str, **params: Any) -> Any:
         """One provider's rating.
@@ -383,7 +383,7 @@ class Operations:
 
         ``GET /providers/{slug}/schema``
         """
-        return self.get(f"/providers/{slug}/schema", **params)
+        return self.page(f"/providers/{slug}/schema", **params)
 
     def get_provider_tools(self, slug: str, **params: Any) -> Any:
         """Every MCP tool a provider ships.
@@ -392,7 +392,7 @@ class Operations:
 
         ``GET /providers/{slug}/tools``
         """
-        return self.get(f"/providers/{slug}/tools", **params)
+        return self.page(f"/providers/{slug}/tools", **params)
 
     def get_rating_history(self, slug: str, **params: Any) -> Any:
         """A provider's rating movement.
@@ -478,7 +478,7 @@ class Operations:
 
         ``GET /apis-json``
         """
-        return self.get("/apis-json", **params)
+        return self.page("/apis-json", **params)
 
     def list_arazzo(self, **params: Any) -> Any:
         """List arazzo workflows across the catalog.
@@ -523,7 +523,7 @@ class Operations:
 
         ``GET /cohorts``
         """
-        return self.get("/cohorts", **params)
+        return self.page("/cohorts", **params)
 
     def list_collections(self, **params: Any) -> Any:
         """List api collections across the catalog.
@@ -577,7 +577,7 @@ class Operations:
 
         ``GET /insights/adoption``
         """
-        return self.get("/insights/adoption", **params)
+        return self.page("/insights/adoption", **params)
 
     def list_insight_companies(self, **params: Any) -> Any:
         """Browse profiled companies.
@@ -586,7 +586,7 @@ class Operations:
 
         ``GET /insights/companies``
         """
-        return self.get("/insights/companies", **params)
+        return self.page("/insights/companies", **params)
 
     def list_insight_dimensions(self, **params: Any) -> Any:
         """Rank the investment dimensions.
@@ -595,14 +595,14 @@ class Operations:
 
         ``GET /insights/dimensions``
         """
-        return self.get("/insights/dimensions", **params)
+        return self.page("/insights/dimensions", **params)
 
     def list_insight_industries(self, **params: Any) -> Any:
         """Industry rollup.
 
         ``GET /insights/industries``
         """
-        return self.get("/insights/industries", **params)
+        return self.page("/insights/industries", **params)
 
     def list_json_ld(self, **params: Any) -> Any:
         """List json-ld contexts across the catalog.
@@ -778,7 +778,7 @@ class Operations:
 
         ``GET /vcs``
         """
-        return self.get("/vcs", **params)
+        return self.page("/vcs", **params)
 
     def match_company_providers(self, slug: str, **params: Any) -> Any:
         """Match providers to a company's stack (the supply↔demand join).

@@ -350,7 +350,7 @@ paths:
       responses:
         '200':
           description: Current band, the next band, and every gate requirement with its status.
-          content: { application/json: { schema: { type: object } } }
+          content: { application/json: { schema: { $ref: "#/components/schemas/ReadinessGates" } } }
         '402': { $ref: '#/components/responses/UpgradeRequired' }
   /providers/{slug}/rating/checks:
     get:
@@ -580,6 +580,82 @@ components:
           items: { type: string }
           examples: [[idempotency]]
         scored_at: { type: [string, 'null'] }
+
+    ReadinessGates:
+      type: object
+      description: >-
+        What stands between this listing and the next agent-readiness band. Agent Readiness is
+        additive, so a provider can reach a band's score floor and still be held below it by the
+        band GATE — this says which, and what would satisfy it.
+      required: [slug, name, current_band, current_score]
+      properties:
+        slug: { type: string, maxLength: 128 }
+        name: { type: string, maxLength: 256 }
+        current_score: { type: number, minimum: 0, maximum: 100 }
+        current_band:
+          type: string
+          enum: [agent-native, agent-ready, agent-aware, human-only]
+          maxLength: 1024
+        band_gated_from:
+          type: string
+          description: >-
+            The band this provider SCORED into but was demoted from by the gate. Absent when no
+            demotion applied — a provider held at its scored band was not gated.
+          enum: [agent-native, agent-ready, agent-aware, human-only]
+          maxLength: 1024
+        verdict:
+          type: string
+          description: One line saying where the provider stands and why.
+          maxLength: 2048
+        next_band: { $ref: "#/components/schemas/BandGate" }
+        all_bands:
+          type: array
+          description: Every band with its floor and gate, so the whole ladder is visible at once.
+          items: { $ref: "#/components/schemas/BandGate" }
+      additionalProperties: true
+    BandGate:
+      type: object
+      description: One band's score floor and the gate guarding it.
+      properties:
+        band:
+          type: string
+          enum: [agent-native, agent-ready, agent-aware, human-only]
+          maxLength: 1024
+        label: { type: string, maxLength: 256 }
+        min: { type: number, description: Score floor for this band. }
+        points_short:
+          type: integer
+          description: Points still needed to reach the floor. 0 once the floor is met.
+        gated:
+          type: boolean
+          description: Whether this band carries a gate at all.
+        gate_requires:
+          type: array
+          description: Dimensions the gate requires.
+          items: { type: string, maxLength: 128 }
+        gate_met:
+          type: array
+          description: Required dimensions this provider satisfies.
+          items: { type: string, maxLength: 128 }
+        gate_unmet:
+          type: array
+          description: Required dimensions still missing. Empty when the gate is satisfied.
+          items: { type: string, maxLength: 128 }
+        gate_satisfied: { type: boolean }
+        demote_to:
+          type: string
+          description: Band a provider falls to when the gate is not satisfied.
+          maxLength: 128
+        blocking:
+          type: array
+          description: >-
+            What is actually holding this provider out of the band — the score, the gate, or both.
+          items: { type: string, maxLength: 256 }
+        rationale:
+          type: string
+          description: Why this band is gated the way it is.
+          maxLength: 4096
+      additionalProperties: true
   responses:
     BadRequest:
       description: The body did not carry what this operation needs. The response names the fields.
