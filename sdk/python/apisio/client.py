@@ -22,6 +22,7 @@ No dependencies beyond the standard library.
 
 from __future__ import annotations
 
+import http.client
 import json as _json
 import re
 import time
@@ -253,6 +254,19 @@ class Client:
                     attempt += 1
                     continue
                 raise ApisIoError(0, {"error": "network", "detail": str(e.reason)}, {}, url) from None
+            except (http.client.HTTPException, OSError) as e:
+                # A reset connection, a half-closed keep-alive, a DNS blip. urllib raises these
+                # RAW rather than wrapping them in URLError, so catching only URLError lets a
+                # transient network fault escape as an unrelated traceback — which is exactly
+                # what it did on the 40th call of a 93-call run. Retried like any other
+                # transport failure, and surfaced as an ApisIoError if it persists, so callers
+                # only ever have to catch one family.
+                if attempt < self.max_retries:
+                    time.sleep(2 ** attempt)
+                    attempt += 1
+                    continue
+                raise ApisIoError(0, {"error": "network", "detail": f"{type(e).__name__}: {e}"},
+                                  {}, url) from None
 
     def get(self, path: str, **params: Any) -> Any:
         return self.request("GET", path, params=params)
