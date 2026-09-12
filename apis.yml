@@ -73,7 +73,7 @@ tags_raw:
 - Agent Skills
 - OpenAPI
 - API Governance
-url: https://apis.io/apis.yml
+url: https://apis.io/apis.json
 created: '2026-03-26'
 modified: '2026-09-11'
 specificationVersion: '0.23'
@@ -101,7 +101,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-apis-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-apis-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-apis-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServer
@@ -138,7 +138,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-areas-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-areas-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-areas-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -173,7 +173,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-artifact-types-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-artifact-types-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-artifact-types-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -207,7 +207,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-industries-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-industries-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-industries-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -243,7 +243,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-insights-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-insights-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-insights-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -277,7 +277,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-providers-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-providers-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-providers-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -312,7 +312,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-ratings-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-ratings-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-ratings-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -346,7 +346,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-regions-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-regions-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-regions-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -380,7 +380,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-search-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-search-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-search-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -415,7 +415,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-synthesis-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-synthesis-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-synthesis-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -449,7 +449,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-tags-api-openapi.yml
   - type: Overlay
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/overlays/apis-io-tags-api-overlay.yaml
+    url: https://apis.io/artifacts/overlays/apis-io-tags-api-overlay.yaml
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServerCard
@@ -484,7 +484,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-cohorts-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-editorial-api
   name: APIs.io Editorial API
   description: Story leads mined from catalog movement (owner tier). 1 operation of the APIs.io API, split out by tag so this
@@ -496,7 +496,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-editorial-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-export-api
   name: APIs.io Export API
   description: Bulk dataset pulls of the catalog — ratings and providers as one download (Business tier). 2 operations of
@@ -508,7 +508,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-export-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-resolve-enrich-api
   name: APIs.io Resolve & Enrich API
   description: Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in
@@ -521,7 +521,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-resolve-enrich-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-saved-workspace-api
   name: APIs.io Saved Workspace API
   description: Saved searches and provider lists for a signed-in apis.io API key — save a query, re-run it, and watch what
@@ -534,7 +534,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-saved-workspace-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - aid: apis-io:apis-io-venture-capital-api
   name: APIs.io Venture Capital API
   description: Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated portfolio graph,
@@ -547,7 +547,7 @@ apis:
   - type: OpenAPI
     url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-venture-capital-api-openapi.yml
   - type: SpectralRules
-    url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+    url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 common:
 - type: VulnerabilityDisclosure
   url: security/apis-io-vulnerability-disclosure.yml
@@ -609,7 +609,7 @@ common:
 - type: GitHubRepository
   url: https://github.com/api-evangelist/apis-io
 - type: SpectralRules
-  url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
+  url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 - type: Vocabulary
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/vocabulary/apis-io-vocabulary.yaml
 - type: WellKnown
@@ -625,7 +625,7 @@ common:
 - type: AgentSkill
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/skills/_index.yml
 - type: Conformance
-  url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/conformance/apis-io-conformance.yml
+  url: https://apis.io/artifacts/conformance/apis-io-conformance.yml
 - type: ErrorCatalog
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/errors/apis-io-problem-types.yml
 - type: Lifecycle
