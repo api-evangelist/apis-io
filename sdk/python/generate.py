@@ -27,6 +27,11 @@ import yaml
 HERE = os.path.dirname(os.path.abspath(__file__))
 SPECS = os.path.normpath(os.path.join(HERE, "..", "..", "openapi", "_original"))
 OUT = os.path.join(HERE, "apisio", "operations.py")
+# ONE generator, THREE targets. The spec-reading is the hard part and it is solved once here; a
+# second parser per language is how three clients drift from each other and from the contract.
+SDK_ROOT = os.path.normpath(os.path.join(HERE, ".."))
+OUT_JS = os.path.join(SDK_ROOT, "javascript", "src", "operations.js")
+OUT_GO = os.path.join(SDK_ROOT, "go", "apisio", "operations.go")
 
 # Operations the client deliberately does not bind.
 #
@@ -211,6 +216,114 @@ def render(docs: int, ops: list) -> str:
     return "".join(out)
 
 
+
+JS_HEADER = """/* apis.io operation bindings — GENERATED, DO NOT EDIT.
+ *
+ * Regenerate with `python3 ../python/generate.py` from the OpenAPI documents in
+ * all/apis-io/openapi/_original/ — the documents apis.io publishes, not the refined mirror.
+ *
+ * {count} operations across {docs} documents, generated {stamp}.
+ */
+
+import {{ Transport }} from './client.js';
+
+export class Client extends Transport {{
+"""
+
+JS_METHOD = """
+  /** {doc}
+   *  `{verb} {path}` */
+  {name}({sig}) {{
+    return this.{call};
+  }}
+"""
+
+GO_HEADER = """// apis.io operation bindings — GENERATED, DO NOT EDIT.
+//
+// Regenerate with `python3 ../../python/generate.py` from the OpenAPI documents in
+// all/apis-io/openapi/_original/ — the documents apis.io publishes, not the refined mirror.
+//
+// {count} operations across {docs} documents, generated {stamp}.
+
+package apisio
+
+import "context"
+"""
+
+GO_METHOD = """
+// {gname} — {doc}
+//
+// {verb} {path}
+func (c *Client) {gname}(ctx context.Context{sig}) ({ret}, error) {{
+	return c.{call}
+}}
+"""
+
+
+def camel(name):
+    parts = name.split("_")
+    return parts[0] + "".join(p.title() for p in parts[1:])
+
+
+def pascal(name):
+    return "".join(p.title() for p in name.split("_"))
+
+
+def render_js(docs, ops):
+    import datetime
+    out = [JS_HEADER.format(count=len(ops), docs=docs, stamp=datetime.date.today().isoformat())]
+    for o in ops:
+        args = [py_param(p) for p in o["path_params"]]
+        sig = ", ".join(args + (["body = null"] if o["body"] else []) + ["params = {}"])
+        tpl = o["path"]
+        for orig, a in zip(o["path_params"], args):
+            tpl = tpl.replace("{" + orig + "}", "${" + a + "}")
+        lit = f"`{tpl}`"
+        if o["verb"] == "GET":
+            call = f"page({lit}, params)" if o["collection"] else f"get({lit}, params)"
+        elif o["verb"] == "DELETE":
+            call = f"delete({lit}, params)"
+        else:
+            call = (f"request('{o['verb']}', {lit}, {{ params, json: body }})" if o["body"]
+                    else f"request('{o['verb']}', {lit}, {{ params }})")
+        doc = " ".join(o["summary"].split()).replace("*/", "* /")[:140]
+        out.append(JS_METHOD.format(name=camel(o["name"]), sig=sig, doc=doc,
+                                    verb=o["verb"], path=o["path"], call=call))
+    out.append("}\n")
+    return "".join(out)
+
+
+def render_go(docs, ops):
+    import datetime
+    out = [GO_HEADER.format(count=len(ops), docs=docs, stamp=datetime.date.today().isoformat())]
+    for o in ops:
+        args = [py_param(p) for p in o["path_params"]]
+        sig = "".join(f", {a} string" for a in args)
+        if o["body"]:
+            sig += ", body any"
+        sig += ", params map[string]any"
+        tpl = o["path"]
+        fmtargs = []
+        for orig, a in zip(o["path_params"], args):
+            tpl = tpl.replace("{" + orig + "}", "%s")
+            fmtargs.append(a)
+        lit = (f'fmt.Sprintf("{tpl}", {", ".join(fmtargs)})' if fmtargs else f'"{tpl}"')
+        if o["verb"] == "GET" and o["collection"]:
+            call, ret = f"GetPage(ctx, {lit}, params)", "*Page"
+        elif o["verb"] == "GET":
+            call, ret = f"Get(ctx, {lit}, params)", "any"
+        else:
+            body = "body" if o["body"] else "nil"
+            call, ret = f'Request(ctx, "{o["verb"]}", {lit}, params, {body})', "any"
+        doc = " ".join(o["summary"].split())[:120]
+        out.append(GO_METHOD.format(gname=pascal(o["name"]), sig=sig, doc=doc,
+                                    verb=o["verb"], path=o["path"], call=call, ret=ret))
+    body = "".join(out)
+    if "fmt.Sprintf" in body:
+        body = body.replace('import "context"', 'import (\n\t"context"\n\t"fmt"\n)')
+    return body
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true",
@@ -222,20 +335,27 @@ def main() -> int:
         return 2
     docs, ops = load_ops()
     new = render(docs, ops)
+    targets = [(OUT, new), (OUT_JS, render_js(docs, ops)), (OUT_GO, render_go(docs, ops))]
 
+    strip = lambda s: re.sub(r"generated \d{4}-\d\d-\d\d", "generated", s)             # noqa: E731
     if a.check:
-        cur = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else ""
-        # The generation date is the only line that moves on its own; compare without it.
-        strip = lambda s: re.sub(r"generated \d{4}-\d\d-\d\d", "generated", s)             # noqa: E731
-        if strip(cur) != strip(new):
-            print(f"operations.py is STALE — {len(ops)} operations in {docs} published documents")
+        stale = []
+        for path, text in targets:
+            cur = open(path, encoding="utf-8").read() if os.path.exists(path) else ""
+            if strip(cur) != strip(text):
+                stale.append(os.path.relpath(path, SDK_ROOT))
+        if stale:
+            print(f"STALE: {', '.join(stale)} — {len(ops)} operations in {docs} published documents")
             return 1
-        print(f"operations.py is current — {len(ops)} operations, {docs} documents")
+        print(f"all 3 clients current — {len(ops)} operations, {docs} documents")
         return 0
 
-    with open(OUT, "w", encoding="utf-8") as fh:
-        fh.write(new)
-    print(f"wrote {OUT}: {len(ops)} operations from {docs} published documents")
+    for path, text in targets:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text)
+        print(f"  wrote {os.path.relpath(path, SDK_ROOT)}")
+    print(f"{len(ops)} operations from {docs} published documents, 3 clients")
     return 0
 
 

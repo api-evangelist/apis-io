@@ -3,7 +3,7 @@
 Regenerate with `python3 generate.py` from the OpenAPI documents in
 `all/apis-io/openapi/_original/` — the documents apis.io publishes, not the refined mirror.
 
-108 operations across 18 documents, generated 2026-09-11.
+108 operations across 18 documents, generated 2026-09-12.
 
 Every method is a thin call through `Client.request`. Collection endpoints return a `Page`
 (a list, with `.meta`/`.total`/`.pages`); everything else returns the parsed body.

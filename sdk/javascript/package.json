@@ -1,0 +1,16 @@
+{
+  "name": "@apis-io/client",
+  "version": "0.1.0",
+  "description": "JavaScript client for the apis.io API catalog",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": { ".": "./src/index.js" },
+  "files": ["src"],
+  "engines": { "node": ">=18" },
+  "keywords": ["apis.io", "api", "catalog", "openapi", "apis.json", "discovery", "agents"],
+  "license": "Apache-2.0",
+  "author": "API Evangelist",
+  "homepage": "https://apis.io",
+  "repository": { "type": "git", "url": "https://github.com/api-evangelist/apis-io", "directory": "sdk/javascript" },
+  "dependencies": {}
+}
