@@ -5,7 +5,7 @@ scheme: dated
 current_version: v1 (API contract 1.2.1)
 scope: >-
   Network-wide running log — search ranking, the provider catalog and ratings, the REST + MCP API,
-  and the network sites. Newest first. Planned work lives on https://apis.io/roadmap/.
+  and the network sites. Newest first. Planned work used to live on https://apis.io/roadmap/; verified 2026-09-11 that page is now a noindex meta-refresh tombstone redirecting to /changelog/ itself, so there is no separate roadmap surface and the apis.yml Roadmap pointer was removed rather than left asserting one.
 entries:
 - date: '2026-07-26'
   area: Site

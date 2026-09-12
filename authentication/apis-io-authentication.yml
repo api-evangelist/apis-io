@@ -1,4 +1,4 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: searched
 source: https://apis.io/developer/authentication
 docs: https://apis.io/developer/authentication
@@ -7,10 +7,20 @@ derived_from: openapi/*.yml + openapi/_original/apis-io-v1-openapi.yml
 summary:
   types:
   - apiKey
+  - oauth2
   api_key_in:
   - header
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
   required: false
-  read_only: true
+  read_only: false
+  read_only_note: >-
+    Corrected 2026-09-11. The catalog-read surface is still GET-only, but the v1 contract now
+    carries 32 POST and 7 DELETE operations across Provider Control (/providers/{slug}/claim,
+    /facts, /submit, /visibility, /dispute, /correction, /checks, /gaps/report) and Saved
+    Workspace (/me/searches, /me/lists, /me/watch). This file previously asserted read_only: true
+    and oauth2: false; both were true on 2026-08-10 and are not true now.
 model: >-
   v1 is open and read-only — every endpoint is a GET, no endpoint mutates the catalog, and
   anonymous requests succeed on the Free tier. The OpenAPI declares an `ApiKeyAuth` apiKey scheme
@@ -71,12 +81,46 @@ tiers:
   price: $199/mo
   rate_limit: 400 req/s
   daily_quota: 1000000
-oauth2: false
-openid_connect: false
+oauth2: true
+openid_connect: true
 mutual_tls: false
+oauth2_server:
+  issuer: https://apis.io
+  metadata_rfc8414: https://apis.io/.well-known/oauth-authorization-server
+  metadata_openid: https://apis.io/.well-known/openid-configuration
+  protected_resource_rfc9728: https://apis.io/.well-known/oauth-protected-resource
+  jwks_uri: https://apis.io/.well-known/jwks.json
+  authorization_endpoint: https://apis.io/api/v1/auth/authorize
+  token_endpoint: https://apis.io/api/v1/auth/token
+  registration_endpoint: https://apis.io/api/v1/auth/register
+  grant_types: [authorization_code, refresh_token, client_credentials]
+  code_challenge_methods: [S256]
+  token_endpoint_auth_methods: [none, client_secret_basic, client_secret_post]
+  dynamic_client_registration: true
+  client_id_metadata_document_supported: true
+  resource_indicators_supported: true
+  protected_resource: https://apis.io/mcp
+  note: >-
+    RFC 7591 dynamic client registration plus a client_credentials grant means an agent can
+    register itself and take a token with no human in the loop. The protected resource named by
+    the RFC 9728 document is the MCP server, not the REST API — a key is optional on /api/v1 and
+    raises the tier rather than granting access.
+aauth:
+  document: https://apis.io/.well-known/aauth-resource.json
+  issuer: https://apis.io
+  jwks_uri: https://apis.io/.well-known/jwks.json
+  r3_vocabularies:
+    urn:aauth:vocabulary:openapi: https://apis.io/openapi.json
+    urn:aauth:vocabulary:mcp: https://apis.io/mcp
+  defect: >-
+    The r3_vocabularies OpenAPI pointer https://apis.io/openapi.json returned HTTP 404 when
+    probed on 2026-09-11 (the served document is an HTML shell, 26,159 bytes). The MCP pointer
+    resolves. An AAuth client following the OpenAPI vocabulary URI finds nothing. Recorded here
+    rather than quietly dropped — this is our own document making a claim the host does not honour.
 scopes:
-  present: false
-  reason: apiKey auth only — there is no OAuth scope surface to record.
+  present: true
+  artifact: scopes/apis-io-scopes.yml
+  scopes: [apis:read, apis:pro, offline_access]
 cors:
   allow_origin: '*'
   allow_headers: [content-type, x-api-key]
@@ -88,14 +132,38 @@ mcp_authentication:
     Pro-tier tools are listed anonymously but return HTTP 402 `upgrade_required` when called
     without a paid key.
   oauth_discovery:
-    /.well-known/oauth-authorization-server: 404
-    /.well-known/oauth-protected-resource: 404
+    /.well-known/oauth-authorization-server: 200
+    /.well-known/oauth-protected-resource: 200
+    /.well-known/openid-configuration: 200
+    /.well-known/aauth-resource.json: 200
+    checked: '2026-09-11'
+    note: All four 404'd on 2026-08-10 and are served now.
 x-evidence:
-  fetched: '2026-08-10'
+  fetched: '2026-09-11'
   probes:
+  - url: https://apis.io/.well-known/oauth-authorization-server
+    http_status: 200
+    note: RFC 8414, saved to well-known/apis-io-oauth-authorization-server.json
+  - url: https://apis.io/.well-known/openid-configuration
+    http_status: 200
+    note: saved to well-known/apis-io-openid-configuration.json
+  - url: https://apis.io/.well-known/oauth-protected-resource
+    http_status: 200
+    note: RFC 9728, resource https://apis.io/mcp
+  - url: https://apis.io/.well-known/aauth-resource.json
+    http_status: 200
+    note: AAuth resource, issuer + jwks_uri present
+  - url: https://apis.io/.well-known/jwks.json
+    http_status: 200
+  - url: https://apis.io/openapi.json
+    http_status: 404
+    note: named by aauth r3_vocabularies; not served
+  - url: https://apis.io/api/v1/
+    http_status: 401
+    note: anonymous call to an undefined endpoint — unauthorized envelope
   - url: https://apis.io/api/v1/search?q=weather&limit=1
     http_status: 200
-    note: anonymous, no key
+    note: anonymous, no key (first observed 2026-08-10, re-confirmed 2026-09-11)
   - url: https://apis.io/api/v1/ratings
     http_status: 402
     note: anonymous — tier gate

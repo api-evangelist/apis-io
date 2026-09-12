@@ -43,6 +43,23 @@ headers:
   limit: X-RateLimit-Limit
   window: X-RateLimit-Window
   tier: X-RateLimit-Tier
+  observed: '2026-09-11'
+  observed_on: GET https://apis.io/api/v1/search?q=weather&limit=1 (anonymous, no key)
+  observed_values:
+    ratelimit-policy: '"quota";q=500;w=86400, "burst";q=5;w=1'
+    x-ratelimit-limit: '500'
+    x-ratelimit-window: '86400'
+    x-ratelimit-tier: free
+  not_sent: [X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After]
+  note: >-
+    PROBED AND CONFIRMED 2026-09-11. All four headers are now sent on every response, anonymous
+    included, and are CORS-exposed. The 2026-08-21 harvest recorded them as declared-but-not-sent;
+    they are sent. No remaining-count and no Retry-After, so a caller learns the ceiling and its
+    tier from any response but not its distance from the ceiling.
+  divergence_from_plans: >-
+    The header says the anonymous free quota is 500/day; plans/apis-io-plans-pricing.yml and
+    https://apis.io/developer/plans both say 1,000/day. Recorded rather than reconciled — the
+    enforced unkeyed number and the published keyed-Free number may legitimately differ.
 x-headers-not-sent:
   remaining: X-RateLimit-Remaining and RateLimit-Reset are NOT sent. They describe the state of a counter;
     API Gateway owns that counter and does not expose it to the integration, and there is no per-key usage

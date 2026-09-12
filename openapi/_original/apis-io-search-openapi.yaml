@@ -7,7 +7,8 @@ info:
     name: Kin Lane
     email: info@apievangelist.com
 servers:
-- url: https://search-api.apis.io
+- url: https://apis.io/api/v1
+  description: Production server. Corrected 2026-09-11 — the legacy harvested host search-api.apis.io has no DNS record; the live base is apis.io/api/v1, the same correction applied to the other 11 contracts on 2026-08-21.
 tags:
 - name: Search
   description: Search using a cloud search engine.

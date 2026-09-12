@@ -1,0 +1,115 @@
+{
+  "protocolVersion": "0.3",
+  "name": "APIs.io",
+  "description": "Read-only discovery over the APIs.io catalog of API providers, their APIs, and the machine-readable artifacts each publishes. Searching the catalog, reading a provider or an API, and browsing tags, taxonomy and artifacts are free and need no key. Synthesis across the catalog — ratings, cohorts, capabilities, gap analysis, stack design — is paid.",
+  "url": "https://apis.io/mcp",
+  "preferredTransport": "MCP",
+  "version": "1.0.0",
+  "documentationUrl": "https://apis.io/developer/mcp-server/",
+  "iconUrl": "https://apis.io/assets/images/apis-io-logo.png",
+  "provider": {
+    "organization": "API Evangelist",
+    "url": "https://apievangelist.com"
+  },
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "defaultInputModes": ["application/json", "text/plain"],
+  "defaultOutputModes": ["application/json", "text/plain"],
+  "additionalInterfaces": [
+    {
+      "url": "https://apis.io/mcp",
+      "transport": "MCP",
+      "protocolBinding": "JSONRPC",
+      "description": "Model Context Protocol endpoint. 133 tools over JSON-RPC 2.0. This is the interface this card describes; APIs.io serves no native A2A JSON-RPC endpoint."
+    },
+    {
+      "url": "https://apis.io/api/v1",
+      "transport": "HTTP+JSON",
+      "protocolBinding": "REST",
+      "description": "The same catalog over REST. OpenAPI at https://apis.io/developer/api/, RFC 9728 resource metadata at https://apis.io/.well-known/oauth-protected-resource/api/v1."
+    }
+  ],
+  "securitySchemes": {
+    "oauth2": {
+      "type": "oauth2",
+      "description": "OAuth 2.1 with PKCE and Dynamic Client Registration (RFC 7591). An agent can register itself and obtain a token with no human, using client_credentials with an AAuth-signed request. Authorization server metadata: https://apis.io/.well-known/oauth-authorization-server",
+      "flows": {
+        "authorizationCode": {
+          "authorizationUrl": "https://apis.io/api/v1/auth/authorize",
+          "tokenUrl": "https://apis.io/api/v1/auth/token",
+          "scopes": {
+            "apis:read": "Search and read the catalog",
+            "apis:pro": "Synthesis across the catalog: ratings, cohorts, capabilities, insights"
+          }
+        },
+        "clientCredentials": {
+          "tokenUrl": "https://apis.io/api/v1/auth/token",
+          "scopes": {
+            "apis:read": "Search and read the catalog",
+            "apis:pro": "Synthesis across the catalog"
+          }
+        }
+      }
+    },
+    "apiKey": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "x-api-key",
+      "description": "A key from https://apis.io/developer/. The free tier needs no key for catalog reads."
+    }
+  },
+  "security": [{ "oauth2": ["apis:read"] }, { "apiKey": [] }],
+  "skills": [
+    {
+      "id": "search-catalog",
+      "name": "Search the API catalog",
+      "description": "Federated search across API providers, APIs and tags in one call, with match counts. Filter by tag, artifact type, industry, region or rating band. Free, no key required.",
+      "tags": ["discovery", "search", "free"],
+      "examples": [
+        "Find payment APIs with an OpenAPI and an MCP server",
+        "Which providers in insurance publish machine-readable rate limits?"
+      ],
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "read-provider",
+      "name": "Read a provider or an API",
+      "description": "Everything APIs.io holds about one provider: its APIs, artifacts, onboarding path, capabilities and evidence. Free, no key required.",
+      "tags": ["discovery", "provider", "free"],
+      "examples": ["What does Stripe publish?", "How do I onboard with Twilio?"],
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "rate-and-compare",
+      "name": "Rate and compare providers",
+      "description": "The Kin Score: a published rubric over contract quality, developer ergonomics, commercial clarity, operational transparency, governance and discoverability, plus a standalone agent-readiness score. Compare providers or whole cohorts. Paid.",
+      "tags": ["rating", "benchmarking", "paid"],
+      "examples": ["Compare Adyen and Stripe on agent readiness", "Rank open banking providers by contract quality"],
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "improve-a-listing",
+      "name": "Find what to fix on a listing",
+      "description": "For a provider improving its own score: the ranked remediation list, which band gate is unmet, and what a given fix would move. Paid.",
+      "tags": ["remediation", "provider", "paid"],
+      "examples": ["What is the highest-value fix for our listing?", "What is holding us at agent-ready?"],
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "report-a-correction",
+      "name": "Report that the catalog is wrong",
+      "description": "Tell APIs.io its record about a provider is incorrect. Free and unmetered, always: correcting our own error is not a paid feature. Also reachable over REST at POST /v1/providers/{slug}/correction.",
+      "tags": ["correction", "feedback", "free"],
+      "examples": ["Your record says we have no OpenAPI; here is the URL"],
+      "inputModes": ["application/json"],
+      "outputModes": ["application/json"]
+    }
+  ]
+}

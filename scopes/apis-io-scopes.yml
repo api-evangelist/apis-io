@@ -1,0 +1,38 @@
+generated: '2026-09-11'
+method: derived
+source: openapi/apis-io-v1-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/apis-io-v1-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://apis.io/api/v1/auth/authorize
+    tokenUrl: https://apis.io/api/v1/auth/token
+  description: The machine path to the same tiers, and the better of the two options for an
+    agent. APIs.io runs its own OAuth 2.1 authorization server -- RFC 8414 metadata at /.well-known/oauth-authorization-server,
+    a JWKS at /.well-known/jwks.json, PKCE (S256 only), RFC 7591 dynamic client registration,
+    and RFC 8707 resource indicators -- so a client can earn access through a protocol handshake
+    instead of a human pasting a key. An access token resolves to the same tier and the same
+    per-user quota as that user's API key. Declared here as of 2026-08-30; the server has been
+    live since before that, and an agent reading this contract to decide how to authenticate
+    could not previously discover it.
+scopes:
+- scope: apis:pro
+  description: The tier-gated resources -- ratings, insights, demand depth, the Saved Workspace.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/apis-io-v1-openapi.yml
+- scope: apis:read
+  description: Read the catalog. Granted to every caller.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/apis-io-v1-openapi.yml
+- scope: offline_access
+  description: Issue a refresh token. Authorization-server scope only; no resource asks for
+    it.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/apis-io-v1-openapi.yml

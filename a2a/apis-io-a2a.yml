@@ -1,4 +1,4 @@
-generated: '2026-09-09'
+generated: '2026-09-11'
 method: probed
 source: https://apis.io/.well-known/agent-card.json
 discovery:
@@ -63,6 +63,22 @@ conformance:
     detail: >-
       Subdomains rewrite the well-known path instead of resolving to the apex card, so a probe of
       developer.apis.io or mcp.apis.io 301s into a 404.
+card:
+  name: APIs.io
+  url: https://apis.io/mcp
+  version: 1.0.0
+  skills: 5
+  file: apis-io-agent-card.json
+x-evidence:
+  fetched: '2026-09-11'
+  url: https://apis.io/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 5533
+  note: >-
+    Re-probed and the body SAVED VERBATIM to a2a/apis-io-agent-card.json on 2026-09-11. The
+    2026-09-09 manifest recorded the probe but never persisted the document, so nothing in the
+    repo could be re-graded without re-fetching. Grade unchanged.
 observed:
   name: APIs.io
   provider: API Evangelist

@@ -1,0 +1,10 @@
+# APIs.io -- vulnerability disclosure. Full policy: https://apis.io/developer/security
+# Expires is RENDERED AT BUILD TIME (six months out). RFC 9116 s2.5.5 makes the
+# field mandatory and says consumers SHOULD ignore an expired file, so a hardcoded
+# date would quietly stop counting on a day nobody is watching. The site rebuilds
+# often enough that this stays valid by construction.
+Contact: mailto:info@apis.io
+Expires: 2027-03-09T22:57:14Z
+Preferred-Languages: en
+Canonical: https://apis.io/.well-known/security.txt
+Policy: https://apis.io/developer/security

@@ -47,13 +47,19 @@
       "anchor": "https://apis.io/apis/",
       "title": "APIs — individual API descriptions",
       "service-doc": [ { "href": "https://apis.io/apis/", "type": "text/html", "title": "APIs index" } ],
-      "describedby": [ { "href": "https://apis.io/apis.json", "type": "application/json" } ]
+      "describedby": [
+        { "href": "https://apis.io/apis.json", "type": "application/json" },
+        { "href": "https://apis.io/linkset/apis/index.json", "type": "application/linkset+json", "title": "Per-API linkset — sharded index of every API's specs and docs" }
+      ]
     },
     {
       "anchor": "https://apis.io/providers/",
       "title": "Providers — API provider profiles",
       "service-doc": [ { "href": "https://apis.io/providers/", "type": "text/html", "title": "Providers index" } ],
-      "describedby": [ { "href": "https://apis.io/apis.json", "type": "application/json" } ]
+      "describedby": [
+        { "href": "https://apis.io/apis.json", "type": "application/json" },
+        { "href": "https://apis.io/linkset/providers/index.json", "type": "application/linkset+json", "title": "Per-provider linkset — sharded index of every provider's specs and docs" }
+      ]
     },
     {
       "anchor": "https://apis.io/tags/",
@@ -79,11 +85,6 @@
       "anchor": "https://apis.io/rules/",
       "title": "Rules — governance rules for APIs and metadata",
       "service-doc": [ { "href": "https://apis.io/rules/", "type": "text/html" } ]
-    },
-    {
-      "anchor": "https://apis.io/vocabularies/",
-      "title": "Vocabularies — controlled vocabularies",
-      "service-doc": [ { "href": "https://apis.io/vocabularies/", "type": "text/html" } ]
     },
     {
       "anchor": "https://apis.io/plans/",

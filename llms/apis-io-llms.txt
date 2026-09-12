@@ -1,20 +1,47 @@
 # APIs.io — Federated API Discovery Network
 
-> APIs.io is an agent-friendly directory of public-internet APIs. It indexes API providers, their individual APIs, schemas, event-driven specs, governance rules, vocabularies, and JSON-LD contexts — all served under the single `apis.io` root domain (each section at its own subpath, e.g. `/providers/`, `/apis/`, `/tags/`).
+> APIs.io is an agent-friendly directory of public-internet APIs. It indexes API providers, their individual APIs, schemas, event-driven specs, governance rules, and JSON-LD contexts — all served under the single `apis.io` root domain (each section at its own subpath, e.g. `/providers/`, `/apis/`, `/tags/`).
 
 APIs.io is intended for both humans and agents. Indexing, retrieval-augmented generation (RAG), grounding, and model training are explicitly permitted — see https://apis.io/terms/. Every page exposes a `<link rel="api-catalog">` pointing at an RFC 9727 linkset that enumerates the indexed APIs, and robots.txt permits search, ai-input, and ai-train via Cloudflare Content-Signals and AIPREF Content-Usage.
 
-The catalog currently indexes roughly 26414 providers, 109100 APIs, and 120595 schemas.
+The catalog currently indexes roughly 27554 providers, 133606 APIs, and 127117 schemas.
 
 ## For agents: API, MCP & skills
 
 The entire catalog is queryable programmatically — start here:
 
 - [REST API](https://apis.io/api/v1): read-only discovery API. Contract: [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml). Docs: https://apis.io/developer/
-- [MCP server](https://apis.io/mcp): Streamable HTTP Model Context Protocol server (15 curated tools, led by `apis_io_search`). Card: https://apis.io/.well-known/mcp/server-card.json
-- [Agent skills](https://apis.io/skills/): index at https://apis.io/.well-known/agent-skills/index.json
+- [MCP server](https://apis.io/mcp): Streamable HTTP Model Context Protocol server, led by `apis_io_search`, with guided prompts for every job (`find_api`, `integrate_provider`, `agent_readiness_scan`, `improve_my_score`). Call `tools/list` for the current tool set. Card: https://apis.io/.well-known/mcp/server-card.json
+- [Agent skills](https://apis.io/skills/): 20 skills covering discovery, adoption, agent readiness, scoring, and market research. Index at https://apis.io/.well-known/agent-skills/index.json
+- [Claude Code plugin](https://apis.io/skills/): all the skills plus the MCP server in one install — `/plugin marketplace add api-search/network` then `/plugin install apis-io@apis-io`
 - [api-catalog](https://apis.io/.well-known/api-catalog): RFC 9727 linkset of every machine-readable surface
 - [Plans](https://apis.io/developer/plans/): free + paid tiers (industries/regions/ratings need Pro+)
+
+## Onboarding, identity and payment — the trust layer
+
+An agent can go from cold discovery to an AUTHORIZED call here with no human at any step: read the
+catalog, read the protected-resource metadata, register or sign, and take a credential. It cannot
+yet PAY without a human — per-call settlement is built and not switched on, and saying otherwise
+would be the one overclaim this whole layer exists to avoid.
+
+These five pages describe that path; the machine-readable half is linked from each.
+
+- [The Trust Layer](https://apis.io/trust/): how discovery, identity, authentication, payment and accountability fit together as one system — and which parts are live, which are built but not switched on, and which are deliberately not built. Start here if you want the shape before the detail.
+- [Onboarding](https://apis.io/onboarding/): the four steps from a cold start to an authorized call, and the five doors in — `open` (no credential), `browser-oauth`, `dcr`, `cimd`, and `aauth` for an agent with nobody in the loop. Machine twin: https://apis.io/.well-known/api-onboarding
+- [KYA — Know Your Agent](https://apis.io/kya/): how a consumer tells a provider who it is, so onboarding can happen without a signup form. Six facets, 26 checks, four grades. Two numbers, never one — *disclosure* is what you told us, *verification* is what we independently confirmed. Graded facts, never a trust verdict: the provider decides, weighted by its own priorities.
+- [Blueprint](https://apis.io/blueprint/): every machine-readable document APIs.io serves, the specification behind each, and what each is worth on the Kin Score. Written to be copied — 50 of the 139 Agent Readiness points come from publishing documents about an API you already have.
+- [Rating](https://apis.io/rating/): the public rubric behind all of it. Every score is recomputable, and correcting an error we made is free.
+
+Discovery documents an agent can fetch directly, all keyless:
+
+- https://apis.io/.well-known/api-catalog — RFC 9727 + RFC 9264 linkset of every surface
+- https://apis.io/.well-known/oauth-protected-resource — RFC 9728, names the authorization server
+- https://apis.io/.well-known/oauth-authorization-server — RFC 8414, carries `registration_endpoint`
+- https://apis.io/.well-known/api-onboarding — API Onboarding Descriptor, including what we require of a consumer
+- https://apis.io/.well-known/aauth-resource.json — agent authentication by signature, no prior registration
+- https://apis.io/.well-known/http-message-signatures-directory — RFC 9421 keys
+- https://apis.io/.well-known/mcp/server-card.json — the MCP server card
+- https://apis.io/.well-known/agent-skills/index.json — the agent skills index
 
 ## Core entry points
 
@@ -25,6 +52,41 @@ The entire catalog is queryable programmatically — start here:
 - [Blog](https://apis.io/blog/): Network updates, provider profiles, weekly roundups
 - [Insights](https://apis.io/insights/): Cross-network reports (top providers, top tags, spec-format breakdowns)
 - [Agent Skills](https://apis.io/agent-skills/): Agent skills published by API providers across the network
+
+## Kin Score — the rating model, one page per measurement
+
+Every provider carries a Kin Score composite (0-100) and a separate agent-readiness score. The rubric is open: every check, its points, and its predicate are published, and each measurement has its own page carrying its definition, its checks, the catalog-wide distribution, and the top-scoring providers (capped at 500, with the true population stated).
+
+- [Kin Score rubric](https://apis.io/rating/): bands, facets, all checks, the regulatory applicability map, and how a score is computed
+- [Contract Quality](https://apis.io/rating/facets/contract-quality/): composite facet, 25% weight, 42 checks
+- [Access Clarity](https://apis.io/rating/facets/commercial-clarity/): composite facet, 20% weight, 9 checks
+- [Developer Ergonomics](https://apis.io/rating/facets/developer-ergonomics/): composite facet, 20% weight, 13 checks
+- [Operational Transparency](https://apis.io/rating/facets/operational-transparency/): composite facet, 13% weight, 9 checks
+- [Contract Governance](https://apis.io/rating/facets/governance/): composite facet, 12% weight, 6 checks
+- [Discoverability](https://apis.io/rating/facets/discoverability/): composite facet, 10% weight, 12 checks
+- [Regulatory Posture](https://apis.io/rating/facets/regulatory/): composite facet, 15% weight (conditional), 18 checks
+- [Open Source Surface](https://apis.io/rating/facets/open-source/): composite facet, 10% weight (conditional), 4 checks
+- [Create-or-Update Ergonomics](https://apis.io/rating/facets/upsert/): composite facet, 10% weight (conditional), 4 checks
+- [Machine-Readable Contract](https://apis.io/rating/dimensions/spec-presence/): agent-readiness dimension, 18 points
+- [Agentic Access Contract](https://apis.io/rating/dimensions/agentic-access/): agent-readiness dimension, 10 points
+- [Documented Reversibility](https://apis.io/rating/dimensions/reversibility-documented/): agent-readiness dimension, 6 points
+- [MCP Server](https://apis.io/rating/dimensions/mcp-server/): agent-readiness dimension, 12 points
+- [Machine-Readable Auth](https://apis.io/rating/dimensions/auth-clarity/): agent-readiness dimension, 10 points
+- [Idempotency](https://apis.io/rating/dimensions/idempotency/): agent-readiness dimension, 9 points
+- [Stable Error Semantics](https://apis.io/rating/dimensions/error-semantics/): agent-readiness dimension, 8 points
+- [Request/Response Examples](https://apis.io/rating/dimensions/openapi-examples/): agent-readiness dimension, 7 points
+- [Rate-Limit Signaling](https://apis.io/rating/dimensions/rate-limit-signal/): agent-readiness dimension, 7 points
+- [Typed Event Surface](https://apis.io/rating/dimensions/event-surface-described/): agent-readiness dimension, 6 points
+- [Agent Skills](https://apis.io/rating/dimensions/agent-skills/): agent-readiness dimension, 5 points
+- [Well-Known Catalog](https://apis.io/rating/dimensions/well-known-catalog/): agent-readiness dimension, 4 points
+- [Consent & Bot Identity](https://apis.io/rating/dimensions/consent-identity/): agent-readiness dimension, 3 points
+- [A2A Agent Card](https://apis.io/rating/dimensions/agent-card/): agent-readiness dimension, 8 points
+- [Dry-Run / Simulate Mode](https://apis.io/rating/dimensions/dry-run-mode/): agent-readiness dimension, 4 points
+- [Delegated User Identity](https://apis.io/rating/dimensions/delegated-identity/): agent-readiness dimension, 6 points
+- [Protected Resource Metadata](https://apis.io/rating/dimensions/protected-resource-metadata/): agent-readiness dimension, 5 points
+- [Registration Without a Human](https://apis.io/rating/dimensions/dynamic-client-registration/): agent-readiness dimension, 6 points
+- [Agentic Commerce Well-Known Document](https://apis.io/rating/dimensions/agentic-commerce/): agent-readiness dimension, 5 points
+
 
 ## Sister sites in the APIs.io network
 
@@ -38,7 +100,6 @@ The entire catalog is queryable programmatically — start here:
 - [asyncapi.apis.io](https://apis.io/asyncapis/): AsyncAPI event-driven specifications
 - [json-ld.apis.io](https://apis.io/jsonld/): JSON-LD contexts and semantic vocabularies
 - [rules.apis.io](https://apis.io/rules/): Spectral governance rules
-- [vocabularies.apis.io](https://apis.io/vocabularies/): Provider tag vocabularies
 - [tags.apis.io](https://apis.io/tags/): Tag index across the network
 - [examples.apis.io](https://examples.apis.io/): API usage examples
 - [developer.apis.io](https://apis.io/developer/): Developer portal and feeds

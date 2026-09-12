@@ -1,0 +1,1 @@
+{"resource":"https://apis.io/mcp","authorization_servers":["https://apis.io"],"scopes_supported":["apis:read"],"bearer_methods_supported":["header"],"resource_name":"APIs.io MCP","resource_documentation":"https://apis.io/developer/mcp-server/","resource_policy_uri":"https://apis.io/developer/plans/"}

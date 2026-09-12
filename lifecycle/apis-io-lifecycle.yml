@@ -1,4 +1,4 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: searched
 source: https://apis.io/developer/overview
 versioning:
@@ -11,13 +11,36 @@ versioning:
     published version-support window. The OpenAPI declares an `ApiKeyAuth` scheme that is not
     enforced in v1, explicitly so metering can arrive without a breaking change.
 deprecation:
-  policy_url: null
-  policy_published: false
-  sunset_header: false
-  deprecation_header: false
+  policy_url: https://apis.io/developer/deprecation
+  policy_published: true
+  policy_last_modified: '2026-08-21'
+  sunset_header: committed
+  deprecation_header: committed
+  link_rel_deprecation: committed
+  standards: [RFC 8594 Sunset, RFC 9745 Deprecation]
+  notice_periods:
+  - change: Deprecating an endpoint or field in /v1
+    minimum_notice: 6 months before removal
+  - change: Retiring an entire API version
+    minimum_notice: 12 months, with /v1 and /v2 served in parallel
+  - change: Security-forced removal
+    minimum_notice: as much as is safe — announced immediately, with the reason
+  breaking_change_definition: >-
+    Published and specific: removing an endpoint or a response field, renaming a field or changing
+    its type, making an optional parameter required, narrowing an enum or changing the meaning of a
+    value, changing the default page size or the paging envelope, or moving a resource from an open
+    tier to a gated one. Additive change ships into /v1 without a version bump.
   note: >-
-    No deprecation policy, no RFC 8594 Sunset/Deprecation header support, and no deprecated
-    operations declared in the OpenAPI contract. This is a real gap, not an absence of evidence.
+    CORRECTED 2026-09-11. This block read "No deprecation policy, no RFC 8594 Sunset/Deprecation
+    header support" and recorded it as "a real gap". A full policy is published at
+    https://apis.io/developer/deprecation (HTTP 200, last modified 2026-08-21) committing to
+    deprecated: true in the contract, Deprecation + Sunset headers, a Link rel="deprecation", a
+    named replacement, and the notice periods above.
+  header_support_is_committed_not_observed: >-
+    The commitment is documented; it cannot be observed, because nothing in the contract is
+    currently deprecated (deprecated_operations is empty) so no response has a Sunset header to
+    carry. Recorded as `committed` rather than `true` on purpose — a promise about future
+    responses is not the same measurement as a header seen on the wire.
 sla:
   url: null
   uptime_target: null

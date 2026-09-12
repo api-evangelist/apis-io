@@ -1,0 +1,84 @@
+{
+"specificationVersion": "0.21",
+"aid": "website",
+"name": "APIs.io",
+"description": "Search and discover APIs by what you want to accomplish. Find API providers, individual APIs, and schemas across the APIs.io network.",
+"image": "https://apis.io/assets/branding/apisio-social-card.png",
+"url": "https://apis.io/apis.json",
+"created": "2024/04/13",
+"modified": "2026/07/13",
+"tags": ["APIs","Search","Discovery","API Directory","API Catalog","REST APIs","APIs.json"],
+"apis": [
+    {
+        "aid": "apis-io:api",
+        "name": "APIs.io API",
+        "description": "Read-only discovery API over the APIs.io catalog — search and browse APIs, providers, tags, industries, regions, areas, ratings, and 17 published artifact types. Every operation maps 1:1 to an MCP tool and, where one exists, an Agent Skill (the API → MCP → Agent-Skill experience chain). Raw discovery (search, providers, apis, tags, all artifact collections) is free; curated dimensions (industries/regions/areas), rating data, and synthesis (compare/gaps/changes/stack) are Pro. Per-operation tier + tool + skill are declared in the OpenAPI via x-tier / x-mcp-tool / x-agent-skill (see the x-apis-io map).",
+        "humanURL": "https://apis.io/developer/",
+        "baseURL": "https://apis.io/api/v1",
+        "tags": ["API Discovery", "API Search", "Catalog", "MCP", "Agent Skills", "APIs.json"],
+        "properties": [
+            { "type": "OpenAPI", "url": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml" },
+            { "type": "Documentation", "url": "https://apis.io/developer/" },
+            { "type": "MCPServer", "url": "https://apis.io/mcp" },
+            { "type": "MCPServerCard", "url": "https://apis.io/.well-known/mcp/server-card.json" },
+            { "type": "AgentSkills", "url": "https://apis.io/.well-known/agent-skills/index.json" },
+            { "type": "Plans", "url": "https://apis.io/developer/plans/" },
+            { "type": "Pricing", "url": "https://apis.io/developer/plans/" },
+            { "type": "RateLimits", "url": "https://apis.io/developer/plans/" },
+            { "type": "Authentication", "url": "https://apis.io/developer/" }
+        ]
+    }
+    ],
+"network": [
+    {
+        "name": "APIs Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Providers Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Tags Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Schemas Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "AsyncAPI Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "JSON-LD Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Rules Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Vocabularies Feed",
+        "url": "https://apis.io/apis.json"
+    },
+    {
+        "name": "Developer Portal",
+        "url": "https://apis.io/developer/apis.json"
+    },
+    {
+        "name": "API Commons",
+        "url": "https://apicommons.org/apis.json"
+    },
+    {
+        "name": "APIs.json",
+        "url": "https://apisjson.org/apis.json"
+    }
+    ],
+"maintainers": [
+    {
+        "FN": "Kin Lane",
+        "email": "info@apievangelist.com"
+    }
+    ]   
+}

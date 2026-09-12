@@ -1,0 +1,112 @@
+generated: '2026-09-11'
+method: searched
+source: >-
+  Registry metadata endpoints (registry.npmjs.org, pypi.org, rubygems.org, crates.io),
+  api.github.com for the api-search organization, and https://apis.io/llms.txt
+summary: >-
+  APIs.io publishes NO first-party client SDK in any public package registry. That is the finding,
+  and it is a real one rather than a gap in this probe: the service's own integration story is
+  "call the REST contract, or attach the MCP server", and the only thing it actually distributes as
+  an installable unit is a Claude Code plugin served from a GitHub repository, which has no
+  registry and therefore no registry metadata endpoint to query. Every registry below was asked by
+  name and answered.
+packages:
+- language: n/a
+  registry: github
+  distribution: claude-code-plugin
+  name: apis-io
+  marketplace: api-search/agent-skills
+  url: https://github.com/api-search/agent-skills
+  manifest: https://raw.githubusercontent.com/api-search/agent-skills/refs/heads/main/.claude-plugin/marketplace.json
+  install: /plugin marketplace add api-search/agent-skills
+  install_step_2: /plugin install apis-io@apis-io
+  version: 1.0.0
+  published: null
+  official: true
+  contents: 20 agent skills plus the APIs.io MCP server, in one install
+  note: >-
+    version 1.0.0 read from the plugin entry in the marketplace manifest (HTTP 200, fetched
+    2026-09-11). published is null because a Claude Code plugin marketplace is a git repository,
+    not a registry — there is no metadata endpoint that carries a publish date, and the manifest
+    itself does not carry one. Checked, nothing to record; not unchecked.
+  defect: >-
+    https://apis.io/llms.txt tells an agent to run `/plugin marketplace add api-search/network`.
+    That repository returns HTTP 404 to an anonymous caller — the marketplace actually lives at
+    api-search/agent-skills. An agent following our own published instructions cannot install our
+    own plugin. Verified 2026-09-11 against api.github.com/repos/api-search/network (404) and
+    api.github.com/repos/api-search/agent-skills (200).
+registries_probed:
+- registry: npm
+  endpoint: https://registry.npmjs.org
+  queries:
+  - {name: apis-io, status: 404}
+  - {name: apisio, status: 404}
+  - {name: apis.io, status: 404}
+  - {name: apis-io-mcp, status: 404}
+  - {name: '@apis-io/sdk', status: 404}
+  - {name: '@apisio/sdk', status: 404}
+  - {name: '@api-evangelist/apis-io', status: 404}
+  - {search: 'apis.io', status: 200, results: 0}
+  - {search: apisio, status: 200, results: 0}
+  found: 0
+- registry: pypi
+  endpoint: https://pypi.org/pypi/<name>/json
+  queries:
+  - {name: apis-io, status: 404}
+  - {name: apisio, status: 404}
+  - {name: apis_io, status: 404}
+  found: 0
+- registry: rubygems
+  endpoint: https://rubygems.org/api/v1/gems/<name>.json
+  queries:
+  - {name: apis-io, status: 404}
+  found: 0
+- registry: crates.io
+  endpoint: https://crates.io/api/v1/crates/<name>
+  queries:
+  - {name: apis-io, status: 403}
+  found: 0
+  note: >-
+    403 is crates.io refusing the user agent, not a package. Recorded as inconclusive rather than
+    as an absence — the only registry of the set that did not give a clean answer.
+- registry: maven-central
+  probed: false
+  reason: No JVM surface is claimed anywhere in the docs, the llms.txt or the GitHub organization.
+- registry: nuget
+  probed: false
+  reason: No .NET surface is claimed anywhere in the docs, the llms.txt or the GitHub organization.
+- registry: pkg.go.dev
+  probed: false
+  reason: No Go surface is claimed anywhere in the docs, the llms.txt or the GitHub organization.
+- registry: mcp-registry
+  endpoint: https://registry.modelcontextprotocol.io/v0/servers?search=io.apis
+  status: 200
+  found: 1
+  entry: io.apis/apis-io
+  note: >-
+    Not a client library — the MCP server's registry listing. Recorded here because it is the one
+    package-registry-shaped record APIs.io does maintain. Catalogued properly in mcp/apis-io-mcp.yml.
+github_organization:
+  org: api-search
+  url: https://github.com/api-search
+  public_repos: 9
+  repos:
+  - {name: .github, language: null}
+  - {name: spotlight-rules, language: JavaScript}
+  - {name: security, language: HTML}
+  - {name: areas, language: HTML}
+  - {name: scopes, language: HTML}
+  - {name: agentic-access, language: HTML}
+  - {name: inbox, language: null}
+  - {name: estates, language: HTML}
+  - {name: agent-skills, language: null}
+  note: >-
+    Nine public repositories, none of which is a client library — eight are published site or data
+    surfaces and one is the plugin marketplace. The repositories named in apis.yml as
+    GitHubRepository pointers (apis-io-search, apis-io-engine, apis-io-authentication,
+    apis-io-ratings, apisio/apis.io) are not among them.
+sdk_count: 0
+official_sdk_count: 0
+x-evidence:
+  fetched: '2026-09-11'
+  method: unauthenticated HTTP to each registry's documented metadata endpoint

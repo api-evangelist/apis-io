@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/cloudflare/agent-skills-discovery-rfc/main/schema/v0.2.0/index.schema.json",
   "version": "0.2.0",
   "name": "apis.io agent skills",
-  "description": "Skills for discovering and consuming APIs in the apis.io federated catalog — navigate the network, search the catalog, fetch specs, onboard providers, and (Pro) design, shortlist, audit, and monitor API stacks.",
+  "description": "Skills for discovering, adopting, and improving APIs in the apis.io catalog \u2014 search the catalog, resolve a company to a provider, fetch specs, onboard a provider, check agent readiness, and (Pro) design, shortlist, audit, benchmark, and monitor API stacks. Backed by the apis.io v1 API and MCP server.",
   "url": "https://apis.io/skills/",
   "publisher": {
     "name": "API Evangelist",
@@ -12,72 +12,142 @@
     {
       "name": "discover-apis-io",
       "type": "claude-skill",
-      "description": "Discover the structure of the apis.io network — its subdomains, machine-readable catalogs, and content-negotiation conventions — so other skills can find APIs efficiently.",
+      "description": "Learn how to read the apis.io API catalog \u2014 the v1 REST API, the MCP server, and the markdown mirror of every page \u2014 so other skills can find APIs without scraping HTML. Use this first when the user mentions apis.io or asks to discover APIs across a catalog.",
       "url": "https://apis.io/skills/discover-apis-io/SKILL.md",
-      "sha256": "590d60427cb602b61edfeb3339dbeeb434091e0864009f70af405ba3d27401d5"
+      "sha256": "04bf657006be3a4828774f84ee9864a22f80a34e3b337f9ff6cbb7a45b2cee1a"
+    },
+    {
+      "name": "resolve-provider",
+      "type": "claude-skill",
+      "description": "Turn a domain, URL, company name, or GitHub org into an apis.io provider slug, with its quality band and composite score. Use first whenever the user names a company rather than a catalog slug \u2014 which is almost always.",
+      "url": "https://apis.io/skills/resolve-provider/SKILL.md",
+      "sha256": "976f3c4ea6fc9740c6579bd6b1e9f72275b74e90b1a314397ddadddf87ff8416"
     },
     {
       "name": "search-apis",
       "type": "claude-skill",
-      "description": "Find APIs in the apis.io catalog by keyword, capability, tag, or provider.",
+      "description": "Search the apis.io catalog for APIs, providers, and tags by keyword, capability, tag, or provider. Use when the user asks what APIs exist for something, which providers offer a capability, or wants to filter the catalog.",
       "url": "https://apis.io/skills/search-apis/SKILL.md",
-      "sha256": "74868af93c4750b665243eb0f5515367102df019468b6f4ebbd96940612aa532"
+      "sha256": "75da56bd33e9cafeba978d4cb00af8f2b30e6290a3e498acf0449b736b699207"
     },
     {
       "name": "fetch-api-spec",
       "type": "claude-skill",
-      "description": "Given an apis.io API URL or catalog entry, fetch the OpenAPI / AsyncAPI / Postman specification for that API.",
+      "description": "Fetch and parse the OpenAPI, AsyncAPI, GraphQL, or Postman description for an API in the apis.io catalog, given its aid or its apis.io URL. Use to inspect operations, summarize endpoints, or generate code from a real spec.",
       "url": "https://apis.io/skills/fetch-api-spec/SKILL.md",
-      "sha256": "0c344c0113f9536da92757597c2dc59006ebc1056787d085a21efd9681d3eaa7"
+      "sha256": "1224220668e96a5d069f1bfe5df7868c06df44b3ca1b35ee9467f07676d4b7f3"
     },
     {
       "name": "find-api",
       "type": "claude-skill",
-      "description": "Find the right API for a task — search the catalog, inspect the best candidates, and recommend one with its spec and links.",
+      "description": "Find the right API for a task \u2014 search the apis.io catalog, inspect the strongest candidates, and recommend one with its spec and links. Use when the user asks what API to use for something, or whether an API exists for a job.",
       "url": "https://apis.io/skills/find-api/SKILL.md",
-      "sha256": "315cd6246b0bf132648083b290c8fc4572b1b5bd9ce9e6a2a27a6c3aed3f6d5b"
+      "sha256": "91e0cd6d82623a7deac4101e7113e4deb6ede95f498b233f77e89e0260f6c864"
     },
     {
       "name": "integrate-provider",
       "type": "claude-skill",
-      "description": "Onboard a provider end-to-end — read its onboarding and OpenAPI from the catalog and produce concrete first-integration steps.",
+      "description": "Onboard an API provider end-to-end \u2014 pull its signup, authentication, base URLs and OpenAPI from the apis.io catalog and produce concrete, runnable first-integration steps. Use when a provider is chosen and the user wants to actually wire it up.",
       "url": "https://apis.io/skills/integrate-provider/SKILL.md",
-      "sha256": "0337e298ac210ec6f8040aff529643170fedc06ada323ba738f459d4f35ed64c"
+      "sha256": "bca4ebd43aaafabb54e394f7db91f8b3b71c2886a85560a686c43f080ca5c86a"
     },
     {
       "name": "discover-mcp-servers",
       "type": "claude-skill",
-      "description": "Find providers in the catalog that publish a public MCP server, so you can plug real tools into an agent.",
+      "description": "Find providers in the apis.io catalog that publish an MCP server, with the endpoint and install method, so you can plug real tools into an agent. Use when the user wants agent-ready tools rather than raw REST.",
       "url": "https://apis.io/skills/discover-mcp-servers/SKILL.md",
-      "sha256": "57567b68cb1be2cc1d9fac63254cfa66cac826c930be67566b2e54054bf60bc6"
+      "sha256": "12a8db6528cc61fba3fb90051bd51e3b81e43cd1a2ed90ea38b48b8bf78757dc"
     },
     {
-      "name": "assemble-api-stack",
+      "name": "discover-agent-skills",
       "type": "claude-skill",
-      "description": "Pro — Design a capability stack from the catalog and export it as an adoptable APIs.json a team can commit.",
-      "url": "https://apis.io/skills/assemble-api-stack/SKILL.md",
-      "sha256": "4e496d568880b3299e6d6f3f8791c72a2e9b0312293f4deaa09a4489cb6618c5"
+      "description": "Search the apis.io catalog for Agent Skills published by API providers \u2014 packaged SKILL.md files you can adopt directly. Use when the user wants ready-made skills for a vendor or capability rather than writing integration code.",
+      "url": "https://apis.io/skills/discover-agent-skills/SKILL.md",
+      "sha256": "dd159a6ad4855e9a90f726e15bf0df0264438b24c4c059b7e1e41680418820fc"
+    },
+    {
+      "name": "find-artifact",
+      "type": "claude-skill",
+      "description": "Search the apis.io catalog for any artifact type beyond OpenAPI \u2014 Arazzo workflows, Spectral rules, pricing plans, FinOps, rate limits, GraphQL, Postman collections, JSON Schemas, examples, and more. Use when the user wants governance, commercial, or workflow artifacts rather than an API contract.",
+      "url": "https://apis.io/skills/find-artifact/SKILL.md",
+      "sha256": "c523d86d346dcc41729c68301ceafea7386998d62f9fbba8e306ad1316c49f91"
+    },
+    {
+      "name": "agent-readiness-scan",
+      "type": "claude-skill",
+      "description": "Check whether an API provider is ready for autonomous AI agents \u2014 machine-readable contracts, MCP servers, agent skills, llms.txt, agent-native access controls, and the operational signals an agent needs. Use when asked if an API is agent-ready, or to compare providers on agent readiness.",
+      "url": "https://apis.io/skills/agent-readiness-scan/SKILL.md",
+      "sha256": "4cc569b1c5e51033b422564e1af097b17b2c264006a748c6b5aa9bb1cef59f2e"
+    },
+    {
+      "name": "score-my-api",
+      "type": "claude-skill",
+      "description": "Read a provider's apis.io quality score and the Kin Score rubric, then turn it into a ranked, do-this-next punch list of what to publish to move up a band. Use when someone wants to know how their own API rates and how to improve it.",
+      "url": "https://apis.io/skills/score-my-api/SKILL.md",
+      "sha256": "07aba4f42d80e1e3e0be09323601e2f21374b1511bcb3081d0fe7c763a82dbb8"
+    },
+    {
+      "name": "verify-provenance",
+      "type": "claude-skill",
+      "description": "Check where an apis.io provider record's evidence came from \u2014 which artifacts the provider published first-party versus which apis.io derived \u2014 before citing a score or an artifact as fact. Use when accuracy matters, or when a provider disputes their rating.",
+      "url": "https://apis.io/skills/verify-provenance/SKILL.md",
+      "sha256": "1042b9bcf911d166cfd0d32af2cf02bd508da25ed67acab12542d73c10464e3e"
     },
     {
       "name": "shortlist-vendors",
       "type": "claude-skill",
-      "description": "Pro — Turn a single capability into a scored, compared vendor shortlist with a clear recommendation.",
+      "description": "Turn one capability into a scored, compared vendor shortlist from the apis.io catalog, with a clear recommendation. Use for a buy decision on a single capability. Pro tier.",
       "url": "https://apis.io/skills/shortlist-vendors/SKILL.md",
-      "sha256": "ac4a8c1969e2334c9702736d2673081f661d04031850e6cd19eb79db6786dd52"
+      "sha256": "0aac78b8fdacde3ac399d6374b90b4788a3391afd42fbd97d8962a7d0d25bb26"
+    },
+    {
+      "name": "assemble-api-stack",
+      "type": "claude-skill",
+      "description": "Design a capability stack from the apis.io catalog \u2014 the best-rated provider per capability \u2014 and export it as an adoptable APIs.json. Use when the user needs several APIs at once, not one. Pro tier.",
+      "url": "https://apis.io/skills/assemble-api-stack/SKILL.md",
+      "sha256": "66e4327a4903842b2c99d6ca51b49e09f2bca0583e483a9748cf10b447cc7b48"
     },
     {
       "name": "audit-api-estate",
       "type": "claude-skill",
-      "description": "Pro — Inventory, score, and gap a set of providers: what they publish, how they rate, and what they're missing.",
+      "description": "Inventory, score, and gap a set of API providers from the apis.io catalog \u2014 what they publish, how they rate, and what they are missing. Use to assess a vendor portfolio. Pro tier.",
       "url": "https://apis.io/skills/audit-api-estate/SKILL.md",
-      "sha256": "4fa12a764687d75d8cb78d20552a2e33d47b9e266ae13378f8fb8871124ccf32"
+      "sha256": "68559ad1b14f4fcef9a482c4b22c2c8a237b20c968bf71cc9d283a47e745561f"
+    },
+    {
+      "name": "benchmark-against-peers",
+      "type": "claude-skill",
+      "description": "Benchmark one API provider against its closest peers facet by facet \u2014 score, artifact coverage, and where it leads or trails. Use for competitive positioning or to justify an API investment. Pro tier, with a free fallback.",
+      "url": "https://apis.io/skills/benchmark-against-peers/SKILL.md",
+      "sha256": "b4d9847ef6baac28793db9a1a9a786a50a4589f49fcc262d2c767c86a0c730b4"
+    },
+    {
+      "name": "explore-cohort",
+      "type": "claude-skill",
+      "description": "Explore any slice of the API market as a scored cohort \u2014 an industry, topic area, region, or tag \u2014 with its members, their Kin Scores and agent readiness. Use to size a market, find the leaders in a category, or research a sector.",
+      "url": "https://apis.io/skills/explore-cohort/SKILL.md",
+      "sha256": "1a779f5a6bdd734c7b378021756f80981bcebd67e8934e1d34e7447f43dd47d8"
+    },
+    {
+      "name": "company-readiness",
+      "type": "claude-skill",
+      "description": "Read the demand side of the API market \u2014 what technologies a company is investing in, where it is thin, and which catalog providers are already in its stack. Use for account research, sales targeting, or to find where demand outruns supply.",
+      "url": "https://apis.io/skills/company-readiness/SKILL.md",
+      "sha256": "d7c326ee477d0d71bf6dc0484c690c1b8ca4753092340b3a0cfef333aaf45096"
+    },
+    {
+      "name": "watch-providers",
+      "type": "claude-skill",
+      "description": "Set up ongoing monitoring of the apis.io catalog using saved searches and lists \u2014 track a vendor set, get only what is new since last check, and watch for rating movement. Use for recurring vendor monitoring rather than one-off queries. Pro tier, with a free fallback.",
+      "url": "https://apis.io/skills/watch-providers/SKILL.md",
+      "sha256": "be8e9532f0f2e7291bc26cbbee79acc8e07ed8388e29b9a3e667e0d96562b633"
     },
     {
       "name": "track-api-changes",
       "type": "claude-skill",
-      "description": "Pro — Monitor the catalog for providers added/updated and rating movement, for a chosen set or the whole network.",
+      "description": "Monitor the apis.io catalog for providers added or updated and for rating movement, across a chosen set or the whole network. Use for ongoing vendor monitoring. Pro tier.",
       "url": "https://apis.io/skills/track-api-changes/SKILL.md",
-      "sha256": "9dc5d7875b2303ececcdd11e613599432a24539eb121ec4a027f870d6f87ce76"
+      "sha256": "c1874e024d0b835a878ec6dd6ae4eb64ba5ce3bf80604a2ae5a22a093a669496"
     }
   ]
 }

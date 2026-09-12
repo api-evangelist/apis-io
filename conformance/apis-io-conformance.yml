@@ -1,10 +1,14 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: derived
 source: openapi/_original/apis-io-v1-openapi.yml + live probes of https://apis.io
 standards:
 - id: openapi-3.1
   conforms: true
-  evidence: All 12 specs in openapi/ declare openapi 3.1.0; the v1 contract carries 62 operations.
+  evidence: >-
+    Every spec in openapi/ declares openapi 3.1.0. Across the 19 tag-split contracts in
+    openapi/_original/ there are 110 distinct operationIds (302 GET, 32 POST, 7 DELETE counted
+    with duplicates across the aggregate and the splits); the v1 aggregate carried 62 on
+    2026-08-10.
 - id: apis-json-0.21
   conforms: true
   evidence: >-
@@ -24,13 +28,17 @@ standards:
 - id: mcp-2025-11-05
   conforms: true
   evidence: >-
-    Streamable-HTTP MCP server at https://apis.io/mcp; anonymous tools/list returned 200 with 79
-    tools; server card declares schemaVersion 2025-11-05.
+    Streamable-HTTP MCP server at https://apis.io/mcp; anonymous tools/list returned 200 with 133
+    tools on 2026-09-11 (79 on 2026-08-10); initialize reports protocolVersion 2025-06-18 and
+    server version 1.3.0; server card declares schemaVersion 2025-11-05. The card still describes
+    the server as read-only at version 1.2.0 while the live server ships 17 write-shaped tools —
+    a card/server divergence recorded in mcp/apis-io-mcp.yml.
 - id: agent-skills-discovery-0.2.0
   conforms: true
   evidence: >-
     /.well-known/agent-skills/index.json validates against the Cloudflare Agent Skills Discovery
-    RFC v0.2.0 index schema; 10 skills with sha256 digests.
+    RFC v0.2.0 index schema; 20 skills with sha256 digests on 2026-09-11 (10 on 2026-08-10). All
+    twenty SKILL.md files re-fetched at HTTP 200 and saved verbatim under skills/.
 - id: aipref-content-usage
   conforms: true
   evidence: 'robots.txt carries Content-Usage: search=y, ai-input=y, ai-train=y.'
@@ -43,21 +51,95 @@ standards:
     Declared in the contract (components.schemas.Problem, application/problem+json) but not served
     — live 404 returns application/json {"error","detail"}. See errors/apis-io-problem-types.yml.
 - id: rfc9116-security-txt
-  conforms: false
-  evidence: https://apis.io/.well-known/security.txt returned HTTP 404.
+  conforms: true
+  evidence: >-
+    https://apis.io/.well-known/security.txt returns HTTP 200 text/plain (2026-09-11) with
+    Contact, Expires, Preferred-Languages, Canonical and Policy. Expires is rendered at build time
+    six months out so the mandatory field cannot lapse. Was 404 on 2026-08-10.
+  changed: '2026-09-11'
 - id: rfc8594-sunset-header
-  conforms: false
-  evidence: No Sunset/Deprecation headers and no published deprecation policy.
+  conforms: partial
+  evidence: >-
+    CORRECTED 2026-09-11. A published deprecation policy DOES exist at
+    https://apis.io/developer/deprecation (HTTP 200, last modified 2026-08-21) committing to RFC
+    8594 Sunset and RFC 9745 Deprecation headers plus a Link rel="deprecation", with 6-month
+    (endpoint/field) and 12-month (version) minimum notice. Marked partial rather than true
+    because no header can be observed: nothing in the contract is currently deprecated, so no
+    response carries one. The 2026-08-10 entry said "no published deprecation policy", which was
+    wrong.
+  changed: '2026-09-11'
+- id: rfc9745-deprecation-header
+  conforms: partial
+  evidence: Committed in the same policy; unobservable for the same reason — no operation is currently deprecated.
 - id: oauth2
-  conforms: false
-  evidence: No oauth2 securityScheme in any spec; auth is an optional X-API-Key header.
-- id: openid-connect
-  conforms: false
-  evidence: /.well-known/openid-configuration returned HTTP 404.
-- id: a2a-agent-card
+  conforms: true
+  evidence: >-
+    RFC 6749/OAuth 2.1 authorization server at issuer https://apis.io — RFC 8414 metadata at
+    /.well-known/oauth-authorization-server (HTTP 200, 2026-09-11), authorization/token/registration
+    endpoints under /api/v1/auth/, scopes apis:read, apis:pro, offline_access. Was false on
+    2026-08-10, when the document 404'd.
+  changed: '2026-09-11'
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: /.well-known/oauth-authorization-server returns HTTP 200 application/json with issuer, jwks_uri and all three endpoints.
+- id: rfc9728-protected-resource-metadata
+  conforms: true
+  evidence: >-
+    /.well-known/oauth-protected-resource returns HTTP 200 naming resource https://apis.io/mcp,
+    authorization_servers [https://apis.io], scopes_supported [apis:read] and
+    bearer_methods_supported [header].
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: >-
+    registration_endpoint https://apis.io/api/v1/auth/register is advertised in both the RFC 8414
+    and OIDC discovery documents, with token_endpoint_auth_methods_supported including "none".
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported is ["S256"] — S256 only, no plain.
+- id: rfc8707-resource-indicators
+  conforms: true
+  evidence: resource_indicators_supported is true in the authorization-server metadata.
+- id: aauth-resource
+  conforms: true
+  evidence: >-
+    /.well-known/aauth-resource.json returns HTTP 200 carrying both required fields (issuer,
+    jwks_uri) plus an r3_vocabularies map (Rich Resource Requests) pointing
+    urn:aauth:vocabulary:mcp at https://apis.io/mcp. First probed 2026-09-11.
+  caveat: >-
+    The same map points urn:aauth:vocabulary:openapi at https://apis.io/openapi.json, which
+    returned HTTP 404 on the same pass. The document conforms structurally; one of the two
+    vocabulary URIs it advertises does not resolve.
+- id: rfc9421-http-message-signatures
   conforms: false
   evidence: >-
-    /.well-known/agent-card.json and /.well-known/agent.json both returned HTTP 404 on apis.io.
+    /.well-known/http-message-signatures-directory IS served (HTTP 200) but its keys[] array is
+    empty by design — the document itself states apis.io does not sign outbound HTTP traffic. A
+    present directory with no keys is not a signing posture.
+- id: api-onboarding-descriptor-0.1
+  conforms: true
+  evidence: >-
+    /.well-known/api-onboarding returns HTTP 200, aod 0.1, describing the account, verification,
+    registration, authentication and credential steps from cold start to an authorized call.
+- id: openid-connect
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration returns HTTP 200 (2026-09-11) with issuer, jwks_uri,
+    authorization/token/registration endpoints, response_types_supported [code], grant_types
+    [authorization_code, refresh_token, client_credentials] and S256 PKCE. Was 404 on 2026-08-10.
+  changed: '2026-09-11'
+  caveat: >-
+    The document is byte-identical to the RFC 8414 one and advertises no id_token issuance
+    (no subject_types_supported, no id_token_signing_alg_values_supported), so this is OAuth
+    metadata served at the OIDC path rather than a full OpenID Provider.
+- id: a2a-agent-card
+  conforms: partial
+  evidence: >-
+    /.well-known/agent-card.json returns HTTP 200 application/json (served since 2026-09-07; 404
+    on 2026-08-10). Graded NEAR-CONFORMANT against A2A 1.0.0 in a2a/apis-io-a2a.yml: all three
+    hard checks pass, but preferredTransport is "MCP" — not a transport A2A defines — and url
+    points at an MCP endpoint, so an A2A client can parse the card and cannot drive the service
+    with it. The pre-0.3 /.well-known/agent.json alias is still 404.
+  changed: '2026-09-11'
 - id: asyncapi
   conforms: false
   evidence: >-
@@ -80,16 +162,50 @@ compliance_program:
     certification. The page at https://apis.io/security/ is the catalog's cross-provider "API
     Security Posture" index — it lists OTHER providers' certifications and must not be read as an
     APIs.io compliance claim.
+domain_standard:
+  applicable: false
+  note: >-
+    REWARD-ONLY and deliberately left empty. APIs.io's market is API discovery, and the closest
+    thing to a domain standard for it is APIs.json — which IS declared, and is already recorded
+    above as apis-json-0.21 with a live /apis.json at HTTP 200 rather than as a marketing claim.
+    Nothing else in this sector has a standard to conform to, so no slot is filled to fill it.
 x-evidence:
-  fetched: '2026-08-10'
+  fetched: '2026-09-11'
   probes:
   - url: https://apis.io/apis.json
+    http_status: 200
+  - url: https://apis.io/apis.yml
     http_status: 200
   - url: https://apis.io/.well-known/api-catalog
     http_status: 200
   - url: https://apis.io/mcp
     http_status: 200
+    note: POST tools/list, 133 tools anonymously
   - url: https://apis.io/.well-known/security.txt
-    http_status: 404
+    http_status: 200
+    was: 404 on 2026-08-10
   - url: https://apis.io/.well-known/agent-card.json
+    http_status: 200
+    was: 404 on 2026-08-10
+  - url: https://apis.io/.well-known/openid-configuration
+    http_status: 200
+    was: 404 on 2026-08-10
+  - url: https://apis.io/.well-known/oauth-authorization-server
+    http_status: 200
+    was: 404 on 2026-08-10
+  - url: https://apis.io/.well-known/oauth-protected-resource
+    http_status: 200
+    was: 404 on 2026-08-10
+  - url: https://apis.io/.well-known/aauth-resource.json
+    http_status: 200
+    note: first ever probe of this path on this host
+  - url: https://apis.io/.well-known/api-onboarding
+    http_status: 200
+  - url: https://apis.io/.well-known/http-message-signatures-directory
+    http_status: 200
+    note: served but keys[] is empty
+  - url: https://apis.io/.well-known/agent.json
     http_status: 404
+  - url: https://apis.io/openapi.json
+    http_status: 404
+    note: advertised by the AAuth r3_vocabularies map; not served

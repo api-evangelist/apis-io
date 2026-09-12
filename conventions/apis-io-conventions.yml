@@ -1,4 +1,4 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: searched
 source: https://apis.io/developer/overview
 docs:
@@ -10,14 +10,29 @@ docs:
   api_reference: https://apis.io/developer/api/
 base_url: https://apis.io/api/v1
 http:
-  methods: [GET]
-  read_only: true
+  methods: [GET, POST, DELETE]
+  read_only: false
+  operation_counts:
+    GET: 302
+    POST: 32
+    DELETE: 7
+  counted: '2026-09-11'
   note: >-
-    Every v1 endpoint is a GET. No operation mutates catalog state, which is why the API ships no
-    idempotency contract — there is nothing to make idempotent.
+    CORRECTED 2026-09-11. This block previously read "Every v1 endpoint is a GET. No operation
+    mutates catalog state", and on 2026-08-10 that was true. It is not true now. Two write
+    surfaces have landed: Provider Control (/providers/{slug}/claim, /facts, /submit, /visibility,
+    /dispute, /correction, plus /checks and /gaps/report) and Saved Workspace (/me/searches,
+    /me/lists, /me/lists/{id}/entries, /me/watch/{slug}). The catalog-read surface is still
+    GET-only; the account and listing surfaces are not. Every Provider Control write returns 202
+    and is queued for a person — nothing publishes or moves a score on its own — but a queued
+    request is still a mutation an agent can fire twice.
 authentication:
-  style: api-key-header
+  style: api-key-header-or-oauth2
   header: X-API-Key
+  oauth2: true
+  oauth2_metadata: https://apis.io/.well-known/oauth-authorization-server
+  protected_resource: https://apis.io/.well-known/oauth-protected-resource
+  dynamic_client_registration: true
   required: false
   note: >-
     v1 is open — anonymous requests run on the Free tier. A GitHub login issues a free Starter key;
@@ -25,10 +40,125 @@ authentication:
     Saved Workspace and Synthesis.
   artifact: authentication/apis-io-authentication.yml
 idempotency:
-  supported: false
-  reason: >-
-    Read-only API — GET only, no write operations, no idempotency-key header documented or present
-    in the OpenAPI contract.
+  supported: true
+  coverage: partial
+  mechanism: natural-key upsert, scoped to the caller
+  header: none
+  scope:
+  - claimListing
+  - correctFacts
+  - submitArtifact
+  not_covered:
+  - reportCorrection
+  - disputeFinding
+  - setVisibility
+  - requestCheck
+  - reportGap
+  - createSavedSearch
+  - createList
+  - addToList
+  detail: >-
+    CORRECTED 2026-09-11 (this file previously recorded supported: false, which was accurate for a
+    GET-only API and is not accurate now). There is NO Idempotency-Key header anywhere in the
+    contract and no caller-declared match key. What exists instead is per-operation natural-key
+    idempotency, documented operation by operation in
+    openapi/_original/apis-io-v1-provider-control-openapi.yml:
+      - claimListing — "IDEMPOTENT FOR YOU, CONTESTED ACROSS PARTIES". A repeat claim returns the
+        open claim (outcome: already_claimed), not a second one. A claim on a listing another
+        party already claimed is a 409.
+      - correctFacts — "AN UPSERT, scoped to you". A second call while a correction is open
+        amends it in place and keeps its id; outcome is created (202) or amended (200), with
+        previous carrying what was replaced.
+      - submitArtifact — "UPSERT ON (type, url)". Re-submitting a pointer already held is a no-op
+        (outcome: unchanged); a new url of a held type is an ADDITION, never a replacement.
+    Everything else replays. reportCorrection says so in its own description: "NOT IDEMPOTENT.
+    Each call files a new correction; sending the same body twice queues it twice."
+    coverage is therefore `partial`, not `full`: 3 of 11 mutating Provider Control operations and
+    0 of 5 Saved Workspace writes carry replay protection. Calling it full because the three
+    highest-consequence writes are covered would be the flattery the field exists to prevent.
+  x-declared-in-contract: >-
+    The contract states its own non-idempotency rather than implying safety — see the
+    "DOCUMENTED AS BUILT (roadmap#288)" note in the Provider Control info.description.
+reversibility:
+  grade: documented
+  applicable: true
+  summary: >-
+    Every self-service write an agent can make on its OWN workspace has a reversal operation, and
+    none of them states a window because none is needed — the reversal is immediate and
+    unconditional. The writes that reach the CATALOG have no reversal operation at all, and one of
+    them is destructive. That asymmetry is the finding.
+  write_surfaces:
+  - operation: createSavedSearch
+    reversal: deleteSavedSearch
+    reversal_operation_id: deleteSavedSearch
+    window: none stated — unconditional
+    docs: https://apis.io/developer/api/
+    note: >-
+      The contract says "Permanently removes the saved search and its delta cursor." The reversal
+      of the CREATE is unconditional; the DELETE itself is the irreversible direction.
+  - operation: createList
+    reversal: deleteList
+    reversal_operation_id: deleteList
+    window: none stated — unconditional
+    note: Contract says "Permanently removes the list." Same asymmetry as saved searches.
+  - operation: watchListing
+    reversal: unwatchListing
+    reversal_operation_id: unwatchListing
+    window: none stated — unconditional
+  - operation: addToList
+    reversal: null
+    window: null
+    note: >-
+      NO REVERSAL EXISTS. Entries are appended and de-duplicated, and there is no
+      DELETE /me/lists/{id}/entries. The only way to remove a member is deleteList, which destroys
+      the whole list. An agent that adds the wrong provider to a curated shortlist cannot undo it
+      without losing the shortlist.
+  - operation: setVisibility
+    reversal: null
+    window: null
+    consequence: high
+    note: >-
+      NO REVERSAL OPERATION, and this is the destructive one. Its own description reads "A person
+      applies this — it strips artifacts, pages and rollups across the network." Restoring a
+      delisted provider is a human process with no documented path, no operation and no stated
+      window. An agent should treat this as one-way.
+  - operation: claimListing
+    reversal: null
+    window: null
+    note: A claim cannot be withdrawn through the API; a contested claim (409) is decided by a person.
+  - operation: correctFacts
+    reversal: amend-in-place
+    window: while the correction is still open (state not stated as a duration)
+    note: >-
+      The upsert IS the amendment path — a second call replaces the pending correction and returns
+      `previous`. Once an operator works the row there is no documented amendment or withdrawal.
+      A window exists but is expressed as a state, not a duration, so this is `documented`, not
+      `verified`.
+  - operation: submitArtifact
+    reversal: null
+    window: null
+    note: >-
+      A submitted pointer cannot be retracted through the API. Re-submitting the same (type, url)
+      is a no-op rather than a toggle.
+  - operation: reportCorrection
+    reversal: null
+    window: null
+    note: Not idempotent AND not reversible — each call queues a new row that a person must work.
+  grade_reason: >-
+    `documented`, not `verified`: reversal operations exist and are named, but not one of them
+    states a time window, and the two highest-consequence writes (setVisibility, submitArtifact)
+    have no reversal path at all. Per the rubric a reversal path alone is documented (0.4); a
+    reversal path AND a stated window is verified (1.0). No window is stated anywhere, so no
+    window is claimed here.
+dry_run_mode:
+  supported: true
+  operation: simulateFixes
+  path: POST /providers/{slug}/projection
+  note: >-
+    "What a set of fixes would move the score to" — a real rehearsal surface for the scoring
+    outcome of a set of changes, computed without applying anything. It rehearses the SCORE, not
+    the write: there is no dry-run on claim, submit, visibility or the workspace writes.
+  tier: paid
 pagination:
   style: page-number
   request_params:
@@ -71,11 +201,34 @@ error_envelope:
   note: >-
     Contract and deployment diverge — see the divergences block in the error catalog.
 rate_limit_signaling:
-  headers: none observed
+  headers:
+  - RateLimit-Policy
+  - X-RateLimit-Limit
+  - X-RateLimit-Window
+  - X-RateLimit-Tier
+  cors_exposed: >-
+    access-control-expose-headers lists ratelimit-policy, x-ratelimit-limit, x-ratelimit-window,
+    x-ratelimit-tier and www-authenticate, so a browser client can read them too.
+  observed_example:
+    request: GET https://apis.io/api/v1/search?q=weather&limit=1 (anonymous, no key)
+    ratelimit-policy: '"quota";q=500;w=86400, "burst";q=5;w=1'
+    x-ratelimit-limit: 500
+    x-ratelimit-window: 86400
+    x-ratelimit-tier: free
+  retry_after: not sent
+  remaining: not sent
   note: >-
-    No RateLimit / X-RateLimit headers are returned. Limits are enforced per-IP at the CloudFront
-    edge (Free 5 req/s, Starter 20, Pro 100, Business 400) plus a daily quota. Over-quota Pro
+    CORRECTED 2026-09-11. This block previously read "headers: none observed", which was true on
+    2026-08-10. The API now signals its limits on every response, including anonymous ones, in the
+    RFC-draft RateLimit-Policy form plus three X-RateLimit-* headers. What it still does NOT send
+    is a remaining-count or a Retry-After, so an agent can read the ceiling and its tier from any
+    response but cannot see how close it is to the ceiling until it hits it. Over-quota Pro
     surfaces return HTTP 402 upgrade_required rather than 429.
+  divergence: >-
+    The observed anonymous quota is q=500;w=86400 (500/day). plans/apis-io-plans-pricing.yml and
+    https://apis.io/developer/plans both state a Free daily quota of 1,000. Recorded, not
+    reconciled — the header is what the gateway enforces on an unkeyed caller and the published
+    number may describe a keyed Free account.
   artifact: rate-limits/apis-io-rate-limits.yml
 tracing:
   request_id_headers: [x-amzn-requestid, x-amzn-trace-id]
@@ -97,8 +250,18 @@ agent_signals:
   llms_txt: llms/apis-io-llms.txt
   api_catalog: well-known/apis-io-api-catalog.json
 x-evidence:
-  fetched: '2026-08-10'
+  fetched: '2026-09-11'
   probes:
+  - url: https://apis.io/mcp
+    method: POST tools/list
+    http_status: 200
+    note: 133 tools anonymously, 17 of them write-shaped
+  - url: https://apis.io/api/v1/submit/discover
+    http_status: 400
+    note: missing_url envelope — the write door answers, contract shape confirmed
+  - source: openapi/_original/apis-io-v1-provider-control-openapi.yml
+    note: idempotency and reversibility read from the contract's own per-operation descriptions
+  - fetched_previously: '2026-08-10'
   - url: https://apis.io/api/v1/search?q=weather&limit=1
     http_status: 200
   - url: https://apis.io/api/v1/industries

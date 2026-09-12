@@ -1,10 +1,6 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
-# 2026-08-21: dropped the search-api.apis.io entry. The probe was honest -- the
-# host had no DNS record -- but listing it under `hosts` asserts a host we
-# operate. It only appeared here because 11 OpenAPI documents declared it as
-# their server; those now declare https://apis.io/api/v1, which resolves.
 hosts:
 - host: apis.io
   https: true
@@ -16,4 +12,5 @@ domains:
   dnssec: false
   caa: []
   spf: true
-  dmarc: false
+  dmarc: true
+  dmarc_policy: none

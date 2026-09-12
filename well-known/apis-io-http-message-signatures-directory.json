@@ -1,0 +1,4 @@
+{
+  "keys": [],
+  "note": "apis.io is a public catalog and does not currently sign outbound HTTP traffic. This directory exists per draft-meunier-web-bot-auth-architecture so agents can discover that no signing keys are published. The Worker layer (see https://github.com/api-search/network/tree/main/cloudflare-worker) observes inbound RFC 9421 web-bot-auth signatures and surfaces them in the x-bot-auth response header."
+}

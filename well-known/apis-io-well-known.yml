@@ -1,40 +1,86 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: searched
 source: https://apis.io/.well-known/
 host: https://apis.io
-other_discovery:
-- path: /llms.txt
-  status: 200
-  file: llms/apis-io-llms.txt
-- path: /apis.json
-  standard: APIs.json 0.21
-  status: 200
-- path: /robots.txt
-  status: 200
-  note: Carries Cloudflare Content-Signals (search=yes, ai-input=yes, ai-train=yes) and AIPREF Content-Usage
-    (search=y, ai-input=y, ai-train=y) — explicit agent/AI permission signals.
-notes:
-- 'A security.txt is now published at https://apis.io/.well-known/security.txt (RFC 9116), rendered
-  at build time so its mandatory Expires field cannot lapse. There is still no OAuth/OIDC discovery
-  for the v1 REST API — a key is optional there and raises the tier rather than granting access; the
-  MCP server does use OAuth. See authentication/apis-io-authentication.yml.'
-- 'The OpenAPI servers[] host `search-api.apis.io` had no DNS record, so no /.well-known/ probe was
-  possible against it. The live host is apis.io. Resolved 2026-08-21 — all 11 affected contracts now
-  declare https://apis.io/api/v1, applying the $.servers correction that had been written into
-  overlays/ on 2026-08-10 and never applied. Every contract was re-verified callable afterwards.'
-x-evidence:
-  fetched: '2026-08-10'
-  probed_hosts:
-  - apis.io
-  - search-api.apis.io
+path_echo_control: passed
+soft_404_control:
+  path: /.well-known/apis-io-negative-control-7f3ab91c.json
+  host: apis.io
+  status: 404
+  body_bytes: 26159
+  content_type: text/html
+  note: >-
+    A path that cannot exist returns the site 404 HTML shell, not a 2xx. apis.io does not echo the
+    requested path back as a document, so every 200 below is a document the host actually serves.
+    The same shell (26,159 bytes of text/html) is what a 404 looks like on this host, which is why
+    the misses below are recorded with their content type — a 26KB HTML body on a .well-known path
+    is the absence, not a soft hit.
+subdomain_behaviour: >-
+  www., developer. and mcp.apis.io return 301 for almost every path AND 200 for exactly four:
+  openid-configuration, oauth-authorization-server, oauth-protected-resource and
+  aauth-resource.json. Those four are served by an edge function that is not host-scoped, so the
+  identity documents resolve from any apis.io subdomain while the content documents do not. The
+  agent card and the api-catalog do NOT resolve from a subdomain — a client probing
+  developer.apis.io or mcp.apis.io for a card finds a 301 into a 404 rather than the apex card.
+  Recorded, not repaired: the fix belongs in the CloudFront behaviour, not in this file.
 hosts:
 - host: https://apis.io
   documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: apis-io-security.txt
+    standard: RFC 9116
+    content_type: text/plain
+    note: >-
+      Served now; this probe recorded 404 on 2026-08-10. Expires is rendered at build time six
+      months out, so the mandatory field cannot silently lapse. Policy points at
+      https://apis.io/developer/security, Contact at mailto:info@apis.io.
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: apis-io-openid-configuration.json
+    standard: OpenID Connect Discovery
+    content_type: application/json
+    note: 404 on 2026-08-10; served now. Carries registration_endpoint and client_credentials.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: apis-io-oauth-authorization-server.json
+    standard: RFC 8414
+    content_type: application/json
+    note: 404 on 2026-08-10; served now. Byte-identical to the openid-configuration document.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: apis-io-oauth-protected-resource.json
+    standard: RFC 9728
+    content_type: application/json
+    note: >-
+      404 on 2026-08-10; served now. resource is https://apis.io/mcp — the MCP server, not the
+      REST API. scopes_supported [apis:read].
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    file: apis-io-aauth-resource.json
+    standard: draft-hardt-oauth-aauth-protocol
+    content_type: application/json
+    required_fields_present: [issuer, jwks_uri]
+    r3_vocabularies:
+      urn:aauth:vocabulary:openapi: https://apis.io/openapi.json
+      urn:aauth:vocabulary:mcp: https://apis.io/mcp
+    note: >-
+      First time this path was ever probed on this host. Both required fields are present. The
+      OpenAPI vocabulary URI it advertises, https://apis.io/openapi.json, returned 404 on the same
+      pass — see the defect note in authentication/apis-io-authentication.yml.
   - path: /.well-known/api-catalog
     status: 200
     file: apis-io-api-catalog.json
     standard: RFC 9727 linkset
     content_type: application/linkset+json
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/apis-io-agent-card.json
+    standard: A2A 1.0.0
+    content_type: application/json
+    note: >-
+      404 on 2026-08-10; served since 2026-09-07. Saved verbatim under a2a/ and graded in
+      a2a/apis-io-a2a.yml (near-conformant).
   - path: /.well-known/mcp/server-card.json
     status: 200
     file: apis-io-mcp-server-card.json
@@ -45,27 +91,166 @@ hosts:
     file: apis-io-agent-skills-index.json
     standard: Agent Skills Discovery RFC v0.2.0
     content_type: application/json
-  - path: /.well-known/security.txt
+  - path: /.well-known/api-onboarding
+    status: 200
+    file: apis-io-api-onboarding.json
+    standard: API Onboarding Descriptor 0.1
+    content_type: application/json
+    note: >-
+      Not on the pipeline's named path list; found because apis.io's own llms.txt names it.
+      Describes the five doors from cold start to an authorized call.
+  - path: /.well-known/http-message-signatures-directory
+    status: 200
+    file: apis-io-http-message-signatures-directory.json
+    standard: RFC 9421
+    content_type: application/http-message-signatures-directory
+    note: >-
+      Served, and its keys[] array is EMPTY by design — the document itself says apis.io does not
+      sign outbound HTTP traffic. A present-but-empty directory is not a signing posture; recorded
+      as served so the next pass can see if keys appear.
+  - path: /apis.json
+    status: 200
+    file: apis-io-apis-json.json
+    standard: APIs.json 0.21
+    content_type: application/json
+    note: Parsed and carries both specificationVersion and apis — a real index, not a soft-404.
+  - path: /apis.yml
+    status: 200
+    standard: APIs.json 0.21 (YAML serialization)
+    content_type: application/yaml
+    note: The YAML twin of /apis.json; not saved separately, same document.
+  - path: /.well-known/apis.json
     status: 404
-    standard: RFC 9116
-  - path: /.well-known/openid-configuration
-    status: 404
-  - path: /.well-known/oauth-authorization-server
-    status: 404
-    standard: RFC 8414
-  - path: /.well-known/oauth-protected-resource
-    status: 404
-    standard: RFC 9728
+    content_type: text/html
+    note: The index lives at the domain root, which is the specification's primary location.
   - path: /.well-known/ai-plugin.json
     status: 404
-  - path: /.well-known/agent-card.json
-    status: 404
-    standard: A2A 1.0.0
+    content_type: text/html
   - path: /.well-known/agent.json
     status: 404
     standard: A2A pre-0.3 legacy
+    content_type: text/html
+    note: The pre-0.3 alias is not served; clients pinned to it find nothing.
+  - path: /.well-known/ucp.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/acp.json
+    status: 404
+    content_type: text/html
+  - path: /.well-known/agentic-commerce
+    status: 404
+    content_type: text/html
+  - path: /.well-known/web-bot-auth
+    status: 404
+    content_type: text/html
+- host: https://www.apis.io
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    note: Same document as the apex; not saved twice.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    content_type: application/json
+  - path: /.well-known/security.txt
+    status: 301
+  - path: /.well-known/api-catalog
+    status: 301
+  - path: /.well-known/agent-card.json
+    status: 301
+  - path: /apis.json
+    status: 301
+- host: https://developer.apis.io
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    content_type: application/json
+  - path: /.well-known/agent-card.json
+    status: 301
+    note: 301s to /developer/.well-known/agent-card.json, which is a 404.
+  - path: /.well-known/security.txt
+    status: 301
+- host: https://mcp.apis.io
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    note: >-
+      This is the host an MCP client is most likely to probe for RFC 9728 metadata, and it does
+      resolve — the resource it names is https://apis.io/mcp.
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    content_type: application/json
+  - path: /.well-known/agent-card.json
+    status: 301
+  - path: /.well-known/security.txt
+    status: 301
+- host: https://search-api.apis.io
+  unreachable: true
+  dns: none
+  documents:
+  - path: /.well-known/security.txt
+    status: null
+    note: >-
+      No DNS record — dig returns nothing. This host appeared only in the servers[] block of the
+      legacy harvested spec openapi/_original/apis-io-search-openapi.yaml, which was corrected to
+      https://apis.io/api/v1 on 2026-09-11 (the other eleven contracts were corrected 2026-08-21).
+      No probe is possible against it and none should be attempted again.
+other_discovery:
+- path: /llms.txt
+  status: 200
+  file: ../llms/apis-io-llms.txt
+  note: Re-harvested 2026-09-11 — grew from 5,711 to 12,564 bytes.
+- path: /robots.txt
+  status: 200
+  note: >-
+    Carries Cloudflare Content-Signals (search=yes, ai-input=yes, ai-train=yes) and AIPREF
+    Content-Usage (search=y, ai-input=y, ai-train=y) — explicit agent/AI permission signals.
+- path: /.well-known/jwks.json
+  status: 200
+  note: RSA key set backing the OAuth/AAuth issuer. Not saved — key material rotates.
+- path: /openapi.json
+  status: 404
+  note: >-
+    Probed because the AAuth document advertises it as the OpenAPI vocabulary target. Returns the
+    site 404 HTML shell. The real contract is at
+    https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml,
+    which is what the api-catalog linkset correctly points service-desc at.
+x-evidence:
+  fetched: '2026-09-11'
+  probed_hosts:
+  - apis.io
+  - www.apis.io
+  - developer.apis.io
+  - mcp.apis.io
+  - search-api.apis.io
+  paths_probed: 15
+  hits: 13
+  method: curl with a browser User-Agent, following no redirects
 x-shape-fix:
   converted: '2026-08-20'
   from: documents
-  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
-    .well-known surface recorded in any other shape scores as absent.
+  note: >-
+    Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A
+    served .well-known surface recorded in any other shape scores as absent.

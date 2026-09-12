@@ -1,393 +1,964 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: derived
-source: mcp/apis-io-mcp-tools.json + openapi/_original/apis-io-v1-openapi.yml
+source: mcp/apis-io-mcp-tools.json (live tools/list, 133 tools) + openapi/_original/*.yml (the tag-split
+  contracts)
 surfaces:
   openapi:
-    file: openapi/_original/apis-io-v1-openapi.yml
-    title: APIs.io API 1.2.1
+    files: openapi/_original/*.yml
+    contracts: 19
     server: https://apis.io/api/v1
-    operations: 62
+    operations: 110
     gated: false
+    note: Counted across every tag-split contract, not just apis-io-v1-openapi.yml — the Provider Control,
+      Saved Workspace, Cohorts, Editorial, Export and Venture Capital contracts each carry operations
+      the v1 aggregate does not.
   mcp:
     url: https://apis.io/mcp
     transport: streamable-http
-    tools: 79
+    tools: 133
     gated: false
-    note: >-
-      Anonymous tools/list returned 200 with full inputSchema per tool, so every binding below is
-      confirmed against the real live tool contract, not a docs list.
+    note: Anonymous tools/list returned HTTP 200 with a full inputSchema per tool on 2026-09-11, so every
+      binding below is confirmed against the live tool contract rather than a docs list.
   graphql:
     present: false
-    note: >-
-      /graphql in the REST contract is the *catalog collection* of GraphQL schemas published by
-      OTHER providers (listGraphql) — APIs.io itself serves no GraphQL endpoint.
+    note: /graphql in the REST contract is the catalog COLLECTION of GraphQL schemas published by other
+      providers (listGraphql) — APIs.io itself serves no GraphQL endpoint.
+binding_method: Preferred source of truth is the x-mcp-tool extension declared on the operation itself
+  (76 operations carry one). Where the contract does not declare it, the 2026-08-10 hand mapping was carried
+  forward and every operationId re-verified to still exist. Anything left over is recorded as mcp_only
+  or rest_only rather than guessed.
 crosswalk:
-- tool: apis_io_search
-  category: search
-  rest: [search]
+- tool: get_agent_readiness
+  category: agent-readiness
+  rest:
+  - getProviderAgentReadiness
   binding: rest
   confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_agent_readiness is declared on the operation.'
+- tool: readiness_gates
+  category: agent-readiness
+  rest:
+  - readinessGates
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: readiness_gates is declared on the operation.'
 - tool: find_apis
   category: apis
-  rest: [listApis]
+  rest:
+  - listApis
   binding: rest
   confidence: high
-- tool: get_api
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_apis_json
   category: apis
-  rest: [getApi]
+  rest:
+  - listApisJson
   binding: rest
   confidence: high
-- tool: get_api_artifacts
-  category: apis
-  rest: [getApiArtifacts]
-  binding: rest
-  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_apis_json is declared on the operation.'
 - tool: find_similar_apis
   category: apis
-  rest: [findSimilarApis]
+  rest:
+  - findSimilarApis
   binding: rest
   confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_similar_apis is declared on the operation.'
+- tool: get_api
+  category: apis
+  rest:
+  - getApi
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: get_api_artifacts
+  category: apis
+  rest:
+  - getApiArtifacts
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_api_artifacts is declared on the operation.'
 - tool: get_openapi
   category: apis
-  rest: [getOpenapi]
+  rest:
+  - getOpenapi
   binding: rest
   confidence: high
-- tool: find_providers
-  category: providers
-  rest: [listProviders]
-  binding: rest
-  confidence: high
-- tool: get_provider
-  category: providers
-  rest: [getProvider]
-  binding: rest
-  confidence: high
-- tool: get_provider_artifacts
-  category: providers
-  rest: [getProviderArtifacts]
-  binding: rest
-  confidence: high
-- tool: get_provider_onboarding
-  category: providers
-  rest: [getProviderOnboarding]
-  binding: rest
-  confidence: high
-- tool: find_similar_providers
-  category: providers
-  rest: [findSimilarProviders]
-  binding: rest
-  confidence: high
-- tool: find_tags
-  category: taxonomy
-  rest: [listTags]
-  binding: rest
-  confidence: high
-- tool: get_tag
-  category: taxonomy
-  rest: [getTag]
-  binding: rest
-  confidence: high
-- tool: find_industries
-  category: taxonomy
-  rest: [listIndustries]
-  binding: rest
-  confidence: high
-- tool: get_industry
-  category: taxonomy
-  rest: [getIndustry]
-  binding: rest
-  confidence: high
-- tool: get_industry_leaders
-  category: taxonomy
-  rest: [getIndustryLeaders]
-  binding: rest
-  confidence: high
-- tool: find_regions
-  category: taxonomy
-  rest: [listRegions]
-  binding: rest
-  confidence: high
-- tool: get_region
-  category: taxonomy
-  rest: [getRegion]
-  binding: rest
-  confidence: high
-- tool: get_region_leaders
-  category: taxonomy
-  rest: [getRegionLeaders]
-  binding: rest
-  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_openapi is declared on the operation.'
 - tool: find_areas
-  category: taxonomy
-  rest: [listAreas]
+  category: areas
+  rest:
+  - listAreas
   binding: rest
   confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_areas is declared on the operation.'
 - tool: get_area
-  category: taxonomy
-  rest: [getArea]
+  category: areas
+  rest:
+  - getArea
   binding: rest
   confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_area is declared on the operation.'
 - tool: get_area_leaders
-  category: taxonomy
-  rest: [getAreaLeaders]
+  category: areas
+  rest:
+  - getAreaLeaders
   binding: rest
   confidence: high
-- tool: find_ratings
-  category: ratings
-  rest: [listRatings]
-  binding: rest
-  confidence: high
-- tool: get_provider_rating
-  category: ratings
-  rest: [getProviderRating]
-  binding: rest
-  confidence: high
-- tool: get_rating_rubric
-  category: ratings
-  rest: [getRatingRubric]
-  binding: rest
-  confidence: high
-- tool: get_rating_history
-  category: ratings
-  rest: [getRatingHistory]
-  binding: rest
-  confidence: high
-- tool: find_rating_movers
-  category: ratings
-  rest: [findRatingMovers]
-  binding: rest
-  confidence: high
-- tool: compare_providers
-  category: synthesis
-  rest: [compareProviders]
-  binding: rest
-  confidence: high
-- tool: gap_analysis
-  category: synthesis
-  rest: [gapAnalysis]
-  binding: rest
-  confidence: high
-- tool: industry_gap_analysis
-  category: synthesis
-  rest: [industryGapAnalysis]
-  binding: rest
-  confidence: high
-- tool: whats_changed
-  category: synthesis
-  rest: [whatsChanged]
-  binding: rest
-  confidence: high
-- tool: recommend_stack
-  category: synthesis
-  rest: [recommendStack]
-  binding: rest
-  confidence: high
-- tool: export_stack
-  category: synthesis
-  rest: [exportStack]
-  binding: rest
-  confidence: high
-- tool: find_company_insights
-  category: insights
-  rest: [listInsightCompanies]
-  binding: rest
-  confidence: high
-- tool: insights_dimensions
-  category: insights
-  rest: [listInsightDimensions]
-  binding: rest
-  confidence: high
-- tool: insights_adoption
-  category: insights
-  rest: [listInsightAdoption]
-  binding: rest
-  confidence: high
-- tool: get_company_insight
-  category: insights
-  rest: [getCompanyInsight]
-  binding: rest
-  confidence: high
-- tool: company_gaps
-  category: insights
-  rest: [getCompanyGaps]
-  binding: rest
-  confidence: high
-- tool: match_providers
-  category: insights
-  rest: [matchCompanyProviders]
-  binding: rest
-  confidence: high
-- tool: find_openapis
-  category: artifacts
-  rest: [listOpenapis]
-  binding: rest
-  confidence: high
-- tool: find_asyncapis
-  category: artifacts
-  rest: [listAsyncapis]
-  binding: rest
-  confidence: high
-- tool: find_channels
-  category: artifacts
-  rest: [listChannels]
-  binding: rest
-  confidence: high
-- tool: find_graphql
-  category: artifacts
-  rest: [listGraphql]
-  binding: rest
-  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_area_leaders is declared on the operation.'
 - tool: find_arazzo
   category: artifacts
-  rest: [listArazzo]
+  rest:
+  - listArazzo
   binding: rest
   confidence: high
-- tool: find_mcp
-  category: artifacts
-  rest: [listMcpServers]
-  binding: rest
-  confidence: high
-- tool: find_skills
-  category: artifacts
-  rest: [listSkills]
-  binding: rest
-  confidence: high
-- tool: find_rules
-  category: artifacts
-  rest: [listRules]
-  binding: rest
-  confidence: high
-- tool: find_scopes
-  category: artifacts
-  rest: [listScopes]
-  binding: rest
-  confidence: high
-- tool: find_security
-  category: artifacts
-  rest: [listSecurity]
-  binding: rest
-  confidence: high
-- tool: find_plans
-  category: artifacts
-  rest: [listPlans]
-  binding: rest
-  confidence: high
-- tool: find_rate_limits
-  category: artifacts
-  rest: [listRateLimits]
-  binding: rest
-  confidence: high
-- tool: find_finops
-  category: artifacts
-  rest: [listFinops]
-  binding: rest
-  confidence: high
-- tool: find_collections
-  category: artifacts
-  rest: [listCollections]
-  binding: rest
-  confidence: high
-- tool: find_json_ld
-  category: artifacts
-  rest: [listJsonLd]
-  binding: rest
-  confidence: high
-- tool: find_json_schemas
-  category: artifacts
-  rest: [listJsonSchemas]
-  binding: rest
-  confidence: high
-- tool: find_json_structures
-  category: artifacts
-  rest: [listJsonStructures]
-  binding: rest
-  confidence: high
-- tool: find_examples
-  category: artifacts
-  rest: [listExamples]
-  binding: rest
-  confidence: high
-- tool: find_postman
-  category: artifacts
-  rest: [listPostman]
-  binding: rest
-  confidence: high
-- tool: find_vocabularies
-  category: artifacts
-  rest: [listVocabularies]
-  binding: rest
-  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
 - tool: find_artifacts
   category: artifacts
-  rest: [listOpenapis, listAsyncapis, listArazzo, listPostman, listCollections, listGraphql,
-    listJsonSchemas, listJsonStructures, listJsonLd, listVocabularies, listRules, listExamples,
-    listFinops, listPlans, listRateLimits, listChannels, listMcpServers, listSkills, listScopes,
-    listSecurity]
+  rest:
+  - listChannels
+  - listMcpServers
+  - listScopes
+  - listSecurity
+  - listSkills
   binding: rest
-  confidence: medium
-  note: >-
-    Fan-out tool — one `type` parameter selects which per-type REST collection operation backs the
-    call, so a single tool multiplexes twenty operations.
-mcp_only:
-- tool: find_apis_json
-  reason: No public REST operation exposes the apis.json artifact collection.
-- tool: resolve
-  reason: Identifier resolver (slug / aid / URL → catalog entity); server-side composite.
-- tool: enrich_provider
-  reason: Composite over profile + onboarding + artifact groups; no single REST operation.
-- tool: find_vcs
-  reason: Venture-capital surface is not in the v1 REST contract.
-- tool: get_vc
-  reason: Venture-capital surface is not in the v1 REST contract.
-- tool: vc_portfolio
-  reason: Venture-capital surface is not in the v1 REST contract.
-- tool: find_investors
-  reason: Venture-capital surface is not in the v1 REST contract.
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_artifacts is declared on the operation.'
+- tool: find_asyncapis
+  category: artifacts
+  rest:
+  - listAsyncapis
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_channels
+  category: artifacts
+  rest:
+  - listChannels
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_collections
+  category: artifacts
+  rest:
+  - listCollections
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_examples
+  category: artifacts
+  rest:
+  - listExamples
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_finops
+  category: artifacts
+  rest:
+  - listFinops
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_graphql
+  category: artifacts
+  rest:
+  - listGraphql
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_json_ld
+  category: artifacts
+  rest:
+  - listJsonLd
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_json_schemas
+  category: artifacts
+  rest:
+  - listJsonSchemas
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_json_structures
+  category: artifacts
+  rest:
+  - listJsonStructures
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_mcp
+  category: artifacts
+  rest:
+  - listMcpServers
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_openapis
+  category: artifacts
+  rest:
+  - listOpenapis
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_plans
+  category: artifacts
+  rest:
+  - listPlans
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_postman
+  category: artifacts
+  rest:
+  - listPostman
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_rate_limits
+  category: artifacts
+  rest:
+  - listRateLimits
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_rules
+  category: artifacts
+  rest:
+  - listRules
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_scopes
+  category: artifacts
+  rest:
+  - listScopes
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_security
+  category: artifacts
+  rest:
+  - listSecurity
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_skills
+  category: artifacts
+  rest:
+  - listSkills
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: get_provider_capabilities
+  category: capabilities
+  rest:
+  - getProviderCapabilities
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_capabilities is declared on the operation.'
+- tool: whats_changed
+  category: catalog
+  rest:
+  - whatsChanged
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: whats_changed is declared on the operation.'
+- tool: cohort_capabilities
+  category: cohorts
+  rest:
+  - getCohortCapabilities
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: cohort_capabilities is declared on the operation.'
+- tool: cohort_rankings
+  category: cohorts
+  rest:
+  - getCohortRankings
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: cohort_rankings is declared on the operation.'
+- tool: cohort_scores
+  category: cohorts
+  rest:
+  - getCohortScores
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: cohort_scores is declared on the operation.'
+- tool: cohort_stats
+  category: cohorts
+  rest:
+  - getCohortStats
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: cohort_stats is declared on the operation.'
+- tool: compare_cohorts
+  category: cohorts
+  rest:
+  - compareCohorts
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: compare_cohorts is declared on the operation.'
+- tool: find_cohorts
+  category: cohorts
+  rest:
+  - listCohorts
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_cohorts is declared on the operation.'
+- tool: get_cohort
+  category: cohorts
+  rest:
+  - getCohort
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_cohort is declared on the operation.'
 - tool: story_leads
-  reason: Editorial lead generator; no REST equivalent.
+  category: editorial
+  rest:
+  - storyLeads
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: story_leads is declared on the operation.'
 - tool: export_dataset
-  reason: Dataset export; no REST equivalent.
-- tool: save_search
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: list_saved_searches
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: run_saved_search
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: saved_search_net_new
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
+  category: export
+  rest:
+  - exportDataset
+  - exportNamedDataset
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: export_dataset is declared on the operation.'
+- tool: export_stack
+  category: export
+  rest:
+  - exportStack
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: export_stack is declared on the operation.'
+- tool: find_industries
+  category: industries
+  rest:
+  - listIndustries
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_industries is declared on the operation.'
+- tool: get_industry
+  category: industries
+  rest:
+  - getIndustry
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_industry is declared on the operation.'
+- tool: get_industry_leaders
+  category: industries
+  rest:
+  - getIndustryLeaders
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_industry_leaders is declared on the operation.'
+- tool: industry_gap_analysis
+  category: industries
+  rest:
+  - industryGapAnalysis
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: industry_gap_analysis is declared on the operation.'
+- tool: find_company_insights
+  category: insights
+  rest:
+  - listInsightCompanies
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_company_insights is declared on the operation.'
+- tool: get_company_insight
+  category: insights
+  rest:
+  - getCompanyInsight
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_company_insight is declared on the operation.'
+- tool: insights_adoption
+  category: insights
+  rest:
+  - listInsightAdoption
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: insights_adoption is declared on the operation.'
+- tool: insights_dimensions
+  category: insights
+  rest:
+  - listInsightDimensions
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: insights_dimensions is declared on the operation.'
+- tool: insights_industries
+  category: insights
+  rest:
+  - listInsightIndustries
+  binding: rest
+  confidence: high
+  note: GET /insights/industries. Unannotated in the contract.
+- tool: insights_overview
+  category: insights
+  rest:
+  - getInsightsSummary
+  binding: rest
+  confidence: high
+  note: GET /insights — the summary the tool returns. Unannotated in the contract.
+- tool: find_investors
+  category: market
+  rest:
+  - getProviderInvestors
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_investors is declared on the operation.'
+- tool: find_vcs
+  category: market
+  rest:
+  - listVcs
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_vcs is declared on the operation.'
+- tool: get_vc
+  category: market
+  rest:
+  - getVc
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_vc is declared on the operation.'
+- tool: vc_portfolio
+  category: market
+  rest:
+  - getVcPortfolio
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: vc_portfolio is declared on the operation.'
+- tool: get_provider_onboarding
+  category: onboarding
+  rest:
+  - getProviderOnboarding
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_onboarding is declared on the operation.'
+- tool: get_provider_operations
+  category: operations
+  rest:
+  - getProviderOperations
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_operations is declared on the operation.'
+- tool: claim_listing
+  category: provider-control
+  rest:
+  - claimListing
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: claim_listing is declared on the operation.'
+- tool: company_gaps
+  category: provider-control
+  rest:
+  - getCompanyGaps
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: company_gaps is declared on the operation.'
+- tool: correct_facts
+  category: provider-control
+  rest:
+  - correctFacts
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: correct_facts is declared on the operation.'
+- tool: dispute_finding
+  category: provider-control
+  rest:
+  - disputeFinding
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: dispute_finding is declared on the operation.'
+- tool: gap_analysis
+  category: provider-control
+  rest:
+  - gapAnalysis
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: gap_analysis is declared on the operation.'
+- tool: generate_artifact
+  category: provider-control
+  rest:
+  - generateArtifacts
+  binding: rest
+  confidence: high
+  note: Name and semantics match POST /providers/{slug}/generate exactly; the operation simply carries
+    no x-mcp-tool annotation.
+- tool: report_correction
+  category: provider-control
+  rest:
+  - reportCorrection
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: report_correction is declared on the operation.'
+- tool: report_gap
+  category: provider-control
+  rest:
+  - reportGap
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: report_gap is declared on the operation.'
+- tool: request_check
+  category: provider-control
+  rest:
+  - requestCheck
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: request_check is declared on the operation.'
+- tool: set_visibility
+  category: provider-control
+  rest:
+  - setVisibility
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: set_visibility is declared on the operation.'
+- tool: simulate_fixes
+  category: provider-control
+  rest:
+  - simulateFixes
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: simulate_fixes is declared on the operation.'
+- tool: submit_artifact
+  category: provider-control
+  rest:
+  - submitArtifact
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: submit_artifact is declared on the operation.'
+- tool: what_can_i_fix
+  category: provider-control
+  rest:
+  - whatCanIFix
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: what_can_i_fix is declared on the operation.'
+- tool: compare_providers
+  category: providers
+  rest:
+  - compareProviders
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: compare_providers is declared on the operation.'
+- tool: enrich_provider
+  category: providers
+  rest:
+  - enrichProvider
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: enrich_provider is declared on the operation.'
+- tool: find_providers
+  category: providers
+  rest:
+  - listProviders
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_similar_providers
+  category: providers
+  rest:
+  - findSimilarProviders
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_similar_providers is declared on the operation.'
+- tool: get_provider
+  category: providers
+  rest:
+  - getProvider
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: get_provider_apis
+  category: providers
+  rest:
+  - listProviderApis
+  binding: rest
+  confidence: high
+  note: GET /providers/{slug}/apis. Unannotated in the contract.
+- tool: get_provider_artifacts
+  category: providers
+  rest:
+  - getProviderArtifacts
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_artifacts is declared on the operation.'
+- tool: get_provider_evidence
+  category: providers
+  rest:
+  - getProviderEvidence
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_evidence is declared on the operation.'
+- tool: get_provider_facets
+  category: providers
+  rest:
+  - getProviderFacets
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_facets is declared on the operation.'
+- tool: get_provider_schema
+  category: providers
+  rest:
+  - getProviderSchema
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_schema is declared on the operation.'
+- tool: get_provider_tools
+  category: providers
+  rest:
+  - getProviderTools
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_tools is declared on the operation.'
+- tool: match_providers
+  category: providers
+  rest:
+  - matchCompanyProviders
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: match_providers is declared on the operation.'
+- tool: find_rating_movers
+  category: ratings
+  rest:
+  - findRatingMovers
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_rating_movers is declared on the operation.'
+- tool: find_ratings
+  category: ratings
+  rest:
+  - listRatings
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_ratings is declared on the operation.'
+- tool: get_provider_rating
+  category: ratings
+  rest:
+  - getProviderRating
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_provider_rating is declared on the operation.'
+- tool: get_rating_history
+  category: ratings
+  rest:
+  - getRatingHistory
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_rating_history is declared on the operation.'
+- tool: get_rating_rubric
+  category: ratings
+  rest:
+  - getRatingRubric
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: find_regions
+  category: regions
+  rest:
+  - listRegions
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: find_regions is declared on the operation.'
+- tool: get_region
+  category: regions
+  rest:
+  - getRegion
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_region is declared on the operation.'
+- tool: get_region_leaders
+  category: regions
+  rest:
+  - getRegionLeaders
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_region_leaders is declared on the operation.'
+- tool: resolve
+  category: resolve
+  rest:
+  - resolveIdentifier
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: resolve is declared on the operation.'
+- tool: apis_io_search
+  category: search
+  rest:
+  - search
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
 - tool: delete_saved_search
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: create_list
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: list_lists
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
-- tool: get_list
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
+  category: search
+  rest:
+  - deleteSavedSearch
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: delete_saved_search is declared on the operation.'
+- tool: run_saved_search
+  category: search
+  rest:
+  - runSavedSearch
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: run_saved_search is declared on the operation.'
+- tool: save_search
+  category: search
+  rest:
+  - createSavedSearch
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: save_search is declared on the operation.'
+- tool: saved_search_net_new
+  category: search
+  rest:
+  - savedSearchNetNew
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: saved_search_net_new is declared on the operation.'
+- tool: recommend_stack
+  category: synthesis
+  rest:
+  - recommendStack
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: recommend_stack is declared on the operation.'
+- tool: find_tags
+  category: taxonomy
+  rest:
+  - listTags
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
+- tool: get_tag
+  category: taxonomy
+  rest:
+  - getTag
+  binding: rest
+  confidence: high
+  note: Carried forward from the 2026-08-10 crosswalk; every operationId re-verified to still exist in
+    the contract.
 - tool: add_to_list
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
+  category: workspace
+  rest:
+  - addToList
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: add_to_list is declared on the operation.'
+- tool: create_list
+  category: workspace
+  rest:
+  - createList
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: create_list is declared on the operation.'
 - tool: delete_list
-  reason: Saved Workspace — stateful, per-account, MCP-side only.
+  category: workspace
+  rest:
+  - deleteList
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: delete_list is declared on the operation.'
+- tool: get_list
+  category: workspace
+  rest:
+  - getList
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: get_list is declared on the operation.'
+- tool: list_lists
+  category: workspace
+  rest:
+  - listLists
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: list_lists is declared on the operation.'
+- tool: list_saved_searches
+  category: workspace
+  rest:
+  - listSavedSearches
+  binding: rest
+  confidence: high
+  note: 'Bound by the contract itself — x-mcp-tool: list_saved_searches is declared on the operation.'
+mcp_only:
+- tool: get_playground_apis
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'Curated APIs that are SAFE TO EXPERIMENT WITH — no key (or an instant, free, self-serve
+    key), no cost, and no real-world side effects. Free, and deliberately so: this is where you '
+  first_seen: '2026-09-11'
+- tool: find_countries
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: Browse the country dimension — the finest of the four place taxonomies, and the one a buyer
+    usually names ("who is in Germany"). Peer to find_industries / find_regions / find_areas
+  first_seen: '2026-09-11'
+- tool: get_country
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'One country: metadata, counts, and a top sample of member providers (with the total).
+    Use find_providers?country=slug for the full ranked list, or view=full here.'
+  first_seen: '2026-09-11'
+- tool: find_extensions
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'Browse every OpenAPI `x-` specification extension harvested across the catalog, with the
+    provenance the OpenAPI Initiative registry does not carry: who publishes it, in how many do'
+  first_seen: '2026-09-11'
+- tool: get_extension
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'One OpenAPI specification extension: its publishers, occurrence and document counts, where
+    it appears, and the value shapes observed. CHECK is_api_evangelist BEFORE treating a key '
+  first_seen: '2026-09-11'
+- tool: find_tag_groups
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: START HERE for capability-map questions. The 1,500+ tag groups the catalog computes — sets
+    of tags that demonstrably travel together across providers (Cards, Logistics, Wealth Mana
+  first_seen: '2026-09-11'
+- tool: get_tag_group
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'One tag group: its member tags and the full provider roster resolved from the catalog,
+    each with Kin Score and agent readiness. Filter the roster by industry, region, country or ar'
+  first_seen: '2026-09-11'
+- tool: tag_group_tags
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: The member tags of one tag group, each joined to its catalog record — provider count, api
+    count, tag quality band and composite. Use it to see what a group is actually made of befo
+  first_seen: '2026-09-11'
+- tool: find_operations
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — CATALOG-WIDE operation search: which providers expose a path matching
+    your terms. "Who has a POST /refunds" had no answer before this — tags are what a company says'
+  first_seen: '2026-09-11'
+- tool: deprecated_operations
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — every provider publishing at least one operation marked deprecated in
+    its own OpenAPI, ranked by how many. The lifecycle view of the catalog: 8,297 deprecated opera'
+  first_seen: '2026-09-11'
+- tool: cohort_history
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — the SET-LEVEL time series: how a whole market''s Kin Score and agent readiness
+    moved, build by build. There was a per-provider series and a whole-dataset licence and'
+  first_seen: '2026-09-11'
+- tool: cohort_failures
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — what a whole market gets WRONG: the agent-readiness checks its members
+    most commonly fail, ranked by what fixing each would move the cohort mean. The inverse of gap'
+  first_seen: '2026-09-11'
+- tool: find_agent_readiness
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: UNDERSTANDING — the agent-readiness leaderboard across the whole catalog. Rank providers
+    by agent readiness, and filter to those that DO satisfy (has) or do NOT satisfy (missing) s
+  first_seen: '2026-09-11'
+- tool: agent_readiness_dimensions
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — diffusion: for each agent-readiness dimension, how many scored providers
+    satisfy it, out of how many, as a share. The denominator every "the agent web is/is not her'
+  first_seen: '2026-09-11'
+- tool: find_capabilities
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: START HERE for "what can a business do with these APIs". The business-capability model
+    — 333 top-level capabilities across 28 industries — with how many catalog providers reach eac
+  first_seen: '2026-09-11'
+- tool: get_capability
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'One business capability: its definition, its sub-capabilities, the external authorities
+    it cites, and WHICH catalog providers reach it with their ratings. Accepts a slug or a BC id'
+  first_seen: '2026-09-11'
+- tool: get_capability_edges
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — the evidence behind a capability. Every edge that lands on it: the provider,
+    the tag, the exact OpenAPI file, a calibrated confidence, and the QUOTED FRAGMENT OF TH'
+  first_seen: '2026-09-11'
+- tool: get_provider_business_capabilities
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: UNDERSTANDING — what ONE vendor's published APIs let a business DO, rolled up by capability,
+    with the tag-level evidence under each. Answers "what is this vendor actually for" from
+  first_seen: '2026-09-11'
+- tool: get_country_leaders
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: UNDERSTANDING — Top-rated providers in one country. Membership is derived and partial,
+    so read the ranking as "the best of what we have placed there", not a national league table.
+  first_seen: '2026-09-11'
+- tool: watch_listing
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'INFLUENCE — be told when a listing you care about moves: score changes, band changes,
+    or a check closing. Registration only — the scoring pipeline sends the mail, this records what'
+  first_seen: '2026-09-11'
+- tool: list_watches
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'INFLUENCE — the listings you are watching, with the events registered for each and when
+    you started. The read half of watch_listing: call it before registering another, so you neit'
+  first_seen: '2026-09-11'
+- tool: unwatch_listing
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'INFLUENCE — stop watching a listing. Takes effect immediately and removes the registration
+    outright; there is no paused state. Removing a watch that was never registered is not an '
+  first_seen: '2026-09-11'
+- tool: check_status
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'INFLUENCE — the status of a check request by id: queued, in_review, running, done, rejected
+    or needs_info, with any notes shared by the reviewer. The id identifies the request, but'
+  first_seen: '2026-09-11'
+- tool: my_checks
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: INFLUENCE — the check requests you filed, newest first. Requires a key or login — an anonymous
+    caller has no identity to scope a list to, and should read a single request with chec
+  first_seen: '2026-09-11'
+- tool: my_workspace
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'UNDERSTANDING — the workspace root: which plan you are on, how many saved searches and
+    lists you hold, and where each lives. Answers "what do I have here and what can I afford" in '
+  first_seen: '2026-09-11'
+- tool: submit_feedback
+  reason: No public REST operation carries this tool name and none is annotated x-mcp-tool for it.
+  description: 'Report something wrong with a result: wrong data, a filter that did not filter, a ranking
+    that put off-topic results first, a number you could not reproduce, or an answer that was '
+  first_seen: '2026-09-11'
 rest_only:
-- capability: insights
-  operations: [getInsightsSummary, listInsightIndustries]
-  reason: Insights overview and industry rollup have no MCP tool binding.
-- capability: providers
-  operations: [listProviderApis]
-  reason: >-
-    Covered indirectly by get_provider (which inlines the provider's APIs), so no discrete tool
-    exists for the /providers/{slug}/apis operation.
+  apis-io-search-openapi.yaml:
+  - addAPI
+  - searchAPIs
+  apis-io-v1-provider-control-openapi.yml:
+  - providerRatingChecks
 coverage:
-  tools_total: 79
-  tools_bound_to_rest: 60
-  mcp_only: 19
-  rest_operations_total: 62
-  rest_operations_with_tool: 59
+  tools_named: 133
+  tools_bound: 107
+  mcp_only: 26
+  rest_operations_total: 110
+  rest_operations_with_a_tool: 107
   rest_only: 3
-notes:
-- >-
-  The MCP surface is a strict superset of REST on the stateful side (Saved Workspace, lists) and on
-  the venture-capital and resolver surfaces; REST is a superset on the Insights rollups. Neither is
-  a projection of the other, which is why both are recorded.
-- >-
-  Pro-tier tools appear in an anonymous tools/list but return HTTP 402 `upgrade_required` when
-  called without a paid key — the tool list is not an entitlement list.
+  previous_pass:
+    date: '2026-08-10'
+    tools: 79
+    rest_operations: 62
+rest_only_note: Operations with no MCP tool. addAPI/searchAPIs belong to the superseded legacy search
+  contract; providerRatingChecks is reachable in MCP only through get_provider_rating, which returns the
+  composite rather than the per-check breakdown — a real surface divergence, recorded rather than papered
+  over.

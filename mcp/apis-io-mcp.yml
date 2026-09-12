@@ -1,18 +1,27 @@
-generated: '2026-08-10'
+generated: '2026-09-11'
 method: searched
 status: published
 source: https://apis.io/.well-known/mcp/server-card.json
 server:
   name: apis.io
   title: APIs.io API catalog MCP server
-  version: 1.2.0
+  version: 1.3.0
   transport: http
   transport_type: streamable-http
   url: https://apis.io/mcp
   documentation: https://apis.io/developer/mcp-server/
   server_card: https://apis.io/.well-known/mcp/server-card.json
   publisher: API Evangelist
-  read_only: true
+  read_only: false
+  read_only_note: >-
+    Corrected 2026-09-11. The server card at /.well-known/mcp/server-card.json still describes
+    itself as "Read-only" and reports version 1.2.0; the live server answers initialize with
+    version 1.3.0 and exposes 17 write-shaped tools (claim_listing, correct_facts, submit_artifact,
+    set_visibility, dispute_finding, request_check, report_gap, report_correction, submit_feedback,
+    generate_artifact, watch_listing, unwatch_listing, save_search, delete_saved_search,
+    create_list, add_to_list, delete_list). Every one of them returns 202 and is worked by a
+    person — none publishes anything or moves a score on its own — but "read-only" is no longer
+    an accurate description of the tool surface, and the card should be regenerated.
 registry:
   name: io.apis/apis-io
   registry: https://registry.modelcontextprotocol.io
@@ -26,16 +35,33 @@ introspection:
   method: tools/list
   http_status: 200
   gated: false
-  tool_count: 79
+  tool_count: 133
+  previous_tool_count: 79
+  checked: '2026-09-11'
   file: apis-io-mcp-tools.json
-  note: Anonymous `tools/list` returns the full tool set with real inputSchema for every tool. The server
-    card advertises a curated subset of 28; the live server exposes 79. Pro-tier tools are listed anonymously
-    but return 402 upgrade_required when called without a paid key.
+  note: >-
+    Anonymous `tools/list` returns the full tool set with a real inputSchema for every tool — no
+    key, no OAuth challenge. 133 tools on 2026-09-11, up from 79 on 2026-08-10: 55 added
+    (cohorts, capabilities, countries, tag groups, extensions, operations, agent-readiness, the
+    playground, the whole own-your-listing surface) and one removed (find_vocabularies). Pro-tier
+    tools are listed anonymously but return 402 upgrade_required when called without a paid key.
+  removed_since_last_pass:
+  - name: find_vocabularies
+    note: >-
+      Present 2026-08-10, absent 2026-09-11. The REST operation listVocabularies still exists in
+      the contract, so this is an MCP-side removal, not a capability retirement.
+  prompts: 36
+  resources: true
 tools:
 - name: apis_io_search
   description: Federated overview of the catalog for a query — top matching APIs, providers and tags in
     one call.
   source_operation: openapi/_original/apis-io-v1-openapi.yml#search
+- name: get_playground_apis
+  description: 'Curated APIs that are SAFE TO EXPERIMENT WITH — no key (or an instant, free, self-serve
+    key), no cost, and no real-world side effects. Free, and deliberately so: this is where you start
+    if you are new'
+  first_seen: '2026-09-11'
 - name: find_apis
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listApis
 - name: get_api
@@ -56,14 +82,177 @@ tools:
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listRegions
 - name: get_region
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegion
+- name: find_countries
+  description: Browse the country dimension — the finest of the four place taxonomies, and the one a buyer
+    usually names ("who is in Germany"). Peer to find_industries / find_regions / find_areas. Search by
+    text; so
+  first_seen: '2026-09-11'
+- name: get_country
+  description: 'One country: metadata, counts, and a top sample of member providers (with the total).
+    Use find_providers?country=slug for the full ranked list, or view=full here.'
+  first_seen: '2026-09-11'
 - name: find_areas
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listAreas
 - name: get_area
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getArea
+- name: find_extensions
+  description: 'Browse every OpenAPI `x-` specification extension harvested across the catalog, with the
+    provenance the OpenAPI Initiative registry does not carry: who publishes it, in how many documents,
+    where in th'
+  first_seen: '2026-09-11'
+- name: get_extension
+  description: 'One OpenAPI specification extension: its publishers, occurrence and document counts, where
+    it appears, and the value shapes observed. CHECK is_api_evangelist BEFORE treating a key as provider-originat'
+  first_seen: '2026-09-11'
 - name: find_ratings
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listRatings
 - name: get_provider_rating
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderRating
+- name: find_cohorts
+  description: START HERE for market-level questions. Every scored population of providers in the catalog
+    — tags, industries, regions, areas and VC portfolios — as one browsable index. Filter by kind, minimum
+    popula
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#listCohorts
+  first_seen: '2026-09-11'
+- name: get_cohort
+  description: 'One cohort: its identity, its population, and the full member roster with each provider''s
+    Kin Score and agent readiness. Understanding plan. The analysis parts (stats/rankings/scores/capabilities)
+    nee'
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohort
+  first_seen: '2026-09-11'
+- name: find_tag_groups
+  description: START HERE for capability-map questions. The 1,500+ tag groups the catalog computes — sets
+    of tags that demonstrably travel together across providers (Cards, Logistics, Wealth Management, Observabilit
+  first_seen: '2026-09-11'
+- name: get_tag_group
+  description: 'One tag group: its member tags and the full provider roster resolved from the catalog,
+    each with Kin Score and agent readiness. Filter the roster by industry, region, country or area. Free;
+    the DISTRI'
+  first_seen: '2026-09-11'
+- name: tag_group_tags
+  description: The member tags of one tag group, each joined to its catalog record — provider count, api
+    count, tag quality band and composite. Use it to see what a group is actually made of before trusting
+    the grou
+  first_seen: '2026-09-11'
+- name: cohort_stats
+  description: 'UNDERSTANDING — the DISTRIBUTION for a whole market: Kin Score mean/median/min/max/stdev,
+    agent-readiness spread, band split, per-facet averages, and artifact adoption rates. This is the market-stats '
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortStats
+  first_seen: '2026-09-11'
+- name: cohort_rankings
+  description: 'UNDERSTANDING — the leaderboard for a market, on TWO axes: rank by Kin Score composite
+    AND rank by agent readiness. The two orders differ, and the gap between a provider''s two ranks is
+    usually the sto'
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortRankings
+  first_seen: '2026-09-11'
+- name: cohort_scores
+  description: UNDERSTANDING — facet-level scores for every member of a cohort, each with the cohort average
+    and the delta against it. A 60 in governance means nothing until you know the market sits at 45; this
+    is t
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortScores
+  first_seen: '2026-09-11'
+- name: find_operations
+  description: 'UNDERSTANDING — CATALOG-WIDE operation search: which providers expose a path matching
+    your terms. "Who has a POST /refunds" had no answer before this — tags are what a company says about
+    itself, a pat'
+  first_seen: '2026-09-11'
+- name: deprecated_operations
+  description: 'UNDERSTANDING — every provider publishing at least one operation marked deprecated in
+    its own OpenAPI, ranked by how many. The lifecycle view of the catalog: 8,297 deprecated operations
+    across 681 pro'
+  first_seen: '2026-09-11'
+- name: cohort_history
+  description: 'UNDERSTANDING — the SET-LEVEL time series: how a whole market''s Kin Score and agent readiness
+    moved, build by build. There was a per-provider series and a whole-dataset licence and nothing between
+    the'
+  first_seen: '2026-09-11'
+- name: cohort_failures
+  description: 'UNDERSTANDING — what a whole market gets WRONG: the agent-readiness checks its members
+    most commonly fail, ranked by what fixing each would move the cohort mean. The inverse of gap_analysis,
+    which say'
+  first_seen: '2026-09-11'
+- name: cohort_capabilities
+  description: 'UNDERSTANDING — what every member of a cohort actually publishes: artifact counts by type
+    plus the agent-readiness dimensions each one satisfies. The capability matrix behind a market report.
+    Large co'
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortCapabilities
+  first_seen: '2026-09-11'
+- name: compare_cohorts
+  description: 'UNDERSTANDING — two markets side by side on one rubric: "is US payments further along
+    than UK banking?" Returns both distributions plus the deltas on score, agent readiness, every facet
+    and every adop'
+  source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#compareCohorts
+  first_seen: '2026-09-11'
+- name: get_provider_operations
+  description: Every operation a provider exposes, across all of its OpenAPIs — method, path, operationId,
+    summary, which API it belongs to, and whether it is deprecated. The shortcut for "what can I actually
+    call h
+  source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderOperations
+  first_seen: '2026-09-11'
+- name: get_provider_tools
+  description: 'Every MCP tool a provider ships, with the operation each one wraps and its auth. Reports
+    provenance per tool: `first-party` means the provider publishes that server, `derived` means API Evangelist
+    gen'
+  source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderTools
+  first_seen: '2026-09-11'
+- name: get_provider_schema
+  description: Every JSON Schema a provider publishes — the data shapes their API works in, in one list,
+    without walking their artifacts. Free.
+  source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderSchema
+  first_seen: '2026-09-11'
+- name: get_provider_facets
+  description: UNDERSTANDING — one provider's score broken into its facets (discoverability, contract
+    quality, governance, operational transparency, developer ergonomics, commercial clarity) plus any
+    regulatory regi
+  source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderFacets
+  first_seen: '2026-09-11'
+- name: get_agent_readiness
+  description: EXPLORE — the agent-readiness dimensions and standalone score for ONE provider (spec presence,
+    MCP server, auth clarity, idempotency, error semantics, rate-limit signal, well-known catalog, consent
+    id
+  source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderAgentReadiness
+  first_seen: '2026-09-11'
+- name: find_agent_readiness
+  description: UNDERSTANDING — the agent-readiness leaderboard across the whole catalog. Rank providers
+    by agent readiness, and filter to those that DO satisfy (has) or do NOT satisfy (missing) specific
+    dimensions —
+  first_seen: '2026-09-11'
+- name: agent_readiness_dimensions
+  description: 'UNDERSTANDING — diffusion: for each agent-readiness dimension, how many scored providers
+    satisfy it, out of how many, as a share. The denominator every "the agent web is/is not here yet"
+    claim needs a'
+  first_seen: '2026-09-11'
+- name: find_capabilities
+  description: START HERE for "what can a business do with these APIs". The business-capability model
+    — 333 top-level capabilities across 28 industries — with how many catalog providers reach each one.
+    Defaults to c
+  first_seen: '2026-09-11'
+- name: get_capability
+  description: 'One business capability: its definition, its sub-capabilities, the external authorities
+    it cites, and WHICH catalog providers reach it with their ratings. Accepts a slug or a BC id (e.g.
+    "payments-car'
+  first_seen: '2026-09-11'
+- name: get_capability_edges
+  description: 'UNDERSTANDING — the evidence behind a capability. Every edge that lands on it: the provider,
+    the tag, the exact OpenAPI file, a calibrated confidence, and the QUOTED FRAGMENT OF THE PROVIDER''S
+    OWN CON'
+  first_seen: '2026-09-11'
+- name: get_provider_business_capabilities
+  description: UNDERSTANDING — what ONE vendor's published APIs let a business DO, rolled up by capability,
+    with the tag-level evidence under each. Answers "what is this vendor actually for" from its own contracts
+    r
+  first_seen: '2026-09-11'
+- name: get_provider_capabilities
+  description: 'What one provider publishes, counted by artifact type, with the agent dimensions it satisfies.
+    Free — it is a fact about their own public surface. NOTE: this is artifact counts, NOT business capabilit'
+  source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderCapabilities
+  first_seen: '2026-09-11'
+- name: get_provider_evidence
+  description: 'How a provider''s score was established, part by part: first-party (they published it),
+    verified (we fetched and confirmed it), or derived (we inferred it). Free — the basis for a claim
+    should never si'
+  source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderEvidence
+  first_seen: '2026-09-11'
 - name: get_rating_rubric
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingRubric
 - name: find_artifacts
@@ -76,8 +265,11 @@ tools:
   source_operation: openapi/_original/apis-io-v1-openapi.yml#whatsChanged
 - name: recommend_stack
   source_operation: openapi/_original/apis-io-v1-openapi.yml#recommendStack
-- name: export_stack
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#exportStack
+- name: get_provider_apis
+  description: 'Every API one provider publishes, as a page you can filter — the provider''s own catalog
+    rather than the whole network''s. Prefer this over find_apis with a `providers` filter when you already
+    know the '
+  first_seen: '2026-09-11'
 - name: get_provider_artifacts
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderArtifacts
 - name: get_api_artifacts
@@ -94,26 +286,169 @@ tools:
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustryLeaders
 - name: get_region_leaders
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegionLeaders
+- name: get_country_leaders
+  description: UNDERSTANDING — Top-rated providers in one country. Membership is derived and partial,
+    so read the ranking as "the best of what we have placed there", not a national league table.
+  first_seen: '2026-09-11'
 - name: get_area_leaders
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getAreaLeaders
 - name: get_rating_history
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingHistory
 - name: find_rating_movers
   source_operation: openapi/_original/apis-io-v1-openapi.yml#findRatingMovers
+- name: story_leads
+  note: MCP-only.
+- name: what_can_i_fix
+  description: INFLUENCE — the ranked, costed, gated punch list for one provider you own. Every agent-readiness
+    check with points still on the table (exact — these are real per-check results, each with what satisfie
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#whatCanIFix
+  first_seen: '2026-09-11'
+- name: readiness_gates
+  description: 'INFLUENCE — what blocks the next agent-readiness band, GATES BEFORE POINTS. Some bands
+    are unreachable on score alone: agent-native requires idempotency AND a stable error envelope regardless
+    of how m'
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#readinessGates
+  first_seen: '2026-09-11'
+- name: simulate_fixes
+  description: INFLUENCE — project a set of fixes onto a provider's agent-readiness score and band before
+    doing the work. Re-applies the band gate to the PROJECTED state, so it will tell you when buying points
+    still
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#simulateFixes
+  first_seen: '2026-09-11'
+- name: claim_listing
+  description: 'INFLUENCE — ask to claim a listing as yours. Returns 202 with a token and the hosts it
+    will be checked against: publish it as a DNS TXT record, or as a file at /.well-known/apis-io-challenge,
+    and leav'
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#claimListing
+  first_seen: '2026-09-11'
+- name: generate_artifact
+  description: 'INFLUENCE — REQUEST an artifact you are being marked down for not having: apis-json, agent-card,
+    mcp (one tool per operation you already publish), arazzo, rules (a Spectral ruleset scoped to your
+    own '
+  first_seen: '2026-09-11'
+- name: submit_artifact
+  description: INFLUENCE — tell us about an artifact you publish, rather than waiting for us to find it.
+    Returns 202; a person fetches it, checks it and re-runs the pipeline against it. Track it with check_status.
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#submitArtifact
+  first_seen: '2026-09-11'
+- name: correct_facts
+  description: 'INFLUENCE — propose corrections to what we say about you: name, description, url, industries,
+    tags. Returns 202 and is applied by a person — an API that let an owner rewrite their own description
+    unre'
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#correctFacts
+  first_seen: '2026-09-11'
+- name: dispute_finding
+  description: INFLUENCE — "you say we lack X, here it is." Send the claim in words and a URL that evidences
+    it. Returns 202; a person fetches your evidence, checks it against what we hold, and emails you either
+    way
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#disputeFinding
+  first_seen: '2026-09-11'
+- name: set_visibility
+  description: INFLUENCE — ask to be shown less, or not at all. `restricted` keeps a name, a description
+    and a link to your own site, unrated and out of every ranked view; `delisted` removes you entirely.
+    Returns 20
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#setVisibility
+  first_seen: '2026-09-11'
+- name: watch_listing
+  description: 'INFLUENCE — be told when a listing you care about moves: score changes, band changes,
+    or a check closing. Registration only — the scoring pipeline sends the mail, this records what you
+    want to hear ab'
+  first_seen: '2026-09-11'
+- name: list_watches
+  description: 'INFLUENCE — the listings you are watching, with the events registered for each and when
+    you started. The read half of watch_listing: call it before registering another, so you neither duplicate
+    a watc'
+  first_seen: '2026-09-11'
+- name: unwatch_listing
+  description: INFLUENCE — stop watching a listing. Takes effect immediately and removes the registration
+    outright; there is no paused state. Removing a watch that was never registered is not an error.
+  first_seen: '2026-09-11'
+- name: request_check
+  description: INFLUENCE — ask APIs.io to (re)check something. Use it when a listing is wrong or stale,
+    when a score looks incorrect, or to get a company profiled that is not in the catalog yet. A check
+    can target a
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#requestCheck
+  first_seen: '2026-09-11'
+- name: check_status
+  description: 'INFLUENCE — the status of a check request by id: queued, in_review, running, done, rejected
+    or needs_info, with any notes shared by the reviewer. The id identifies the request, but the Influence
+    plan '
+  first_seen: '2026-09-11'
+- name: report_gap
+  description: 'FREE, no account — tell the catalog what you looked for and could not find. The consumer
+    door (roadmap#166): a gap report is how the catalog learns what to add next, and a person reads the
+    queue. One '
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#reportGap
+  first_seen: '2026-09-11'
+- name: my_checks
+  description: INFLUENCE — the check requests you filed, newest first. Requires a key or login — an anonymous
+    caller has no identity to scope a list to, and should read a single request with check_status instead.
+  first_seen: '2026-09-11'
+- name: export_dataset
+  note: MCP-only.
 - name: industry_gap_analysis
   source_operation: openapi/_original/apis-io-v1-openapi.yml#industryGapAnalysis
+- name: export_stack
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#exportStack
+- name: insights_overview
+  description: 'UNDERSTANDING — the Insights root: how many companies are profiled, over how many quarters,
+    and the top investment dimensions across the whole set. Read this FIRST — it tells you the size and
+    vintage '
+  first_seen: '2026-09-11'
 - name: find_company_insights
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightCompanies
 - name: insights_dimensions
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightDimensions
 - name: insights_adoption
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightAdoption
+- name: insights_industries
+  description: 'UNDERSTANDING — the demand-side industry rollup: the sectors the profiled companies fall
+    into. Each row carries TWO counts and they answer different questions: `company_count` is the research
+    roster, '
+  first_seen: '2026-09-11'
 - name: get_company_insight
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyInsight
 - name: company_gaps
   source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyGaps
 - name: match_providers
   source_operation: openapi/_original/apis-io-v1-openapi.yml#matchCompanyProviders
+- name: find_vcs
+  note: MCP-only — venture-capital surface not exposed in the v1 REST contract.
+- name: get_vc
+  note: MCP-only.
+- name: vc_portfolio
+  note: MCP-only.
+- name: find_investors
+  note: MCP-only.
+- name: resolve
+  note: MCP-only — identifier resolver with no public REST operation.
+- name: enrich_provider
+  note: MCP-only — profile/onboarding/artifact composite with no single REST operation.
+- name: save_search
+  note: MCP-only — Saved Workspace (Pro), stateful, no REST equivalent.
+- name: my_workspace
+  description: 'UNDERSTANDING — the workspace root: which plan you are on, how many saved searches and
+    lists you hold, and where each lives. Answers "what do I have here and what can I afford" in one call,
+    so an agen'
+  first_seen: '2026-09-11'
+- name: list_saved_searches
+  note: MCP-only — Saved Workspace (Pro).
+- name: run_saved_search
+  note: MCP-only — Saved Workspace (Pro).
+- name: saved_search_net_new
+  note: MCP-only — Saved Workspace (Pro).
+- name: delete_saved_search
+  note: MCP-only — Saved Workspace (Pro).
+- name: create_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: list_lists
+  note: MCP-only — Saved Workspace (Pro).
+- name: get_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: add_to_list
+  note: MCP-only — Saved Workspace (Pro).
+- name: delete_list
+  note: MCP-only — Saved Workspace (Pro).
 - name: find_openapis
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listOpenapis
 - name: find_asyncapis
@@ -152,53 +487,35 @@ tools:
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listExamples
 - name: find_postman
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listPostman
-- name: find_vocabularies
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listVocabularies
 - name: find_apis_json
   note: MCP-only — no public REST operation for the apis.json artifact collection.
-- name: resolve
-  note: MCP-only — identifier resolver with no public REST operation.
-- name: enrich_provider
-  note: MCP-only — profile/onboarding/artifact composite with no single REST operation.
-- name: find_vcs
-  note: MCP-only — venture-capital surface not exposed in the v1 REST contract.
-- name: get_vc
-  note: MCP-only.
-- name: vc_portfolio
-  note: MCP-only.
-- name: find_investors
-  note: MCP-only.
-- name: story_leads
-  note: MCP-only.
-- name: export_dataset
-  note: MCP-only.
-- name: save_search
-  note: MCP-only — Saved Workspace (Pro), stateful, no REST equivalent.
-- name: list_saved_searches
-  note: MCP-only — Saved Workspace (Pro).
-- name: run_saved_search
-  note: MCP-only — Saved Workspace (Pro).
-- name: saved_search_net_new
-  note: MCP-only — Saved Workspace (Pro).
-- name: delete_saved_search
-  note: MCP-only — Saved Workspace (Pro).
-- name: create_list
-  note: MCP-only — Saved Workspace (Pro).
-- name: list_lists
-  note: MCP-only — Saved Workspace (Pro).
-- name: get_list
-  note: MCP-only — Saved Workspace (Pro).
-- name: add_to_list
-  note: MCP-only — Saved Workspace (Pro).
-- name: delete_list
-  note: MCP-only — Saved Workspace (Pro).
+- name: submit_feedback
+  description: 'Report something wrong with a result: wrong data, a filter that did not filter, a ranking
+    that put off-topic results first, a number you could not reproduce, or an answer that was useless
+    for your tas'
+  first_seen: '2026-09-11'
+- name: report_correction
+  description: 'Report that the catalog has a provider WRONG — a wrong website, a wrong logo, APIs that
+    are not theirs, a count that does not match what they ship, a score computed from any of those. Free,
+    always: co'
+  source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#reportCorrection
+  first_seen: '2026-09-11'
 x-evidence:
-  fetched: '2026-08-10'
+  fetched: '2026-09-11'
+  initialize:
+    url: https://apis.io/mcp
+    method: POST initialize
+    http_status: 200
+    server_version: 1.3.0
+    protocol_version: '2025-06-18'
   tools_list:
     url: https://apis.io/mcp
     method: POST tools/list
     http_status: 200
-    tools_returned: 79
+    tools_returned: 133
+    anonymous: true
+    bytes: 146525
+    saved: mcp/apis-io-mcp-tools.json
   server_card:
     url: https://apis.io/.well-known/mcp/server-card.json
     http_status: 200
@@ -210,6 +527,11 @@ deployment:
   endpoint: https://apis.io/mcp
   verified: probed
   probe: live
-  tools: 79
-  checked: '2026-08-12'
-  source: catalog MCP census
+  auth: none
+  auth_note: >-
+    tools/list is anonymous. Calling a Pro-tier tool without a key returns 402 upgrade_required,
+    and the RFC 9728 protected-resource document at /.well-known/oauth-protected-resource names
+    https://apis.io as the authorization server for https://apis.io/mcp.
+  tools: 133
+  checked: '2026-09-11'
+  source: live probe (POST initialize + tools/list)
