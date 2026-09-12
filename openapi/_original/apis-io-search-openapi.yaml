@@ -1,4 +1,5 @@
-openapi: 3.1.0
+openapi: 3.2.0
+$self: https://apis.io/artifacts/openapi/apis-io-search-openapi.yaml
 info:
   title: APIs.io Search API
   description: This is the technical API contract for the search API for the APIs.io search engine.

@@ -1,4 +1,5 @@
-openapi: 3.1.0
+openapi: 3.2.0
+$self: https://apis.io/artifacts/openapi/apis-io-v1-provider-control-openapi.yml
 info:
   title: APIs.io Provider Control API
   version: 1.0.0
