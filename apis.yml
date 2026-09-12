@@ -73,7 +73,7 @@ tags_raw:
 - Agent Skills
 - OpenAPI
 - API Governance
-url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml
+url: https://apis.io/apis.yml
 created: '2026-03-26'
 modified: '2026-09-11'
 specificationVersion: '0.23'
@@ -554,7 +554,7 @@ common:
 - type: OAuthScopes
   url: scopes/apis-io-scopes.yml
 - type: IssueTracker
-  url: https://github.com/apisio/apis.io/issues
+  url: https://github.com/api-evangelist/roadmap/issues
 - type: License
   name: MIT
   url: https://github.com/apisio/apis.io/blob/master/LICENSE
@@ -607,7 +607,7 @@ common:
 - type: GitHubOrganization
   url: https://github.com/api-search
 - type: GitHubRepository
-  url: https://github.com/apisio/apis.io
+  url: https://github.com/api-evangelist/apis-io
 - type: SpectralRules
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/rules/apis-io-spectral-rules.yml
 - type: Vocabulary
