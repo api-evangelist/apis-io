@@ -556,8 +556,11 @@ common:
 - type: IssueTracker
   url: https://github.com/api-evangelist/roadmap/issues
 - type: License
-  name: MIT
-  url: https://github.com/apisio/apis.io/blob/master/LICENSE
+  name: CC BY-NC-SA 4.0
+  url: https://github.com/api-evangelist/apis-io/blob/main/LICENSE
+- type: License
+  name: Apache 2.0
+  url: https://github.com/api-evangelist/apis-io/blob/main/sdk/LICENSE
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apisio/overview
 - type: AgenticAccess
