@@ -36,6 +36,7 @@ conformance:
     informational:
     - '[APIs.io API v1] Media type ''application/vnd.oai.openapi'' is a valid application extension media
       type. ARD permits extension types without core registration.'
+  did_web: null
 catalog:
   host_display_name: APIs.io
   host_identifier: apis.io
