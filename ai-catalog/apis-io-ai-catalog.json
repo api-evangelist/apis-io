@@ -1,0 +1,399 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "APIs.io",
+    "identifier": "apis.io",
+    "documentationUrl": "https://apis.io/developer/",
+    "logoUrl": "https://apis.io/assets/images/apis-io-logo.png"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:apis.io:mcp:catalog",
+      "displayName": "APIs.io API catalog MCP server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://apis.io/.well-known/mcp/server-card.json",
+      "tags": [
+        "discovery",
+        "api-catalog",
+        "mcp",
+        "read-only"
+      ],
+      "version": "1.2.0",
+      "representativeQueries": [
+        "find an API that does X across a catalog of providers",
+        "which providers publish an OpenAPI and an MCP server",
+        "how agent-ready is this API provider",
+        "compare two API vendors on contract quality"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:a2a:catalog",
+      "displayName": "APIs.io",
+      "type": "application/a2a-agent-card+json",
+      "url": "https://apis.io/.well-known/agent-card.json",
+      "tags": [
+        "discovery",
+        "api-catalog",
+        "a2a"
+      ],
+      "version": "1.0.0",
+      "representativeQueries": [
+        "search a catalog of API providers from an agent",
+        "read everything known about one API provider"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:api:v1",
+      "displayName": "APIs.io API v1",
+      "type": "application/vnd.oai.openapi",
+      "url": "https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-v1-openapi.yml",
+      "description": "Read-only REST discovery over the APIs.io catalog of API providers, their APIs, and the artifacts each publishes. The same contract generates the MCP server, so the two never drift. Catalog reads are free and keyless.",
+      "tags": [
+        "discovery",
+        "api-catalog",
+        "openapi",
+        "rest"
+      ],
+      "representativeQueries": [
+        "search API providers and their APIs over REST",
+        "list the machine-readable artifacts a provider publishes",
+        "look up an API rating and its rubric"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:discover-apis-io",
+      "displayName": "discover-apis-io",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/discover-apis-io/SKILL.md",
+      "description": "Learn how to read the apis.io API catalog — the v1 REST API, the MCP server, and the markdown mirror of every page — so other skills can find APIs without scraping HTML. Use this first when the user mentions apis.io or asks to discover APIs across a catalog.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "how do I read the apis.io catalog",
+        "what interfaces does apis.io expose"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:resolve-provider",
+      "displayName": "resolve-provider",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/resolve-provider/SKILL.md",
+      "description": "Turn a domain, URL, company name, or GitHub org into an apis.io provider slug, with its quality band and composite score. Use first whenever the user names a company rather than a catalog slug — which is almost always.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "turn a company name into a catalog slug",
+        "which provider is this domain"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:search-apis",
+      "displayName": "search-apis",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/search-apis/SKILL.md",
+      "description": "Search the apis.io catalog for APIs, providers, and tags by keyword, capability, tag, or provider. Use when the user asks what APIs exist for something, which providers offer a capability, or wants to filter the catalog.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "search for APIs by keyword",
+        "find APIs in an industry"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:fetch-api-spec",
+      "displayName": "fetch-api-spec",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/fetch-api-spec/SKILL.md",
+      "description": "Fetch and parse the OpenAPI, AsyncAPI, GraphQL, or Postman description for an API in the apis.io catalog, given its aid or its apis.io URL. Use to inspect operations, summarize endpoints, or generate code from a real spec.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "get the OpenAPI for this provider",
+        "download an API specification"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:find-api",
+      "displayName": "find-api",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/find-api/SKILL.md",
+      "description": "Find the right API for a task — search the apis.io catalog, inspect the strongest candidates, and recommend one with its spec and links. Use when the user asks what API to use for something, or whether an API exists for a job.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "find an API that can do this task",
+        "which API handles payments"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:integrate-provider",
+      "displayName": "integrate-provider",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/integrate-provider/SKILL.md",
+      "description": "Onboard an API provider end-to-end — pull its signup, authentication, base URLs and OpenAPI from the apis.io catalog and produce concrete, runnable first-integration steps. Use when a provider is chosen and the user wants to actually wire it up.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "how do I onboard with this API",
+        "what does integration take"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:discover-mcp-servers",
+      "displayName": "discover-mcp-servers",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/discover-mcp-servers/SKILL.md",
+      "description": "Find providers in the apis.io catalog that publish an MCP server, with the endpoint and install method, so you can plug real tools into an agent. Use when the user wants agent-ready tools rather than raw REST.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "which providers run an MCP server",
+        "find MCP servers for a task"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:discover-agent-skills",
+      "displayName": "discover-agent-skills",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/discover-agent-skills/SKILL.md",
+      "description": "Search the apis.io catalog for Agent Skills published by API providers — packaged SKILL.md files you can adopt directly. Use when the user wants ready-made skills for a vendor or capability rather than writing integration code.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "which providers publish agent skills",
+        "find agent skills for a vendor"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:find-artifact",
+      "displayName": "find-artifact",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/find-artifact/SKILL.md",
+      "description": "Search the apis.io catalog for any artifact type beyond OpenAPI — Arazzo workflows, Spectral rules, pricing plans, FinOps, rate limits, GraphQL, Postman collections, JSON Schemas, examples, and more. Use when the user wants governance, commercial, or workflow artifacts rather than an API contract.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "find providers publishing AsyncAPI",
+        "who publishes Arazzo workflows"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:agent-readiness-scan",
+      "displayName": "agent-readiness-scan",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/agent-readiness-scan/SKILL.md",
+      "description": "Check whether an API provider is ready for autonomous AI agents — machine-readable contracts, MCP servers, agent skills, llms.txt, agent-native access controls, and the operational signals an agent needs. Use when asked if an API is agent-ready, or to compare providers on agent readiness.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "is this provider ready for agents",
+        "scan a domain for agent readiness"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:score-my-api",
+      "displayName": "score-my-api",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/score-my-api/SKILL.md",
+      "description": "Read a provider's apis.io quality score and the Kin Score rubric, then turn it into a ranked, do-this-next punch list of what to publish to move up a band. Use when someone wants to know how their own API rates and how to improve it.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "what is my API rated",
+        "how do I raise my score"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:verify-provenance",
+      "displayName": "verify-provenance",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/verify-provenance/SKILL.md",
+      "description": "Check where an apis.io provider record's evidence came from — which artifacts the provider published first-party versus which apis.io derived — before citing a score or an artifact as fact. Use when accuracy matters, or when a provider disputes their rating.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "where did this catalog claim come from",
+        "show the evidence for this rating"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:shortlist-vendors",
+      "displayName": "shortlist-vendors",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/shortlist-vendors/SKILL.md",
+      "description": "Turn one capability into a scored, compared vendor shortlist from the apis.io catalog, with a clear recommendation. Use for a buy decision on a single capability. Pro tier.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "shortlist vendors for this capability",
+        "which API vendor should we pick"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:assemble-api-stack",
+      "displayName": "assemble-api-stack",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/assemble-api-stack/SKILL.md",
+      "description": "Design a capability stack from the apis.io catalog — the best-rated provider per capability — and export it as an adoptable APIs.json. Use when the user needs several APIs at once, not one. Pro tier.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "design an API stack for this product",
+        "which APIs do I need for this build"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:audit-api-estate",
+      "displayName": "audit-api-estate",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/audit-api-estate/SKILL.md",
+      "description": "Inventory, score, and gap a set of API providers from the apis.io catalog — what they publish, how they rate, and what they are missing. Use to assess a vendor portfolio. Pro tier.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "audit the APIs our company depends on",
+        "review our API estate"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:benchmark-against-peers",
+      "displayName": "benchmark-against-peers",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/benchmark-against-peers/SKILL.md",
+      "description": "Benchmark one API provider against its closest peers facet by facet — score, artifact coverage, and where it leads or trails. Use for competitive positioning or to justify an API investment. Pro tier, with a free fallback.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "how do we compare to our competitors",
+        "benchmark our API against peers"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:explore-cohort",
+      "displayName": "explore-cohort",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/explore-cohort/SKILL.md",
+      "description": "Explore any slice of the API market as a scored cohort — an industry, topic area, region, or tag — with its members, their Kin Scores and agent readiness. Use to size a market, find the leaders in a category, or research a sector.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "explore a group of similar providers",
+        "what does this industry publish"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:company-readiness",
+      "displayName": "company-readiness",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/company-readiness/SKILL.md",
+      "description": "Read the demand side of the API market — what technologies a company is investing in, where it is thin, and which catalog providers are already in its stack. Use for account research, sales targeting, or to find where demand outruns supply.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "is this company ready for agent traffic",
+        "assess a company API surface"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:watch-providers",
+      "displayName": "watch-providers",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/watch-providers/SKILL.md",
+      "description": "Set up ongoing monitoring of the apis.io catalog using saved searches and lists — track a vendor set, get only what is new since last check, and watch for rating movement. Use for recurring vendor monitoring rather than one-off queries. Pro tier, with a free fallback.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "alert me when a provider changes",
+        "watch these APIs for updates"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:skill:track-api-changes",
+      "displayName": "track-api-changes",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://apis.io/skills/track-api-changes/SKILL.md",
+      "description": "Monitor the apis.io catalog for providers added or updated and for rating movement, across a chosen set or the whole network. Use for ongoing vendor monitoring. Pro tier.",
+      "tags": [
+        "agent-skill",
+        "discovery",
+        "api-catalog"
+      ],
+      "representativeQueries": [
+        "what changed in this API",
+        "track deprecations across my dependencies"
+      ]
+    },
+    {
+      "identifier": "urn:air:apis.io:guide:llms",
+      "displayName": "APIs.io llms.txt",
+      "type": "text/plain",
+      "url": "https://apis.io/llms.txt",
+      "description": "Plain-language orientation for an agent arriving at apis.io: what the catalog holds, which surfaces read it, and what is free versus paid.",
+      "tags": [
+        "guide",
+        "llms-txt"
+      ],
+      "representativeQueries": [
+        "what is apis.io and how do I use it",
+        "how do I search the apis.io API catalog"
+      ]
+    }
+  ]
+}
