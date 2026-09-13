@@ -21,7 +21,6 @@ conformance:
   spec_version_declared: '1.0'
   hard_failures: []
   soft_gaps:
-  - cors-not-wildcard
   - host-identifier-not-did-web
   official_tool:
     tool: ARD conformance-test v0.9.1 (ards-project/ard-spec)
@@ -53,7 +52,7 @@ catalog:
 transport:
   http_status: 200
   content_type: application/ai-catalog+json
-  access_control_allow_origin: null
+  access_control_allow_origin: '*'
 x-evidence:
   fetched: '2026-09-13'
   url: https://apis.io/.well-known/ard.json
