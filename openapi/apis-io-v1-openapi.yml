@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.8.0
+  version: 1.9.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated
     dimensions — free to explore, with synthesis and decision plans above it.
   description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\n\
@@ -10262,6 +10262,12 @@ components:
           description: Tags INSIDE this one. `developer-tools` contains `source-control`, `api-client`,
             `ci-cd` and 16 more. Does NOT roll into provider_count, which stays the population the click-through
             returns.
+        senses:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Sense'
+          description: Disambiguated meanings, when this tag is polysemous.
       required:
       - slug
       - name
@@ -10916,6 +10922,31 @@ components:
       required:
       - provider
       - estate
+    Sense:
+      type: object
+      description: One disambiguated meaning of a polysemous tag.
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        anchors:
+          type: array
+          items:
+            type: string
+        provider_count:
+          type: integer
+        share:
+          type: number
+        tags:
+          type: array
+          items:
+            type: string
+          description: The first-class tag(s) this sense corresponds to, where its label names them. 85
+            of 280 sense labels decompose entirely into existing tags -- `supply-chain`'s "Freight & Transportation"
+            IS the `freight` and `transportation` tags -- so this makes the correspondence navigable instead
+            of leaving a caller to meet the same concept twice with no link. Empty when the sense does
+            not correspond to a tag.
   headers:
     RateLimitPolicy:
       description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331
