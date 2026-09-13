@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.6.0
+  version: 1.7.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated
     dimensions — free to explore, with synthesis and decision plans above it.
   description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\n\
@@ -6977,7 +6977,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': &id001
+        '400':
           $ref: '#/components/responses/BadRequest'
   /cohorts/compare:
     get:
@@ -7013,10 +7013,11 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': *id001
-        '402': &id005
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
           $ref: '#/components/responses/UpgradeRequired'
-        '404': &id002
+        '404':
           $ref: '#/components/responses/NotFound'
   /cohorts/{kind}/{slug}:
     get:
@@ -7031,10 +7032,8 @@ paths:
         both the DECLARED roster size and the number actually resolved against the catalog — the gap is
         a coverage fact, not a rounding error. Understanding plan.
       parameters:
-      - &id003
-        $ref: '#/components/parameters/CohortKind'
-      - &id004
-        $ref: '#/components/parameters/CohortSlug'
+      - $ref: '#/components/parameters/CohortKind'
+      - $ref: '#/components/parameters/CohortSlug'
       responses:
         '200':
           description: One cohort and its member roster.
@@ -7042,8 +7041,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '400': *id001
-        '404': *id002
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /cohorts/{kind}/{slug}/stats:
     get:
       operationId: getCohortStats
@@ -7059,8 +7060,8 @@ paths:
         rates. Always carries a `coverage` block stating how much of the roster is actually scored, because
         a mean over half a roster is a different claim from a mean over all of it.
       parameters:
-      - *id003
-      - *id004
+      - $ref: '#/components/parameters/CohortKind'
+      - $ref: '#/components/parameters/CohortSlug'
       responses:
         '200':
           description: The distribution for a whole market (Pro).
@@ -7068,8 +7069,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/rankings:
@@ -7085,8 +7088,8 @@ paths:
       description: Every scored member ranked by Kin Score composite AND, separately, by agent readiness.
         The two orders differ, and the distance between a provider's two ranks is usually the story.
       parameters:
-      - *id003
-      - *id004
+      - $ref: '#/components/parameters/CohortKind'
+      - $ref: '#/components/parameters/CohortSlug'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Format'
@@ -7097,8 +7100,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/scores:
@@ -7114,8 +7119,8 @@ paths:
       description: One row per provider per facet, each carrying the cohort average and the delta against
         it. A 60 in governance means nothing until you know the market sits at 45.
       parameters:
-      - *id003
-      - *id004
+      - $ref: '#/components/parameters/CohortKind'
+      - $ref: '#/components/parameters/CohortSlug'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       - $ref: '#/components/parameters/Format'
@@ -7126,8 +7131,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '422':
           $ref: '#/components/responses/InsufficientPopulation'
   /cohorts/{kind}/{slug}/capabilities:
@@ -7152,8 +7159,8 @@ paths:
         / `returned` / `cursor` / `next_cursor` / `complete` (changed 2026-08-24, when the unpaginated
         form 502''d on any cohort past ~9,000 members).'
       parameters:
-      - *id003
-      - *id004
+      - $ref: '#/components/parameters/CohortKind'
+      - $ref: '#/components/parameters/CohortSlug'
       - name: cursor
         in: query
         required: false
@@ -7783,8 +7790,10 @@ paths:
                     dry_run_mode: false
                   band: minimal
                   kin_score: 2.6
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /providers/{slug}/rating/facets:
     get:
       operationId: getProviderFacets
@@ -7805,8 +7814,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /providers/{slug}/agent-readiness:
     get:
       operationId: getProviderAgentReadiness
@@ -7828,8 +7839,10 @@ paths:
             application/json:
               schema:
                 type: object
-        '402': *id005
-        '404': *id002
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+        '404':
+          $ref: '#/components/responses/NotFound'
   /providers/{slug}/capabilities:
     get:
       operationId: getProviderCapabilities
@@ -7851,7 +7864,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id002
+        '404':
+          $ref: '#/components/responses/NotFound'
   /providers/{slug}/evidence:
     get:
       operationId: getProviderEvidence
@@ -7874,7 +7888,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id002
+        '404':
+          $ref: '#/components/responses/NotFound'
   /story-leads:
     get:
       operationId: storyLeads
@@ -7965,7 +7980,7 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': &id006
+        '404':
           $ref: '#/components/responses/NotFound'
   /providers/{slug}/tools:
     get:
@@ -8005,7 +8020,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id006
+        '404':
+          $ref: '#/components/responses/NotFound'
   /providers/{slug}/schema:
     get:
       operationId: getProviderSchema
@@ -8030,7 +8046,8 @@ paths:
             application/json:
               schema:
                 type: object
-        '404': *id006
+        '404':
+          $ref: '#/components/responses/NotFound'
   /checks:
     post:
       operationId: requestCheck
@@ -9304,6 +9321,151 @@ paths:
           $ref: '#/components/responses/AuthRequired'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
+  /estates:
+    get:
+      operationId: listEstates
+      x-tier: free
+      x-mcp-tool: find_estates
+      security: []
+      tags:
+      - Estates
+      summary: List corporate estates.
+      description: 'An estate is one COMPANY whose API surface is spread across many provider records
+        - Amazon across 237, Cisco 37, Salesforce 27. The catalog computes these and publishes them at
+        apis.io/estates/; this is the same rollup on the API. Use it when two slugs look like separate
+        vendors and you need to know whether they are one company. Ranked by member count. The member
+        ROSTER is omitted here and returned by GET /estates/{slug}: a single large estate carries hundreds
+        of member objects.'
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: List corporate estates.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstateList'
+              example:
+                meta:
+                  total: 53
+                  page: 1
+                  limit: 2
+                  pages: 27
+                  query: {}
+                data:
+                - slug: cisco
+                  name: Cisco
+                  parent_provider: cisco
+                  member_total: 37
+                  member_on_network: 37
+                  api_total: 444
+                  subfamily_count: 0
+                  is_subfamily: false
+                  _type: estate
+                - slug: salesforce
+                  name: Salesforce
+                  parent_provider: salesforce
+                  member_total: 27
+                  member_on_network: 27
+                  api_total: 71
+                  subfamily_count: 0
+                  is_subfamily: false
+                  _type: estate
+          headers:
+            RateLimit-Policy:
+              $ref: '#/components/headers/RateLimitPolicy'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/XRateLimitLimit'
+            X-RateLimit-Window:
+              $ref: '#/components/headers/XRateLimitWindow'
+            X-RateLimit-Tier:
+              $ref: '#/components/headers/XRateLimitTier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /estates/{slug}:
+    get:
+      operationId: getEstate
+      x-tier: free
+      x-mcp-tool: get_estate
+      security: []
+      tags:
+      - Estates
+      summary: One corporate estate, with its full member roster.
+      description: The owning provider, every member with its API count and rating band, and the estate-wide
+        rating. Use GET /providers/{slug}/estate to go the other way, from a provider to the company that
+        owns it.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: One corporate estate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Estate'
+              example:
+                slug: salesforce
+                name: Salesforce
+                parent_provider: salesforce
+                member_total: 27
+                member_on_network: 27
+                api_total: 71
+                is_subfamily: false
+                estate_rating:
+                  band: emerging
+                  composite_avg: 28.3
+                  best: 68.6
+                  agent_band: emerging
+                  agent_avg: 13.0
+                members:
+                - name: Salesforce Service Cloud APIs
+                  api_count: 1
+                  relationship: product
+                  immediate_parent: salesforce
+                  score_band: exemplar
+                  agent_band: agent-native
+                  agent_score: 47.2
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /providers/{slug}/estate:
+    get:
+      operationId: getProviderEstate
+      x-tier: free
+      x-mcp-tool: get_provider_estate
+      security: []
+      tags:
+      - Providers
+      - Estates
+      summary: Which corporate estate a provider belongs to.
+      description: Answers the question an agent has while looking at one provider - is this part of a
+        larger company? Returns 200 with a null estate when the provider stands alone. That is a measured
+        absence rather than a missing record, and it is deliberately not a 404, because 'no such provider'
+        and 'this provider is in no estate' are different facts.
+      parameters:
+      - $ref: '#/components/parameters/Slug'
+      responses:
+        '200':
+          description: The estate this provider belongs to, or an explicit null.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProviderEstate'
+              example:
+                provider: pardot
+                estate:
+                  slug: salesforce
+                  name: Salesforce
+                  parent_provider: salesforce
+                  member_total: 27
+                  api_total: 71
+                  _type: estate
+                is_root: false
+                next: Use get_estate(salesforce) for the full member roster.
+        '404':
+          $ref: '#/components/responses/NotFound'
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -10639,6 +10801,107 @@ components:
       required:
       - meta
       - data
+    Estate:
+      type: object
+      description: One company whose API surface is spread across many provider records. Rooted at the
+        provider named in parent_provider.
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        parent_provider:
+          type: string
+          description: The provider record this estate is rooted at.
+        estate_root:
+          type: string
+          nullable: true
+          description: The owning estate, when this one is a sub-family of a larger company.
+        estate_root_name:
+          type: string
+          nullable: true
+        is_subfamily:
+          type: boolean
+        member_total:
+          type: integer
+          description: Provider records in this estate.
+        member_on_network:
+          type: integer
+          description: Members that are catalogued providers, as opposed to named but unprofiled.
+        api_total:
+          type: integer
+          description: APIs across every member.
+        subfamily_count:
+          type: integer
+        estate_rating:
+          type: object
+          nullable: true
+          description: The estate-wide rollup of member Kin Scores and agent readiness.
+          additionalProperties: true
+        member_bands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: Member counts grouped by rating band.
+        members:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: The roster. Returned by GET /estates/{slug} only, never by the list - a large estate
+            carries hundreds of member objects.
+        tags:
+          type: array
+          items:
+            type: string
+        image:
+          type: string
+        _type:
+          type: string
+          enum:
+          - estate
+      required:
+      - slug
+      - name
+    EstateList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Estate'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    ProviderEstate:
+      type: object
+      description: Which estate a provider belongs to. A null estate is a measured absence, not a missing
+        record.
+      properties:
+        provider:
+          type: string
+        estate:
+          allOf:
+          - $ref: '#/components/schemas/Estate'
+          nullable: true
+          description: Null when this provider is not a member of any estate.
+        is_root:
+          type: boolean
+          description: True when this provider is the estate owner.
+        detail:
+          type: string
+          description: Present only when estate is null, saying so plainly.
+        next:
+          type: string
+      required:
+      - provider
+      - estate
   headers:
     RateLimitPolicy:
       description: 'The rate-limit policy in force for the tier that served this response, in RFC 9331
