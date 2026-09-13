@@ -549,6 +549,8 @@ apis:
   - type: SpectralRules
     url: https://apis.io/artifacts/rules/apis-io-spectral-rules.yml
 common:
+- type: AsyncAPI
+  url: https://apis.io/artifacts/asyncapi/apis-io-watch-events-asyncapi.yml
 - type: VulnerabilityDisclosure
   url: security/apis-io-vulnerability-disclosure.yml
 - type: OAuthScopes
