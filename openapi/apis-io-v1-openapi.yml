@@ -1726,18 +1726,6 @@ paths:
       x-mcp-tool: tag_group_tags
       security: []
       tags:
-      - name: country
-        in: query
-        description: Providers whose derived country membership includes these slugs (e.g. `united-kingdom`).
-          Membership is partial — a count is a floor, not a census.
-        style: form
-        explode: false
-        schema:
-          type: array
-          items:
-            type: string
-            maxLength: 1024
-          maxItems: 1000
       - Tag groups
       summary: The tags inside one group.
       description: The member tags of a group, each with its catalog counts — the paginated view of what
@@ -3554,6 +3542,54 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
+  /prices:
+    get:
+      operationId: getPrices
+      x-mcp-tool: get_prices
+      summary: Per-call prices for pay-as-you-go access
+      description: >-
+        What one call costs on the pay-as-you-go plan, by cost band. FREE and uncredentialed by
+        design: a price a caller can only discover by being refused is a price that has already
+        lost the sale. `status` is `preview` until the metered plan itself ships. Subscriptions
+        are unaffected — under Understanding or Influence these calls are included in the plan.
+        The same map is served as the `apis://prices` MCP resource, quoted in the `x-price-usd`
+        response header on metered calls, and used to price x402 payments, so all three agree.
+      tags:
+        - Plans
+      responses:
+        '200':
+          description: The price map.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currency: { type: string, example: USD }
+                  status:
+                    type: string
+                    description: '`preview` while the pay-as-you-go plan is not yet purchasable.'
+                  bands:
+                    type: array
+                    description: The cost bands, with the per-row form for bulk.
+                    items:
+                      type: object
+                      properties:
+                        band: { type: string, example: B2 }
+                        description: { type: string }
+                        usd: { type: number, example: 0.05 }
+                        usd_per_row: { type: number }
+                        usd_minimum: { type: number }
+                  prices:
+                    type: array
+                    description: Every priced resource key and the band it sits in.
+                    items:
+                      type: object
+                      properties:
+                        key: { type: string, example: cohorts.stats }
+                        band: { type: string, example: B2 }
+                        usd: { type: number }
+                        purchasable: { type: boolean }
+                  plans: { type: string, format: uri }
   /playground:
     get:
       operationId: getPlaygroundApis
@@ -9398,7 +9434,7 @@ paths:
         rating. Use GET /providers/{slug}/estate to go the other way, from a provider to the company that
         owns it.
       parameters:
-      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/EstateSlug'
       responses:
         '200':
           description: One corporate estate.
@@ -9445,7 +9481,7 @@ paths:
         absence rather than a missing record, and it is deliberately not a 404, because 'no such provider'
         and 'this provider is in no estate' are different facts.
       parameters:
-      - $ref: '#/components/parameters/Slug'
+      - $ref: '#/components/parameters/ProviderSlug'
       responses:
         '200':
           description: The estate this provider belongs to, or an explicit null.
@@ -9579,6 +9615,14 @@ components:
           type: string
           maxLength: 1024
         maxItems: 1000
+    EstateSlug:
+      name: slug
+      in: path
+      required: true
+      description: Estate slug — the owning company's slug (e.g. `cisco`).
+      schema:
+        type: string
+        maxLength: 1024
     ProviderSlug:
       name: slug
       in: path
