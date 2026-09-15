@@ -105,7 +105,16 @@ apis:
   - type: Documentation
     url: https://apis.io/developer/overview/
   - type: MCPServer
-    url: https://apis.io/mcp
+    url: mcp/apis-io-mcp.yml
+    slug: mcp
+    name: APIs.io MCP Server
+    description: >-
+      The APIs.io catalog as a Model Context Protocol server over streamable HTTP — 137
+      tools and 36 guided prompts across API, provider, tag, artifact, operation, cohort
+      and rating discovery. Anonymous callers get the free catalog surface with no key;
+      OAuth 2.1 with dynamic client registration unlocks the Understanding and Influence
+      tiers. Most tools read; the write tools concern a listing you own or a request you
+      are filing, and each returns 202 for a person to work.
   - type: MCPServerCard
     url: https://apis.io/.well-known/mcp/server-card.json
   - type: AgentSkills
@@ -623,6 +632,10 @@ common:
   url: https://apis.io/.well-known/api-catalog
 - type: MCPServer
   url: https://apis.io/mcp
+  name: APIs.io MCP Server
+  description: >-
+    Hosted streamable-HTTP endpoint for the APIs.io catalog MCP server. Descriptor and
+    tool inventory: mcp/apis-io-mcp.yml.
 - type: ToolCrosswalk
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/mcp/apis-io-tool-crosswalk.yml
 - type: LLMsTxt
