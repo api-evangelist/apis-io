@@ -12,6 +12,12 @@ artifacts:
   agentic-access/apis-io-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-catalog/apis-io-ai-catalog.json:
+    method: unknown
+    evidence: no authorship recorded
+  ai-catalog/apis-io-ai-catalog.yml:
+    method: unknown
+    evidence: no authorship recorded
   arazzo/apis-io-compare-keyword-coverage-workflow.yml:
     method: unknown
     evidence: no authorship recorded
@@ -234,7 +240,7 @@ artifacts:
   json-structure/apis-io-search-tag-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-12T080032.yml:
+  kin/checks-2026-09-14T225847.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-17T064519.yml:
@@ -391,6 +397,24 @@ artifacts:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T080032.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T204651.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-12T221936.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-13T214537.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T064754.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T210656.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-14T225847.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   lifecycle/apis-io-lifecycle.yml:
@@ -631,6 +655,9 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   scripts/split-openapi.mjs:
+    method: unknown
+    evidence: no authorship recorded
+  sdk/LICENSE:
     method: unknown
     evidence: no authorship recorded
   security/apis-io-domain-security.yml:
