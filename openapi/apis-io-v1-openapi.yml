@@ -4417,6 +4417,114 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '403':
           $ref: '#/components/responses/UpgradeRequired'
+  /agents:
+    get:
+      operationId: listAgents
+      x-tier: free
+      x-mcp-tool: find_agents
+      summary: The A2A agent registry
+      description: Agents that registered themselves by serving an agent card and calling POST
+        /agents/register. Each row carries the card URL, the operator, and the last verification of the
+        card - grade against A2A 1.0.0, protocol version, preferred transport, deviations. Free and keyless;
+        this is the one door on this API an unattended agent can walk through unaided.
+      tags:
+      - Agents
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: The registry, newest registration first.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    additionalProperties: true
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        slug: { type: string }
+                        name: { type: string }
+                        operator: { type: string, nullable: true }
+                        operator_url: { type: string, nullable: true }
+                        card_url: { type: string, format: uri }
+                        registered: { type: string, format: date }
+                        registered_via: { type: string, nullable: true }
+                        provider_slug: { type: string, nullable: true, description: The catalog provider this agent belongs to, when known. }
+                        grade: { type: string, nullable: true, description: 'Last verification of the card: conformant, flavored or invalid.' }
+                        last_checked: { type: string, format: date, nullable: true }
+                        serving: { type: boolean, nullable: true }
+                        protocol_version: { type: string, nullable: true }
+                        preferred_transport: { type: string, nullable: true }
+                        deviations: { type: array, items: { type: string } }
+                        _type: { type: string, enum: [agent] }
+                  register: { type: string, description: Path of the registration endpoint. }
+                  registry: { type: string, format: uri, description: The human-readable registry page. }
+                  note: { type: string }
+  /agents/register:
+    get:
+      operationId: describeAgentRegistration
+      x-tier: free
+      x-mcp-tool: register_agent
+      summary: How to register an agent - the endpoint describes itself
+      description: A bare GET returns the registration contract - the endpoint, the body, the gate and
+        the responses - so an agent that lands here without documentation can proceed. Free and keyless.
+      tags:
+      - Agents
+      responses:
+        '200':
+          description: The registration contract.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+    post:
+      operationId: registerAgent
+      x-tier: free
+      x-mcp-tool: register_agent
+      summary: Register an agent - the machine door
+      description: 'Free and keyless. Serve an A2A agent card at /.well-known/agent-card.json on a host
+        you control, then pass its URL (or just the host). The card must be fetchable and pass the three
+        A2A 1.0.0 hard checks: capabilities is an object, protocolVersion is present, skills is an array.
+        The card is the evidence, so there is no account and no form. 202 queues the registration for
+        review; 422 names the check that failed.'
+      tags:
+      - Agents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [card_url]
+              properties:
+                card_url: { type: string, description: The agent card URL, or the host that serves one at a well-known path. }
+                operator: { type: string, description: 'Optional: who runs the agent.' }
+                contact: { type: string, description: 'Optional: an email for questions about the registration.' }
+      responses:
+        '202':
+          description: Queued for review. The body carries the graded card and the queue status.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '422':
+          description: 'Not registered: card_url_required, card_not_served, card_not_json, or card_not_conformant - the body says which, and for a non-conformant card lists the deviations.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: string }
+                  detail: { type: string }
+                  deviations: { type: array, items: { type: string } }
   /gaps/report:
     post:
       operationId: reportGap
