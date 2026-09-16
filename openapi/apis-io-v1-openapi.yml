@@ -8315,13 +8315,14 @@ paths:
   /:
     get:
       operationId: getServiceRoot
-      x-tier: pro
+      x-tier: free
       tags:
       - Search
       summary: The service record and catalog counts.
-      description: Name, version, and how many providers, APIs, tags and artifacts the catalog holds.
-        The cheapest way to confirm you are talking to the right service and to see its size before paging
-        anything.
+      description: Name, version, how many providers, APIs, tags and artifacts the catalog holds, and
+        where everything else is - the contract, the docs, the plans, the price list, the no-key
+        playground and the MCP endpoint. Free and keyless. The cheapest way to confirm you are talking
+        to the right service and to see its size before paging anything.
       responses:
         '200':
           description: The service record.
@@ -8337,8 +8338,27 @@ paths:
                   counts:
                     type: object
                     additionalProperties: true
-        '402':
-          $ref: '#/components/responses/UpgradeRequired'
+                  openapi:
+                    type: string
+                    format: uri
+                    description: This contract.
+                  docs:
+                    type: string
+                    format: uri
+                  plans:
+                    type: string
+                    format: uri
+                  prices:
+                    type: string
+                    format: uri
+                    description: The per-operation price list (GET /prices).
+                  playground:
+                    type: string
+                    format: uri
+                    description: Curated APIs an agent can call with no key (GET /playground).
+                  mcp:
+                    type: string
+                    format: uri
   /me:
     get:
       operationId: getWorkspace
