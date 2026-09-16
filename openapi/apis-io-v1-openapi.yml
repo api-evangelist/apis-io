@@ -9854,7 +9854,10 @@ paths:
       summary: OAuth dynamic client registration (RFC 7591)
       description: 'Keyless. Registers a public client. A client registered this way is capped at
         apis:read and cannot unlock any gated resource on its own — paid tiers are reached by a signed-in
-        person. See roadmap#411 for client management.'
+        person. The response carries a registration_access_token (shown once) and a
+        registration_client_uri for RFC 7592 management. A client never exchanged for a token is removed
+        after seven days. Registrations are capped per hour across all callers; the x-ratelimit-*
+        headers report the remaining allowance, and 429 means retry after the reset.'
       tags:
       - Account
       security:
@@ -9872,9 +9875,72 @@ paths:
                 token_endpoint_auth_method: { type: string, example: none }
       responses:
         '201':
-          description: The registered client.
+          description: The registered client, with registration_access_token and registration_client_uri.
         '400':
           description: An RFC 7591 error.
+        '429':
+          description: The hourly registration ceiling was reached; see Retry-After.
+  /auth/register/{client_id}:
+    parameters:
+    - name: client_id
+      in: path
+      required: true
+      schema: { type: string }
+    get:
+      operationId: oauthReadClient
+      x-tier: free
+      summary: Read a registered client (RFC 7592)
+      description: Authorized by the registration_access_token issued at registration, as a Bearer
+        token. A wrong token and an unknown client both answer 401 invalid_token.
+      tags:
+      - Account
+      security:
+      - {}
+      responses:
+        '200':
+          description: The client's current metadata and its registration_client_uri.
+        '401':
+          description: invalid_token.
+    put:
+      operationId: oauthUpdateClient
+      x-tier: free
+      summary: Update a registered client (RFC 7592)
+      description: Replaces the client's metadata. The body must carry the same client_id, may not set
+        client_secret or registration_access_token, and is held to the same redirect_uri rules as
+        registration. An update does not make an unused client permanent.
+      tags:
+      - Account
+      security:
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [client_id]
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated metadata.
+        '400':
+          description: invalid_client_metadata or invalid_redirect_uri.
+        '401':
+          description: invalid_token.
+    delete:
+      operationId: oauthDeleteClient
+      x-tier: free
+      summary: Delete a registered client (RFC 7592)
+      description: Removes the client. Registration is reversible in one request.
+      tags:
+      - Account
+      security:
+      - {}
+      responses:
+        '204':
+          description: Deleted.
+        '401':
+          description: invalid_token.
   /billing/access/terms:
     get:
       operationId: getAccessTerms
