@@ -516,6 +516,13 @@ tags:
 - name: Checks
   description: 'The remediation intake: asking APIs.io to re-profile a listing, and reading where that
     request stands.'
+- name: Account
+  description: 'Who you are and how you got in: sign-in, the OAuth endpoints, your own identity, tier,
+    key and usage (GET /auth/me works with an API key), and account deletion. Operations marked WEB
+    SESSION ONLY need a person signed in at apis.io; an agent cannot call them with a key.'
+- name: Billing
+  description: 'Subscribing and pay-as-you-go. The terms are keyless; every mutation needs a person''s
+    signed-in web session. Whether pay-as-you-go is open is stated by GET /prices `status`.'
 - name: Export
   description: Bulk data export — the license tier above Pro. The whole ratings or providers dataset in
     one pull, with the attribution string a published figure must carry. Influence plan.
@@ -9630,8 +9637,367 @@ paths:
                 next: Use get_estate(salesforce) for the full member roster.
         '404':
           $ref: '#/components/responses/NotFound'
+  /auth/providers:
+    get:
+      operationId: listSignInProviders
+      x-tier: free
+      summary: Which sign-in providers are configured
+      description: The identity providers a person can sign in with, each with the URL that starts the
+        browser flow. Keyless. The starting point for the only door that issues a paid key.
+      tags:
+      - Account
+      security:
+      - {}
+      responses:
+        '200':
+          description: Configured providers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  providers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string, example: github }
+                        label: { type: string }
+                        login: { type: string, format: uri }
+  /auth/login:
+    get:
+      operationId: startSignIn
+      x-tier: free
+      summary: Start browser sign-in
+      description: 'BROWSER ONLY. Redirects a person to the chosen identity provider; the callback issues
+        a Learn key and sets a web session. An agent cannot complete this — hand the URL to a person, or
+        use the `resolution.url` a refusal carries.'
+      tags:
+      - Account
+      security:
+      - {}
+      parameters:
+      - name: provider
+        in: query
+        description: An id from GET /auth/providers.
+        schema: { type: string, example: github }
+      responses:
+        '302':
+          description: Redirect to the identity provider.
+  /auth/me:
+    get:
+      operationId: getMyAccount
+      x-tier: free
+      summary: Who am I — identity, tier, key and usage
+      description: 'Works with an API key, a web session, or an AAuth-signed request. With a key it
+        returns the account login, tier, `principal_type: api_key`, the masked key, and usage — the
+        seven-day total and `today` (used, remaining and reset for the enforced daily window, from the
+        gateway''s own count). Its `note` says which operations need the signed-in web session instead.
+        The answer to "which key am I using, what tier am I, and how much have I used".'
+      tags:
+      - Account
+      security:
+      - ApiKeyAuth: []
+      - SessionCookie: []
+      responses:
+        '200':
+          description: The calling principal.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                properties:
+                  login: { type: string }
+                  tier: { type: string }
+                  principal_type: { type: string, enum: [api_key, agent, session] }
+                  key: { type: string, description: Masked. }
+                  usage:
+                    type: object
+                    additionalProperties: true
+                  note: { type: string }
+        '401':
+          description: No credential, or a key that does not resolve to an account.
+    patch:
+      operationId: updateMyAccount
+      x-tier: free
+      summary: Update account settings
+      description: WEB SESSION ONLY. Not callable with an API key.
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Updated.
+        '401':
+          description: No signed-in session.
+    delete:
+      operationId: deleteMyAccount
+      x-tier: free
+      summary: Delete my account
+      description: 'Self-serve erasure. A person uses the web session; an agent principal deletes itself
+        with the same AAuth signature it authenticates with. Irreversible.'
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Deleted, with a receipt of what was removed.
+        '401':
+          description: No signed-in session or signed request.
+  /auth/me/export:
+    get:
+      operationId: exportMyData
+      x-tier: free
+      summary: Export everything held about me
+      description: WEB SESSION ONLY. A data-subject export of the account, its keys and its usage.
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: The export.
+        '401':
+          description: No signed-in session.
+  /auth/keys:
+    get:
+      operationId: listMyKeys
+      x-tier: free
+      summary: List my API keys
+      description: WEB SESSION ONLY. Key rotation and revocation need the signed-in session, not a key.
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: The account's keys, masked.
+        '401':
+          description: No signed-in session.
+    delete:
+      operationId: revokeMyKey
+      x-tier: free
+      summary: Revoke an API key
+      description: WEB SESSION ONLY.
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Revoked.
+        '401':
+          description: No signed-in session.
+  /auth/logout:
+    post:
+      operationId: signOut
+      x-tier: free
+      summary: End the web session
+      description: WEB SESSION ONLY. Clears the signed-in session cookie; it does not revoke API keys.
+      tags:
+      - Account
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Session cleared.
+  /auth/authorize:
+    get:
+      operationId: oauthAuthorize
+      x-tier: free
+      summary: OAuth 2.1 authorization endpoint
+      description: 'The authorization-code + PKCE (S256) entry point, as advertised in
+        /.well-known/oauth-authorization-server. Redirects through browser sign-in. A self-registered
+        client is granted apis:read only, whatever it requests; apis:pro and apis:business are granted
+        only to a signed-in person on those plans.'
+      tags:
+      - Account
+      security:
+      - {}
+      responses:
+        '302':
+          description: Redirect to sign-in or back to the client with a code.
+        '400':
+          description: Missing or invalid authorization request parameters (client_id, redirect_uri,
+            code_challenge, …).
+  /auth/token:
+    post:
+      operationId: oauthToken
+      x-tier: free
+      summary: OAuth 2.1 token endpoint
+      description: Exchanges an authorization code (with the PKCE verifier) or a refresh token for an
+        access token. client_credentials requires an AAuth-signed request from an allowlisted agent
+        provider.
+      tags:
+      - Account
+      security:
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Tokens.
+        '400':
+          description: An OAuth error object.
+  /auth/register:
+    post:
+      operationId: oauthRegisterClient
+      x-tier: free
+      summary: OAuth dynamic client registration (RFC 7591)
+      description: 'Keyless. Registers a public client. A client registered this way is capped at
+        apis:read and cannot unlock any gated resource on its own — paid tiers are reached by a signed-in
+        person. See roadmap#411 for client management.'
+      tags:
+      - Account
+      security:
+      - {}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                client_name: { type: string }
+                redirect_uris: { type: array, items: { type: string } }
+                token_endpoint_auth_method: { type: string, example: none }
+      responses:
+        '201':
+          description: The registered client.
+        '400':
+          description: An RFC 7591 error.
+  /billing/access/terms:
+    get:
+      operationId: getAccessTerms
+      x-tier: free
+      summary: The pay-as-you-go mandate
+      description: Keyless. The versioned terms a person accepts to let APIs.io charge a saved card
+        automatically — the trigger, the amount, the escalation ladder, the caps and how to turn it off.
+        Fetched, never typed into a page, so what is recorded is what was shown.
+      tags:
+      - Billing
+      security:
+      - {}
+      responses:
+        '200':
+          description: The terms and their version.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+                properties:
+                  version: { type: string }
+                  terms: { type: array, items: { type: string } }
+                  defaults: { type: object, additionalProperties: true }
+  /billing/access/setup:
+    post:
+      operationId: setupAccessCard
+      x-tier: free
+      summary: Put a card on file for pay-as-you-go
+      description: WEB SESSION ONLY. Answers 503 access_not_live until pay-as-you-go opens — GET /prices
+        `status` says whether it has.
+      tags:
+      - Billing
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: A Stripe setup session.
+        '401':
+          description: No signed-in session.
+        '503':
+          description: Pay-as-you-go is not open.
+  /billing/access/topup:
+    post:
+      operationId: topUpAccessBalance
+      x-tier: free
+      summary: Add prepaid credit
+      description: WEB SESSION ONLY. Answers 503 until pay-as-you-go opens.
+      tags:
+      - Billing
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Charged and credited.
+        '401':
+          description: No signed-in session.
+        '503':
+          description: Pay-as-you-go is not open.
+  /billing/access/settings:
+    post:
+      operationId: updateAccessSettings
+      x-tier: free
+      summary: Set top-up amount, floor and spend caps
+      description: WEB SESSION ONLY.
+      tags:
+      - Billing
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: Saved.
+        '401':
+          description: No signed-in session.
+  /billing/checkout:
+    post:
+      operationId: startSubscriptionCheckout
+      x-tier: free
+      summary: Subscribe to Understanding or Influence
+      description: WEB SESSION ONLY. Returns a Stripe Checkout URL for a person to complete.
+      tags:
+      - Billing
+      security:
+      - SessionCookie: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tier: { type: string, enum: [pro, business] }
+                cycle: { type: string, enum: [month, year] }
+      responses:
+        '200':
+          description: A checkout URL.
+        '401':
+          description: No signed-in session.
+  /billing/portal:
+    post:
+      operationId: openBillingPortal
+      x-tier: free
+      summary: Manage a subscription
+      description: WEB SESSION ONLY. Returns a Stripe billing-portal URL for a person.
+      tags:
+      - Billing
+      security:
+      - SessionCookie: []
+      responses:
+        '200':
+          description: A portal URL.
+        '400':
+          description: The account has no subscription to manage.
+        '401':
+          description: No signed-in session.
 components:
   securitySchemes:
+    SessionCookie:
+      type: apiKey
+      in: cookie
+      name: apisio_session
+      description: The web session a person gets by signing in at apis.io. Account and billing mutations
+        require it; an API key does not substitute.
     ApiKeyAuth:
       type: apiKey
       in: header
@@ -9656,6 +10022,8 @@ components:
           scopes:
             apis:read: Read the catalog. Granted to every caller.
             apis:pro: The tier-gated resources -- ratings, insights, demand depth, the Saved Workspace.
+            apis:business: The Influence resources -- bulk export, the request queue, gap and remediation
+              analysis. Granted only on that plan.
             offline_access: Issue a refresh token. Authorization-server scope only; no resource asks for
               it.
   parameters:
