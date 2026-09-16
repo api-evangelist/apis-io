@@ -703,6 +703,8 @@ common:
   url: https://github.com/api-evangelist/apis-io/tree/main/sdk/javascript
 - type: Go SDK
   url: https://github.com/api-evangelist/apis-io/tree/main/sdk/go
+- type: Contact
+  url: mailto:info@apis.io
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
