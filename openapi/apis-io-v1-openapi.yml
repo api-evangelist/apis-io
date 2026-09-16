@@ -10413,17 +10413,109 @@ components:
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
     UpgradeRequired:
-      description: Free — no key required.
-      content:
-        application/problem+json:
+      description: 'A valid credential below the tier this resource needs. The body names the plan, what
+        this one call costs (`price_usd`, `band`), and a `resolution` saying who can resolve it. Where
+        the call is sold per call over x402 (Base mainnet USDC), the body also carries the x402 v1
+        `accepts` block and the response carries the v2 `PAYMENT-REQUIRED` header; `resolution.self_serve`
+        is then true, because a wallet-bearing agent can pay and retry with no account. The same x402
+        block rides on the anonymous `401`, which keeps its status because the caller still sent no
+        credential. Never `403`: the CDN maps that to an HTML page.'
+      headers:
+        PAYMENT-REQUIRED:
+          description: Base64 x402 v2 PaymentRequirements. Present only when the call is sold per call.
           schema:
-            $ref: '#/components/schemas/Problem'
+            type: string
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              error:
+                type: string
+                enum:
+                - upgrade_required
+                - not_purchasable
+              detail:
+                type: string
+              tier:
+                type: string
+                description: The lowest tier that unlocks this resource.
+              plans:
+                type: string
+                format: uri
+              price_usd:
+                type: number
+                description: What this one call costs.
+              band:
+                type: string
+              resolution:
+                type: object
+                properties:
+                  self_serve:
+                    type: boolean
+                    description: True when the caller can resolve this itself (an x402 offer is present).
+                  by:
+                    type: string
+                    enum:
+                    - agent
+                    - human
+                  method:
+                    type: string
+                    enum:
+                    - x402
+                  action:
+                    type: string
+                  url:
+                    type: string
+                    format: uri
+              x402Version:
+                type: integer
+                enum:
+                - 1
+              accepts:
+                type: array
+                description: x402 v1 payment requirements. Sign one, send it in `X-PAYMENT` (v1) or
+                  `PAYMENT-SIGNATURE` (v2), and retry the same request.
+                items:
+                  type: object
+                  additionalProperties: true
+              x402:
+                type: string
+              x402_error:
+                type: string
+                description: Why a payment sent with this request was not settled.
           example:
-            type: https://apis.io/problems/upgrade-required
-            title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Influence plan.
-            instance: /v1/areas
+            error: upgrade_required
+            detail: The ratings endpoint requires the Understanding or Influence plan.
+            tier: pro
+            plans: https://apis.io/developer/plans/
+            price_usd: 0.05
+            band: B2
+            resolution:
+              self_serve: true
+              by: agent
+              method: x402
+              action: 'Pay $0.05 in USDC for this one call: sign one of `accepts`, send it in X-PAYMENT (v1)
+                or PAYMENT-SIGNATURE (v2), and retry this exact request. No account is needed. Without a
+                wallet, show this URL to the person you are working for: https://apis.io/developer/account/?access=1&from=ratings'
+              url: https://apis.io/developer/account/?access=1&from=ratings
+            x402Version: 1
+            accepts:
+            - scheme: exact
+              network: base
+              maxAmountRequired: '50000'
+              asset: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913'
+              payTo: '0x09a6330f8331937f4366CaA8e8F98B1a751f321e'
+              resource: https://apis.io/api/v1/ratings
+              description: The ratings endpoint — one call
+              mimeType: application/json
+              maxTimeoutSeconds: 60
+              extra:
+                name: USD Coin
+                version: '2'
+            x402: Pay 0.05 USDC per call with x402, or buy a plan for volume. Send the payment in X-PAYMENT
+              (v1) or PAYMENT-SIGNATURE (v2) and retry this exact request.
     InsufficientPopulation:
       description: The cohort has too few scored members for distribution statistics to be meaningful.
         The roster and capability matrix remain available.
