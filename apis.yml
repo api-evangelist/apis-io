@@ -91,56 +91,6 @@ apis:
   - type: OpenAPI
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-submit-api-openapi.yml
-- aid: apis-io:apis-io-apis-api
-  name: APIs.io APIs API
-  description: Index of HTTP application programming interfaces.
-  humanURL: https://apis.io/developer/overview/
-  baseURL: https://apis.io/api/v1
-  tags: []
-  tags_raw:
-  - APIs
-  properties:
-  - type: OpenAPI
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-apis-api-openapi.yml
-  - type: Overlay
-    url: https://apis.io/artifacts/overlays/apis-io-apis-api-overlay.yaml
-  - type: Documentation
-    url: https://apis.io/developer/overview/
-  - type: MCPServer
-    url: mcp/apis-io-mcp.yml
-    slug: mcp
-    name: APIs.io MCP Server
-    description: >-
-      The APIs.io catalog as a Model Context Protocol server over streamable HTTP — 137 tools and 36 guided
-      prompts across API, provider, tag, artifact, operation, cohort and rating discovery. Anonymous callers
-      get the free catalog surface with no key; OAuth 2.1 with dynamic client registration unlocks the
-      Understanding and Influence tiers. Most tools read; the write tools concern a listing you own or
-      a request you are filing, and each returns 202 for a person to work.
-  - type: MCPServerCard
-    url: https://apis.io/.well-known/mcp/server-card.json
-  - type: AgentSkills
-    url: https://apis.io/skills/
-  - type: AgentSkills
-    url: https://apis.io/.well-known/agent-skills/index.json
-  - type: PostmanCollection
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
-  - type: Authentication
-    url: https://apis.io/developer/authentication/
-  - type: RateLimits
-    url: https://apis.io/developer/plans/
-  - type: ChangeLog
-    url: https://apis.io/changelog/
-  - type: StatusPage
-    url: >-
-      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 - aid: apis-io:apis-io-areas-api
   name: APIs.io Areas API
   description: >-
@@ -653,7 +603,47 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/apis-io-watches-api-openapi.yml
+- aid: apis-io:apis-io-apis-api
+  name: APIs.io AP Is API
+  description: Individual APIs, each owned by a provider and described by artifacts.
+  humanURL: https://apis.io/add/
+  baseURL: https://apis.io
+  tags:
+  - APIs
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-apis-api-openapi.yml
+  - type: Documentation
+    url: https://apis.io/developer/overview/
+  - type: MCPServerCard
+    url: https://apis.io/.well-known/mcp/server-card.json
+  - type: AgentSkills
+    url: https://apis.io/skills/
+  - type: AgentSkills
+    url: https://apis.io/.well-known/agent-skills/index.json
+  - type: PostmanCollection
+    url: >-
+      https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api
+  - type: Authentication
+    url: https://apis.io/developer/authentication/
+  - type: RateLimits
+    url: https://apis.io/developer/plans/
+  - type: ChangeLog
+    url: https://apis.io/changelog/
+  - type: StatusPage
+    url: >-
+      https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
 common:
+- type: Overlay
+  url: https://apis.io/artifacts/overlays/apis-io-apis-api-overlay.yaml
+- type: MCPServer
+  url: mcp/apis-io-mcp.yml
 - type: AsyncAPI
   url: https://apis.io/artifacts/asyncapi/apis-io-watch-events-asyncapi.yml
 - type: VulnerabilityDisclosure
