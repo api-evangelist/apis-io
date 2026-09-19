@@ -55,6 +55,19 @@ paths:
       - Saved Workspace
       summary: Create a saved search.
       description: Persist a named search using the same filter vocabulary as `/search`. Pro.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        description: >-
+          A client-generated key that makes this write safe to retry. Send the same key on a
+          retry and the FIRST response is replayed verbatim — the same id, not a second object.
+          Scoped to your API key and remembered for 24 hours. Responses to a replay carry the
+          `Idempotency-Replayed` header.
+        schema:
+          type: string
+          maxLength: 200
+        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
       requestBody:
         required: true
         content:
@@ -253,6 +266,19 @@ paths:
       - Saved Workspace
       summary: Create a named, persistent list.
       description: Creates a shortlist/stack you own; seed it with provider slugs and/or aids. Pro.
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: false
+        description: >-
+          A client-generated key that makes this write safe to retry. Send the same key on a
+          retry and the FIRST response is replayed verbatim — the same id, not a second object.
+          Scoped to your API key and remembered for 24 hours. Responses to a replay carry the
+          `Idempotency-Replayed` header.
+        schema:
+          type: string
+          maxLength: 200
+        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
       requestBody:
         required: true
         content:
@@ -373,6 +399,18 @@ paths:
         required: true
         schema:
           type: string
+      - name: Idempotency-Key
+        in: header
+        required: false
+        description: >-
+          A client-generated key that makes this write safe to retry. Send the same key on a
+          retry and the FIRST response is replayed verbatim — the same id, not a second object.
+          Scoped to your API key and remembered for 24 hours. Responses to a replay carry the
+          `Idempotency-Replayed` header.
+        schema:
+          type: string
+          maxLength: 200
+        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
       requestBody:
         required: true
         content:
