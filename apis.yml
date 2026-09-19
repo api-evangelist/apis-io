@@ -78,6 +78,22 @@ created: '2026-03-26'
 modified: '2026-09-11'
 specificationVersion: '0.23'
 apis:
+- aid: apis-io:apis-io-prices-api
+  name: APIs.io Prices API
+  description: The per-call price of every metered resource on the APIs.io API, as data. Free, uncredentialed,
+    and the one thing a caller can read before deciding whether to call anything else.
+  humanURL: https://apis.io/developer/plans/
+  baseURL: https://apis.io/api/v1
+  tags:
+  - Pricing
+  - API Monetization
+  properties:
+  - type: OpenAPI
+    url: openapi/_original/apis-io-v1-prices-openapi.yml
+  - type: OpenAPISource
+    url: https://apis.io/artifacts/openapi/apis-io-v1-prices-openapi.yml
+  - type: Documentation
+    url: https://apis.io/developer/plans/
 - name: APIs.io Submit API
   description: >-
     Discover a domain's machine-readable API surface and submit a provider for review — the Add-API door,
@@ -608,7 +624,8 @@ apis:
   description: Individual APIs, each owned by a provider and described by artifacts.
   humanURL: https://apis.io/add/
   baseURL: https://apis.io
-  tags:
+  tags: []
+  tags_raw:
   - APIs
   properties:
   - type: OpenAPI
