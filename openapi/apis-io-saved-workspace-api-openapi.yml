@@ -1,15 +1,11 @@
 openapi: 3.2.0
 info:
   title: APIs.io Saved Workspace API
-  description: 'A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability
-    the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace.
-    Requires an API key.
-
-
-    This is the Saved Workspace surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts
-    split from the full API by tag, each documented and governed on its own. See the APIs.json index for
-    the whole set.'
   version: 1.5.0
+  description: 'A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace. Requires an API key.
+
+
+    This is the Saved Workspace surface of the APIs.io API — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -21,9 +17,7 @@ servers:
   description: Production server.
 tags:
 - name: Saved Workspace
-  description: A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability
-    the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace.
-    Requires an API key.
+  description: A Pro dimension — per-user saved searches, lists, and net-new deltas. The same capability the MCP exposes as tools; turns apis.io from stateless lookup into a persistent research workspace. Requires an API key.
 paths:
   /me/searches:
     get:
@@ -34,7 +28,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: List your saved searches.
+      summary: List your saved searches
       description: The saved searches owned by the authenticated key. Pro. Requires an API key.
       responses:
         '200':
@@ -42,17 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
+                $ref: '#/components/schemas/SavedSearchList'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
@@ -65,7 +49,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Create a saved search.
+      summary: Create a saved search
       description: Persist a named search using the same filter vocabulary as `/search`. Pro.
       requestBody:
         required: true
@@ -78,60 +62,44 @@ paths:
               properties:
                 name:
                   type: string
-                  description: Name for the saved search.
-                  examples:
-                  - Messaging APIs
-                  maxLength: 1024
                 q:
                   type: string
-                  description: Free-text query the saved search runs with.
-                  examples:
-                  - messaging
-                  maxLength: 1024
                 tags:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to records carrying these tags.
                 band:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to these rating bands.
                 industry:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to these industries.
                 region:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to these regions.
                 area:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to these curated areas.
                 artifact_types:
                   type: array
                   items:
                     type: string
-                  description: Restrict the search to records publishing these artifact types.
                 match:
                   type: string
                   enum:
                   - any
                   - all
-                  description: Whether a record must carry any of the tags or all of them.
-                  examples:
-                  - any
                 min_score:
                   type: number
-                  description: Only results at or above this composite score.
-                  examples:
-                  - 60
-        description: The search to save — a name plus the filters the search runs with.
+                match_on:
+                  type: string
+                  enum:
+                  - name
+                  description: Upsert on this natural key instead of always creating. Omit it and every call creates a new object, which is the existing behaviour and the default. An unrecognised key is refused with 400 rather than ignored, because silently creating a duplicate is the outcome you used match_on to avoid.
       responses:
         '201':
           description: The created saved search (id, name, criteria).
@@ -140,31 +108,27 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-      parameters:
-      - name: Idempotency-Key
-        in: header
-        required: false
-        description: 'A client-generated key that makes this write safe to retry. Send the same key on
-          a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
-          to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
-          true.'
-        schema: &id001
-          type: string
-          maxLength: 200
-        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
+        '200':
+          description: An existing object with that name was updated in place.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  outcome:
+                    type: string
+                    enum:
+                    - created
+                    - updated
+                    description: Which branch ran.
   /me/searches/{id}:
     delete:
       operationId: deleteSavedSearch
@@ -174,7 +138,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Delete a saved search you own.
+      summary: Delete a saved search you own
       description: Permanently removes the saved search and its delta cursor. Pro.
       parameters:
       - name: id
@@ -182,8 +146,6 @@ paths:
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
       responses:
         '200':
           description: Deleted.
@@ -192,15 +154,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/searches/{id}/results:
@@ -212,7 +165,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Re-run a saved search against the live catalog.
+      summary: Re-run a saved search against the live catalog
       description: Re-runs the stored criteria and returns providers that currently match. Pro.
       parameters:
       - name: id
@@ -220,14 +173,10 @@ paths:
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
       - name: limit
         in: query
         schema:
           type: integer
-          maximum: 1000000
-        description: Items per page.
       responses:
         '200':
           description: Current matching providers.
@@ -236,19 +185,8 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /me/searches/{id}/net_new:
     get:
       operationId: savedSearchNetNew
@@ -258,18 +196,14 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: What's NEW for a saved search since you last checked.
-      description: Providers that newly match your criteria since the previous call. Advances the delta
-        cursor, so each call reports only the change. The first call establishes the baseline (net-new
-        empty). The agent-native version of the demand report. Pro.
+      summary: What's NEW for a saved search since you last checked
+      description: Providers that newly match your criteria since the previous call. Advances the delta cursor, so each call reports only the change. The first call establishes the baseline (net-new empty). The agent-native version of the demand report. Pro.
       parameters:
       - name: id
         in: path
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
       responses:
         '200':
           description: Net-new matches + advanced cursor.
@@ -278,19 +212,8 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
   /me/lists:
     get:
       operationId: listLists
@@ -300,30 +223,18 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: List the lists/shortlists you own.
+      summary: List the lists/shortlists you own
       responses:
         '200':
           description: Your lists.
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
+                $ref: '#/components/schemas/SavedListList'
         '401':
           $ref: '#/components/responses/AuthRequired'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-      description: The saved lists in your workspace, each with its members and when it was last changed.
-        Requires a signed-in apis.io API key.
     post:
       operationId: createList
       x-tier: pro
@@ -332,7 +243,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Create a named, persistent list.
+      summary: Create a named, persistent list
       description: Creates a shortlist/stack you own; seed it with provider slugs and/or aids. Pro.
       requestBody:
         required: true
@@ -345,16 +256,16 @@ paths:
               properties:
                 name:
                   type: string
-                  description: Name for the list.
-                  examples:
-                  - Payments shortlist
-                  maxLength: 1024
                 members:
                   type: array
                   items:
                     type: string
                   description: Provider slugs and/or aids.
-        description: The list to create — a name and, optionally, its first members.
+                match_on:
+                  type: string
+                  enum:
+                  - name
+                  description: Upsert on this natural key instead of always creating. Omit it and every call creates a new object, which is the existing behaviour and the default. An unrecognised key is refused with 400 rather than ignored, because silently creating a duplicate is the outcome you used match_on to avoid.
       responses:
         '201':
           description: The created list.
@@ -363,27 +274,25 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-      parameters:
-      - name: Idempotency-Key
-        in: header
-        required: false
-        description: 'A client-generated key that makes this write safe to retry. Send the same key on
-          a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
-          to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
-          true.'
-        schema: *id001
-        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
+        '200':
+          description: An existing object with that name was updated in place.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  outcome:
+                    type: string
+                    enum:
+                    - created
+                    - updated
+                    description: Which branch ran.
   /me/lists/{id}:
     get:
       operationId: getList
@@ -393,7 +302,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Get a list, members resolved to current name/band/score.
+      summary: Get a list, members resolved to current name/band/score
       description: Returns the list with each member resolved to its current profile and rating. Pro.
       parameters:
       - name: id
@@ -401,8 +310,6 @@ paths:
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
       responses:
         '200':
           description: The list with resolved members.
@@ -411,19 +318,8 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
-        '404':
-          $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteList
       x-tier: pro
@@ -432,7 +328,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Delete a list you own.
+      summary: Delete a list you own
       description: Permanently removes the list. Pro.
       parameters:
       - name: id
@@ -440,8 +336,6 @@ paths:
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
       responses:
         '200':
           description: Deleted.
@@ -450,15 +344,6 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
   /me/lists/{id}/entries:
@@ -470,7 +355,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Saved Workspace
-      summary: Add providers/APIs to a list.
+      summary: Add providers/APIs to a list
       description: Appends providers/APIs (by slug or aid) to the list, de-duplicated. Pro.
       parameters:
       - name: id
@@ -478,17 +363,6 @@ paths:
         required: true
         schema:
           type: string
-          maxLength: 1024
-        description: Identifier of the saved search or list, as returned when it was created.
-      - name: Idempotency-Key
-        in: header
-        required: false
-        description: 'A client-generated key that makes this write safe to retry. Send the same key on
-          a retry and the FIRST response is replayed verbatim — the same id, not a second object. Scoped
-          to your API key and remembered for 24 hours. Responses to a replay carry Idempotency-Replayed:
-          true.'
-        schema: *id001
-        example: 9f1c1a7e-3b0a-4a2e-9d1f-2c8a5b6e7d90
       requestBody:
         required: true
         content:
@@ -502,8 +376,6 @@ paths:
                   type: array
                   items:
                     type: string
-                  description: Provider slugs or API aids to add to the list.
-        description: The members to add to the list.
       responses:
         '200':
           description: Updated list (count + added).
@@ -512,82 +384,9 @@ paths:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: '#/components/headers/RateLimitPolicy'
-            x-ratelimit-tier:
-              $ref: '#/components/headers/RateLimitTier'
-            x-ratelimit-limit:
-              $ref: '#/components/headers/RateLimitLimit'
-            x-ratelimit-window:
-              $ref: '#/components/headers/RateLimitWindow'
         '402':
           $ref: '#/components/responses/UpgradeRequired'
 components:
-  responses:
-    AuthRequired:
-      description: The saved workspace needs a signed-in apis.io API key — get one at https://apis.io/developer/.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/auth-required
-            title: Authentication required
-            status: 401
-            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
-            instance: /v1/me/lists
-      headers:
-        ratelimit-policy:
-          $ref: '#/components/headers/RateLimitPolicy'
-        x-ratelimit-tier:
-          $ref: '#/components/headers/RateLimitTier'
-        x-ratelimit-limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        x-ratelimit-window:
-          $ref: '#/components/headers/RateLimitWindow'
-    UpgradeRequired:
-      description: Payment Required — this operation needs a paid tier. Send a plan key in `X-API-Key`.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/upgrade-required
-            title: Upgrade required
-            status: 402
-            detail: This endpoint requires the Understanding or Influence plan.
-            instance: /v1/ratings
-      headers:
-        ratelimit-policy:
-          $ref: '#/components/headers/RateLimitPolicy'
-        x-ratelimit-tier:
-          $ref: '#/components/headers/RateLimitTier'
-        x-ratelimit-limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        x-ratelimit-window:
-          $ref: '#/components/headers/RateLimitWindow'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
-      headers:
-        ratelimit-policy:
-          $ref: '#/components/headers/RateLimitPolicy'
-        x-ratelimit-tier:
-          $ref: '#/components/headers/RateLimitTier'
-        x-ratelimit-limit:
-          $ref: '#/components/headers/RateLimitLimit'
-        x-ratelimit-window:
-          $ref: '#/components/headers/RateLimitWindow'
   schemas:
     Problem:
       type: object
@@ -624,58 +423,70 @@ components:
           type: string
           description: A human-readable explanation specific to this occurrence.
           maxLength: 20000
-          examples:
-          - '`match` must be one of: any, all.'
         instance:
           type: string
           format: uri-reference
           description: A URI reference identifying the specific occurrence (typically the request path).
           maxLength: 2048
-          examples:
-          - /v1/search
         parameter:
           type: string
           description: Extension member — the offending query/path parameter, when applicable.
           maxLength: 1024
-          examples:
-          - match
       required:
       - type
       - title
       - status
       additionalProperties: true
+    SavedSearchList:
+      type: object
+      description: The caller's saved searches. Keyed under `searches` rather than `data` — this is a personal workspace, not a catalog collection, and it is not paged.
+      required:
+      - searches
+      properties:
+        searches:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+    SavedListList:
+      type: object
+      description: The caller's saved lists. Keyed under `lists`, and not paged.
+      required:
+      - lists
+      properties:
+        lists:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+  responses:
+    AuthRequired:
+      description: The Saved Workspace needs a signed-in apis.io API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          example:
+            error: auth_required
+            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
       in: header
       name: X-API-Key
-      description: Send a plan key to be served above the free tier. Keyless callers get the free tier;
-        a call that needs a paid tier answers 402 rather than refusing the connection.
-  headers:
-    RateLimitPolicy:
-      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
-      schema:
-        type: string
-        maxLength: 1024
-      example: '"quota";q=500;w=86400, "burst";q=5;w=1'
-    RateLimitTier:
-      description: The tier the call was served at. Keyless callers are served `free`.
-      schema:
-        type: string
-        enum:
-        - free
-        - pro
-        - business
-      example: free
-    RateLimitLimit:
-      description: Requests allowed in the current quota window.
-      schema:
-        type: integer
-        maximum: 1000000
-      example: 500
-    RateLimitWindow:
-      description: Length of the quota window, in seconds.
-      schema:
-        type: integer
-        maximum: 1000000
-      example: 86400
+      description: Optional in v1. Defined so metering/rate-tiers can be enabled later without a breaking change.

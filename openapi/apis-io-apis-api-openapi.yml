@@ -1,11 +1,11 @@
 openapi: 3.2.0
 info:
-  title: APIs.io APIs API
-  description: |-
-    Individual APIs, each owned by a provider and described by artifacts.
-
-    This is the APIs surface of the [APIs.io API](https://apis.io/api/v1) — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  title: .io AP Is API
   version: 1.5.0
+  description: 'Individual APIs, each owned by a provider and described by artifacts.
+
+
+    This is the APIs surface of the APIs.io API — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
   contact:
     name: API Evangelist
     url: https://apis.io
@@ -13,105 +13,86 @@ info:
     name: CC BY 4.0
     url: https://creativecommons.org/licenses/by/4.0/
 servers:
-  - url: https://apis.io/api/v1
-    description: Production server.
+- url: https://apis.io/api/v1
+  description: Production server.
 tags:
-  - name: APIs
-    description: Individual APIs, each owned by a provider and described by artifacts.
+- name: APIs
+  description: Individual APIs, each owned by a provider and described by artifacts.
 paths:
   /apis:
     get:
       operationId: listApis
       tags:
-        - APIs
-      summary: List and filter APIs across the network.
-      description: |
-        The core cross-provider discovery endpoint. Filter by free text, one or many tags
+      - APIs
+      summary: List and filter APIs across the network
+      description: 'The core cross-provider discovery endpoint. Filter by free text, one or many tags
+
         (`match=any|all`), one or many providers, and/or the artifact types an API must
+
         publish. Use `artifact_types` together with `fields=...,properties` to return only
-        the artifacts you want.
+
+        the artifacts you want.'
       parameters:
-        - $ref: "#/components/parameters/Q"
-        - $ref: "#/components/parameters/Tags"
-        - $ref: "#/components/parameters/Match"
-        - $ref: "#/components/parameters/Providers"
-        - $ref: "#/components/parameters/ArtifactTypes"
-        - $ref: "#/components/parameters/IndustryFilter"
-        - $ref: "#/components/parameters/RegionFilter"
-        - $ref: "#/components/parameters/Include"
-        - $ref: "#/components/parameters/BandFilter"
-        - $ref: "#/components/parameters/MinScore"
-        - name: sort
-          in: query
-          schema:
-            type: string
-            enum:
-              - relevance
-              - name
-              - provider
-              - created
-              - score
-            default: relevance
-            maxLength: 1024
-          description: Sort order.
-        - $ref: "#/components/parameters/Fields"
-        - $ref: "#/components/parameters/Page"
-        - $ref: "#/components/parameters/Limit"
-        - $ref: "#/components/parameters/Format"
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Providers'
+      - $ref: '#/components/parameters/ArtifactTypes'
+      - $ref: '#/components/parameters/IndustryFilter'
+      - $ref: '#/components/parameters/RegionFilter'
+      - $ref: '#/components/parameters/Include'
+      - $ref: '#/components/parameters/BandFilter'
+      - $ref: '#/components/parameters/MinScore'
+      - name: sort
+        in: query
+        schema:
+          type: string
+          enum:
+          - relevance
+          - name
+          - provider
+          - created
+          - score
+          default: relevance
+          maxLength: 1024
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Format'
       responses:
-        "200":
+        '200':
           description: A page of APIs.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiList"
-          headers:
-            ratelimit-policy:
-              $ref: "#/components/headers/RateLimitPolicy"
-            x-ratelimit-tier:
-              $ref: "#/components/headers/RateLimitTier"
-            x-ratelimit-limit:
-              $ref: "#/components/headers/RateLimitLimit"
-            x-ratelimit-window:
-              $ref: "#/components/headers/RateLimitWindow"
-        "400":
-          $ref: "#/components/responses/BadRequest"
+                $ref: '#/components/schemas/ApiList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
       security: []
       x-tier: free
-      x-mcp-tool: find_apis
   /apis/{aid}:
     get:
       operationId: getApi
       tags:
-        - APIs
-      summary: Get one API by aid.
+      - APIs
+      summary: Get one API by aid
       description: Returns a single API. Pass `include=content` to inline artifact bodies, optionally narrowed by `artifact_types`.
       parameters:
-        - $ref: "#/components/parameters/Aid"
-        - $ref: "#/components/parameters/ArtifactTypes"
-        - $ref: "#/components/parameters/Include"
-        - $ref: "#/components/parameters/Fields"
+      - $ref: '#/components/parameters/Aid'
+      - $ref: '#/components/parameters/ArtifactTypes'
+      - $ref: '#/components/parameters/Include'
+      - $ref: '#/components/parameters/Fields'
       responses:
-        "200":
+        '200':
           description: The API.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Api"
-          headers:
-            ratelimit-policy:
-              $ref: "#/components/headers/RateLimitPolicy"
-            x-ratelimit-tier:
-              $ref: "#/components/headers/RateLimitTier"
-            x-ratelimit-limit:
-              $ref: "#/components/headers/RateLimitLimit"
-            x-ratelimit-window:
-              $ref: "#/components/headers/RateLimitWindow"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/Api'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: []
       x-tier: free
-      x-mcp-tool: get_api
   /apis/{aid}/artifacts:
     get:
       operationId: getApiArtifacts
@@ -119,31 +100,22 @@ paths:
       x-mcp-tool: get_api_artifacts
       x-agent-skill: find-api
       tags:
-        - APIs
-      summary: One API's artifacts, grouped by type.
+      - APIs
+      summary: One API's artifacts, grouped by type
       description: Returns a single API's registered artifacts grouped by type with per-type counts. Pass `include=content` to inline the bodies.
       parameters:
-        - $ref: "#/components/parameters/Aid"
-        - $ref: "#/components/parameters/Include"
+      - $ref: '#/components/parameters/Aid'
+      - $ref: '#/components/parameters/Include'
       responses:
-        "200":
+        '200':
           description: The API's artifacts.
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: "#/components/headers/RateLimitPolicy"
-            x-ratelimit-tier:
-              $ref: "#/components/headers/RateLimitTier"
-            x-ratelimit-limit:
-              $ref: "#/components/headers/RateLimitLimit"
-            x-ratelimit-window:
-              $ref: "#/components/headers/RateLimitWindow"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: []
   /apis/{aid}/similar:
     get:
@@ -152,30 +124,21 @@ paths:
       x-mcp-tool: find_similar_apis
       x-agent-skill: find-api
       tags:
-        - APIs
-      summary: APIs similar to a given one.
+      - APIs
+      summary: APIs similar to a given one
       description: Ranks catalog APIs by shared tags — "more like this API."
       parameters:
-        - $ref: "#/components/parameters/Aid"
-        - $ref: "#/components/parameters/Limit"
+      - $ref: '#/components/parameters/Aid'
+      - $ref: '#/components/parameters/Limit'
       responses:
-        "200":
+        '200':
           description: A page of similar APIs, most similar first.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ApiList"
-          headers:
-            ratelimit-policy:
-              $ref: "#/components/headers/RateLimitPolicy"
-            x-ratelimit-tier:
-              $ref: "#/components/headers/RateLimitTier"
-            x-ratelimit-limit:
-              $ref: "#/components/headers/RateLimitLimit"
-            x-ratelimit-window:
-              $ref: "#/components/headers/RateLimitWindow"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/ApiList'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: []
   /openapis/{aid}:
     get:
@@ -184,74 +147,327 @@ paths:
       x-mcp-tool: get_openapi
       x-agent-skill: integrate-provider
       tags:
-        - APIs
-      summary: An API's primary OpenAPI.
+      - APIs
+      summary: An API's primary OpenAPI
       description: Returns the primary OpenAPI reference (url) for one API — the top agent intent. Pass `include=content` to inline the spec body.
       parameters:
-        - $ref: "#/components/parameters/Aid"
-        - $ref: "#/components/parameters/Include"
+      - $ref: '#/components/parameters/Aid'
+      - $ref: '#/components/parameters/Include'
       responses:
-        "200":
+        '200':
           description: The API's OpenAPI reference (and body when include=content).
           content:
             application/json:
               schema:
                 type: object
                 additionalProperties: true
-          headers:
-            ratelimit-policy:
-              $ref: "#/components/headers/RateLimitPolicy"
-            x-ratelimit-tier:
-              $ref: "#/components/headers/RateLimitTier"
-            x-ratelimit-limit:
-              $ref: "#/components/headers/RateLimitLimit"
-            x-ratelimit-window:
-              $ref: "#/components/headers/RateLimitWindow"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: []
 components:
+  schemas:
+    Artifact:
+      type: object
+      description: A machine- or human-readable artifact attached to an API.
+      properties:
+        id:
+          type: string
+          description: Stable artifact id, `aid::type::n`.
+          examples:
+          - twilio:twilio-accounts-api::OpenAPI::0
+          maxLength: 1024
+        type:
+          $ref: '#/components/schemas/ArtifactType'
+        name:
+          type: string
+          description: Optional human label for the artifact.
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          description: Reference to the artifact.
+          maxLength: 2048
+        aid:
+          type: string
+          description: aid of the owning API.
+          maxLength: 1024
+        provider_slug:
+          type: string
+          maxLength: 1024
+        provider_name:
+          type: string
+          maxLength: 1024
+        content:
+          type: string
+          description: Inlined artifact body. Present only when include=content.
+          maxLength: 20000
+        content_type:
+          type: string
+          description: Media type of the inlined content (e.g. application/yaml).
+          maxLength: 20000
+      required:
+      - type
+      - url
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+      - exemplar
+      - strong
+      - developing
+      - thin
+      - emerging
+      - minimal
+      maxLength: 1024
+    Api:
+      type: object
+      description: An individual API owned by a provider.
+      properties:
+        aid:
+          type: string
+          examples:
+          - twilio:twilio-accounts-api
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        provider_slug:
+          type: string
+          maxLength: 1024
+        provider_name:
+          type: string
+          maxLength: 1024
+        baseURL:
+          type: string
+          format: uri
+          maxLength: 2048
+        humanURL:
+          type: string
+          format: uri
+          description: Human-facing documentation entry point.
+          maxLength: 2048
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+            maxLength: 1024
+          examples:
+          - - Messaging
+            - Authentication
+          maxItems: 1000
+        properties:
+          type: array
+          description: The API's artifacts.
+          items:
+            $ref: '#/components/schemas/Artifact'
+          maxItems: 1000
+        sibling_apis:
+          type: array
+          description: Other APIs published by the same provider.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+          maxItems: 1000
+        overview:
+          type: string
+          description: Narrative overview (markdown).
+          maxLength: 1024
+      required:
+      - aid
+      - name
+      - provider_slug
+    ArtifactType:
+      type: string
+      description: 'The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
+
+        common are listed here. Unknown values are allowed.
+
+        '
+      examples:
+      - OpenAPI
+      - JSONSchema
+      - PostmanCollection
+      enum:
+      - Documentation
+      - OpenAPI
+      - JSONSchema
+      - JSONStructure
+      - JSONLD
+      - Example
+      - GettingStarted
+      - APIReference
+      - Authentication
+      - SDK
+      - GitHubRepository
+      - Reference
+      - Pricing
+      - CodeExamples
+      - Website
+      - RateLimits
+      - Portal
+      - AsyncAPI
+      - Arazzo
+      - GitHub
+      - ChangeLog
+      - SourceCode
+      - Repository
+      - FAQ
+      - SignUp
+      - GraphQL
+      - Plans
+      - Vocabulary
+      - Specification
+      - Tutorials
+      - Sandbox
+      - FinOps
+      - SpectralRules
+      - Console
+      - GitHubOrganization
+      - ReleaseNotes
+      - Support
+      - TermsOfService
+      - Rules
+      - Webhooks
+      - Quickstart
+      - ProductPage
+      - Capabilities
+      - PostmanCollection
+      - Collection
+      - KubernetesCRD
+      - Hub
+      - NaftikoCapability
+      x-extensible-enum: true
+      maxLength: 1024
+    ApiList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+      - total
+      - page
+      - limit
+      - pages
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
   parameters:
-    Format:
-      name: format
+    RegionFilter:
+      name: region
       in: query
-      required: false
-      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
+      description: Filter by one or more region slugs.
+      style: form
+      explode: false
       schema:
-        type: string
-        enum:
-          - csv
-    Limit:
-      name: limit
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Include:
+      name: include
       in: query
-      description: Items per page.
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
+      style: form
+      explode: false
       schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    Aid:
-      name: aid
-      in: path
-      required: true
-      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
-      schema:
-        type: string
-        pattern: ^[^:]+:[^:]+$
-        maxLength: 1024
-    Page:
-      name: page
+        type: array
+        items:
+          type: string
+          enum:
+          - content
+          maxLength: 1024
+        maxItems: 1000
+    Fields:
+      name: fields
       in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    IndustryFilter:
-      name: industry
-      in: query
-      description: Filter by one or more industry slugs.
+      description: Sparse fieldset — comma-separated property names to return.
       style: form
       explode: false
       schema:
@@ -267,6 +483,26 @@ components:
       schema:
         type: string
         maxLength: 1024
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Match:
+      name: match
+      in: query
+      description: Whether results must match `any` (default) or `all` of the supplied tags.
+      schema:
+        type: string
+        enum:
+        - any
+        - all
+        default: any
+        maxLength: 1024
     BandFilter:
       name: band
       in: query
@@ -276,16 +512,26 @@ components:
       schema:
         type: array
         items:
-          $ref: "#/components/schemas/Band"
+          $ref: '#/components/schemas/Band'
         maxItems: 1000
-    MinScore:
-      name: min_score
+    Format:
+      name: format
       in: query
-      description: Minimum composite score (0–100).
+      required: false
+      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
       schema:
-        type: number
-        minimum: 0
-        maximum: 100
+        type: string
+        enum:
+        - csv
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
     ArtifactTypes:
       name: artifact_types
       in: query
@@ -295,12 +541,12 @@ components:
       schema:
         type: array
         items:
-          $ref: "#/components/schemas/ArtifactType"
+          $ref: '#/components/schemas/ArtifactType'
         maxItems: 1000
-    Fields:
-      name: fields
+    IndustryFilter:
+      name: industry
       in: query
-      description: Sparse fieldset — comma-separated property names to return.
+      description: Filter by one or more industry slugs.
       style: form
       explode: false
       schema:
@@ -309,6 +555,15 @@ components:
           type: string
           maxLength: 1024
         maxItems: 1000
+    Aid:
+      name: aid
+      in: path
+      required: true
+      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
+      schema:
+        type: string
+        pattern: ^[^:]+:[^:]+$
+        maxLength: 1024
     Tags:
       name: tags
       in: query
@@ -316,37 +571,12 @@ components:
       style: form
       explode: false
       example:
-        - Messaging
-        - Authentication
+      - Messaging
+      - Authentication
       schema:
         type: array
         items:
           type: string
-          maxLength: 1024
-        maxItems: 1000
-    Match:
-      name: match
-      in: query
-      description: Whether results must match `any` (default) or `all` of the supplied tags.
-      schema:
-        type: string
-        enum:
-          - any
-          - all
-        default: any
-        maxLength: 1024
-    Include:
-      name: include
-      in: query
-      description: Extra data to embed. `content` fetches and inlines artifact bodies.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          enum:
-            - content
           maxLength: 1024
         maxItems: 1000
     Providers:
@@ -361,419 +591,37 @@ components:
           type: string
           maxLength: 1024
         maxItems: 1000
-    RegionFilter:
-      name: region
+    MinScore:
+      name: min_score
       in: query
-      description: Filter by one or more region slugs.
-      style: form
-      explode: false
+      description: Minimum composite score (0–100).
       schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-  schemas:
-    Band:
-      type: string
-      description: Rating band derived from the composite score.
-      enum:
-        - exemplar
-        - strong
-        - developing
-        - thin
-        - minimal
-      maxLength: 1024
-    Problem:
-      type: object
-      description: |
-        A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-        added alongside the standard fields.
-      properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-            - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-            - Invalid parameter
-          maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-            - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-          examples:
-            - "`match` must be one of: any, all."
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-          examples:
-            - /v1/search
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-          examples:
-            - match
-      required:
-        - type
-        - title
-        - status
-      additionalProperties: true
-    ArtifactType:
-      type: string
-      description: |
-        The type of an artifact. Open enumeration — the catalog carries ~50 types; the most
-        common are listed here. Unknown values are allowed.
-      examples:
-        - OpenAPI
-        - JSONSchema
-        - PostmanCollection
-      enum:
-        - Documentation
-        - OpenAPI
-        - JSONSchema
-        - JSONStructure
-        - JSONLD
-        - Example
-        - GettingStarted
-        - APIReference
-        - Authentication
-        - SDK
-        - GitHubRepository
-        - Reference
-        - Pricing
-        - CodeExamples
-        - Website
-        - RateLimits
-        - Portal
-        - AsyncAPI
-        - Arazzo
-        - GitHub
-        - ChangeLog
-        - SourceCode
-        - Repository
-        - FAQ
-        - SignUp
-        - GraphQL
-        - Plans
-        - Vocabulary
-        - Specification
-        - Tutorials
-        - Sandbox
-        - FinOps
-        - SpectralRules
-        - Console
-        - GitHubOrganization
-        - ReleaseNotes
-        - Support
-        - TermsOfService
-        - Rules
-        - Webhooks
-        - Quickstart
-        - ProductPage
-        - Capabilities
-        - PostmanCollection
-        - Collection
-        - KubernetesCRD
-        - Hub
-        - NaftikoCapability
-      x-extensible-enum: true
-      maxLength: 1024
-    ApiList:
-      type: object
-      properties:
-        meta:
-          $ref: "#/components/schemas/Meta"
-          description: Pagination and echoed-query metadata for this page.
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/Api"
-          maxItems: 1000
-          description: The APIs on this page.
-      required:
-        - meta
-        - data
-      description: A page of APIs
-    Meta:
-      type: object
-      description: Pagination and echoed-query metadata for collection responses.
-      properties:
-        total:
-          type: integer
-          description: Total matching items across all pages.
-          maximum: 1000000
-          examples:
-            - 1039
-        page:
-          type: integer
-          maximum: 1000000
-          description: The 1-based page this response represents.
-          examples:
-            - 1
-        limit:
-          type: integer
-          maximum: 1000
-          description: Items requested per page.
-          examples:
-            - 25
-        pages:
-          type: integer
-          description: Total number of pages.
-          maximum: 1000000
-          examples:
-            - 42
-        query:
-          type: object
-          additionalProperties: true
-          description: The effective query parameters, echoed back.
-      required:
-        - total
-        - page
-        - limit
-        - pages
-    Api:
-      type: object
-      description: An individual API owned by a provider.
-      properties:
-        aid:
-          type: string
-          examples:
-            - twilio:twilio-accounts-api
-          maxLength: 1024
-          description: Stable identifier for the API — `<provider-slug>:<api-slug>`.
-        name:
-          type: string
-          maxLength: 1024
-          description: Display name of the API.
-          examples:
-            - Twilio Accounts API
-        description:
-          type: string
-          maxLength: 20000
-          description: What the API does
-          examples:
-            - Programmable messaging across SMS
-        provider_slug:
-          type: string
-          maxLength: 1024
-          description: Slug of the company that publishes the API.
-          examples:
-            - twilio
-        provider_name:
-          type: string
-          maxLength: 1024
-          description: Display name of the company that publishes the API.
-          examples:
-            - Twilio
-        baseURL:
-          type: string
-          format: uri
-          maxLength: 2048
-          description: The API's base URL
-          examples:
-            - https://api.twilio.com
-        humanURL:
-          type: string
-          format: uri
-          description: Human-facing documentation entry point.
-          maxLength: 2048
-          examples:
-            - https://www.twilio.com/docs/messaging
-        tags:
-          type: array
-          description: Tag names in Title Case (e.g. Messaging, Authentication).
-          items:
-            type: string
-            maxLength: 1024
-          examples:
-            - - Messaging
-              - Authentication
-          maxItems: 1000
-        properties:
-          type: array
-          description: The API's artifacts.
-          items:
-            $ref: "#/components/schemas/Artifact"
-          maxItems: 1000
-        sibling_apis:
-          type: array
-          description: Other APIs published by the same provider.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                maxLength: 1024
-                description: Display name of the sibling API.
-                examples:
-                  - Twilio Messaging API
-              slug:
-                type: string
-                maxLength: 1024
-                description: Slug of the sibling API within the same provider.
-                examples:
-                  - twilio-messaging-api
-          maxItems: 1000
-        overview:
-          type: string
-          description: Narrative overview (markdown).
-          maxLength: 1024
-          examples:
-            - The account-management surface of the Twilio platform — subaccounts
-      required:
-        - aid
-        - name
-        - provider_slug
-    Artifact:
-      type: object
-      description: A machine- or human-readable artifact attached to an API.
-      properties:
-        id:
-          type: string
-          description: Stable artifact id, `aid::type::n`.
-          examples:
-            - twilio:twilio-accounts-api::OpenAPI::0
-          maxLength: 1024
-        type:
-          $ref: "#/components/schemas/ArtifactType"
-          description: The kind of artifact this is.
-        name:
-          type: string
-          description: Optional human label for the artifact.
-          maxLength: 1024
-          examples:
-            - Twilio Accounts API OpenAPI
-        url:
-          type: string
-          format: uri
-          description: Reference to the artifact.
-          maxLength: 2048
-        aid:
-          type: string
-          description: aid of the owning API.
-          maxLength: 1024
-          examples:
-            - twilio:twilio-accounts-api
-        provider_slug:
-          type: string
-          maxLength: 1024
-          description: Slug of the company that published the artifact.
-          examples:
-            - twilio
-        provider_name:
-          type: string
-          maxLength: 1024
-          description: Display name of the company that published the artifact.
-          examples:
-            - Twilio
-        content:
-          type: string
-          description: Inlined artifact body. Present only when include=content.
-          maxLength: 20000
-          examples:
-            - "openapi: 3.1.0"
-        content_type:
-          type: string
-          description: Media type of the inlined content (e.g. application/yaml).
-          maxLength: 20000
-          examples:
-            - application/yaml
-      required:
-        - type
-        - url
+        type: number
+        minimum: 0
+        maximum: 100
   responses:
+    BadRequest:
+      description: Malformed request (bad parameter value).
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/invalid-parameter
+            title: Invalid parameter
+            status: 400
+            detail: '`match` must be one of: any, all.'
+            instance: /v1/search
+            parameter: match
     NotFound:
       description: Resource not found.
       content:
         application/problem+json:
           schema:
-            $ref: "#/components/schemas/Problem"
+            $ref: '#/components/schemas/Problem'
           example:
             type: https://apis.io/problems/not-found
             title: Resource not found
             status: 404
             detail: No API found with aid `twilio:nope`.
             instance: /v1/apis/twilio:nope
-      headers:
-        ratelimit-policy:
-          $ref: "#/components/headers/RateLimitPolicy"
-        x-ratelimit-tier:
-          $ref: "#/components/headers/RateLimitTier"
-        x-ratelimit-limit:
-          $ref: "#/components/headers/RateLimitLimit"
-        x-ratelimit-window:
-          $ref: "#/components/headers/RateLimitWindow"
-    BadRequest:
-      description: Malformed request (bad parameter value).
-      content:
-        application/problem+json:
-          schema:
-            $ref: "#/components/schemas/Problem"
-          example:
-            type: https://apis.io/problems/invalid-parameter
-            title: Invalid parameter
-            status: 400
-            detail: "`match` must be one of: any, all."
-            instance: /v1/search
-            parameter: match
-      headers:
-        ratelimit-policy:
-          $ref: "#/components/headers/RateLimitPolicy"
-        x-ratelimit-tier:
-          $ref: "#/components/headers/RateLimitTier"
-        x-ratelimit-limit:
-          $ref: "#/components/headers/RateLimitLimit"
-        x-ratelimit-window:
-          $ref: "#/components/headers/RateLimitWindow"
-  headers:
-    RateLimitPolicy:
-      description: The quota and burst policy applied to this key, in the RFC 9745 RateLimit-Policy form.
-      schema:
-        type: string
-        maxLength: 1024
-      example: "\"quota\";q=500;w=86400, \"burst\";q=5;w=1"
-    RateLimitTier:
-      description: The tier the call was served at. Keyless callers are served `free`.
-      schema:
-        type: string
-        enum:
-          - free
-          - pro
-          - business
-      example: free
-    RateLimitLimit:
-      description: Requests allowed in the current quota window.
-      schema:
-        type: integer
-        maximum: 1000000
-      example: 500
-    RateLimitWindow:
-      description: Length of the quota window, in seconds.
-      schema:
-        type: integer
-        maximum: 1000000
-      example: 86400
-  securitySchemes:
-    ApiKeyAuth:
-      type: apiKey
-      in: header
-      name: X-API-Key
-      description: Send a plan key to be served above the free tier. Keyless callers get the free tier; a call that needs a paid tier answers 402 rather than refusing the connection.

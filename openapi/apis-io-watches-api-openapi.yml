@@ -1,0 +1,193 @@
+openapi: 3.2.0
+info:
+  title: APIs.io Provider Control Watches API
+  version: 1.0.0
+  description: 'The surface a provider uses to act on their own listing: claim it, correct it, submit artifacts, dispute a finding, ask what to fix, and simulate a fix before doing the work.'
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+- url: https://apis.io/api/v1
+  description: Production server.
+tags:
+- name: Watches
+paths: {}
+webhooks:
+  watchEvents:
+    post:
+      operationId: receiveWatchEvents
+      summary: Watch events for one provider
+      description: 'One POST per watched provider per scoring run, carrying every event that provider produced for you in that run. Signed with `X-APIs-Io-Signature: t=,v1=.">`; verify it before trusting the payload and reject on the age of `t` to refuse a replay. Retried twice on 5xx and on transport failure, never on 4xx. Return any 2xx to acknowledge.'
+      tags:
+      - Watches
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - slug
+              - run_ts
+              - events
+              properties:
+                slug:
+                  type: string
+                  examples:
+                  - apis-io
+                run_ts:
+                  type: string
+                  description: The scoring run this reports on; the idempotency key for the delivery.
+                  examples:
+                  - '2026-09-11T06:00:00.000Z'
+                events:
+                  type: array
+                  minItems: 1
+                  items:
+                    oneOf:
+                    - $ref: '#/components/schemas/WatchScoreChanged'
+                    - $ref: '#/components/schemas/WatchBandChanged'
+                    - $ref: '#/components/schemas/WatchAgentBandChanged'
+      responses:
+        2XX:
+          description: Acknowledged. Any 2xx stops the retry.
+        4XX:
+          description: Rejected. Not retried — a receiver that calls the payload malformed will call it malformed again.
+components:
+  schemas:
+    WatchBandChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - band
+      - previous_band
+      description: Sent when the band moves, including when the composite did not.
+      properties:
+        event:
+          type: string
+          const: provider.band.changed
+        slug:
+          type: string
+        name:
+          type: string
+        band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - thin
+          - emerging
+          - minimal
+        previous_band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - thin
+          - emerging
+          - minimal
+        composite:
+          type:
+          - number
+          - 'null'
+        scored_at:
+          type:
+          - string
+          - 'null'
+    WatchAgentBandChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - agent_band
+      - previous_agent_band
+      description: Carries the band gate when one applies. `band_gated_from` with `gate_unmet` means the score cleared a higher band and an unmet gate held it below — the one thing about their own listing a provider cannot work out for themselves.
+      properties:
+        event:
+          type: string
+          const: provider.agent_band.changed
+        slug:
+          type: string
+        name:
+          type: string
+        agent_band:
+          type: string
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+        previous_agent_band:
+          type: string
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+        agent_score:
+          type:
+          - number
+          - 'null'
+          examples:
+          - 44.5
+        band_gated_from:
+          type: string
+          examples:
+          - agent-native
+        gate_unmet:
+          type: array
+          items:
+            type: string
+          examples:
+          - - idempotency
+        scored_at:
+          type:
+          - string
+          - 'null'
+    WatchScoreChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - composite
+      - previous_composite
+      - delta
+      properties:
+        event:
+          type: string
+          const: provider.score.changed
+        slug:
+          type: string
+        name:
+          type: string
+        composite:
+          type: number
+          examples:
+          - 71.9
+        previous_composite:
+          type: number
+          description: What you were last TOLD, which is not necessarily the previous scoring run.
+          examples:
+          - 72.6
+        delta:
+          type: number
+          examples:
+          - -0.7
+        scored_at:
+          type:
+          - string
+          - 'null'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key

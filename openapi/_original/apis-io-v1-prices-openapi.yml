@@ -1,0 +1,153 @@
+openapi: 3.2.0
+$self: https://apis.io/artifacts/openapi/apis-io-v1-prices-openapi.yml
+info:
+  title: APIs.io Prices API
+  version: 1.0.0
+  description: |-
+    The per-call price of every metered resource on the APIs.io API, as data. Free, uncredentialed, and deliberately the one thing a caller can read before deciding whether to call anything else.
+
+    **Why this is a published contract.** The cheapest way to make a metered API fail is to let a caller discover the price at the 402. The reference x402 client ships a 0.10 USDC default spend cap, so an agent that learns a price only when it is refused has already been refused by its own wallet — and a person deciding whether to put a card down is in the same position. Every priced resource is listed here, with its band, before anything is spent.
+
+    The same map prices x402 payments and the `x-price-usd` / `x-price-band` response headers that arrive on a metered `200`, so a caller can reconcile what it was quoted against what it was charged.
+
+    This is the Prices surface of the [APIs.io API](https://apis.io/api/v1) — one of the contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.
+  contact:
+    name: API Evangelist
+    url: https://apis.io
+  license:
+    name: CC BY 4.0
+    url: https://creativecommons.org/licenses/by/4.0/
+servers:
+  - url: https://apis.io/api/v1
+    description: Production server.
+tags:
+  - name: Prices
+    description: The per-call price map for metered resources, and the bands it is built from.
+paths:
+  /prices:
+    get:
+      operationId: getPrices
+      tags:
+        - Prices
+      summary: The whole price map, as data.
+      description: |-
+        Returns every band and every priced resource key. No key is required and the call is never metered — pricing a request must not itself cost anything.
+
+        `status` reports whether the map is live or a preview of a plan that is not yet purchasable. A `preview` map is accurate and quotable, but nothing can be bought against it yet; subscriptions are unaffected either way, because under Understanding or Influence these calls are included in the plan.
+
+        `purchasable: false` on a row is a different answer from free: it marks an owner-only resource that no balance and no payment may ever reach, so a caller is told that rather than quoted a number it cannot spend.
+      x-tier: free
+      security: []
+      responses:
+        "200":
+          description: The band table, the per-resource price map, and the status of the plan they belong to.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceMap"
+components:
+  schemas:
+    PriceMap:
+      type: object
+      required:
+        - currency
+        - status
+        - bands
+        - prices
+      properties:
+        currency:
+          type: string
+          description: ISO 4217 code every amount in this document is denominated in.
+          examples:
+            - USD
+        status:
+          type: string
+          enum:
+            - preview
+            - live
+          description: |-
+            `preview` — the map is accurate but the pay-as-you-go plan is not yet purchasable.
+            `live` — calls are metered and billable against a balance.
+        detail:
+          type: string
+          description: One sentence a caller can show a human about what the status means for them.
+        plans:
+          type: string
+          format: uri
+          description: Where the subscription plans that include these calls are described.
+          examples:
+            - https://apis.io/developer/plans/
+        bands:
+          type: array
+          description: The price bands. Every priced resource names one.
+          items:
+            $ref: "#/components/schemas/Band"
+        prices:
+          type: array
+          description: One row per priced resource key.
+          items:
+            $ref: "#/components/schemas/PriceRow"
+    Band:
+      type: object
+      required:
+        - band
+        - description
+      properties:
+        band:
+          type: string
+          description: Band identifier, as named by every price row and by the `x-price-band` response header.
+          examples:
+            - B2
+        description:
+          type: string
+          description: What kind of work the band buys.
+          examples:
+            - cross-catalog synthesis
+        usd:
+          type: number
+          description: Flat per-call price. Absent on a band priced per row or charged as a one-off.
+        usd_per_row:
+          type: number
+          description: Per-row price, on a band metered by rows delivered rather than by call.
+        usd_minimum:
+          type: number
+          description: Floor for a per-row band, so a small page of a licensed dataset is not sold for a fraction of a cent.
+        flat:
+          type: boolean
+          description: True when the band is not a per-call price at all — a one-off charge with its own receipt, outside any prepaid balance.
+    PriceRow:
+      type: object
+      required:
+        - key
+        - band
+        - purchasable
+      properties:
+        key:
+          type: string
+          description: |-
+            The resource key this price applies to — the method and the meaningful sub-path, not a full URL. Keys name the resource, never the entity: `providers.rating.facets`, never `/v1/providers/stripe/rating/facets`.
+          examples:
+            - GET ratings
+            - POST checks
+        band:
+          type: string
+          nullable: true
+          description: The band that prices this key. Null when the resource is not purchasable.
+          examples:
+            - B2
+        description:
+          type: string
+          description: What the band means, repeated on the row so one row is readable alone.
+        usd:
+          type: number
+          description: Flat per-call price for this key, when its band carries one.
+        usd_per_row:
+          type: number
+          description: Per-row price, on a per-row band.
+        usd_minimum:
+          type: number
+          description: Floor charged for a per-row key however few rows are returned.
+        purchasable:
+          type: boolean
+          description: |-
+            False marks an owner-only resource that can never be bought at any price. It is not the same as free — a free resource is `purchasable: true` in band `B0`.

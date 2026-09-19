@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: APIs.io API
-  version: 1.9.0
+  version: 1.10.0
   summary: Read-only discovery API over the APIs.io catalog of providers, APIs, tags, artifacts, and curated
     dimensions — free to explore, with synthesis and decision plans above it.
   description: "A first-class, read-only discovery API over the [APIs.io](https://apis.io) network.\n\n\
@@ -10056,6 +10056,129 @@ paths:
           description: The account has no subscription to manage.
         '401':
           description: No signed-in session.
+# ---------------------------------------------------------------------------------------------
+# WEBHOOKS — what APIs.io SENDS you (roadmap#300).
+#
+# Everything else in this document is a request you make. These are the requests WE make, to a
+# `callback_url` you registered with `watch_listing`. OpenAPI 3.1 has a top-level `webhooks` block
+# for exactly this, and a catalog that rates other people's event surfaces should describe its own.
+#
+# The same events are described as AsyncAPI 3.0.0 in
+# https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/asyncapi/apis-io-watch-events-asyncapi.yml
+# — that document is the one to generate a consumer from; this block is here so a reader of the
+# REST contract discovers the event surface at all rather than having to know it exists.
+#
+# EVERY DELIVERY IS SIGNED, and an unsigned one is not from us: the sender refuses to send without
+# a key rather than quietly downgrading, because a receiver cannot tell an unsigned POST from
+# APIs.io apart from an unsigned POST from anyone who learned the callback URL.
+  /regulations:
+    get:
+      operationId: listRegulations
+      x-tier: free
+      x-mcp-tool: find_regulations
+      security: []
+      tags:
+      - Regulations
+      summary: List and filter the laws the catalog tracks, joined to the cohorts they bind.
+      description: >-
+        Every regulation, statute, accreditation and regulator guidance API Evangelist tracks, each
+        joined to the countries, regions and industries it reaches. Filter by `scope=horizontal` to
+        get the regimes that reach a provider with NO industry tag at all — the question tags alone
+        cannot answer — or by `kind`, `jurisdiction` or free text. Free: this is catalog fact.
+
+
+        `company_count` MAY BE NULL, and null is not zero. It means the job-corpus pass has not run
+        for that name; treating it as a measured zero publishes a fabricated number in a field whose
+        whole value is that it is sourced.
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - name: scope
+        in: query
+        description: Horizontal regimes reach any provider; sectoral ones reach an industry.
+        schema:
+          type: string
+          enum: [horizontal, sectoral]
+      - name: kind
+        in: query
+        description: Instrument type.
+        schema:
+          type: string
+          enum: [regulation, statute, accreditation, regulator-guidance]
+      - name: jurisdiction
+        in: query
+        description: Substring match on the issuing jurisdiction.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Regulations, with any filter applied.
+          content:
+            application/json:
+              schema:
+                type: object
+  /regulations/{slug}:
+    get:
+      operationId: getRegulation
+      x-tier: free
+      x-mcp-tool: get_regulation
+      security: []
+      tags:
+      - Regulations
+      summary: Get one regulation, with the cohorts it reaches.
+      description: >-
+        One regulation: what it is, its jurisdiction and scope, a link to the law itself, and
+        `reaches[]` — the country, region and industry cohorts this regime binds. Use `reaches[]` to
+        go straight to the affected members with `find_providers`. `company_count` may be null; null
+        means the corpus pass has not run for that name, not that no company mentions it.
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        description: The regulation slug.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: One regulation and the cohorts it reaches.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: No such regulation.
+webhooks:
+  watchEvents:
+    post:
+      summary: A listing you watch has moved
+      operationId: receiveWatchEvents
+      description: |
+        Sent to the `callback_url` you registered with `watch_listing`, once per provider per
+        notifier run, carrying every event that fired for that provider in that run.
+
+        **Verify the signature before trusting the body.** `x-apis-io-signature` is
+        `t=<unix-seconds>,v1=<hex>`, where the hex is `HMAC-SHA256(secret, "<t>.<raw body>")` over
+        the exact bytes received. Reject a timestamp outside your tolerance to stop a replay.
+
+        **The first run after you register sends nothing.** It records where the provider stands,
+        so the first notification you get is a real move rather than a restatement of the present.
+
+        Retried up to three times on a network error or a 5xx. **A 4xx is treated as an answer,
+        not a hiccup** — return 2xx once you have durably accepted the delivery.
+      tags: [Watches]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/WatchDelivery' }
+      responses:
+        '200':
+          description: Accepted. Any 2xx ends the retry loop.
+        '4XX':
+          description: |
+            Treated as a final answer and not retried — use it to say "stop sending me this".
+        '5XX':
+          description: Retried, up to three attempts in total.
+
 components:
   securitySchemes:
     SessionCookie:
@@ -10538,6 +10661,182 @@ components:
                 items:
                   type: string
   schemas:
+    WatchEnvelope:
+      type: object
+      required: &id001
+      - slug
+      - run_ts
+      - events
+      additionalProperties: false
+      properties: &id002
+        slug:
+          type: string
+          description: The watched provider.
+          examples:
+          - apis-io
+        run_ts:
+          type: string
+          description: The scoring run this delivery reports on. Idempotency key — the same slug and run_ts
+            will not be delivered twice once a delivery has succeeded.
+          examples:
+          - '2026-09-11T06:00:00.000Z'
+        events:
+          type: array
+          minItems: 1
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ScoreChanged'
+            - $ref: '#/components/schemas/BandChanged'
+            - $ref: '#/components/schemas/AgentBandChanged'
+            discriminator: event
+    ScoreChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - composite
+      - previous_composite
+      - delta
+      properties:
+        event:
+          type: string
+          const: provider.score.changed
+        slug:
+          type: string
+          examples:
+          - apis-io
+        name:
+          type: string
+          examples:
+          - APIs.io
+        composite:
+          type: number
+          description: Kin Score composite now.
+          examples:
+          - 71.9
+        previous_composite:
+          type: number
+          description: What you were last told, not necessarily the previous scoring run.
+          examples:
+          - 72.6
+        delta:
+          type: number
+          examples:
+          - -0.7
+        scored_at:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '2026-09-10'
+    BandChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - band
+      - previous_band
+      description: Sent when the band moves, INCLUDING when the composite did not. A rubric release can reprice
+        thresholds without changing a single score.
+      properties:
+        event:
+          type: string
+          const: provider.band.changed
+        slug:
+          type: string
+        name:
+          type: string
+        band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - emerging
+          - thin
+        previous_band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - emerging
+          - thin
+        composite:
+          type:
+          - number
+          - 'null'
+        scored_at:
+          type:
+          - string
+          - 'null'
+    AgentBandChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - agent_band
+      - previous_agent_band
+      description: The event worth registering for. When an agent band is held below what the points earned,
+        `band_gated_from` and `gate_unmet` say which gate did it — a fact a provider cannot compute about
+        their own listing, because it is the rubric's band gate applied to their dimensions.
+      properties:
+        event:
+          type: string
+          const: provider.agent_band.changed
+        slug:
+          type: string
+        name:
+          type: string
+        agent_band:
+          type: string
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+        previous_agent_band:
+          type: string
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+        agent_score:
+          type:
+          - number
+          - 'null'
+          examples:
+          - 44.5
+        band_gated_from:
+          type: string
+          description: Present only when the score cleared a higher band's threshold and an unmet gate held
+            it below. Absent means the band is what the points say.
+          examples:
+          - agent-native
+        gate_unmet:
+          type: array
+          items:
+            type: string
+          description: The gate checks still unsatisfied.
+          examples:
+          - - idempotency
+        scored_at:
+          type:
+          - string
+          - 'null'
+    WatchDelivery:
+      type: object
+      required: *id001
+      additionalProperties: false
+      properties: *id002
+      description: 'One delivery: every event that fired for one provider in one notifier run. COPIED FROM
+        asyncapi/apis-io-watch-events-asyncapi.yml, which is verified field-for-field against the sender —
+        edit that document, not this copy.'
+
     Check:
       type: object
       description: A remediation request and where it stands. Only notes an operator marked shareable
