@@ -2,15 +2,15 @@
 kin_checks:
   slug: apis-io
   schema_version: 0.22.0
-  scored_at: '2026-09-18'
-  run_ts: 2026-09-18T231945
+  scored_at: '2026-09-19'
+  run_ts: 2026-09-19T193153
   note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
     apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
     below let you verify that.
   counts:
     total: 136
-    earned: 69
-    partial: 28
+    earned: 70
+    partial: 27
     missed: 14
     na: 25
   checks:
@@ -134,10 +134,6 @@ kin_checks:
     status: partial
     earned: 9.0
     detail: 'grade: served'
-  - id: idempotency
-    status: partial
-    earned: 4.5
-    detail: 'grade: documented'
   - id: openapi_examples
     status: partial
     earned: 3.5
