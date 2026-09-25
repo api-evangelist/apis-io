@@ -159,6 +159,9 @@ artifacts:
   finops/apis-io-finops.yml:
     method: generated
     evidence: declared in the artifact
+  front-door-ai/2026-09-17.yml:
+    method: unknown
+    evidence: no authorship recorded
   json-ld/apis-io-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -240,37 +243,7 @@ artifacts:
   json-structure/apis-io-search-tag-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-14T225847.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-17T064519.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T080027.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T082702.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-19T114122.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T165047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T191845.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-20T205517.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-21T110057.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T064859.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-24T171257.yml:
+  kin/checks-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-08-25T125852.yml:
@@ -417,6 +390,63 @@ artifacts:
   kin/score-2026-09-14T225847.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T211329.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-15T230249.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T210549.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-16T225339.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T211151.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-17T233623.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T205255.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-18T231945.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T165737.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-19T193153.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T205903.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-20T232958.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T211425.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-21T233935.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-22T213221.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-23T000603.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T064009.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T090406.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-24T161608.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/apis-io-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -434,61 +464,84 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/apis-io-search-openapi.yaml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-apis-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-areas-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-artifact-types-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-cohorts-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-editorial-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-export-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-industries-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-insights-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
+  openapi/_original/apis-io-v1-prices-openapi.yml:
+    method: harvested
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-provider-control-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-providers-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-ratings-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-regions-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-resolve-enrich-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-saved-workspace-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-search-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-synthesis-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-tags-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/_original/apis-io-v1-venture-capital-openapi.yml:
     method: harvested
-    evidence: fetched from the provider as-is; byte-identical to the source
+    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
+      to the provider's source is unverified
   openapi/apis-io-apis-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -511,6 +564,9 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/apis-io-insights-api-openapi.yml:
+    method: derived
+    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/apis-io-provider-control-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   openapi/apis-io-providers-api-openapi.yml:
@@ -546,6 +602,9 @@ artifacts:
   openapi/apis-io-venture-capital-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  openapi/apis-io-watches-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/split-manifest.json:
     method: unknown
     evidence: no authorship recorded
