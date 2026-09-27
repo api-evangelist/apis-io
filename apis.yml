@@ -58,6 +58,7 @@ tags:
 - Agent Skills
 - OpenAPI
 - API Governance
+- A2A
 tags_raw:
 - API Aggregation
 - API Directory
@@ -73,33 +74,17 @@ tags_raw:
 - Agent Skills
 - OpenAPI
 - API Governance
+- A2A
 url: https://apis.io/apis.json
 created: '2026-03-26'
 modified: '2026-09-11'
 specificationVersion: '0.23'
 apis:
-- aid: apis-io:apis-io-prices-api
-  name: APIs.io Prices API
-  description: The per-call price of every metered resource on the APIs.io API, as data. Free, uncredentialed,
-    and the one thing a caller can read before deciding whether to call anything else.
-  humanURL: https://apis.io/developer/plans/
-  baseURL: https://apis.io/api/v1
-  tags:
-  - Pricing
-  - API Monetization
-  properties:
-  - type: OpenAPI
-    url: openapi/_original/apis-io-v1-prices-openapi.yml
-  - type: OpenAPISource
-    url: https://apis.io/artifacts/openapi/apis-io-v1-prices-openapi.yml
-  - type: Documentation
-    url: https://apis.io/developer/plans/
 - name: APIs.io Submit API
   description: >-
     Discover a domain's machine-readable API surface and submit a provider for review — the Add-API door,
     documented first-party from the serving Lambda.
   humanURL: https://apis.io/add/
-  baseURL: https://apis.io
   tags:
   - Submissions
   - Discovery
@@ -603,7 +588,6 @@ apis:
     Claim, correct and improve your own listing. Most operations require the Influence plan; reporting
     that our data is wrong is free and always will be.
   humanURL: https://apis.io/add/
-  baseURL: https://apis.io
   tags:
   - Provider Control
   properties:
@@ -613,17 +597,15 @@ apis:
   name: APIs.io Watches API
   description: The Watches API from APIs.io — 0 operation(s) for watches.
   humanURL: https://apis.io/add/
-  baseURL: https://apis.io
   tags:
   - Watches
   properties:
   - type: OpenAPI
     url: openapi/apis-io-watches-api-openapi.yml
 - aid: apis-io:apis-io-apis-api
-  name: APIs.io AP Is API
+  name: APIs.io APIs API
   description: Individual APIs, each owned by a provider and described by artifacts.
   humanURL: https://apis.io/add/
-  baseURL: https://apis.io
   tags: []
   tags_raw:
   - APIs
@@ -656,6 +638,20 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json
+- aid: apis-io:apis-io-prices-api
+  name: APIs.io Prices API
+  description: The per-call price map for metered resources, and the bands it is built from.
+  humanURL: https://apis.io/developer/plans/
+  baseURL: https://apis.io/api/v1
+  tags:
+  - Prices
+  properties:
+  - type: OpenAPI
+    url: openapi/apis-io-prices-api-openapi.yml
+  - type: OpenAPISource
+    url: https://apis.io/artifacts/openapi/apis-io-v1-prices-openapi.yml
+  - type: Documentation
+    url: https://apis.io/developer/plans/
 common:
 - type: Overlay
   url: https://apis.io/artifacts/overlays/apis-io-apis-api-overlay.yaml
@@ -816,3 +812,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 22
   pass: local-v3
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://apis.io/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

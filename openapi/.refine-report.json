@@ -10,6 +10,7 @@
     "_original/apis-io-v1-export-openapi.yml",
     "_original/apis-io-v1-industries-openapi.yml",
     "_original/apis-io-v1-insights-openapi.yml",
+    "_original/apis-io-v1-prices-openapi.yml",
     "_original/apis-io-v1-provider-control-openapi.yml",
     "_original/apis-io-v1-providers-openapi.yml",
     "_original/apis-io-v1-ratings-openapi.yml",
@@ -32,6 +33,7 @@
     "apis-io-export-api-openapi.yml",
     "apis-io-industries-api-openapi.yml",
     "apis-io-insights-api-openapi.yml",
+    "apis-io-prices-api-openapi.yml",
     "apis-io-provider-control-api-openapi.yml",
     "apis-io-watches-api-openapi.yml",
     "apis-io-providers-api-openapi.yml",
@@ -44,24 +46,21 @@
     "apis-io-venture-capital-api-openapi.yml",
     "apis-io-submit-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [
     "apis-io-submit-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /api/v1/submit post, /api/v1/submit/discover get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
   ],
   "notes": [
     "apis-io-v1-openapi.yml: protected first-party contract, not split or archived",
-    "sourced from openapi/_original/ (19 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (20 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "apis-io-search-openapi.yaml: multi-axis tagging (2 tags, 1 first tags, 1.50x duplication over 2 operations) \u2014 split on first tag, 1 operations narrowed",
     "apis-io-v1-provider-control-openapi.yml: declared missing tag: Watches",
     "tag 'Search' spans 2 source specs (apis-io-search-openapi.yaml, apis-io-v1-search-openapi.yml): per-path servers applied",
-    "superseded outputs removed: apis-io-ap-is-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 20 total)"
+    "apis.yml register: written (+1 apis, 21 total)"
   ],
   "skipped": [
-    "apis-io-ap-is-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apis-io-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-areas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-artifact-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-cohorts-api-openapi.yml: previously refined output, superseded by openapi/_original/",

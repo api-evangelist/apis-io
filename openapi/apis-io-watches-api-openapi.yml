@@ -58,49 +58,6 @@ webhooks:
           description: Rejected. Not retried — a receiver that calls the payload malformed will call it malformed again.
 components:
   schemas:
-    WatchBandChanged:
-      type: object
-      required:
-      - event
-      - slug
-      - name
-      - band
-      - previous_band
-      description: Sent when the band moves, including when the composite did not.
-      properties:
-        event:
-          type: string
-          const: provider.band.changed
-        slug:
-          type: string
-        name:
-          type: string
-        band:
-          type: string
-          enum:
-          - exemplar
-          - strong
-          - developing
-          - thin
-          - emerging
-          - minimal
-        previous_band:
-          type: string
-          enum:
-          - exemplar
-          - strong
-          - developing
-          - thin
-          - emerging
-          - minimal
-        composite:
-          type:
-          - number
-          - 'null'
-        scored_at:
-          type:
-          - string
-          - 'null'
     WatchAgentBandChanged:
       type: object
       required:
@@ -148,6 +105,49 @@ components:
             type: string
           examples:
           - - idempotency
+        scored_at:
+          type:
+          - string
+          - 'null'
+    WatchBandChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - band
+      - previous_band
+      description: Sent when the band moves, including when the composite did not.
+      properties:
+        event:
+          type: string
+          const: provider.band.changed
+        slug:
+          type: string
+        name:
+          type: string
+        band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - thin
+          - emerging
+          - minimal
+        previous_band:
+          type: string
+          enum:
+          - exemplar
+          - strong
+          - developing
+          - thin
+          - emerging
+          - minimal
+        composite:
+          type:
+          - number
+          - 'null'
         scored_at:
           type:
           - string

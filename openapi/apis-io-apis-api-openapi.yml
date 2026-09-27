@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: .io AP Is API
+  title: .io APIs API
   version: 1.5.0
   description: 'Individual APIs, each owned by a provider and described by artifacts.
 
@@ -165,7 +165,182 @@ paths:
           $ref: '#/components/responses/NotFound'
       security: []
 components:
+  parameters:
+    RegionFilter:
+      name: region
+      in: query
+      description: Filter by one or more region slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Match:
+      name: match
+      in: query
+      description: Whether results must match `any` (default) or `all` of the supplied tags.
+      schema:
+        type: string
+        enum:
+        - any
+        - all
+        default: any
+        maxLength: 1024
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - csv
+    Providers:
+      name: providers
+      in: query
+      description: Comma-separated provider slugs to scope results to.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    MinScore:
+      name: min_score
+      in: query
+      description: Minimum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    BandFilter:
+      name: band
+      in: query
+      description: Filter by one or more rating bands.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Band'
+        maxItems: 1000
+    IndustryFilter:
+      name: industry
+      in: query
+      description: Filter by one or more industry slugs.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Aid:
+      name: aid
+      in: path
+      required: true
+      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
+      schema:
+        type: string
+        pattern: ^[^:]+:[^:]+$
+        maxLength: 1024
+    ArtifactTypes:
+      name: artifact_types
+      in: query
+      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/ArtifactType'
+        maxItems: 1000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+      - Messaging
+      - Authentication
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Include:
+      name: include
+      in: query
+      description: Extra data to embed. `content` fetches and inlines artifact bodies.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+          - content
+          maxLength: 1024
+        maxItems: 1000
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
   schemas:
+    ApiList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Api'
+          maxItems: 1000
+      required:
+      - meta
+      - data
     Artifact:
       type: object
       description: A machine- or human-readable artifact attached to an API.
@@ -219,6 +394,55 @@ components:
       - emerging
       - minimal
       maxLength: 1024
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
     Api:
       type: object
       description: An individual API owned by a provider.
@@ -348,19 +572,6 @@ components:
       - NaftikoCapability
       x-extensible-enum: true
       maxLength: 1024
-    ApiList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Api'
-          maxItems: 1000
-      required:
-      - meta
-      - data
     Meta:
       type: object
       description: Pagination and echoed-query metadata for collection responses.
@@ -388,218 +599,19 @@ components:
       - page
       - limit
       - pages
-    Problem:
-      type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
-      properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
-          maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-  parameters:
-    RegionFilter:
-      name: region
-      in: query
-      description: Filter by one or more region slugs.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Include:
-      name: include
-      in: query
-      description: Extra data to embed. `content` fetches and inlines artifact bodies.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          enum:
-          - content
-          maxLength: 1024
-        maxItems: 1000
-    Fields:
-      name: fields
-      in: query
-      description: Sparse fieldset — comma-separated property names to return.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    Match:
-      name: match
-      in: query
-      description: Whether results must match `any` (default) or `all` of the supplied tags.
-      schema:
-        type: string
-        enum:
-        - any
-        - all
-        default: any
-        maxLength: 1024
-    BandFilter:
-      name: band
-      in: query
-      description: Filter by one or more rating bands.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Band'
-        maxItems: 1000
-    Format:
-      name: format
-      in: query
-      required: false
-      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
-      schema:
-        type: string
-        enum:
-        - csv
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    ArtifactTypes:
-      name: artifact_types
-      in: query
-      description: Comma-separated artifact types. Filters which artifacts are returned and (on list endpoints) which APIs qualify.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/ArtifactType'
-        maxItems: 1000
-    IndustryFilter:
-      name: industry
-      in: query
-      description: Filter by one or more industry slugs.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Aid:
-      name: aid
-      in: path
-      required: true
-      description: API id in `provider:api-slug` form (e.g. `twilio:twilio-accounts-api`).
-      schema:
-        type: string
-        pattern: ^[^:]+:[^:]+$
-        maxLength: 1024
-    Tags:
-      name: tags
-      in: query
-      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
-      style: form
-      explode: false
-      example:
-      - Messaging
-      - Authentication
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Providers:
-      name: providers
-      in: query
-      description: Comma-separated provider slugs to scope results to.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    MinScore:
-      name: min_score
-      in: query
-      description: Minimum composite score (0–100).
-      schema:
-        type: number
-        minimum: 0
-        maximum: 100
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -613,15 +625,3 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope

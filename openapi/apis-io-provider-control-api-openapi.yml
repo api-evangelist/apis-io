@@ -684,34 +684,6 @@ paths:
           $ref: '#/components/responses/QueueUnreachable'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        detail:
-          type: string
-    QueuedRequest:
-      type: object
-      description: Every write here is a REQUEST, not a completed action. `completed` is always false on acceptance.
-      properties:
-        received:
-          type: boolean
-        completed:
-          type: boolean
-        request_type:
-          type: string
-        slug:
-          type: string
-        id:
-          type: string
-          description: Poll status_url with this.
-        status:
-          type: string
-        status_url:
-          type: string
-        detail:
-          type: string
     UpsertResult:
       type: object
       description: A write whose repeat behaviour is defined. `outcome` names which branch ran, so a caller retrying after a timeout can tell what the server did without re-reading the record.
@@ -797,6 +769,27 @@ components:
           description: Why this band is gated the way it is.
           maxLength: 4096
       additionalProperties: true
+    QueuedRequest:
+      type: object
+      description: Every write here is a REQUEST, not a completed action. `completed` is always false on acceptance.
+      properties:
+        received:
+          type: boolean
+        completed:
+          type: boolean
+        request_type:
+          type: string
+        slug:
+          type: string
+        id:
+          type: string
+          description: Poll status_url with this.
+        status:
+          type: string
+        status_url:
+          type: string
+        detail:
+          type: string
     ReadinessGates:
       type: object
       description: What stands between this listing and the next agent-readiness band. Agent Readiness is additive, so a provider can reach a band's score floor and still be held below it by the band GATE — this says which, and what would satisfy it.
@@ -845,7 +838,20 @@ components:
           items:
             $ref: '#/components/schemas/BandGate'
       additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
   responses:
+    UpgradeRequired:
+      description: A valid credential below the required plan. An unauthenticated caller gets 401 with a bootstrap challenge instead.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     QueueUnreachable:
       description: The request queue is not reachable. The response says where else to reach us — a request here is never dropped silently.
       content:
@@ -860,12 +866,6 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: No such provider, or nothing stored for it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UpgradeRequired:
-      description: A valid credential below the required plan. An unauthenticated caller gets 401 with a bootstrap challenge instead.
       content:
         application/json:
           schema:

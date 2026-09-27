@@ -266,15 +266,61 @@ components:
               examples:
               - -5
               maximum: 1000000000
-    AgentBand:
+    Facets:
+      type: object
+      description: The six facet scores, each 0–100.
+      properties:
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
+    Trend:
       type: string
-      description: Agent Readiness band, derived from the score and subject to the band gate.
+      description: Week-over-week movement in composite score (±5 thresholds).
       enum:
-      - agent-native
-      - agent-ready
-      - agent-aware
-      - human-only
+      - rising
+      - flat
+      - falling
       maxLength: 1024
+    RatingList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingEntry'
+          maxItems: 1000
+      required:
+      - meta
+      - data
     Band:
       type: string
       description: Rating band derived from the composite score.
@@ -286,6 +332,125 @@ components:
       - emerging
       - minimal
       maxLength: 1024
+    ProviderEvidence:
+      type: object
+      description: What a provider's score RESTED ON — the provenance behind each artifact class, so a reader can tell a signal the provider published from one API Evangelist generated for them.
+      required:
+      - slug
+      - name
+      - provenance
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        provenance:
+          type: object
+          description: Provenance class per artifact family (mcp, skills, agentic_access, conformance, contracts). Values are the classes named in `legend`; `contracts` carries counts rather than a class.
+          additionalProperties: true
+        legend:
+          type: object
+          description: What each provenance class means, so the values above are readable alone.
+          additionalProperties:
+            type: string
+            maxLength: 1024
+        rubric:
+          type: string
+          maxLength: 2048
+        rubric_version:
+          type: string
+          maxLength: 32
+        scored_at:
+          type: string
+          format: date
+      additionalProperties: true
+    AgentBand:
+      type: string
+      description: Agent Readiness band, derived from the score and subject to the band gate.
+      enum:
+      - agent-native
+      - agent-ready
+      - agent-aware
+      - human-only
+      maxLength: 1024
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
+    Mover:
+      type: object
+      description: One provider's movement between passes.
+      required:
+      - slug
+      - name
+      - delta
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        delta:
+          type: number
+          description: Change in composite. Negative for a faller.
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Composite after the move.
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+      additionalProperties: true
     RatingHistory:
       type: object
       description: A provider's scoring history as a time series, plus a summary of how far it has moved.
@@ -375,6 +540,145 @@ components:
           description: A caveat about this particular history, when one applies.
           maxLength: 2048
       additionalProperties: true
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+      - total
+      - page
+      - limit
+      - pages
+    RatingMovers:
+      type: object
+      description: Providers whose composite moved most between the two most recent scoring passes.
+      required:
+      - up
+      - down
+      properties:
+        up:
+          type: array
+          description: Biggest risers, largest first.
+          items:
+            $ref: '#/components/schemas/Mover'
+        down:
+          type: array
+          description: Biggest fallers, largest drop first.
+          items:
+            $ref: '#/components/schemas/Mover'
+        note:
+          type: string
+          maxLength: 2048
+      additionalProperties: true
+    ProviderScore:
+      type: object
+      description: A provider's rating, rubric v0.3.
+      properties:
+        composite:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Weighted composite of the six facets.
+          examples:
+          - 66.3
+        band:
+          $ref: '#/components/schemas/Band'
+        trend:
+          $ref: '#/components/schemas/Trend'
+        delta:
+          type: number
+          description: Composite change since the previous snapshot.
+          examples:
+          - 0
+          maximum: 1000000000
+        previous_composite:
+          type: number
+          minimum: 0
+          maximum: 100
+        scored_at:
+          type: string
+          format: date
+          maxLength: 10
+        schema_version:
+          type: string
+          examples:
+          - '0.3'
+          maxLength: 1024
+        facets:
+          $ref: '#/components/schemas/Facets'
+      required:
+      - composite
+      - band
+    AgentReadiness:
+      type: object
+      description: A provider's Agent Readiness — the standalone layer, scored and banded separately from the composite rating and never folded into it. It answers whether an agent can drive this API safely, which is a different question from whether the API is well described.
+      required:
+      - slug
+      - name
+      - score
+      - band
+      - dimensions
+      properties:
+        slug:
+          type: string
+          description: Provider slug.
+          maxLength: 128
+        name:
+          type: string
+          description: Provider display name.
+          maxLength: 256
+        score:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Agent Readiness score. Additive across the dimensions below, then banded.
+        band:
+          $ref: '#/components/schemas/AgentBand'
+        dimensions:
+          type: object
+          description: One entry per scored dimension, keyed by dimension id. A graded dimension reports `verified` (the behaviour is in the contract), `documented` (only a provider-level link asserts it), or false. Dimension ids move with the rubric, so this is an open map rather than a fixed set — read `rubric_version` to know which revision produced it.
+          additionalProperties: true
+        rubric:
+          type: string
+          description: URL of the published rubric revision that produced this score.
+          maxLength: 2048
+        rubric_version:
+          type: number
+          description: Version of the AGENT READINESS layer — not the composite rubric. Served as a NUMBER here and as a string on /rating/facets and /evidence, which is roadmap#314; do not compare the two without normalising.
+        scored_at:
+          type: string
+          format: date
+          description: Date this provider was last scored.
+      additionalProperties: true
+    FacetName:
+      type: string
+      description: One of the six rating facets.
+      enum:
+      - discoverability
+      - contract_quality
+      - governance
+      - operational_transparency
+      - developer_ergonomics
+      - commercial_clarity
+      maxLength: 1024
     RatingEntry:
       type: object
       description: A ranked provider in the ratings leaderboard.
@@ -403,27 +707,6 @@ components:
       - provider_slug
       - composite
       - band
-    RatingList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RatingEntry'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-    Trend:
-      type: string
-      description: Week-over-week movement in composite score (±5 thresholds).
-      enum:
-      - rising
-      - flat
-      - falling
-      maxLength: 1024
     ProviderFacets:
       type: object
       description: The facet breakdown behind a provider's composite score.
@@ -500,290 +783,129 @@ components:
           type: string
           format: date
       additionalProperties: true
-    Facets:
-      type: object
-      description: The six facet scores, each 0–100.
-      properties:
-        discoverability:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Discoverability facet score (weight 0.10).
-        contract_quality:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Contract Quality facet score (weight 0.25).
-        governance:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Governance facet score (weight 0.12).
-        operational_transparency:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Operational Transparency facet score (weight 0.13).
-        developer_ergonomics:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Developer Ergonomics facet score (weight 0.20).
-        commercial_clarity:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Commercial Clarity facet score (weight 0.20).
-    Meta:
-      type: object
-      description: Pagination and echoed-query metadata for collection responses.
-      properties:
-        total:
-          type: integer
-          description: Total matching items across all pages.
-          maximum: 1000000
-        page:
-          type: integer
-          maximum: 1000000
-        limit:
-          type: integer
-          maximum: 1000
-        pages:
-          type: integer
-          description: Total number of pages.
-          maximum: 1000000
-        query:
-          type: object
-          additionalProperties: true
-          description: The effective query parameters, echoed back.
-      required:
-      - total
-      - page
-      - limit
-      - pages
-    ProviderEvidence:
-      type: object
-      description: What a provider's score RESTED ON — the provenance behind each artifact class, so a reader can tell a signal the provider published from one API Evangelist generated for them.
-      required:
-      - slug
-      - name
-      - provenance
-      properties:
-        slug:
+  parameters:
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - csv
+    Providers:
+      name: providers
+      in: query
+      description: Comma-separated provider slugs to scope results to.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
           type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        provenance:
-          type: object
-          description: Provenance class per artifact family (mcp, skills, agentic_access, conformance, contracts). Values are the classes named in `legend`; `contracts` carries counts rather than a class.
-          additionalProperties: true
-        legend:
-          type: object
-          description: What each provenance class means, so the values above are readable alone.
-          additionalProperties:
-            type: string
-            maxLength: 1024
-        rubric:
-          type: string
-          maxLength: 2048
-        rubric_version:
-          type: string
-          maxLength: 32
-        scored_at:
-          type: string
-          format: date
-      additionalProperties: true
-    Problem:
-      type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
-      properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
           maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-    FacetName:
-      type: string
-      description: One of the six rating facets.
-      enum:
-      - discoverability
-      - contract_quality
-      - governance
-      - operational_transparency
-      - developer_ergonomics
-      - commercial_clarity
-      maxLength: 1024
-    RatingMovers:
-      type: object
-      description: Providers whose composite moved most between the two most recent scoring passes.
-      required:
-      - up
-      - down
-      properties:
-        up:
-          type: array
-          description: Biggest risers, largest first.
-          items:
-            $ref: '#/components/schemas/Mover'
-        down:
-          type: array
-          description: Biggest fallers, largest drop first.
-          items:
-            $ref: '#/components/schemas/Mover'
-        note:
-          type: string
-          maxLength: 2048
-      additionalProperties: true
-    AgentReadiness:
-      type: object
-      description: A provider's Agent Readiness — the standalone layer, scored and banded separately from the composite rating and never folded into it. It answers whether an agent can drive this API safely, which is a different question from whether the API is well described.
-      required:
-      - slug
-      - name
-      - score
-      - band
-      - dimensions
-      properties:
-        slug:
-          type: string
-          description: Provider slug.
-          maxLength: 128
-        name:
-          type: string
-          description: Provider display name.
-          maxLength: 256
-        score:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Agent Readiness score. Additive across the dimensions below, then banded.
-        band:
-          $ref: '#/components/schemas/AgentBand'
-        dimensions:
-          type: object
-          description: One entry per scored dimension, keyed by dimension id. A graded dimension reports `verified` (the behaviour is in the contract), `documented` (only a provider-level link asserts it), or false. Dimension ids move with the rubric, so this is an open map rather than a fixed set — read `rubric_version` to know which revision produced it.
-          additionalProperties: true
-        rubric:
-          type: string
-          description: URL of the published rubric revision that produced this score.
-          maxLength: 2048
-        rubric_version:
-          type: number
-          description: Version of the AGENT READINESS layer — not the composite rubric. Served as a NUMBER here and as a string on /rating/facets and /evidence, which is roadmap#314; do not compare the two without normalising.
-        scored_at:
-          type: string
-          format: date
-          description: Date this provider was last scored.
-      additionalProperties: true
-    Mover:
-      type: object
-      description: One provider's movement between passes.
-      required:
-      - slug
-      - name
-      - delta
-      properties:
-        slug:
-          type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        delta:
-          type: number
-          description: Change in composite. Negative for a faller.
-        composite:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Composite after the move.
-        band:
+        maxItems: 1000
+    MinScore:
+      name: min_score
+      in: query
+      description: Minimum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    BandFilter:
+      name: band
+      in: query
+      description: Filter by one or more rating bands.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
           $ref: '#/components/schemas/Band'
-        trend:
-          $ref: '#/components/schemas/Trend'
-      additionalProperties: true
-    ProviderScore:
-      type: object
-      description: A provider's rating, rubric v0.3.
-      properties:
-        composite:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Weighted composite of the six facets.
-          examples:
-          - 66.3
-        band:
-          $ref: '#/components/schemas/Band'
-        trend:
-          $ref: '#/components/schemas/Trend'
-        delta:
-          type: number
-          description: Composite change since the previous snapshot.
-          examples:
-          - 0
-          maximum: 1000000000
-        previous_composite:
-          type: number
-          minimum: 0
-          maximum: 100
-        scored_at:
+        maxItems: 1000
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    TrendFilter:
+      name: trend
+      in: query
+      description: Filter by trend marker.
+      schema:
+        $ref: '#/components/schemas/Trend'
+    MaxScore:
+      name: max_score
+      in: query
+      description: Maximum composite score (0–100).
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024
+    MinFacet:
+      name: min_facet
+      in: query
+      description: Minimum score (0–100) for the facet named by `facet`.
+      schema:
+        type: number
+        minimum: 0
+        maximum: 100
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
+    Tags:
+      name: tags
+      in: query
+      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
+      style: form
+      explode: false
+      example:
+      - Messaging
+      - Authentication
+      schema:
+        type: array
+        items:
           type: string
-          format: date
-          maxLength: 10
-        schema_version:
-          type: string
-          examples:
-          - '0.3'
           maxLength: 1024
-        facets:
-          $ref: '#/components/schemas/Facets'
-      required:
-      - composite
-      - band
+        maxItems: 1000
+    FacetFilter:
+      name: facet
+      in: query
+      description: Facet to apply `min_facet` against.
+      schema:
+        $ref: '#/components/schemas/FacetName'
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     UpgradeRequired:
       description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
       content:
@@ -809,125 +931,3 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
-  parameters:
-    ProviderSlug:
-      name: slug
-      in: path
-      required: true
-      description: Provider slug (e.g. `twilio`).
-      schema:
-        type: string
-        maxLength: 1024
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    BandFilter:
-      name: band
-      in: query
-      description: Filter by one or more rating bands.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Band'
-        maxItems: 1000
-    MinFacet:
-      name: min_facet
-      in: query
-      description: Minimum score (0–100) for the facet named by `facet`.
-      schema:
-        type: number
-        minimum: 0
-        maximum: 100
-    MinScore:
-      name: min_score
-      in: query
-      description: Minimum composite score (0–100).
-      schema:
-        type: number
-        minimum: 0
-        maximum: 100
-    TrendFilter:
-      name: trend
-      in: query
-      description: Filter by trend marker.
-      schema:
-        $ref: '#/components/schemas/Trend'
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    Tags:
-      name: tags
-      in: query
-      description: Comma-separated tags to filter by. Tag names are Title Case (e.g. Messaging); lowercase slugs (e.g. messaging) are also accepted.
-      style: form
-      explode: false
-      example:
-      - Messaging
-      - Authentication
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    MaxScore:
-      name: max_score
-      in: query
-      description: Maximum composite score (0–100).
-      schema:
-        type: number
-        minimum: 0
-        maximum: 100
-    FacetFilter:
-      name: facet
-      in: query
-      description: Facet to apply `min_facet` against.
-      schema:
-        $ref: '#/components/schemas/FacetName'
-    Providers:
-      name: providers
-      in: query
-      description: Comma-separated provider slugs to scope results to.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Format:
-      name: format
-      in: query
-      required: false
-      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
-      schema:
-        type: string
-        enum:
-        - csv
