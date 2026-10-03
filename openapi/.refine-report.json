@@ -57,7 +57,7 @@
     "apis-io-search-openapi.yaml: multi-axis tagging (2 tags, 1 first tags, 1.50x duplication over 2 operations) \u2014 split on first tag, 1 operations narrowed",
     "apis-io-v1-provider-control-openapi.yml: declared missing tag: Watches",
     "tag 'Search' spans 2 source specs (apis-io-search-openapi.yaml, apis-io-v1-search-openapi.yml): per-path servers applied",
-    "apis.yml register: written (+1 apis, 21 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "apis-io-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -68,6 +68,7 @@
     "apis-io-export-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-industries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-insights-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apis-io-prices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-provider-control-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-providers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "apis-io-ratings-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -178,52 +178,16 @@ paths:
           $ref: '#/components/responses/NotFound'
       x-tier: free
 components:
+  parameters:
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024
   schemas:
-    VcList:
-      type: object
-      description: Venture capital firms tracked against the catalog, as a paged collection.
-      required:
-      - data
-      - meta
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      additionalProperties: true
-    ProviderInvestors:
-      type: object
-      description: The investors recorded against a provider.
-      required:
-      - slug
-      - name
-      - investors
-      properties:
-        slug:
-          type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        investor_count:
-          type: integer
-        investors:
-          type: array
-          items:
-            type: object
-            properties:
-              slug:
-                type: string
-                maxLength: 128
-              name:
-                type: string
-                maxLength: 256
-            additionalProperties: true
-      additionalProperties: true
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -273,15 +237,51 @@ components:
       - title
       - status
       additionalProperties: true
-  parameters:
-    ProviderSlug:
-      name: slug
-      in: path
-      required: true
-      description: Provider slug (e.g. `twilio`).
-      schema:
-        type: string
-        maxLength: 1024
+    ProviderInvestors:
+      type: object
+      description: The investors recorded against a provider.
+      required:
+      - slug
+      - name
+      - investors
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        investor_count:
+          type: integer
+        investors:
+          type: array
+          items:
+            type: object
+            properties:
+              slug:
+                type: string
+                maxLength: 128
+              name:
+                type: string
+                maxLength: 256
+            additionalProperties: true
+      additionalProperties: true
+    VcList:
+      type: object
+      description: Venture capital firms tracked against the catalog, as a paged collection.
+      required:
+      - data
+      - meta
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
   responses:
     NotFound:
       description: Resource not found.

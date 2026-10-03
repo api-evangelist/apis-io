@@ -683,33 +683,87 @@ paths:
         '503':
           $ref: '#/components/responses/QueueUnreachable'
 components:
+  responses:
+    QueueUnreachable:
+      description: The request queue is not reachable. The response says where else to reach us — a request here is never dropped silently.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UpgradeRequired:
+      description: A valid credential below the required plan. An unauthenticated caller gets 401 with a bootstrap challenge instead.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: No such provider, or nothing stored for it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The body did not carry what this operation needs. The response names the fields.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    UpsertResult:
+    ReadinessGates:
       type: object
-      description: A write whose repeat behaviour is defined. `outcome` names which branch ran, so a caller retrying after a timeout can tell what the server did without re-reading the record.
-      allOf:
-      - $ref: '#/components/schemas/QueuedRequest'
-      - type: object
-        properties:
-          outcome:
-            type: string
-            enum:
-            - created
-            - amended
-            - unchanged
-            - already_claimed
-            description: created — a new request. amended — your open one was replaced, same id. unchanged — we already hold this, nothing queued. already_claimed — your existing claim, not a second.
-          previous:
-            type: object
-            description: On an amend
-            what the request held before.: null
-          revisions:
-            type: integer
-            description: How many times this request has been amended.
-          existing_of_type:
-            type: integer
-            description: On submit
-            how many pointers of this type we already hold.: null
+      description: What stands between this listing and the next agent-readiness band. Agent Readiness is additive, so a provider can reach a band's score floor and still be held below it by the band GATE — this says which, and what would satisfy it.
+      required:
+      - slug
+      - name
+      - current_band
+      - current_score
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        current_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        current_band:
+          type: string
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+          maxLength: 1024
+        band_gated_from:
+          type: string
+          description: The band this provider SCORED into but was demoted from by the gate. Absent when no demotion applied — a provider held at its scored band was not gated.
+          enum:
+          - agent-native
+          - agent-ready
+          - agent-aware
+          - human-only
+          maxLength: 1024
+        verdict:
+          type: string
+          description: One line saying where the provider stands and why.
+          maxLength: 2048
+        next_band:
+          $ref: '#/components/schemas/BandGate'
+        all_bands:
+          type: array
+          description: Every band with its floor and gate, so the whole ladder is visible at once.
+          items:
+            $ref: '#/components/schemas/BandGate'
+      additionalProperties: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        detail:
+          type: string
     BandGate:
       type: object
       description: One band's score floor and the gate guarding it.
@@ -790,86 +844,32 @@ components:
           type: string
         detail:
           type: string
-    ReadinessGates:
+    UpsertResult:
       type: object
-      description: What stands between this listing and the next agent-readiness band. Agent Readiness is additive, so a provider can reach a band's score floor and still be held below it by the band GATE — this says which, and what would satisfy it.
-      required:
-      - slug
-      - name
-      - current_band
-      - current_score
-      properties:
-        slug:
-          type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        current_score:
-          type: number
-          minimum: 0
-          maximum: 100
-        current_band:
-          type: string
-          enum:
-          - agent-native
-          - agent-ready
-          - agent-aware
-          - human-only
-          maxLength: 1024
-        band_gated_from:
-          type: string
-          description: The band this provider SCORED into but was demoted from by the gate. Absent when no demotion applied — a provider held at its scored band was not gated.
-          enum:
-          - agent-native
-          - agent-ready
-          - agent-aware
-          - human-only
-          maxLength: 1024
-        verdict:
-          type: string
-          description: One line saying where the provider stands and why.
-          maxLength: 2048
-        next_band:
-          $ref: '#/components/schemas/BandGate'
-        all_bands:
-          type: array
-          description: Every band with its floor and gate, so the whole ladder is visible at once.
-          items:
-            $ref: '#/components/schemas/BandGate'
-      additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        detail:
-          type: string
-  responses:
-    UpgradeRequired:
-      description: A valid credential below the required plan. An unauthenticated caller gets 401 with a bootstrap challenge instead.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    QueueUnreachable:
-      description: The request queue is not reachable. The response says where else to reach us — a request here is never dropped silently.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The body did not carry what this operation needs. The response names the fields.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: No such provider, or nothing stored for it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+      description: A write whose repeat behaviour is defined. `outcome` names which branch ran, so a caller retrying after a timeout can tell what the server did without re-reading the record.
+      allOf:
+      - $ref: '#/components/schemas/QueuedRequest'
+      - type: object
+        properties:
+          outcome:
+            type: string
+            enum:
+            - created
+            - amended
+            - unchanged
+            - already_claimed
+            description: created — a new request. amended — your open one was replaced, same id. unchanged — we already hold this, nothing queued. already_claimed — your existing claim, not a second.
+          previous:
+            type: object
+            description: On an amend
+            what the request held before.: null
+          revisions:
+            type: integer
+            description: How many times this request has been amended.
+          existing_of_type:
+            type: integer
+            description: On submit
+            how many pointers of this type we already hold.: null
   parameters:
     Slug:
       name: slug

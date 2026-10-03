@@ -109,6 +109,40 @@ components:
           type:
           - string
           - 'null'
+    WatchScoreChanged:
+      type: object
+      required:
+      - event
+      - slug
+      - name
+      - composite
+      - previous_composite
+      - delta
+      properties:
+        event:
+          type: string
+          const: provider.score.changed
+        slug:
+          type: string
+        name:
+          type: string
+        composite:
+          type: number
+          examples:
+          - 71.9
+        previous_composite:
+          type: number
+          description: What you were last TOLD, which is not necessarily the previous scoring run.
+          examples:
+          - 72.6
+        delta:
+          type: number
+          examples:
+          - -0.7
+        scored_at:
+          type:
+          - string
+          - 'null'
     WatchBandChanged:
       type: object
       required:
@@ -148,40 +182,6 @@ components:
           type:
           - number
           - 'null'
-        scored_at:
-          type:
-          - string
-          - 'null'
-    WatchScoreChanged:
-      type: object
-      required:
-      - event
-      - slug
-      - name
-      - composite
-      - previous_composite
-      - delta
-      properties:
-        event:
-          type: string
-          const: provider.score.changed
-        slug:
-          type: string
-        name:
-          type: string
-        composite:
-          type: number
-          examples:
-          - 71.9
-        previous_composite:
-          type: number
-          description: What you were last TOLD, which is not necessarily the previous scoring run.
-          examples:
-          - 72.6
-        delta:
-          type: number
-          examples:
-          - -0.7
         scored_at:
           type:
           - string

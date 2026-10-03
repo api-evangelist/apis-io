@@ -114,59 +114,55 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    RankedProvider:
+    Region:
       type: object
-      description: A provider summary as it appears in an industry or region membership list.
+      description: A geographic region grouping providers across the catalog.
       properties:
         slug:
           type: string
+          examples:
+          - southeast-asia
           maxLength: 1024
         name:
           type: string
+          examples:
+          - Southeast Asia
+          maxLength: 1024
+        short:
+          type: string
+          description: One-line summary.
           maxLength: 1024
         description:
           type: string
           maxLength: 20000
+        aliases:
+          type: array
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        name_patterns:
+          type: array
+          description: Country/nationality strings used to infer regional membership.
+          items:
+            type: string
+            maxLength: 1024
+          maxItems: 1000
+        provider_count:
+          type: integer
+          maximum: 1000
         api_count:
           type: integer
           maximum: 1000
-        image:
-          type: string
-          format: uri
-          maxLength: 2048
-        score_band:
-          $ref: '#/components/schemas/Band'
-        score_composite:
-          type: number
-          minimum: 0
-          maximum: 100
+        providers:
+          type: array
+          description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
+          items:
+            $ref: '#/components/schemas/RankedProvider'
+          maxItems: 1000
       required:
       - slug
       - name
-    Band:
-      type: string
-      description: Rating band derived from the composite score.
-      enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - emerging
-      - minimal
-      maxLength: 1024
-    RegionList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Region'
-          maxItems: 1000
-      required:
-      - meta
-      - data
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -243,56 +239,67 @@ components:
       - page
       - limit
       - pages
-    Region:
+    RankedProvider:
       type: object
-      description: A geographic region grouping providers across the catalog.
+      description: A provider summary as it appears in an industry or region membership list.
       properties:
         slug:
           type: string
-          examples:
-          - southeast-asia
           maxLength: 1024
         name:
           type: string
-          examples:
-          - Southeast Asia
-          maxLength: 1024
-        short:
-          type: string
-          description: One-line summary.
           maxLength: 1024
         description:
           type: string
           maxLength: 20000
-        aliases:
-          type: array
-          items:
-            type: string
-            maxLength: 1024
-          maxItems: 1000
-        name_patterns:
-          type: array
-          description: Country/nationality strings used to infer regional membership.
-          items:
-            type: string
-            maxLength: 1024
-          maxItems: 1000
-        provider_count:
-          type: integer
-          maximum: 1000
         api_count:
           type: integer
           maximum: 1000
-        providers:
-          type: array
-          description: Member providers, ranked by score. Returned on the single-region endpoint; omitted from list responses by default.
-          items:
-            $ref: '#/components/schemas/RankedProvider'
-          maxItems: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        score_band:
+          $ref: '#/components/schemas/Band'
+        score_composite:
+          type: number
+          minimum: 0
+          maximum: 100
       required:
       - slug
       - name
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+      - exemplar
+      - strong
+      - developing
+      - thin
+      - emerging
+      - minimal
+      maxLength: 1024
+    RegionList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Region'
+          maxItems: 1000
+      required:
+      - meta
+      - data
   parameters:
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
     Page:
       name: page
       in: query
@@ -323,14 +330,19 @@ components:
         minimum: 1
         maximum: 100
         default: 25
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
   responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -344,15 +356,3 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope

@@ -236,6 +236,18 @@ components:
             status: 403
             detail: The areas endpoint requires the Pro or Business tier.
             instance: /v1/areas
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
     BadRequest:
       description: Malformed request (bad parameter value).
       content:
@@ -249,18 +261,6 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
   schemas:
     Problem:
       type: object

@@ -414,16 +414,6 @@ paths:
           $ref: '#/components/responses/UpgradeRequired'
 components:
   responses:
-    AuthRequired:
-      description: The Saved Workspace needs a signed-in apis.io API key.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-          example:
-            error: auth_required
-            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
     UpgradeRequired:
       description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
       content:
@@ -436,19 +426,17 @@ components:
             status: 403
             detail: The areas endpoint requires the Pro or Business tier.
             instance: /v1/areas
-  schemas:
-    SavedListList:
-      type: object
-      description: The caller's saved lists. Keyed under `lists`, and not paged.
-      required:
-      - lists
-      properties:
-        lists:
-          type: array
-          items:
+    AuthRequired:
+      description: The Saved Workspace needs a signed-in apis.io API key.
+      content:
+        application/json:
+          schema:
             type: object
             additionalProperties: true
-      additionalProperties: true
+          example:
+            error: auth_required
+            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+  schemas:
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -505,6 +493,18 @@ components:
       - searches
       properties:
         searches:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+    SavedListList:
+      type: object
+      description: The caller's saved lists. Keyed under `lists`, and not paged.
+      required:
+      - lists
+      properties:
+        lists:
           type: array
           items:
             type: object

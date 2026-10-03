@@ -103,7 +103,268 @@ paths:
       security: []
       x-tier: free
 components:
+  parameters:
+    Page:
+      name: page
+      in: query
+      description: 1-based page number.
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        maximum: 1000000
+    Q:
+      name: q
+      in: query
+      description: Free-text query over name and description (and tags where applicable).
+      schema:
+        type: string
+        maxLength: 1024
+    Fields:
+      name: fields
+      in: query
+      description: Sparse fieldset — comma-separated property names to return.
+      style: form
+      explode: false
+      schema:
+        type: array
+        items:
+          type: string
+          maxLength: 1024
+        maxItems: 1000
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - csv
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
   schemas:
+    Problem:
+      type: object
+      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
+
+        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
+
+        added alongside the standard fields.
+
+        '
+      properties:
+        type:
+          type: string
+          format: uri
+          default: about:blank
+          description: A URI identifying the problem type; dereferences to human-readable docs.
+          examples:
+          - https://apis.io/problems/invalid-parameter
+          maxLength: 2048
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+          examples:
+          - Invalid parameter
+          maxLength: 1024
+        status:
+          type: integer
+          minimum: 100
+          maximum: 599
+          description: The HTTP status code, repeated for convenience.
+          examples:
+          - 400
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence.
+          maxLength: 20000
+        instance:
+          type: string
+          format: uri-reference
+          description: A URI reference identifying the specific occurrence (typically the request path).
+          maxLength: 2048
+        parameter:
+          type: string
+          description: Extension member — the offending query/path parameter, when applicable.
+          maxLength: 1024
+      required:
+      - type
+      - title
+      - status
+      additionalProperties: true
+    Provider:
+      type: object
+      description: An organization publishing one or more APIs.
+      properties:
+        slug:
+          type: string
+          examples:
+          - twilio
+          maxLength: 1024
+        name:
+          type: string
+          maxLength: 1024
+        description:
+          type: string
+          maxLength: 20000
+        api_count:
+          type: integer
+          maximum: 1000
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+        created:
+          type: string
+          format: date
+          maxLength: 10
+        common:
+          type: array
+          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
+          items:
+            $ref: '#/components/schemas/Link'
+          maxItems: 1000
+        apis:
+          type: array
+          description: Summary list of the provider's APIs.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                maxLength: 1024
+              slug:
+                type: string
+                maxLength: 1024
+              description:
+                type: string
+                maxLength: 20000
+          maxItems: 1000
+        tags:
+          type: array
+          description: Tag names in Title Case (e.g. Messaging, Authentication).
+          items:
+            type: string
+            maxLength: 1024
+          examples:
+          - - Messaging
+            - Authentication
+          maxItems: 1000
+        score:
+          $ref: '#/components/schemas/ProviderScore'
+      required:
+      - slug
+      - name
+    Meta:
+      type: object
+      description: Pagination and echoed-query metadata for collection responses.
+      properties:
+        total:
+          type: integer
+          description: Total matching items across all pages.
+          maximum: 1000000
+        page:
+          type: integer
+          maximum: 1000000
+        limit:
+          type: integer
+          maximum: 1000
+        pages:
+          type: integer
+          description: Total number of pages.
+          maximum: 1000000
+        query:
+          type: object
+          additionalProperties: true
+          description: The effective query parameters, echoed back.
+      required:
+      - total
+      - page
+      - limit
+      - pages
+    Band:
+      type: string
+      description: Rating band derived from the composite score.
+      enum:
+      - exemplar
+      - strong
+      - developing
+      - thin
+      - emerging
+      - minimal
+      maxLength: 1024
+    TagList:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          maxItems: 1000
+      required:
+      - meta
+      - data
+    Facets:
+      type: object
+      description: The six facet scores, each 0–100.
+      properties:
+        discoverability:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Discoverability facet score (weight 0.10).
+        contract_quality:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Contract Quality facet score (weight 0.25).
+        governance:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Governance facet score (weight 0.12).
+        operational_transparency:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Operational Transparency facet score (weight 0.13).
+        developer_ergonomics:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Developer Ergonomics facet score (weight 0.20).
+        commercial_clarity:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Commercial Clarity facet score (weight 0.20).
+    Link:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
+          maxLength: 1024
+        url:
+          type: string
+          format: uri
+          maxLength: 2048
+        title:
+          type: string
+          maxLength: 1024
+      required:
+      - type
+      - url
     Tag:
       type: object
       description: A tag in the taxonomy, with network-wide ranking metadata.
@@ -180,40 +441,6 @@ components:
       required:
       - slug
       - name
-    Facets:
-      type: object
-      description: The six facet scores, each 0–100.
-      properties:
-        discoverability:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Discoverability facet score (weight 0.10).
-        contract_quality:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Contract Quality facet score (weight 0.25).
-        governance:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Governance facet score (weight 0.12).
-        operational_transparency:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Operational Transparency facet score (weight 0.13).
-        developer_ergonomics:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Developer Ergonomics facet score (weight 0.20).
-        commercial_clarity:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Commercial Clarity facet score (weight 0.20).
     Trend:
       type: string
       description: Week-over-week movement in composite score (±5 thresholds).
@@ -222,186 +449,6 @@ components:
       - flat
       - falling
       maxLength: 1024
-    TagList:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Tag'
-          maxItems: 1000
-      required:
-      - meta
-      - data
-    Provider:
-      type: object
-      description: An organization publishing one or more APIs.
-      properties:
-        slug:
-          type: string
-          examples:
-          - twilio
-          maxLength: 1024
-        name:
-          type: string
-          maxLength: 1024
-        description:
-          type: string
-          maxLength: 20000
-        api_count:
-          type: integer
-          maximum: 1000
-        image:
-          type: string
-          format: uri
-          maxLength: 2048
-        created:
-          type: string
-          format: date
-          maxLength: 10
-        common:
-          type: array
-          description: Provider-wide links (Website, Docs, Pricing, GitHub, social, …).
-          items:
-            $ref: '#/components/schemas/Link'
-          maxItems: 1000
-        apis:
-          type: array
-          description: Summary list of the provider's APIs.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                maxLength: 1024
-              slug:
-                type: string
-                maxLength: 1024
-              description:
-                type: string
-                maxLength: 20000
-          maxItems: 1000
-        tags:
-          type: array
-          description: Tag names in Title Case (e.g. Messaging, Authentication).
-          items:
-            type: string
-            maxLength: 1024
-          examples:
-          - - Messaging
-            - Authentication
-          maxItems: 1000
-        score:
-          $ref: '#/components/schemas/ProviderScore'
-      required:
-      - slug
-      - name
-    Band:
-      type: string
-      description: Rating band derived from the composite score.
-      enum:
-      - exemplar
-      - strong
-      - developing
-      - thin
-      - emerging
-      - minimal
-      maxLength: 1024
-    Link:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Link/relationship type (e.g. Documentation, Website, GitHub, Pricing).
-          maxLength: 1024
-        url:
-          type: string
-          format: uri
-          maxLength: 2048
-        title:
-          type: string
-          maxLength: 1024
-      required:
-      - type
-      - url
-    Problem:
-      type: object
-      description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
-
-        Served as `application/problem+json`. Extension members (e.g. `parameter`) may be
-
-        added alongside the standard fields.
-
-        '
-      properties:
-        type:
-          type: string
-          format: uri
-          default: about:blank
-          description: A URI identifying the problem type; dereferences to human-readable docs.
-          examples:
-          - https://apis.io/problems/invalid-parameter
-          maxLength: 2048
-        title:
-          type: string
-          description: A short, human-readable summary of the problem type.
-          examples:
-          - Invalid parameter
-          maxLength: 1024
-        status:
-          type: integer
-          minimum: 100
-          maximum: 599
-          description: The HTTP status code, repeated for convenience.
-          examples:
-          - 400
-        detail:
-          type: string
-          description: A human-readable explanation specific to this occurrence.
-          maxLength: 20000
-        instance:
-          type: string
-          format: uri-reference
-          description: A URI reference identifying the specific occurrence (typically the request path).
-          maxLength: 2048
-        parameter:
-          type: string
-          description: Extension member — the offending query/path parameter, when applicable.
-          maxLength: 1024
-      required:
-      - type
-      - title
-      - status
-      additionalProperties: true
-    Meta:
-      type: object
-      description: Pagination and echoed-query metadata for collection responses.
-      properties:
-        total:
-          type: integer
-          description: Total matching items across all pages.
-          maximum: 1000000
-        page:
-          type: integer
-          maximum: 1000000
-        limit:
-          type: integer
-          maximum: 1000
-        pages:
-          type: integer
-          description: Total number of pages.
-          maximum: 1000000
-        query:
-          type: object
-          additionalProperties: true
-          description: The effective query parameters, echoed back.
-      required:
-      - total
-      - page
-      - limit
-      - pages
     TagRef:
       type: object
       properties:
@@ -450,53 +497,6 @@ components:
       required:
       - composite
       - band
-  parameters:
-    Page:
-      name: page
-      in: query
-      description: 1-based page number.
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        maximum: 1000000
-    Format:
-      name: format
-      in: query
-      required: false
-      description: Set to `csv` for a spreadsheet-ready response on row-shaped endpoints. Defaults to JSON.
-      schema:
-        type: string
-        enum:
-        - csv
-    Fields:
-      name: fields
-      in: query
-      description: Sparse fieldset — comma-separated property names to return.
-      style: form
-      explode: false
-      schema:
-        type: array
-        items:
-          type: string
-          maxLength: 1024
-        maxItems: 1000
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-    Q:
-      name: q
-      in: query
-      description: Free-text query over name and description (and tags where applicable).
-      schema:
-        type: string
-        maxLength: 1024
   responses:
     NotFound:
       description: Resource not found.
