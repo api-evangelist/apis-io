@@ -178,15 +178,19 @@ paths:
           $ref: '#/components/responses/NotFound'
       x-tier: free
 components:
-  parameters:
-    ProviderSlug:
-      name: slug
-      in: path
-      required: true
-      description: Provider slug (e.g. `twilio`).
-      schema:
-        type: string
-        maxLength: 1024
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
   schemas:
     Problem:
       type: object
@@ -237,6 +241,22 @@ components:
       - title
       - status
       additionalProperties: true
+    VcList:
+      type: object
+      description: Venture capital firms tracked against the catalog, as a paged collection.
+      required:
+      - data
+      - meta
+      properties:
+        meta:
+          type: object
+          additionalProperties: true
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
     ProviderInvestors:
       type: object
       description: The investors recorded against a provider.
@@ -266,32 +286,12 @@ components:
                 maxLength: 256
             additionalProperties: true
       additionalProperties: true
-    VcList:
-      type: object
-      description: Venture capital firms tracked against the catalog, as a paged collection.
-      required:
-      - data
-      - meta
-      properties:
-        meta:
-          type: object
-          additionalProperties: true
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      additionalProperties: true
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope
+  parameters:
+    ProviderSlug:
+      name: slug
+      in: path
+      required: true
+      description: Provider slug (e.g. `twilio`).
+      schema:
+        type: string
+        maxLength: 1024

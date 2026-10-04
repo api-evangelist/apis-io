@@ -40,40 +40,34 @@ paths:
                 $ref: '#/components/schemas/PriceMap'
 components:
   schemas:
-    PriceRow:
+    Band:
       type: object
       required:
-      - key
       - band
-      - purchasable
+      - description
       properties:
-        key:
-          type: string
-          description: 'The resource key this price applies to — the method and the meaningful sub-path, not a full URL. Keys name the resource, never the entity: `providers.rating.facets`, never `/v1/providers/stripe/rating/facets`.'
-          examples:
-          - GET ratings
-          - POST checks
         band:
           type: string
-          nullable: true
-          description: The band that prices this key. Null when the resource is not purchasable.
+          description: Band identifier, as named by every price row and by the `x-price-band` response header.
           examples:
           - B2
         description:
           type: string
-          description: What the band means, repeated on the row so one row is readable alone.
+          description: What kind of work the band buys.
+          examples:
+          - cross-catalog synthesis
         usd:
           type: number
-          description: Flat per-call price for this key, when its band carries one.
+          description: Flat per-call price. Absent on a band priced per row or charged as a one-off.
         usd_per_row:
           type: number
-          description: Per-row price, on a per-row band.
+          description: Per-row price, on a band metered by rows delivered rather than by call.
         usd_minimum:
           type: number
-          description: Floor charged for a per-row key however few rows are returned.
-        purchasable:
+          description: Floor for a per-row band, so a small page of a licensed dataset is not sold for a fraction of a cent.
+        flat:
           type: boolean
-          description: 'False marks an owner-only resource that can never be bought at any price. It is not the same as free — a free resource is `purchasable: true` in band `B0`.'
+          description: True when the band is not a per-call price at all — a one-off charge with its own receipt, outside any prepaid balance.
     PriceMap:
       type: object
       required:
@@ -114,31 +108,37 @@ components:
           description: One row per priced resource key.
           items:
             $ref: '#/components/schemas/PriceRow'
-    Band:
+    PriceRow:
       type: object
       required:
+      - key
       - band
-      - description
+      - purchasable
       properties:
+        key:
+          type: string
+          description: 'The resource key this price applies to — the method and the meaningful sub-path, not a full URL. Keys name the resource, never the entity: `providers.rating.facets`, never `/v1/providers/stripe/rating/facets`.'
+          examples:
+          - GET ratings
+          - POST checks
         band:
           type: string
-          description: Band identifier, as named by every price row and by the `x-price-band` response header.
+          nullable: true
+          description: The band that prices this key. Null when the resource is not purchasable.
           examples:
           - B2
         description:
           type: string
-          description: What kind of work the band buys.
-          examples:
-          - cross-catalog synthesis
+          description: What the band means, repeated on the row so one row is readable alone.
         usd:
           type: number
-          description: Flat per-call price. Absent on a band priced per row or charged as a one-off.
+          description: Flat per-call price for this key, when its band carries one.
         usd_per_row:
           type: number
-          description: Per-row price, on a band metered by rows delivered rather than by call.
+          description: Per-row price, on a per-row band.
         usd_minimum:
           type: number
-          description: Floor for a per-row band, so a small page of a licensed dataset is not sold for a fraction of a cent.
-        flat:
+          description: Floor charged for a per-row key however few rows are returned.
+        purchasable:
           type: boolean
-          description: True when the band is not a per-call price at all — a one-off charge with its own receipt, outside any prepaid balance.
+          description: 'False marks an owner-only resource that can never be bought at any price. It is not the same as free — a free resource is `purchasable: true` in band `B0`.'

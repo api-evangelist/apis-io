@@ -413,30 +413,19 @@ paths:
         '402':
           $ref: '#/components/responses/UpgradeRequired'
 components:
-  responses:
-    UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/upgrade-required
-            title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
-    AuthRequired:
-      description: The Saved Workspace needs a signed-in apis.io API key.
-      content:
-        application/json:
-          schema:
+  schemas:
+    SavedSearchList:
+      type: object
+      description: The caller's saved searches. Keyed under `searches` rather than `data` — this is a personal workspace, not a catalog collection, and it is not paged.
+      required:
+      - searches
+      properties:
+        searches:
+          type: array
+          items:
             type: object
             additionalProperties: true
-          example:
-            error: auth_required
-            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
-  schemas:
+      additionalProperties: true
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -486,18 +475,6 @@ components:
       - title
       - status
       additionalProperties: true
-    SavedSearchList:
-      type: object
-      description: The caller's saved searches. Keyed under `searches` rather than `data` — this is a personal workspace, not a catalog collection, and it is not paged.
-      required:
-      - searches
-      properties:
-        searches:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      additionalProperties: true
     SavedListList:
       type: object
       description: The caller's saved lists. Keyed under `lists`, and not paged.
@@ -510,6 +487,29 @@ components:
             type: object
             additionalProperties: true
       additionalProperties: true
+  responses:
+    AuthRequired:
+      description: The Saved Workspace needs a signed-in apis.io API key.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          example:
+            error: auth_required
+            detail: The saved workspace needs a signed-in apis.io API key. Get one at https://apis.io/developer/.
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

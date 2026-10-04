@@ -249,6 +249,21 @@ components:
           type: string
           maxLength: 2048
       additionalProperties: true
+    InsightDimensionList:
+      type: object
+      description: The dimensions the insights corpus is organised by, as a paged collection.
+      required:
+      - data
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/InsightsMeta'
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
     Problem:
       type: object
       description: 'A Problem Details object per [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457).
@@ -298,37 +313,6 @@ components:
       - title
       - status
       additionalProperties: true
-    InsightCompanyList:
-      type: object
-      description: Companies in the insights corpus, as a paged collection.
-      required:
-      - data
-      - meta
-      properties:
-        meta:
-          $ref: '#/components/schemas/InsightsMeta'
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      additionalProperties: true
-    InsightsMeta:
-      type: object
-      description: Pagination and echoed-query metadata for insights collections.
-      properties:
-        total:
-          type: integer
-        page:
-          type: integer
-        limit:
-          type: integer
-        pages:
-          type: integer
-        query:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     InsightsSummary:
       type: object
       description: 'The insights corpus in one call — what it covers, how it was assembled, and which dimensions carry the most signal. Read `meta` before quoting any number from it: this corpus is joined from company research rather than measured from contracts, and `meta` is where its basis and caveats are stated.'
@@ -367,9 +351,9 @@ components:
           description: Provenance and caveats — how companies were joined, which quarter is primary, what the adoption basis is, and what the numbers do NOT mean.
           additionalProperties: true
       additionalProperties: true
-    InsightDimensionList:
+    InsightCompanyList:
       type: object
-      description: The dimensions the insights corpus is organised by, as a paged collection.
+      description: Companies in the insights corpus, as a paged collection.
       required:
       - data
       - meta
@@ -380,94 +364,6 @@ components:
           type: array
           items:
             type: object
-            additionalProperties: true
-      additionalProperties: true
-    InsightAdoptionList:
-      type: object
-      description: Adoption signal per dimension, as a paged collection.
-      required:
-      - data
-      - meta
-      properties:
-        meta:
-          $ref: '#/components/schemas/InsightsMeta'
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-      additionalProperties: true
-    CompanyInsight:
-      type: object
-      description: 'One company''s technology signal — what the corpus observed, by quarter. This is RESEARCH, not a contract measurement: `confidence` and `source` say how far to trust it, and `note` carries the caveat that applies to this particular company.'
-      required:
-      - slug
-      - name
-      properties:
-        slug:
-          type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        industry:
-          type: string
-          maxLength: 256
-        sub_sector:
-          type: string
-          maxLength: 256
-        confidence:
-          type: string
-          description: How well evidenced this company's signal is.
-          maxLength: 64
-        source:
-          type: string
-          description: Where the signal came from.
-          maxLength: 256
-        current:
-          type: object
-          description: The most recent quarter's signal — totals plus the leading tools and standards.
-          additionalProperties: true
-        quarters:
-          type: object
-          description: Signal by quarter, keyed by quarter id such as `q2-2026`.
-          additionalProperties: true
-        note:
-          type: string
-          maxLength: 2048
-      additionalProperties: true
-    CompanyGaps:
-      type: object
-      description: Where a company's observed signal is thin, by dimension — the gaps an integrator or a vendor would care about.
-      required:
-      - slug
-      - name
-      - gaps
-      properties:
-        slug:
-          type: string
-          maxLength: 128
-        name:
-          type: string
-          maxLength: 256
-        industry:
-          type: string
-          maxLength: 256
-        readiness_total:
-          type: integer
-          description: Summed readiness across dimensions.
-        gaps:
-          type: array
-          description: One entry per dimension, lowest score first.
-          items:
-            type: object
-            properties:
-              dimension:
-                type: string
-                maxLength: 256
-              score:
-                type: integer
-                description: Observed signal for this dimension.
             additionalProperties: true
       additionalProperties: true
     CompanyProviderMatch:
@@ -512,7 +408,133 @@ components:
           type: string
           maxLength: 2048
       additionalProperties: true
+    InsightAdoptionList:
+      type: object
+      description: Adoption signal per dimension, as a paged collection.
+      required:
+      - data
+      - meta
+      properties:
+        meta:
+          $ref: '#/components/schemas/InsightsMeta'
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+    CompanyGaps:
+      type: object
+      description: Where a company's observed signal is thin, by dimension — the gaps an integrator or a vendor would care about.
+      required:
+      - slug
+      - name
+      - gaps
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        industry:
+          type: string
+          maxLength: 256
+        readiness_total:
+          type: integer
+          description: Summed readiness across dimensions.
+        gaps:
+          type: array
+          description: One entry per dimension, lowest score first.
+          items:
+            type: object
+            properties:
+              dimension:
+                type: string
+                maxLength: 256
+              score:
+                type: integer
+                description: Observed signal for this dimension.
+            additionalProperties: true
+      additionalProperties: true
+    CompanyInsight:
+      type: object
+      description: 'One company''s technology signal — what the corpus observed, by quarter. This is RESEARCH, not a contract measurement: `confidence` and `source` say how far to trust it, and `note` carries the caveat that applies to this particular company.'
+      required:
+      - slug
+      - name
+      properties:
+        slug:
+          type: string
+          maxLength: 128
+        name:
+          type: string
+          maxLength: 256
+        industry:
+          type: string
+          maxLength: 256
+        sub_sector:
+          type: string
+          maxLength: 256
+        confidence:
+          type: string
+          description: How well evidenced this company's signal is.
+          maxLength: 64
+        source:
+          type: string
+          description: Where the signal came from.
+          maxLength: 256
+        current:
+          type: object
+          description: The most recent quarter's signal — totals plus the leading tools and standards.
+          additionalProperties: true
+        quarters:
+          type: object
+          description: Signal by quarter, keyed by quarter id such as `q2-2026`.
+          additionalProperties: true
+        note:
+          type: string
+          maxLength: 2048
+      additionalProperties: true
+    InsightsMeta:
+      type: object
+      description: Pagination and echoed-query metadata for insights collections.
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        pages:
+          type: integer
+        query:
+          type: object
+          additionalProperties: true
+      additionalProperties: true
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/not-found
+            title: Resource not found
+            status: 404
+            detail: No API found with aid `twilio:nope`.
+            instance: /v1/apis/twilio:nope
   parameters:
+    Limit:
+      name: limit
+      in: query
+      description: Items per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 25
     Page:
       name: page
       in: query
@@ -529,25 +551,3 @@ components:
       schema:
         type: string
         maxLength: 1024
-    Limit:
-      name: limit
-      in: query
-      description: Items per page.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 100
-        default: 25
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/not-found
-            title: Resource not found
-            status: 404
-            detail: No API found with aid `twilio:nope`.
-            instance: /v1/apis/twilio:nope

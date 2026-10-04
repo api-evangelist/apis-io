@@ -224,18 +224,6 @@ paths:
           $ref: '#/components/responses/BadRequest'
 components:
   responses:
-    UpgradeRequired:
-      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
-      content:
-        application/problem+json:
-          schema:
-            $ref: '#/components/schemas/Problem'
-          example:
-            type: https://apis.io/problems/upgrade-required
-            title: Upgrade required
-            status: 403
-            detail: The areas endpoint requires the Pro or Business tier.
-            instance: /v1/areas
     NotFound:
       description: Resource not found.
       content:
@@ -261,6 +249,18 @@ components:
             detail: '`match` must be one of: any, all.'
             instance: /v1/search
             parameter: match
+    UpgradeRequired:
+      description: This operation requires the Pro tier. Send a valid `X-API-Key` for a paid tier.
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+          example:
+            type: https://apis.io/problems/upgrade-required
+            title: Upgrade required
+            status: 403
+            detail: The areas endpoint requires the Pro or Business tier.
+            instance: /v1/areas
   schemas:
     Problem:
       type: object
