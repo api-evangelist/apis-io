@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: APIs.io Insights API
   version: 1.5.0
-  description: 'Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+  description: 'Demand-side intelligence — what 6,572 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Q3 2026 is the first quarter in the series. Every route requires the Understanding plan.
 
 
     This is the Insights surface of the APIs.io API — one of 17 contracts split from the full API by tag, each documented and governed on its own. See the APIs.json index for the whole set.'
@@ -17,7 +17,7 @@ servers:
   description: Production server.
 tags:
 - name: Insights
-  description: Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery is free; per-company depth, gaps, and provider matches are Pro.
+  description: Demand-side intelligence — what 6,572 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Q3 2026 is the first quarter in the series. Every route requires the Understanding plan.
 paths:
   /insights:
     get:
@@ -25,7 +25,7 @@ paths:
       tags:
       - Insights
       summary: Insights overview
-      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Free.
+      description: Company/dimension/adoption counts and the top investment dimensions across the profiled set. Understanding plan.
       responses:
         '200':
           description: Insights summary.
@@ -34,7 +34,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InsightsSummary'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/dimensions:
     get:
       operationId: listInsightDimensions
@@ -42,7 +42,7 @@ paths:
       tags:
       - Insights
       summary: Rank the investment dimensions
-      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Free.
+      description: The 40 tracked technology & organizational dimensions ranked by how many companies show signal. Understanding plan.
       parameters:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -54,7 +54,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InsightDimensionList'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/adoption:
     get:
       operationId: listInsightAdoption
@@ -62,7 +62,7 @@ paths:
       tags:
       - Insights
       summary: Services / tools / standards by adoption
-      description: Technologies ranked by how many companies adopt them. Free.
+      description: Technologies ranked by how many companies adopt them. Understanding plan.
       parameters:
       - name: type
         in: query
@@ -85,14 +85,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/InsightAdoptionList'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/industries:
     get:
       operationId: listInsightIndustries
       tags:
       - Insights
       summary: Industry rollup
-      description: Profiled sectors with company counts. Free.
+      description: Profiled sectors with company counts. Understanding plan.
       responses:
         '200':
           description: Industry rollup.
@@ -101,7 +101,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InsightIndustryList'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/companies:
     get:
       operationId: listInsightCompanies
@@ -109,7 +109,7 @@ paths:
       tags:
       - Insights
       summary: Browse profiled companies
-      description: Companies ranked by overall technology-readiness signal; filter by name. Free (top-line fields).
+      description: Companies ranked by overall technology-readiness signal; filter by name. Understanding plan.
       parameters:
       - $ref: '#/components/parameters/Q'
       - $ref: '#/components/parameters/Page'
@@ -122,7 +122,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InsightCompanyList'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/company/{slug}:
     get:
       operationId: getCompanyInsight
@@ -130,7 +130,7 @@ paths:
       tags:
       - Insights
       summary: One company's demand-side profile
-      description: Free returns a thin preview; Pro returns the full 40-dimension profile, adopted stack, and per-quarter history.
+      description: The full 40-dimension profile, adopted stack, and per-quarter history. Understanding plan.
       parameters:
       - name: slug
         in: path
@@ -149,7 +149,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
       security: []
-      x-tier: free
+      x-tier: pro
   /insights/company/{slug}/gaps:
     get:
       operationId: getCompanyGaps
@@ -490,7 +490,7 @@ components:
           additionalProperties: true
         quarters:
           type: object
-          description: Signal by quarter, keyed by quarter id such as `q2-2026`.
+          description: Signal by quarter, keyed by quarter id such as `q3-2026`.
           additionalProperties: true
         note:
           type: string

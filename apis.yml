@@ -216,9 +216,8 @@ apis:
 - aid: apis-io:apis-io-insights-api
   name: APIs.io Insights API
   description: >-
-    Demand-side intelligence — what ~5,800 companies (Fortune 1000 + API providers) build, buy, and hire
-    for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Discovery
-    is free; per-company depth, gaps, and provider matches are Pro.
+    Demand-side intelligence — what 6,572 companies (Fortune 1000 + API providers) build, buy, and hire
+    for around APIs, data, and AI, derived from job postings, press, and engineering blogs. Q3 2026 is the first quarter in the series. Requires the Understanding plan.
   humanURL: https://apis.io/developer/overview/
   baseURL: https://apis.io/api/v1
   tags:
