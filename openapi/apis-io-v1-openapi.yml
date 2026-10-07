@@ -567,6 +567,20 @@ paths:
           - score
           default: relevance
           maxLength: 1024
+      - name: platform
+        in: query
+        required: false
+        description: 'Providers running on these platform vendors (comma-separated), by registry key or catalog slug — mintlify, readme, gitbook, redocly, apigee, kong, cloudflare, vercel. "Who are Mintlify''s customers" is platform=mintlify. Each row carries `platforms` with its evidence (CNAME, fingerprint, markup). Detection covers ~1,240 providers; absent means not detected. roadmap#555.'
+        schema:
+          type: string
+          maxLength: 1024
+      - name: platform_area
+        in: query
+        required: false
+        description: Narrow platform matching to one area — documentation, developer-portal, api-gateway, hosting, cdn, status-page, support, identity, mcp-hosting.
+        schema:
+          type: string
+          maxLength: 1024
       - $ref: '#/components/parameters/Fields'
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
@@ -3072,11 +3086,23 @@ paths:
       - $ref: '#/components/parameters/Match'
       - $ref: '#/components/parameters/Include'
       - $ref: '#/components/parameters/ArtifactSort'
+      - name: billing_model
+        in: query
+        required: false
+        description: 'Substring of the FinOps pricing category (`meta.billing_model`, e.g. subscription, usage, prepaid, take rate). Declared on find_finops since the collection shipped but undocumented here, missing from the known-parameter list, and compared against a dict — so it had never matched anything (roadmap#941).'
+        schema:
+          type: string
+      - name: method
+        in: query
+        required: false
+        description: 'Who wrote the artifact (roadmap#941): searched (transcribed verbatim from the provider''s page, dated in `meta.provenance_date`), probed (read from the live surface), generated (an API Evangelist sweep, unverified), derived, unmarked (no authorship recorded — never the provider''s). Substring match on `meta.method`; a record built before 2026-10-09 carries no method and never matches.'
+        schema:
+          type: string
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of finops artifacts with owning API and provider context.
+          description: 'A page of finops artifacts with owning API and provider context. `meta.billing_model` is the pricing category string; records built since 2026-10-09 also carry method, provenance_date, primary_unit (what the provider bills by), discount_count and template (true for sweep output that restates the FinOps framework without a unit, meters or a pricing category).'
           content:
             application/json:
               schema:
@@ -3161,11 +3187,31 @@ paths:
       - $ref: '#/components/parameters/Match'
       - $ref: '#/components/parameters/Include'
       - $ref: '#/components/parameters/ArtifactSort'
+      - name: audience
+        in: query
+        required: false
+        description: 'Who the pricing page prices for (roadmap#941): developer-api (API or platform usage), business-product (the product the API comes with — the API is not priced alone), consumer (a fee schedule, not API pricing), unclear. Substring match on `meta.audience`.'
+        schema:
+          type: string
+          enum: [developer-api, business-product, consumer, unclear]
+      - name: pricing_basis
+        in: query
+        required: false
+        description: 'How the page prices: per-call, per-seat, ad-valorem, flat-platform, tiered-subscription, usage-other, negotiated (no number published), free, none. Substring match on `meta.pricing_basis`.'
+        schema:
+          type: string
+          enum: [per-call, per-seat, ad-valorem, flat-platform, tiered-subscription, usage-other, negotiated, free, none]
+      - name: method
+        in: query
+        required: false
+        description: 'Who wrote the artifact (roadmap#941): searched (transcribed verbatim from the provider''s page, dated in `meta.provenance_date`), probed (read from the live surface), generated (an API Evangelist sweep, unverified), derived, unmarked (no authorship recorded — never the provider''s). Substring match on `meta.method`; a record built before 2026-10-09 carries no method and never matches.'
+        schema:
+          type: string
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of plans with owning API and provider context.
+          description: 'A page of plans with owning API and provider context. `meta` carries plan_count and, for records built since 2026-10-09, method, provenance_date, shape (harvest = verbatim price_text rows / commons = API Commons entries / prose / empty), audience, pricing_basis, delivery_model, prices_published (false = the provider publishes no price, a finding not a gap), priced and stale (a priced file read more than 90 days ago).'
           content:
             application/json:
               schema:
@@ -3243,11 +3289,17 @@ paths:
       - $ref: '#/components/parameters/Match'
       - $ref: '#/components/parameters/Include'
       - $ref: '#/components/parameters/ArtifactSort'
+      - name: method
+        in: query
+        required: false
+        description: 'Who wrote the artifact (roadmap#941): searched (transcribed verbatim from the provider''s page, dated in `meta.provenance_date`), probed (read from the live surface), generated (an API Evangelist sweep, unverified), derived, unmarked (no authorship recorded — never the provider''s). Substring match on `meta.method`; a record built before 2026-10-09 carries no method and never matches.'
+        schema:
+          type: string
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       responses:
         '200':
-          description: A page of rate limits with owning API and provider context.
+          description: 'A page of rate limits with owning API and provider context. `meta` carries limit_count and, for records built since 2026-10-09, method, provenance_date, shape, exceeded_status (the HTTP status an exhausted limit returns) and headers (the response headers that carry live limit state).'
           content:
             application/json:
               schema:
@@ -4386,8 +4438,10 @@ paths:
       tags:
       - Synthesis
       summary: Compare providers side by side (Pro).
-      description: Compares 2+ providers — composite/band, per-facet leaders, and an artifact-coverage matrix. Pro
-        tier.
+      description: Compares 2+ providers — composite/band, per-facet leaders, an artifact-coverage matrix, and each
+        provider's `economics` (audience, pricing basis, delivery, graded entry cost in USD/month and marginal cost per
+        unit, each naming the plan and the quoted figure it came from and the date it was read); `cheapest_entry` names
+        the cheapest published way in and `economics_basis` the stamp date and grade legend (roadmap#941). Pro tier.
       parameters:
       - name: providers
         in: query
@@ -5424,63 +5478,52 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  generated_note: stamp date at deploy — Date.now() unavailable in this harness
+                  generated: '2026-09-25'
                   quarters:
                   - q1-2026
-                  - q2-2026
-                  primary_quarter: q2-2026
-                  companies: 5804
-                  companies_f1000: 947
-                  companies_from_blogs: 4857
-                  companies_with_q1: 295
-                  q1_note: Q1 partial (~316 cos) + method-drifted vs Q2; served flagged, NOT diffed. See time-series.md.
-                  sources: jobs + press (F1000). Provider/blog corpus extraction pending — see ingestion-evaluation.md.
-                  matcher: hardened (word-boundary + stoplist, re-extracted from job corpus)
-                  adoption_basis: recomputed company counts from cleaned stacks
-                  corpus_audit:
-                    date: '2026-08-06'
-                    withheld_companies: 113
-                    reason: Attribution audit of all 879 job corpora found these accounts holding another company's
-                      job board — the pull matched on company NAME and followed a vendor or partner's board. Per-company
-                      demand figures for them are withheld.
-                    caveat: Aggregate figures below — dimensions, adoption and provider_demand — were computed before
-                      this audit and still include the withheld corpora. They are being rebuilt.
-                    reference: https://github.com/api-evangelist/roadmap/issues/17
+                  - q3-2026
+                  primary_quarter: q3-2026
+                  companies: 6572
+                  companies_f1000: 1362
+                  companies_from_blogs: 5210
+                  companies_with_q1: 259
+                  q1_note: "Q1 partial (~316 cos), pre-hardening; served flagged, NOT diffed. q1 and q2 were retired as baselines 2026-08-07 — Q3 is the first point in the series and Q4 the first reportable delta."
+                  matcher: "hardened (word-boundary + stoplist, re-extracted from job corpus)"
                 top_dimensions:
                 - dimension: data
-                  total_signal: 40111
-                  companies_with_signal: 817
+                  total_signal: 50041
+                  companies_with_signal: 1233
                 - dimension: operations
-                  total_signal: 27084
-                  companies_with_signal: 840
+                  total_signal: 35013
+                  companies_with_signal: 1231
                 - dimension: cloud
-                  total_signal: 24024
-                  companies_with_signal: 807
+                  total_signal: 30002
+                  companies_with_signal: 1160
                 - dimension: roiBusinessMetrics
-                  total_signal: 22814
-                  companies_with_signal: 780
-                - dimension: governance
-                  total_signal: 22153
-                  companies_with_signal: 827
+                  total_signal: 28955
+                  companies_with_signal: 1155
                 - dimension: automation
-                  total_signal: 21341
-                  companies_with_signal: 790
+                  total_signal: 27766
+                  companies_with_signal: 1190
+                - dimension: governance
+                  total_signal: 27320
+                  companies_with_signal: 1191
                 - dimension: code
-                  total_signal: 19564
-                  companies_with_signal: 832
+                  total_signal: 26443
+                  companies_with_signal: 1270
                 - dimension: security
-                  total_signal: 18463
-                  companies_with_signal: 930
+                  total_signal: 22633
+                  companies_with_signal: 1189
                 - dimension: ai
-                  total_signal: 15834
-                  companies_with_signal: 775
-                - dimension: services
-                  total_signal: 13682
-                  companies_with_signal: 833
+                  total_signal: 21497
+                  companies_with_signal: 1170
+                - dimension: observability
+                  total_signal: 17917
+                  companies_with_signal: 1152
                 counts:
-                  companies: 5804
-                  services: 566
-                  tools: 286
+                  companies: 6572
+                  services: 658
+                  tools: 397
                   industries: 50
           headers:
             RateLimit-Policy:
@@ -5515,19 +5558,19 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  total: 42
+                  total: 41
                   page: 1
                   limit: 2
                   pages: 21
                   query:
-                    quarter: q2-2026
+                    quarter: q3-2026
                 data:
                 - dimension: data
-                  total_signal: 40111
-                  companies_with_signal: 817
+                  total_signal: 50041
+                  companies_with_signal: 1233
                 - dimension: operations
-                  total_signal: 27084
-                  companies_with_signal: 840
+                  total_signal: 35013
+                  companies_with_signal: 1231
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -5658,22 +5701,22 @@ paths:
                 additionalProperties: true
               example:
                 meta:
-                  total: 5804
+                  total: 6572
                   page: 1
                   limit: 2
-                  pages: 2902
+                  pages: 3286
                   query: {}
                 data:
-                - slug: goldman-sachs
-                  name: Goldman Sachs
-                  industry: Financial Technology
-                  sub_sector: Payment Processing
-                  readiness_total: 1756
-                - slug: leidos
-                  name: Leidos
-                  industry: Enterprise Software
-                  sub_sector: IT Service Management
-                  readiness_total: 1749
+                - slug: jp-morgan-chase
+                  name: "JP Morgan Chase"
+                  industry: "Financial Services"
+                  sub_sector: "Banking"
+                  readiness_total: 2656
+                - slug: unitedhealth-group
+                  name: "UnitedHealth Group"
+                  industry: "Healthcare"
+                  sub_sector: "Managed Care"
+                  readiness_total: 2179
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -5711,28 +5754,108 @@ paths:
                 type: object
                 additionalProperties: true
               example:
-                slug: goldman-sachs
-                name: Goldman Sachs
-                industry: Financial Technology
-                sub_sector: Payment Processing
-                source: jobs
+                slug: goldman-sachs-group
+                name: Goldman Sachs Group
+                industry: Financial Services
+                sub_sector: Investment Banking
+                source: jobs+blogs
                 confidence: high
-                readiness_total: 1756
-                top_dimensions:
-                - key: data
-                  score: 193
-                - key: cloud
-                  score: 119
-                - key: operations
-                  score: 112
-                sample_gap:
-                  dimension: domainSpecialization
-                  score: 2
+                current:
+                  total: 189
+                  dimensions:
+                  - key: operations
+                    score: 24
+                  - key: data
+                    score: 18
+                  - key: governance
+                    score: 17
+                  - key: automation
+                    score: 12
+                  - key: security
+                    score: 11
+                  top_services:
+                  - Microsoft
+                  - Microsoft .NET
+                  - Microsoft Office
+                  - Salesforce
+                  - Jira
+                  top_tools:
+                  - Python
+                  - SPIRE
+                  - Ansible
+                  - Ansible Playbooks
+                  - Git
+                  top_standards:
+                  - HTML
+                  - Internal Control Standards
+                  - Agile
+                  - Agile Methodology
+                  - ITIL
                 quarters:
-                - q2-2026
-                - q1-2026
-                upgrade: Preview is deliberately thin. Pro unlocks the full 40-dimension profile, adoption stack,
-                  per-quarter history, gaps, and provider matches. https://apis.io/developer/plans/
+                  q3-2026:
+                    total: 189
+                    dims:
+                      api: 1
+                      saas: 1
+                      finOps: 0
+                      ai: 6
+                      automation: 12
+                      containers: 1
+                      observability: 10
+                      integrations: 2
+                      virtualization: 3
+                      data: 18
+                      databases: 10
+                      platform: 3
+                      operations: 24
+                      eventDriven: 0
+                      alignment: 4
+                      openSource: 2
+                      standardization: 0
+                      patterns: 1
+                      specifications: 0
+                      governance: 17
+                      security: 11
+                      code: 10
+                      apache: 0
+                      cncf: 1
+                      cloud: 7
+                      services: 5
+                      languages: 4
+                      mergersAndAcquisitions: 2
+                      dataPipelines: 1
+                      modelRegistryVersioning: 4
+                      multimodalInfrastructure: 0
+                      domainSpecialization: 0
+                      testingQuality: 2
+                      developerExprience: 1
+                      roiBusinessMetrics: 8
+                      regulatoryPosture: 10
+                      aiReviewApproval: 4
+                      privacyDataRights: 3
+                      providerStrategy: 0
+                      partnershipsEcosystems: 0
+                      talentOrganizationalDesign: 1
+                    top_services:
+                    - Microsoft
+                    - Microsoft .NET
+                    - Microsoft Office
+                    - Salesforce
+                    - Jira
+                    top_tools:
+                    - Python
+                    - SPIRE
+                    - Ansible
+                    - Ansible Playbooks
+                    - Git
+                    top_standards:
+                    - HTML
+                    - Internal Control Standards
+                    - Agile
+                    - Agile Methodology
+                    - ITIL
+                note: Demand signal from public job postings + press; not confirmed production. Q1 (where present) is partial and
+                  method-drifted vs Q2 — not diffed.
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -5772,27 +5895,21 @@ paths:
                 type: object
                 additionalProperties: true
               example:
-                slug: goldman-sachs
-                name: Goldman Sachs
-                industry: Financial Technology
-                readiness_total: 1756
+                slug: goldman-sachs-group
+                name: Goldman Sachs Group
+                industry: Financial Services
+                readiness_total: 189
                 gaps:
-                - dimension: domainSpecialization
-                  score: 2
                 - dimension: finOps
-                  score: 6
-                - dimension: talentOrganizationalDesign
-                  score: 6
+                  score: 0
+                - dimension: eventDriven
+                  score: 0
+                - dimension: standardization
+                  score: 0
                 - dimension: specifications
-                  score: 7
-                - dimension: partnershipsEcosystems
-                  score: 7
-                - dimension: saas
-                  score: 8
-                - dimension: mergersAndAcquisitions
-                  score: 9
-                - dimension: providerStrategy
-                  score: 9
+                  score: 0
+                - dimension: apache
+                  score: 0
           headers:
             RateLimit-Policy:
               $ref: '#/components/headers/RateLimitPolicy'
@@ -5835,8 +5952,8 @@ paths:
                 type: object
                 additionalProperties: true
               example:
-                slug: goldman-sachs
-                name: Goldman Sachs
+                slug: goldman-sachs-group
+                name: Goldman Sachs Group
                 matched_providers:
                 - from: Salesforce
                   slug: salesforce
@@ -8609,7 +8726,10 @@ paths:
       - Capabilities
       summary: One capability, its sub-capabilities, and who reaches it.
       description: A capability's definition, the sub-capabilities under it, the external authorities it cites,
-        and which providers reach it with their ratings. Accepts a slug or a BC id.
+        which providers reach it with their ratings, and what it costs — `economics` carries supplier and priced-supplier
+        counts and market opacity, plus (Understanding) entry-cost and marginal-cost quartiles by unit, take rate,
+        pricing-basis mix, delivery mix and open-source alternatives, every figure graded A–D by how it was read
+        (roadmap#941). Accepts a slug or a BC id.
       parameters:
       - name: id
         in: path
@@ -8753,8 +8873,8 @@ paths:
       x-mcp-tool: what_can_i_fix
       tags:
       - Ratings
-      summary: Ranked, costed remediation for one provider.
-      description: Which specific rubric checks a provider fails, what each is worth, and in what order to fix them.
+      summary: Ranked remediation for one provider, by points each fix is worth.
+      description: Which specific rubric checks a provider still misses, what each is worth in score points, and in what order to fix them. Earned and not-applicable checks are counted, not ranked. There is no effort or cost estimate.
         The free `improve_my_score` prompt names the weakest FACET; this names the check.
       parameters:
       - $ref: '#/components/parameters/ProviderSlug'
