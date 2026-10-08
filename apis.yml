@@ -728,6 +728,12 @@ common:
   url: https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/well-known/apis-io-well-known.yml
 - type: APICatalog
   url: https://apis.io/.well-known/api-catalog
+- type: HTTPMessageSignatures
+  url: https://apis.io/.well-known/http-message-signatures-directory
+  description: >-
+    RFC 9421 key directory for Web Bot Auth — the public keys apis.io's own signed requests are
+    made with. Served since 2026-09 and declared here 2026-10-08: the Consent & Bot Identity
+    dimension reads this pointer, and the file had been earning nothing while undeclared.
 - type: MCPServer
   url: https://apis.io/mcp
   name: APIs.io MCP Server
