@@ -1,4 +1,4 @@
-generated: '2026-09-16'
+generated: '2026-09-23'
 method: generated
 source: openapi/apis-io-apis-api-openapi.yml, openapi/apis-io-areas-api-openapi.yml, openapi/apis-io-artifact-types-api-openapi.yml,
   openapi/apis-io-cohorts-api-openapi.yml, openapi/apis-io-editorial-api-openapi.yml, openapi/apis-io-export-api-openapi.yml,
@@ -11,14 +11,14 @@ description: Recommended x-agentic-access execution contracts, classified heuris
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 274
+  operations: 276
   by_action_class:
-    connected: 226
-    acting: 48
+    connected: 229
+    acting: 47
   by_consequence:
-    read: 226
+    read: 229
     safety-critical: 12
-    write: 35
+    write: 34
     physical: 1
   human_in_the_loop_required: 12
 operations:
@@ -2558,18 +2558,12 @@ operations:
   method: post
   operationId: listGeneratableArtifacts
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /providers/{slug}/generate/{artifact}
   method: post
   operationId: requestArtifact
@@ -3012,6 +3006,26 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /regulations
+  method: get
+  operationId: listRegulations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /regulations/{slug}
+  method: get
+  operationId: getRegulation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /vcs
   method: get
   operationId: listVcs
