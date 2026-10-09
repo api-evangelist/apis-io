@@ -2886,6 +2886,85 @@ paths:
         '400':
           $ref: '#/components/responses/BadRequest'
       security: []
+  /overlays:
+    get:
+      operationId: listOverlays
+      x-mcp-tool: find_overlays
+      x-tier: free
+      tags:
+      - Artifact Types
+      summary: List OpenAPI Overlays across the catalog.
+      description: 'First-class collection of OpenAPI Overlays — documents applied on top of an API contract to add or
+        change what it says — across every provider on the network (2026-10-09). Surfaces the `Overlay`,
+        `OpenAPIOverlay` artifact types. `meta` says who wrote each one (`authorship`: provider / derived /
+        generated / unmarked, through the same provenance classifier the Kin Score uses), whether the provider
+        hosts it (`provider_hosted` — the only kind the overlay_published check credits), what its actions
+        touch (`purpose`), the action, update, removal and target counts, the contract it `extends` and the
+        Overlay version. Most records are API Evangelist-generated conversational phrasing; filter
+        `authorship=provider` for the ones providers publish. Filter by free text, provider and tags; pass
+        `include=content` to inline each overlay body.'
+      parameters:
+      - $ref: '#/components/parameters/Q'
+      - $ref: '#/components/parameters/Providers'
+      - $ref: '#/components/parameters/Tags'
+      - $ref: '#/components/parameters/Match'
+      - $ref: '#/components/parameters/Include'
+      - $ref: '#/components/parameters/ArtifactSort'
+      - name: authorship
+        in: query
+        required: false
+        description: 'Who wrote the overlay: provider (published or hosted by the provider), derived (API Evangelist, from the provider''s contracts), generated (API Evangelist tooling), unmarked (no authorship recorded — never presented as the provider''s). Substring match on `meta.authorship`.'
+        schema:
+          type: string
+          enum: [provider, derived, generated, unmarked]
+      - name: purpose
+        in: query
+        required: false
+        description: 'What the actions touch, read from the file: phrasing (x-apievangelist-phrasing per operation), servers, documentation, security, removal, update. Substring match on `meta.purpose`.'
+        schema:
+          type: string
+          enum: [phrasing, servers, documentation, security, removal, update]
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: 'A page of overlays with owning provider context. `meta` carries action_count, update_count, remove_count, target_count, purpose, extends, overlay_version, authorship, authorship_method, provider_hosted and authorship_source_url. `sort` also accepts action_count and target_count (largest first).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArtifactList'
+              example:
+                meta:
+                  total: 28699
+                  page: 1
+                  limit: 1
+                  pages: 28699
+                  query:
+                    type: overlays
+                data:
+                - type: Overlay
+                  slug: eventwren-openapi-overlay
+                  name: Eventwren Openapi Overlay
+                  provider_slug: eventwren
+                  provider_name: Eventwren
+                  description: ''
+                  tags:
+                  - Events
+                  url: https://raw.githubusercontent.com/api-evangelist/eventwren/refs/heads/main/overlays/eventwren-openapi-overlay.yaml
+                  meta:
+                    action_count: 3
+                    update_count: 3
+                    remove_count: 0
+                    target_count: 3
+                    purpose: update
+                    extends: openapi/eventwren-openapi.yml
+                    overlay_version: 1.0.0
+                    authorship: generated
+                    authorship_method: generated
+                    provider_hosted: true
+                    authorship_source_url: https://eventwren.com/overlays/site.yml
+        '400':
+          $ref: '#/components/responses/BadRequest'
   /rules:
     get:
       operationId: listRules
