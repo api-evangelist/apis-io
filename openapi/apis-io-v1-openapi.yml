@@ -9743,11 +9743,10 @@ paths:
   /markets:
     get:
       operationId: listMarkets
-      x-tier: free
-      security: []
+      x-tier: pro
       tags:
       - Markets
-      summary: List the markets of the Kin Score Market layer.
+      summary: List the markets of the Kin Score Market layer. Understanding plan.
       description: 'One summary row per market: mode (bedrock or frontier), shape, how many measured providers declare
         their own integrations, are covered only by others, or are undeclared, and the provisional top providers in
         each position. PROVISIONAL and unweighted - not part of the composite or agent readiness. The same generated
@@ -9765,6 +9764,10 @@ paths:
           - frontier
       - $ref: '#/components/parameters/Q'
       responses:
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
         '200':
           description: The markets, one summary row each.
           content:
@@ -9813,11 +9816,10 @@ paths:
   /markets/{id}:
     get:
       operationId: getMarket
-      x-tier: free
-      security: []
+      x-tier: pro
       tags:
       - Markets
-      summary: One market, with its structural sources and provisional leaders by position.
+      summary: One market, with its structural sources and provisional leaders by position. Understanding plan.
       description: 'Where the market publishes its own structure (including sources that are not machine-readable),
         the declaration rate (own, covered, undeclared), the providers grouped BY POSITION (never one flat ranking)
         with integration depth, mix, inbound and outbound counts, unknown-builder, distribution and iPaaS-bridge counts,
@@ -9832,6 +9834,10 @@ paths:
           type: string
           maxLength: 64
       responses:
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
         '200':
           description: One market.
           content:
@@ -9871,12 +9877,11 @@ paths:
   /estates:
     get:
       operationId: listEstates
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: find_estates
-      security: []
       tags:
       - Estates
-      summary: List corporate estates.
+      summary: List corporate estates. Understanding plan.
       description: 'An estate is one COMPANY whose API surface is spread across many provider records - Amazon across
         237, Cisco 37, Salesforce 27. The catalog computes these and publishes them at apis.io/estates/; this is
         the same rollup on the API. Use it when two slugs look like separate vendors and you need to know whether
@@ -9888,6 +9893,10 @@ paths:
       - $ref: '#/components/parameters/Page'
       - $ref: '#/components/parameters/Limit'
       responses:
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
         '200':
           description: List corporate estates.
           content:
@@ -9934,17 +9943,20 @@ paths:
   /estates/{slug}:
     get:
       operationId: getEstate
-      x-tier: free
+      x-tier: pro
       x-mcp-tool: get_estate
-      security: []
       tags:
       - Estates
-      summary: One corporate estate, with its full member roster.
+      summary: One corporate estate, with its full member roster. Understanding plan.
       description: The owning provider, every member with its API count and rating band, and the estate-wide rating.
         Use GET /providers/{slug}/estate to go the other way, from a provider to the company that owns it.
       parameters:
       - $ref: '#/components/parameters/EstateSlug'
       responses:
+        '401':
+          $ref: '#/components/responses/AuthRequired'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
         '200':
           description: One corporate estate.
           content:
