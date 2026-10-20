@@ -51,183 +51,299 @@ introspection:
   resources: true
 tools:
 - name: apis_io_search
-  description: Federated overview of the catalog for a query — top matching APIs, providers and tags in
-    one call.
+  description: 'START HERE. Federated overview of the APIs.io catalog for a query: the top matching APIs,
+    providers, AND tags in one call, each with its total match count. Filter by tags, artifact types,
+    industry, region, rating band. `limit` is per section. To page/sort the full list of ONE type, use
+    find_apis / find_providers / find_tags; for one entity, get_api / get_provider.'
   source_operation: openapi/_original/apis-io-v1-openapi.yml#search
+- name: get_prices
+  description: 'What one call costs on the pay-as-you-go plan, by cost band. FREE — and deliberately so:
+    an agent that learns a price only when it is refused has already been refused by its own wallet. Call
+    this BEFORE budgeting a run of paid tools. Returns the bands (free catalog reads, single-entity synthesis,
+    cross-catalog synthesis, per-row bulk) and every priced resource key. Under an Understanding or Influence
+    subscription these calls are included in the plan; these prices are what per-call access costs. The
+    same map prices x402 payments and the x-price-usd header, so all three agree.'
 - name: get_playground_apis
   description: 'Curated APIs that are SAFE TO EXPERIMENT WITH — no key (or an instant, free, self-serve
     key), no cost, and no real-world side effects. Free, and deliberately so: this is where you start
-    if you are new'
+    if you are new here. Every entry carries an `example_request` URL that returned HTTP 200 to an unauthenticated
+    GET on the date shown, so it can be called immediately with no setup. Use this when you are new to
+    this catalog, learning what an API call feels like, testing a tool-use loop, or need a harmless endpoint
+    to demonstrate something. Defaults to the `starter` set; pass grouping="deep-archive" for institutional/OAI-PMH
+    repositories.'
   first_seen: '2026-09-11'
 - name: find_apis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listApis
   description: 'Paginated, sortable list of APIs across providers — filter by tag, provider, artifact
     type, industry, region, or rating band. Matching is LEXICAL: `q` searches the API''s own name and
-    description. apis_io_search reports a larger API total fo'
+    description. apis_io_search reports a larger API total for the same `q` because it also counts every
+    API belonging to a provider whose NAME matched; pass include=["via_provider"] here to get that same
+    union, and `meta.query.via_provider` says how many rows it added. Use apis_io_search first for a cross-type
+    overview.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listApis
 - name: get_api
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApi
   description: 'Full detail for one API by aid (provider:api-slug); set include=["content"] to inline
     artifact bodies. Results carry `next`: the sub-resources that exist for this entity and the exact
-    tool call that retrieves each, computed from this record'
+    tool call that retrieves each, computed from this record. Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApi
 - name: find_providers
+  description: 'Paginated, sortable list of providers — filter by text, tag, artifact type, industry,
+    region, rating band, access model (pricing/onboarding/try_now/public), or DIRECTION (accepts_writes/min_acting
+    — whether the surface takes a write or only emits). `tags` filters on what the COMPANY does (its own
+    top-level classification), not on what its endpoints touch; for a resource-level term use find_apis?tags=,
+    or api_tags= here to find companies whose APIs merely touch it. A row that is a third-party marketplace
+    / app-store / directory LISTING rather than the provider (`x_source: marketplace-listing`) ranks after
+    every provider; meta.query.marketplace_listings_demoted says how many. Name it in `providers` to read
+    it where you put it. Use apis_io_search first for a cross-type overview.'
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listProviders
-  description: Paginated, sortable list of providers — filter by text, tag, artifact type, industry, region,
-    rating band, access model (pricing/onboarding/try_now/public), or DIRECTION (accepts_writes/min_acting
-    — whether the surface takes a write or only
 - name: get_provider
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProvider
   description: 'Full detail for one provider: profile, rating, and the APIs it publishes. The heavy `collections`
     and `common` sections are omitted by default (their counts are still reported) — pass view=full for
-    the whole document, or fields=["common"] f'
+    the whole document, or fields=["common"] for a section. Narrow for cheap reads: fields=["score"] returns
+    just the rating. Relative artifact URLs are resolved to absolute, fetchable ones. Results carry `next`:
+    the sub-resources that exist for this entity and the exact tool call that retrieves each, computed
+    from this record. Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProvider
 - name: find_tags
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listTags
   description: Paginated, sortable list of tags in the taxonomy. Filter by `axis` to separate MARKETS
     (a business someone is in) from CAPABILITIES (the name of a resource in somebody's OpenAPI) — the
-    single most useful distinction in the vocabulary, and a
+    single most useful distinction in the vocabulary, and a coin flip without it. A tag can carry more
+    than one axis, so axis=market means market is ONE of its axes. Use apis_io_search first for a cross-type
+    overview.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listTags
 - name: get_tag
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getTag
   description: 'One tag: its metadata, neighbor tags, and a top sample of its providers and APIs (with
     totals). `provider_count` counts companies that classify THEMSELVES here; `api_provider_count` counts
-    the ones reached only through an API or operation t'
+    the ones reached only through an API or operation tag — the two are disjoint, and a tag with no providers
+    and many APIs names a resource, not a market. `age` summarises when the members were created (created_last_30d/90d,
+    the largest same-day batch, and how much of the first page by composite is under 30 days old) — a
+    high first_page share means the top of the tag is new listings, and find_providers(tags, sort:"created")
+    lists them newest first. Use find_apis?tags=slug / find_providers?tags=slug for the full ranked list,
+    or view=full here. Results carry `next`: the sub-resources that exist for this entity and the exact
+    tool call that retrieves each, computed from this record. Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getTag
 - name: find_industries
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listIndustries
   description: Browse industry verticals; sort by provider/API count.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listIndustries
 - name: get_industry
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustry
   description: 'One industry: metadata + a top sample of its member providers (ranked, with the total).
     Use find_providers?industry=slug for the full list, or view=full here. Results carry `next`: the sub-resources
-    that exist for this entity and the exact'
+    that exist for this entity and the exact tool call that retrieves each, computed from this record.
+    Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustry
+- name: find_estates
+  description: UNDERSTANDING — Browse corporate estates — one COMPANY whose API surface is spread across
+    many provider records (Amazon 237, Salesforce 27, Cisco 37). Ranked by member count. Use this when
+    two slugs look like separate vendors and you need to know whether they are one company. Priced B1
+    (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.
+- name: get_estate
+  description: 'UNDERSTANDING — One estate: the owning provider, the full member roster with per-member
+    API counts and bands, and the estate-wide rating. Use get_provider_estate(slug) to go the other way,
+    from a provider to the company that owns it. Priced B1 (single-entity synthesis) — $0.01 per call
+    under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
+- name: get_provider_estate
+  description: Which corporate estate a provider belongs to, if any. Answers 200 with estate:null when
+    the provider stands alone — that is a measured absence, not a missing record.
 - name: find_regions
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRegions
   description: Browse geographic regions; sort by provider/API count. Returns the 18 regions themselves.
     The collection also holds region x industry crossover pages (nordics-healthcare and 1,097 more); those
     are excluded unless you ask for them with type.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRegions
 - name: get_region
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegion
   description: 'One region: metadata + a top sample of its member providers (ranked, with the total).
     Use find_providers?region=slug for the full list, or view=full here. Results carry `next`: the sub-resources
-    that exist for this entity and the exact tool'
+    that exist for this entity and the exact tool call that retrieves each, computed from this record.
+    Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegion
 - name: find_countries
-  description: Browse the country dimension — the finest of the four place taxonomies, and the one a buyer
-    usually names ("who is in Germany"). Peer to find_industries / find_regions / find_areas. Search by
-    text; so
+  description: 'Browse the country dimension — the finest of the four place taxonomies, and the one a
+    buyer usually names ("who is in Germany"). Peer to find_industries / find_regions / find_areas. Search
+    by text; sort by provider count. Membership is derived and known to be partial: read a count as a
+    floor, not a census.'
   first_seen: '2026-09-11'
 - name: get_country
   description: 'One country: metadata, counts, and a top sample of member providers (with the total).
     Use find_providers?country=slug for the full ranked list, or view=full here.'
   first_seen: '2026-09-11'
 - name: find_areas
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAreas
   description: Browse the API Evangelist areas taxonomy (authentication, webhooks, payments, …) — curated,
     scored provider indexes. Search by text; sort by provider count.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAreas
 - name: get_area
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getArea
   description: 'One area: metadata, its dedicated site link, and a top sample of member providers (with
     the total). Use find_providers?area=slug for the full list, or view=full here. Results carry `next`:
-    the sub-resources that exist for this entity and th'
+    the sub-resources that exist for this entity and the exact tool call that retrieves each, computed
+    from this record. Pass include_next=false to omit it.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getArea
+- name: find_regulations
+  description: Browse the laws, statutes and accreditations the catalog tracks, each joined to the countries,
+    regions and industries it binds. Filter by scope=horizontal to get the regimes that reach a provider
+    with NO industry tag at all, which is the question tags alone cannot answer; or by kind (regulation/statute/accreditation/regulator-guidance)
+    or jurisdiction. A null company_count means the job-corpus pass has not run for that name — it is
+    NOT a measured zero.
+- name: get_regulation
+  description: 'One regulation: what it is, its jurisdiction and scope, a link to the law itself, and
+    reaches[] — the country, region and industry cohorts this regime binds. Use reaches[] to go straight
+    to the affected members with find_providers.'
 - name: find_extensions
   description: 'Browse every OpenAPI `x-` specification extension harvested across the catalog, with the
     provenance the OpenAPI Initiative registry does not carry: who publishes it, in how many documents,
-    where in th'
+    where in the document it appears, and what shape the value takes. Search by key or purpose; sort by
+    occurrences.'
   first_seen: '2026-09-11'
 - name: get_extension
   description: 'One OpenAPI specification extension: its publishers, occurrence and document counts, where
-    it appears, and the value shapes observed. CHECK is_api_evangelist BEFORE treating a key as provider-originat'
+    it appears, and the value shapes observed. CHECK is_api_evangelist BEFORE treating a key as provider-originated
+    — some of these are published by API Evangelist, not by a vendor.'
   first_seen: '2026-09-11'
 - name: find_ratings
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRatings
   description: Ranked ratings leaderboard — filter by band, score range, trend, or facet threshold. Sort
     by composite (default), delta (biggest gainers), or any quality facet (governance, security, …) to
-    rank providers by that dimension. Priced B2 (cross-
+    rank providers by that dimension. Priced per result — $0.005 per request plus $0.0002 per record returned
+    (less past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence.
+    Estimate first at /api/v1/prices/estimate. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRatings
 - name: get_provider_rating
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderRating
   description: One provider's full rating breakdown (composite, band, trend, six facets). Priced B1 (single-entity
     synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderRating
 - name: find_cohorts
   description: START HERE for market-level questions. Every scored population of providers in the catalog
     — tags, industries, regions, areas and VC portfolios — as one browsable index. Filter by kind, minimum
-    popula
+    population, or promotion tier (report/brief/data). Then call cohort_stats for the distribution, cohort_rankings
+    for the leaderboard. Priced per result — $0.005 per request plus $0.0002 per record returned (less
+    past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence.
+    Estimate first at /api/v1/prices/estimate. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#listCohorts
   first_seen: '2026-09-11'
 - name: get_cohort
   description: 'One cohort: its identity, its population, and the full member roster with each provider''s
     Kin Score and agent readiness. Understanding plan. The analysis parts (stats/rankings/scores/capabilities)
-    nee'
+    are Understanding too — they moved down from Influence on 2026-09-01. Priced per result — $0.005 per
+    request plus $0.0002 per record returned (less past 100), capped at $0.50 a request, under pay-as-you-go;
+    included in Understanding and Influence. Estimate first at /api/v1/prices/estimate. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohort
   first_seen: '2026-09-11'
 - name: find_tag_groups
-  description: START HERE for capability-map questions. The 1,500+ tag groups the catalog computes — sets
-    of tags that demonstrably travel together across providers (Cards, Logistics, Wealth Management, Observabilit
+  description: 'START HERE for capability-map questions. The 1,500+ tag groups the catalog computes —
+    sets of tags that demonstrably travel together across providers (Cards, Logistics, Wealth Management,
+    Observability), the layer between a single tag and a coarse facet. Every response carries a `coverage`
+    block: about a quarter of the vocabulary is in NO group, and any count taken from here should be read
+    against `ungrouped_share`. Pass exclude=cross_cutting,sparse to drop the groups that are plumbing
+    rather than markets.'
   first_seen: '2026-09-11'
 - name: get_tag_group
   description: 'One tag group: its member tags and the full provider roster resolved from the catalog,
     each with Kin Score and agent readiness. Filter the roster by industry, region, country or area. Free;
-    the DISTRI'
+    the DISTRIBUTION over the roster (`stats`) needs Understanding. Note `source_provider_count` vs `provider_count`
+    — the first comes from an index that caps band membership at 1,000, the second is resolved live and
+    is the complete number.'
   first_seen: '2026-09-11'
 - name: tag_group_tags
   description: The member tags of one tag group, each joined to its catalog record — provider count, api
     count, tag quality band and composite. Use it to see what a group is actually made of before trusting
-    the grou
+    the group as a market. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included
+    in Understanding and Influence. See apis://prices.
   first_seen: '2026-09-11'
 - name: cohort_stats
   description: 'UNDERSTANDING — the DISTRIBUTION for a whole market: Kin Score mean/median/min/max/stdev,
-    agent-readiness spread, band split, per-facet averages, and artifact adoption rates. This is the market-stats '
+    agent-readiness spread, band split, per-facet averages, and artifact adoption rates. This is the market-stats
+    sheet from a Trend Report, computed live. Always carries a `coverage` block saying how much of the
+    roster is actually scored AND how deeply we enriched it (`enrichment_depth`: mean catalog_gap and
+    median artifact directories). Read that before quoting the mean anywhere: cohort enrichment depth
+    spans ~42 points of catalog_gap across the catalog, so part of any cohort number is our coverage rather
+    than the market. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included
+    in Understanding and Influence. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortStats
   first_seen: '2026-09-11'
 - name: cohort_rankings
   description: 'UNDERSTANDING — the leaderboard for a market, on TWO axes: rank by Kin Score composite
     AND rank by agent readiness. The two orders differ, and the gap between a provider''s two ranks is
-    usually the sto'
+    usually the story. Priced per result — $0.005 per request plus $0.0002 per record returned (less past
+    100), capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence. Estimate
+    first at /api/v1/prices/estimate. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortRankings
   first_seen: '2026-09-11'
 - name: cohort_scores
   description: UNDERSTANDING — facet-level scores for every member of a cohort, each with the cohort average
     and the delta against it. A 60 in governance means nothing until you know the market sits at 45; this
-    is t
+    is the endpoint that says so. Priced per result — $0.005 per request plus $0.0002 per record returned
+    (less past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence.
+    Estimate first at /api/v1/prices/estimate. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortScores
   first_seen: '2026-09-11'
 - name: find_operations
   description: 'UNDERSTANDING — CATALOG-WIDE operation search: which providers expose a path matching
     your terms. "Who has a POST /refunds" had no answer before this — tags are what a company says about
-    itself, a pat'
+    itself, a path is what its API accepts. Terms match path SEGMENTS (all must appear), so q="payment
+    intents" finds /payments/v1/intents. Add method to narrow by verb, deprecated=true for the retiring
+    ones. One row per real operation: a provider''s spec is split per tag, so the same call can live in
+    several of its documents, and `apis` lists them all. Reads matching providers'' surfaces up to max_providers
+    (cap 100) and tells you in `meta.query.truncated` when more matched than were read. Priced per result
+    — $0.005 per request plus $0.0002 per record returned (less past 100), capped at $0.50 a request,
+    under pay-as-you-go; included in Understanding and Influence. Estimate first at /api/v1/prices/estimate.
+    See apis://prices.'
   first_seen: '2026-09-11'
 - name: deprecated_operations
   description: 'UNDERSTANDING — every provider publishing at least one operation marked deprecated in
     its own OpenAPI, ranked by how many. The lifecycle view of the catalog: 8,297 deprecated operations
-    across 681 pro'
+    across 681 providers, which nothing could see before, because a provider''s own deprecated filter
+    needs you to already suspect that provider. Drill in with get_provider_operations(deprecated=true).
+    Priced per result — $0.005 per request plus $0.0002 per record returned (less past 100), capped at
+    $0.50 a request, under pay-as-you-go; included in Understanding and Influence. Estimate first at /api/v1/prices/estimate.
+    See apis://prices.'
   first_seen: '2026-09-11'
 - name: cohort_history
   description: 'UNDERSTANDING — the SET-LEVEL time series: how a whole market''s Kin Score and agent readiness
     moved, build by build. There was a per-provider series and a whole-dataset licence and nothing between
-    the'
+    them, so "how has banking moved over six months" had no answer. Returns the MEAN over members present
+    on each date plus members_scored beside it — membership changes as the catalog grows, and a move you
+    cannot attribute to scores rather than population is not a finding. Priced B2 (cross-catalog synthesis)
+    — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: cohort_failures
   description: 'UNDERSTANDING — what a whole market gets WRONG: the agent-readiness checks its members
     most commonly fail, ranked by what fixing each would move the cohort mean. The inverse of gap_analysis,
-    which say'
+    which says where a market is under-served; this says where it is failing the rubric. Turns "fix your
+    OpenAPI" into "this industry does not publish OpenAPI", which is the shape of a finding worth publishing.
+    Named checks only — facet rollups cannot name the checks underneath them. Priced per result — $0.005
+    per request plus $0.0002 per record returned (less past 100), capped at $0.50 a request, under pay-as-you-go;
+    included in Understanding and Influence. Estimate first at /api/v1/prices/estimate. See apis://prices.'
   first_seen: '2026-09-11'
 - name: cohort_capabilities
   description: 'UNDERSTANDING — what every member of a cohort actually publishes: artifact counts by type
     plus the agent-readiness dimensions each one satisfies. The capability matrix behind a market report.
-    Large co'
+    Large cohorts come back in byte-budgeted chunks: while `complete` is false, call again with `cursor`
+    set to `next_cursor`; the last page has `complete: true` and a null `next_cursor`. Priced B2 (cross-catalog
+    synthesis) — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#getCohortCapabilities
   first_seen: '2026-09-11'
 - name: compare_cohorts
   description: 'UNDERSTANDING — two markets side by side on one rubric: "is US payments further along
     than UK banking?" Returns both distributions plus the deltas on score, agent readiness, every facet
-    and every adop'
+    and every adoption rate. A question a written report cannot answer, because a report only ever covers
+    one market. CHECK `depth_confounded` FIRST: when the higher-scoring cohort is also the one we enriched
+    more deeply, the delta reflects our own coverage as much as the markets, and `depth_note` says by
+    how much. Priced per result — $0.005 per request plus $0.0002 per record returned (less past 100),
+    capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence. Estimate
+    first at /api/v1/prices/estimate. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-cohorts-openapi.yml#compareCohorts
   first_seen: '2026-09-11'
 - name: get_provider_operations
   description: Every operation a provider exposes, across all of its OpenAPIs — method, path, operationId,
     summary, which API it belongs to, and whether it is deprecated. The shortcut for "what can I actually
-    call h
+    call here?", which otherwise means fetching and parsing every one of their specs. Where the provider
+    publishes agentic-access, each operation also carries its action class and CONSEQUENCE (read vs something
+    that moves money) — filter on those to find the safe surface before letting an agent loose on it.
   source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderOperations
   first_seen: '2026-09-11'
 - name: get_provider_tools
   description: 'Every MCP tool a provider ships, with the operation each one wraps and its auth. Reports
     provenance per tool: `first-party` means the provider publishes that server, `derived` means API Evangelist
-    gen'
+    generated a candidate tool list from their OpenAPI because no hosted server was found. Filter with
+    provenance=first-party for a true picture — counting derived tools as the provider''s own overstates
+    MCP adoption badly. A server whose tools could not be enumerated (auth-gated) is reported in coverage.not_enumerable
+    rather than silently counted as zero.'
   source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderTools
   first_seen: '2026-09-11'
 - name: get_provider_schema
@@ -238,463 +354,618 @@ tools:
 - name: get_provider_facets
   description: UNDERSTANDING — one provider's score broken into its facets (discoverability, contract
     quality, governance, operational transparency, developer ergonomics, commercial clarity) plus any
-    regulatory regi
+    regulatory regime that applies. The composite is one number; these are the parts a team can actually
+    act on. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderFacets
   first_seen: '2026-09-11'
 - name: get_agent_readiness
   description: EXPLORE — the agent-readiness dimensions and standalone score for ONE provider (spec presence,
     MCP server, auth clarity, idempotency, error semantics, rate-limit signal, well-known catalog, consent
-    id
+    identity, dry-run…). A STANDALONE score, not a slice of the composite. For the same question across
+    the catalog — who is agent-ready, which dimensions have actually diffused — use find_agent_readiness
+    (Influence). Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in
+    Understanding and Influence. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderAgentReadiness
   first_seen: '2026-09-11'
 - name: find_agent_readiness
   description: UNDERSTANDING — the agent-readiness leaderboard across the whole catalog. Rank providers
     by agent readiness, and filter to those that DO satisfy (has) or do NOT satisfy (missing) specific
-    dimensions —
+    dimensions — e.g. has="mcp_server,protected_resource_metadata" is the OAuth-capable MCP cohort, missing="agent_card"
+    is the addressable market for a fix. Returns agent score + band alongside the Kin Score. Priced per
+    result — $0.005 per request plus $0.0002 per record returned (less past 100), capped at $0.50 a request,
+    under pay-as-you-go; included in Understanding and Influence. Estimate first at /api/v1/prices/estimate.
+    See apis://prices.
   first_seen: '2026-09-11'
 - name: agent_readiness_dimensions
   description: 'UNDERSTANDING — diffusion: for each agent-readiness dimension, how many scored providers
     satisfy it, out of how many, as a share. The denominator every "the agent web is/is not here yet"
-    claim needs a'
+    claim needs and almost never has. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go;
+    included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: find_capabilities
-  description: START HERE for "what can a business do with these APIs". The business-capability model
+  description: 'START HERE for "what can a business do with these APIs". The business-capability model
     — 333 top-level capabilities across 28 industries — with how many catalog providers reach each one.
-    Defaults to c
+    Defaults to capabilities the catalog actually reaches; pass all=true for the whole model INCLUDING
+    the ones with no coverage, which is a real answer rather than a gap: most of what an enterprise does
+    runs on internal systems that publish no API. Free. Priced per result — $0.005 per request plus $0.0002
+    per record returned (less past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding
+    and Influence. Estimate first at /api/v1/prices/estimate. See apis://prices.'
   first_seen: '2026-09-11'
 - name: get_capability
   description: 'One business capability: its definition, its sub-capabilities, the external authorities
-    it cites, and WHICH catalog providers reach it with their ratings. Accepts a slug or a BC id (e.g.
-    "payments-car'
+    it cites, WHICH catalog providers reach it with their ratings, and what it COSTS — `economics` carries
+    how many suppliers publish a price and how opaque the market is (free), and for Understanding the
+    entry-cost (USD/month) and marginal-cost (USD per unit, by unit) quartiles, take rate, pricing-basis
+    mix, delivery mix and open-source alternatives, every figure graded A–D by how it was read. Accepts
+    a slug or a BC id (e.g. "payments-card-management" or "BC-1340"). The per-tag edges WITH their evidence
+    are get_capability_edges (Understanding). Priced per result — $0.005 per request plus $0.0002 per
+    record returned (less past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding
+    and Influence. Estimate first at /api/v1/prices/estimate. See apis://prices.'
   first_seen: '2026-09-11'
 - name: get_capability_edges
   description: 'UNDERSTANDING — the evidence behind a capability. Every edge that lands on it: the provider,
     the tag, the exact OpenAPI file, a calibrated confidence, and the QUOTED FRAGMENT OF THE PROVIDER''S
-    OWN CON'
+    OWN CONTRACT that justifies the claim. Only edges at confidence >= 0.7 whose evidence was found verbatim
+    in the source contract are published, so an edge here is checkable rather than asserted. This is what
+    you cite when someone asks "says who?". Understanding plan. Priced B1 (single-entity synthesis) —
+    $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: get_provider_business_capabilities
   description: UNDERSTANDING — what ONE vendor's published APIs let a business DO, rolled up by capability,
     with the tag-level evidence under each. Answers "what is this vendor actually for" from its own contracts
-    r
+    rather than its marketing. NOT get_provider_capabilities, which is artifact counts and agent-readiness
+    dimensions and is free. Understanding plan. Priced B1 (single-entity synthesis) — $0.01 per call under
+    pay-as-you-go; included in Understanding and Influence. See apis://prices.
   first_seen: '2026-09-11'
 - name: get_provider_capabilities
   description: 'What one provider publishes, counted by artifact type, with the agent dimensions it satisfies.
-    Free — it is a fact about their own public surface. NOTE: this is artifact counts, NOT business capabilit'
+    Free — it is a fact about their own public surface. NOTE: this is artifact counts, NOT business capabilities
+    — for what the vendor lets a business DO, call get_provider_business_capabilities. Priced B1 (single-entity
+    synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-providers-openapi.yml#getProviderCapabilities
   first_seen: '2026-09-11'
 - name: get_provider_evidence
   description: 'How a provider''s score was established, part by part: first-party (they published it),
     verified (we fetched and confirmed it), or derived (we inferred it). Free — the basis for a claim
-    should never si'
+    should never sit behind the claim. Call this before disputing or quoting a score.'
   source_operation: openapi/_original/apis-io-v1-ratings-openapi.yml#getProviderEvidence
   first_seen: '2026-09-11'
 - name: get_rating_rubric
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingRubric
   description: 'UNDERSTANDING — the rubric: bands, facet weights, trend thresholds, so an agent can interpret
     any score. Moved behind the paywall with the ratings data on 2026-08-31. Priced B1 (single-entity
-    synthesis) — $0.01 per call under pay-as-you-go;'
+    synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingRubric
 - name: find_artifacts
-  note: fans out across the per-type artifact list operations
-  description: Find artifacts of ANY one type across the catalog — the cross-type entry point. Each type
+  description: 'Find artifacts of ANY one type across the catalog — the cross-type entry point. Each type
     also has a dedicated find_<type> tool (find_mcp, find_rules, find_scopes, …) with sorts and filters
-    unique to that type; prefer those when you know th
+    unique to that type; prefer those when you know the type. Types: mcp, skills, rules, arazzo, plans,
+    rate-limits, finops, collections, asyncapis, graphql, json-ld, channels, examples, json-schemas, json-structures,
+    openapis, postman, apis-json. PRO: scopes, security. include=["content"] inlines bodies.'
+  note: fans out across the per-type artifact list operations
 - name: compare_providers
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#compareProviders
   description: 'UNDERSTANDING — Compare 2+ providers side by side: composite/band, per-facet leaders,
-    and an artifact-coverage matrix. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go;
-    included in Understanding and Influence. See ap'
+    an artifact-coverage matrix, and each provider''s economics — audience, pricing basis, delivery, graded
+    entry cost (USD/month) and marginal cost (USD per unit), with the plan and the quoted figure behind
+    each number and the date it was read; `cheapest_entry` names the cheapest published way in. Priced
+    B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#compareProviders
 - name: gap_analysis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#gapAnalysis
   description: 'UNDERSTANDING — For each provider: high-value artifacts it lacks (MCP, Arazzo, Rules,
     Skills…), what its peers commonly publish but it lacks, and its score vs the peer median — plus stack-level
-    gaps across the set. Priced B2 (cross-catalog'
+    gaps across the set. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included
+    in Understanding and Influence. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#gapAnalysis
 - name: whats_changed
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#whatsChanged
   description: 'UNDERSTANDING — What changed in the catalog since a date: providers added/updated, plus
     rating movement measured FROM THAT DATE — each provider''s current score against its score at the
-    first scored snapshot on or after `since`, with `was` a'
+    first scored snapshot on or after `since`, with `was` and `compared_to` on every row. `basis` says
+    whether the answer came from the recorded history or (when no snapshot covers the date) from last-build
+    trend. Priced per result — $0.005 per request plus $0.0002 per record returned (less past 100), capped
+    at $0.50 a request, under pay-as-you-go; included in Understanding and Influence. Estimate first at
+    /api/v1/prices/estimate. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#whatsChanged
 - name: recommend_stack
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#recommendStack
   description: Design an API stack — the best-rated catalog provider per capability, assembled into a
     stack. The Understanding preview is the top pick per capability; the full answer adds alternatives,
-    per-pick artifact gaps, and an exportable APIs.json +
+    per-pick artifact gaps, and an exportable APIs.json + Arazzo hint. Decompose the domain into capabilities
+    first, then pass them here. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go;
+    included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#recommendStack
 - name: get_provider_apis
   description: 'Every API one provider publishes, as a page you can filter — the provider''s own catalog
     rather than the whole network''s. Prefer this over find_apis with a `providers` filter when you already
-    know the '
+    know the company: it is the endpoint the provider page itself is built from, so `meta.total` is that
+    provider''s real API count. Filter by `tags` (with `match`), require `artifact_types`, or pass include=["content"]
+    to inline artifact bodies.'
   first_seen: '2026-09-11'
 - name: get_provider_artifacts
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderArtifacts
   description: Every artifact a provider publishes — provider-level (MCP, security, scopes, rules, agentic-access)
     and per-API (OpenAPI, Arazzo, overlays, reference docs) — grouped by type with counts. by_type_counts
-    is the full summary; pass `type` (e.g.
+    is the full summary; pass `type` (e.g. OpenAPI, MCP) to scope the artifacts list to one type, since
+    an unfiltered provider can be 250+ entries.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderArtifacts
 - name: get_api_artifacts
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApiArtifacts
   description: 'One API''s artifacts grouped by type (by_type_counts is the full summary); pass `type`
     to scope the list to one type (synonym-aware: MCP matches MCPServer), include=["content"] to inline
     the bodies.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getApiArtifacts
 - name: get_openapi
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getOpenapi
   description: An API's primary OpenAPI reference (url) — the top agent intent; set include=["content"]
     to inline the spec body.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getOpenapi
 - name: get_provider_onboarding
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderOnboarding
   description: A getting-started view for a provider — website, portal, signup, docs, authentication,
     base URLs, and first steps assembled from its registered links.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getProviderOnboarding
 - name: find_similar_providers
+  description: Providers similar to a given one (alternatives) by shared tags, areas, industry, region,
+    and artifact coverage. Products under the same owner (a sister, not a rival) are left out of the ranking
+    and listed in meta.query.family; include_family=true ranks them in, flagged same_estate.
   source_operation: openapi/_original/apis-io-v1-openapi.yml#findSimilarProviders
-  description: Providers similar to a given one (alternatives) by shared tags, industry, region, and artifact
-    coverage.
 - name: find_similar_apis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#findSimilarApis
   description: APIs similar to a given one ("more like this") by shared tags.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#findSimilarApis
 - name: get_industry_leaders
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustryLeaders
   description: UNDERSTANDING — Top-rated providers in an industry vertical. Priced B1 (single-entity synthesis)
     — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getIndustryLeaders
 - name: get_region_leaders
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegionLeaders
   description: UNDERSTANDING — Top-rated providers in a region. Priced B1 (single-entity synthesis) —
     $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRegionLeaders
 - name: get_country_leaders
   description: UNDERSTANDING — Top-rated providers in one country. Membership is derived and partial,
-    so read the ranking as "the best of what we have placed there", not a national league table.
+    so read the ranking as "the best of what we have placed there", not a national league table. Priced
+    B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.
   first_seen: '2026-09-11'
 - name: get_area_leaders
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getAreaLeaders
   description: UNDERSTANDING — Top-rated providers in a curated API Evangelist area. Priced B1 (single-entity
     synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getAreaLeaders
 - name: get_rating_history
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingHistory
   description: 'UNDERSTANDING — A provider''s REAL score time series: one point per scored build (composite
     + agent readiness on each date), plus a summary of the movement over the window — first/last, net
-    change, direction, and the largest single-build jum'
+    change, direction, and the largest single-build jump with the date it happened. Not an implied previous
+    point; these are the recorded snapshots. Priced B1 (single-entity synthesis) — $0.01 per call under
+    pay-as-you-go; included in Understanding and Influence. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getRatingHistory
 - name: find_rating_movers
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#findRatingMovers
   description: UNDERSTANDING — The biggest rating movers (up and down) since the previous scoring build.
-    Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included in Understanding
-    and Influence. See apis://prices.
+    Priced per result — $0.005 per request plus $0.0002 per record returned (less past 100), capped at
+    $0.50 a request, under pay-as-you-go; included in Understanding and Influence. Estimate first at /api/v1/prices/estimate.
+    See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#findRatingMovers
 - name: story_leads
-  note: MCP-only.
   description: 'OWNER — The weekly "what''s worth writing" rollup: ranked story leads from the demand
     map crossed with rating movement — unmet demand (searched, no result), risers/fallers, and hot-but-thin
-    capabilities. Each lead is a headline, its signal,'
+    capabilities. Each lead is a headline, its signal, and a suggested angle. include=["raw"] appends
+    the underlying demand report. Not purchasable: owner-only, at any price.'
+  note: MCP-only.
 - name: what_can_i_fix
-  description: INFLUENCE — the ranked, costed, gated punch list for one provider you own. Every agent-readiness
-    check with points still on the table (exact — these are real per-check results, each with what satisfie
+  description: INFLUENCE — the ranked, gated punch list for one provider you own. Every agent-readiness
+    check with points still on the table (exact — these are real per-check results, each with what satisfies
+    it), plus the Kin Score facets ranked by weight x headroom rather than by lowest score. `do_first`
+    is the headline and prefers a BAND GATE over any amount of points, because points cannot clear a gate.
+    Use readiness_gates for the gate detail and simulate_fixes to price a plan before committing to it.
+    Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#whatCanIFix
   first_seen: '2026-09-11'
 - name: readiness_gates
   description: 'INFLUENCE — what blocks the next agent-readiness band, GATES BEFORE POINTS. Some bands
     are unreachable on score alone: agent-native requires idempotency AND a stable error envelope regardless
-    of how m'
+    of how many points a provider collects. Returns the points gap and the unmet gate requirements separately,
+    each priced, plus a verdict saying whether clearing the gate also closes the gap — the case a points-arithmetic
+    answer gets wrong every time. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go;
+    included in Understanding and Influence. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#readinessGates
   first_seen: '2026-09-11'
 - name: simulate_fixes
-  description: INFLUENCE — project a set of fixes onto a provider's agent-readiness score and band before
+  description: 'INFLUENCE — project a set of fixes onto a provider''s agent-readiness score and band before
     doing the work. Re-applies the band gate to the PROJECTED state, so it will tell you when buying points
-    still
+    still leaves you demoted. Kin Score facets are refused rather than estimated: several checks behind
+    them are count-based across a provider''s APIs, so a single claimed fix has no computable composite
+    value. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#simulateFixes
   first_seen: '2026-09-11'
 - name: claim_listing
   description: 'INFLUENCE — ask to claim a listing as yours. Returns 202 with a token and the hosts it
     will be checked against: publish it as a DNS TXT record, or as a file at /.well-known/apis-io-challenge,
-    and leav'
+    and leave it up. A PERSON verifies it and emails you — there is nothing else to call. Track it with
+    check_status. Priced B4 (human work) — worked by a person, no charge. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#claimListing
   first_seen: '2026-09-11'
 - name: generate_artifact
   description: 'INFLUENCE — REQUEST an artifact you are being marked down for not having: apis-json, agent-card,
     mcp (one tool per operation you already publish), arazzo, rules (a Spectral ruleset scoped to your
-    own '
+    own failing checks), scopes and security (read out of your own OpenAPI). Returns 202 — a person generates
+    it against your live surface, checks it, and sends it to you. Nothing is published on your behalf
+    either way: your score moves when YOU commit the file. Omit `artifact` to list what can be made. Priced
+    B4 (human work) — included in Influence; otherwise $49.00 as a one-off with its own receipt, never
+    from a prepaid balance. If this is your own company and our data about it is wrong, report_correction
+    is free. See apis://prices.'
   first_seen: '2026-09-11'
 - name: submit_artifact
   description: INFLUENCE — tell us about an artifact you publish, rather than waiting for us to find it.
     Returns 202; a person fetches it, checks it and re-runs the pipeline against it. Track it with check_status.
+    Priced B4 (human work) — included in Influence; otherwise $49.00 as a one-off with its own receipt,
+    never from a prepaid balance. If this is your own company and our data about it is wrong, report_correction
+    is free. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#submitArtifact
   first_seen: '2026-09-11'
 - name: correct_facts
   description: 'INFLUENCE — propose corrections to what we say about you: name, description, url, industries,
     tags. Returns 202 and is applied by a person — an API that let an owner rewrite their own description
-    unre'
+    unreviewed would be a marketing surface, not a catalog. Score and band are not owner-settable and
+    are ignored. Priced B4 (human work) — included in Influence; otherwise $49.00 as a one-off with its
+    own receipt, never from a prepaid balance. If this is your own company and our data about it is wrong,
+    report_correction is free. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#correctFacts
   first_seen: '2026-09-11'
 - name: dispute_finding
   description: INFLUENCE — "you say we lack X, here it is." Send the claim in words and a URL that evidences
     it. Returns 202; a person fetches your evidence, checks it against what we hold, and emails you either
-    way
+    way. Open to any paying caller — you should not have to prove ownership before you can tell us our
+    data is wrong. Priced B4 (human work) — included in Influence; otherwise $49.00 as a one-off with
+    its own receipt, never from a prepaid balance. If this is your own company and our data about it is
+    wrong, report_correction is free. See apis://prices.
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#disputeFinding
   first_seen: '2026-09-11'
 - name: set_visibility
-  description: INFLUENCE — ask to be shown less, or not at all. `restricted` keeps a name, a description
+  description: 'INFLUENCE — ask to be shown less, or not at all. `restricted` keeps a name, a description
     and a link to your own site, unrated and out of every ranked view; `delisted` removes you entirely.
-    Returns 20
+    Returns 202 and is applied by a person: it strips artifacts, pages and rollups across the network,
+    which is not something to do irreversibly on one API call. Priced B4 (human work) — worked by a person,
+    no charge. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#setVisibility
   first_seen: '2026-09-11'
 - name: watch_listing
   description: 'INFLUENCE — be told when a listing you care about moves: score changes, band changes,
-    or a check closing. Registration only — the scoring pipeline sends the mail, this records what you
-    want to hear ab'
+    agent-band changes, or a check closing. REQUIRES a destination: `contact` (an email address), `callback_url`
+    (an https endpoint that receives signed JSON), or both. The first pass after registering records where
+    the provider stands and sends nothing, so the first notification you get is about a real move. `agent_band`
+    is the one worth having — it carries the gate that caused the change, which a provider cannot compute
+    about themselves. Re-registering the same slug REPLACES its event set rather than adding a second
+    watch. list_watches shows what you hold; unwatch_listing removes one. Priced B1 (single-entity synthesis)
+    — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: list_watches
   description: 'INFLUENCE — the listings you are watching, with the events registered for each and when
     you started. The read half of watch_listing: call it before registering another, so you neither duplicate
-    a watc'
+    a watch nor assume one is in place that never took. Priced B1 (single-entity synthesis) — $0.01 per
+    call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: unwatch_listing
   description: INFLUENCE — stop watching a listing. Takes effect immediately and removes the registration
-    outright; there is no paused state. Removing a watch that was never registered is not an error.
+    outright; there is no paused state. Removing a watch that was never registered is not an error. Priced
+    B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.
   first_seen: '2026-09-11'
 - name: request_check
-  description: INFLUENCE — ask APIs.io to (re)check something. Use it when a listing is wrong or stale,
+  description: 'INFLUENCE — ask APIs.io to (re)check something. Use it when a listing is wrong or stale,
     when a score looks incorrect, or to get a company profiled that is not in the catalog yet. A check
-    can target a
+    can target a PROVIDER (the default) or a slice of the catalog: an `industry`, a `tag`, an `area`,
+    or a company''s `estate` — for an industry roster missing an obvious member, a tag that has drifted,
+    or an area whose ranking looks wrong. This does NOT score anything on the spot: a check means re-running
+    the enrichment pipeline against the live surface, which a person does by hand. You get a request id
+    back immediately; poll check_status with it, and if you supply a contact email you are notified when
+    the status changes. A slug we do not already hold is never refused — for ANY target type it is queued
+    as a request to ADD that thing, whether that is a company nobody has catalogued, a new industry, or
+    an estate nobody here has thought of. Near matches come back alongside it in `did_you_mean`, so a
+    typo is visible without the request being dropped. Priced B4 (human work) — included in Influence;
+    otherwise $99.00 as a one-off with its own receipt, never from a prepaid balance. If this is your
+    own company and our data about it is wrong, report_correction is free. See apis://prices.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#requestCheck
   first_seen: '2026-09-11'
 - name: check_status
   description: 'INFLUENCE — the status of a check request by id: queued, in_review, running, done, rejected
     or needs_info, with any notes shared by the reviewer. The id identifies the request, but the Influence
-    plan '
+    plan is now required to read it back. To report an error for free, use report_correction or open an
+    issue on the provider''s api-evangelist repo. Priced B1 (single-entity synthesis) — $0.01 per call
+    under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
+- name: find_agents
+  description: 'FREE, no account — the A2A agent registry: agents that registered THEMSELVES by serving
+    an agent card and calling register_agent. Each row carries the card URL, the operator, and the last
+    verification of the card (grade, protocol version, transport). This is the door an unattended agent
+    can walk through unaided; the others need a person or a voucher.'
+- name: register_agent
+  description: 'FREE, no account — register yourself in the A2A agent registry. Serve an agent card at
+    /.well-known/agent-card.json on a host you control, then call this with its URL (or just the host).
+    The card must be fetchable and pass the three A2A 1.0.0 hard checks: capabilities is an object, protocolVersion
+    is present, skills is an array. 202 queues it for review; 422 says exactly which check failed. The
+    card IS the evidence, so there is no form, no account, and nothing to wait for from us.'
 - name: report_gap
   description: 'FREE, no account — tell the catalog what you looked for and could not find. The consumer
     door (roadmap#166): a gap report is how the catalog learns what to add next, and a person reads the
-    queue. One '
+    queue. One required field.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#reportGap
   first_seen: '2026-09-11'
 - name: my_checks
   description: INFLUENCE — the check requests you filed, newest first. Requires a key or login — an anonymous
     caller has no identity to scope a list to, and should read a single request with check_status instead.
+    Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.
   first_seen: '2026-09-11'
 - name: export_dataset
-  note: MCP-only.
   description: 'LICENCE (sold on the Influence plan) — the WHOLE dataset, not a 100-row page: `ratings`
     (every rated provider with facets, trend, rubric + provenance), `providers` (the catalog with coverage
-    + score), or `history` (every provider''s full sco'
+    + score), or `history` (every provider''s full score time series — parallel date/composite/agent_readiness
+    arrays across every scored build the catalog retains, with a movement summary per provider). `history`
+    is the one nobody can reconstruct after the fact: it is the only record of what the catalog looked
+    like on those dates. For media outlets and analysts licensing the data to publish rankings and trends.
+    Every dataset exceeds one response, so they arrive in byte-budgeted chunks: while `complete` is false,
+    call again with `cursor` set to `next_cursor` and concatenate `data`; the last page has `complete:
+    true` and a null `next_cursor`. Attribute to apis.io and cite the rubric. Priced B3 (bulk export)
+    — $0.002 per row, $0.50 minimum per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.'
+  note: MCP-only.
 - name: industry_gap_analysis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#industryGapAnalysis
   description: UNDERSTANDING — Valuable artifact types (MCP, Arazzo, Rules, Skills…) commonly missing
     across a whole industry — where the vertical is under-served. Priced B2 (cross-catalog synthesis)
-    — $0.05 per call under pay-as-you-go; included in Under
+    — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#industryGapAnalysis
 - name: export_stack
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#exportStack
   description: UNDERSTANDING — Export a designed capability stack as an adoptable APIs.json document (with
     an Arazzo hint) the team can commit. Priced B3 (bulk export) — $0.002 per row, $0.50 minimum per call
-    under pay-as-you-go; included in Understanding
+    under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#exportStack
 - name: insights_overview
   description: 'UNDERSTANDING — the Insights root: how many companies are profiled, over how many quarters,
     and the top investment dimensions across the whole set. Read this FIRST — it tells you the size and
-    vintage '
+    vintage of the corpus before you draw a conclusion from any single company in it. Priced B2 (cross-catalog
+    synthesis) — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: find_company_insights
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightCompanies
   description: Browse profiled companies (Fortune 1000) by name or industry; ranked by overall technology-readiness
     signal. `industry` takes an insights industry NAME from insights_industries (e.g. "Industrial") —
-    a different vocabulary from the catalog i
+    a different vocabulary from the catalog industry slugs find_providers uses — and matches every roster
+    a company sits on, not just its primary. Understanding plan. Priced per result — $0.005 per request
+    plus $0.0002 per record returned (less past 100), capped at $0.50 a request, under pay-as-you-go;
+    included in Understanding and Influence. Estimate first at /api/v1/prices/estimate. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightCompanies
 - name: insights_dimensions
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightDimensions
   description: Cross-section ranking of the 40 tracked investment dimensions (AI, cloud, governance, security,
     …) by how many profiled companies show signal. Understanding plan. Priced B2 (cross-catalog synthesis)
-    — $0.05 per call under pay-as-you-go; inc
+    — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightDimensions
 - name: insights_adoption
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightAdoption
   description: Services, tools, or standards ranked by how many companies adopt them across the profiled
     set. Understanding plan. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go;
-    included in Understanding and Influence. See apis:/
+    included in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listInsightAdoption
 - name: insights_industries
   description: 'UNDERSTANDING — the demand-side industry rollup: the sectors the profiled companies fall
     into. Each row carries TWO counts and they answer different questions: `company_count` is the research
-    roster, '
+    roster, `profiled_count` is how many of those you can actually read back via find_company_insights(industry:)
+    — size a cohort on profiled_count. The counterpart to find_industries, which counts SUPPLY (providers
+    publishing APIs into a vertical) — this counts DEMAND (companies buying into it). Comparing the two
+    is how you find a sector with buyers and no sellers. Priced B2 (cross-catalog synthesis) — $0.05 per
+    call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: get_company_insight
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyInsight
   description: 'UNDERSTANDING — Full demand-side profile for one company: 40-dimension readiness scores,
     adopted stack, and per-quarter history. Priced B2 (cross-catalog synthesis) — $0.05 per call under
-    pay-as-you-go; included in Understanding and Influen'
+    pay-as-you-go; included in Understanding and Influence. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyInsight
 - name: company_gaps
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyGaps
   description: UNDERSTANDING — A company's weakest investment dimensions — where it is thin and a vendor
     could sell in. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included
     in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#getCompanyGaps
 - name: match_providers
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#matchCompanyProviders
   description: 'UNDERSTANDING — The supply↔demand join: apis.io providers whose product appears in a company''s
     adopted stack, ranked by rating. Priced B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go;
-    included in Understanding and Influenc'
+    included in Understanding and Influence. See apis://prices.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#matchCompanyProviders
 - name: find_vcs
-  note: MCP-only — venture-capital surface not exposed in the v1 REST contract.
   description: UNDERSTANDING — Find venture-capital firms by name, thesis tags, or category. Each carries
     a network-matched, rated portfolio graph. Sort by portfolio_on_network (default), portfolio_total,
-    portfolio_rating, or name. Understanding plan. Pri
+    portfolio_rating, or name. Understanding plan. Priced B1 (single-entity synthesis) — $0.01 per call
+    under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  note: MCP-only — venture-capital surface not exposed in the v1 REST contract.
 - name: get_vc
-  note: MCP-only.
   description: 'UNDERSTANDING — One VC firm: identity, fund facts, and portfolio summary (totals, band
     distribution, average rating). Pass view=full to inline the whole portfolio. Understanding plan. Priced
-    B1 (single-entity synthesis) — $0.01 per call und'
-- name: vc_portfolio
+    B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.'
   note: MCP-only.
+- name: vc_portfolio
   description: UNDERSTANDING — A VC firm's portfolio companies, each matched to the network and rated.
     Filter publishes_api=true (companies that actually ship an API — about 37% of any book), in_network=true,
-    band, or min_score; sort by score (default), a
-- name: find_investors
+    band, or min_score; sort by score (default), api_count, or name. The demand-side view of who a fund
+    has backed. Understanding plan. Priced per result — $0.005 per request plus $0.0002 per record returned
+    (less past 100), capped at $0.50 a request, under pay-as-you-go; included in Understanding and Influence.
+    Estimate first at /api/v1/prices/estimate. See apis://prices.
   note: MCP-only.
+- name: find_investors
   description: 'UNDERSTANDING — The reverse portfolio edge: which VC firms in the network back a given
     provider/company (by slug). The investor COUNT is free; the named firms need Understanding. Priced
-    B2 (cross-catalog synthesis) — $0.05 per call under pa'
+    B2 (cross-catalog synthesis) — $0.05 per call under pay-as-you-go; included in Understanding and Influence.
+    See apis://prices.'
+  note: MCP-only.
 - name: resolve
-  note: MCP-only — identifier resolver with no public REST operation.
   description: Resolve ANY identifier — website URL, domain (stripe.com), or GitHub org (github.com/stripe)
     — to the apis.io provider it belongs to. Use this when you have a URL, not a slug. Understanding plan.
-    Priced B1 (single-entity synthesis) — $0.01
+    Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.
+  note: MCP-only — identifier resolver with no public REST operation.
 - name: enrich_provider
-  note: MCP-only — profile/onboarding/artifact composite with no single REST operation.
   description: 'One call, pick your field groups — resolves a slug OR any identifier and returns exactly
     the groups you ask for, instead of chaining get_provider + get_provider_rating + get_provider_artifacts
-    + get_provider_onboarding. Groups: profile, onb'
+    + get_provider_onboarding. Groups: profile, onboarding, artifacts, rating, insights. Understanding
+    plan — the base groups moved with the rest of the discovery layer on 2026-08-31. Priced B2 (cross-catalog
+    synthesis) — $0.05 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
+  note: MCP-only — profile/onboarding/artifact composite with no single REST operation.
 - name: save_search
-  note: MCP-only — Saved Workspace (Pro), stateful, no REST equivalent.
   description: UNDERSTANDING — Persist the current search criteria as a named saved search you own, so
     you can re-run it and get net-new results later. Criteria use the same filters as apis_io_search.
-    Requires an apis.io API key. Priced B1 (single-entity
+    Requires an apis.io API key. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go;
+    included in Understanding and Influence. See apis://prices.
+  note: MCP-only — Saved Workspace (Pro), stateful, no REST equivalent.
 - name: my_workspace
   description: 'UNDERSTANDING — the workspace root: which plan you are on, how many saved searches and
     lists you hold, and where each lives. Answers "what do I have here and what can I afford" in one call,
-    so an agen'
+    so an agent need not probe. NOT the same as the account (login, API key, usage, billing), which is
+    https://apis.io/api/v1/auth/me. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go;
+    included in Understanding and Influence. See apis://prices.'
   first_seen: '2026-09-11'
 - name: list_saved_searches
-  note: MCP-only — Saved Workspace (Pro).
   description: UNDERSTANDING — List the saved searches you own (name, criteria, when last run, how many
     matches are tracked). Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included
-    in Understanding and Influence. See apis://pri
-- name: run_saved_search
+    in Understanding and Influence. See apis://prices.
   note: MCP-only — Saved Workspace (Pro).
+- name: run_saved_search
   description: UNDERSTANDING — Re-run one of your saved searches against the live catalog and return current
     matching providers. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included
-    in Understanding and Influence. See apis://
-- name: saved_search_net_new
+    in Understanding and Influence. See apis://prices.
   note: MCP-only — Saved Workspace (Pro).
+- name: saved_search_net_new
   description: 'UNDERSTANDING — What is NEW for a saved search since you last checked: providers that
     newly match your criteria. Advances the delta cursor, so each call reports only what changed since
-    the previous call. The agent-native version of the dema'
-- name: delete_saved_search
+    the previous call. The agent-native version of the demand report. Priced B1 (single-entity synthesis)
+    — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.'
   note: MCP-only — Saved Workspace (Pro).
+- name: delete_saved_search
   description: UNDERSTANDING — Delete a saved search you own. Priced B1 (single-entity synthesis) — $0.01
     per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
-- name: create_list
   note: MCP-only — Saved Workspace (Pro).
+- name: create_list
   description: UNDERSTANDING — Create a named, persistent list (a shortlist / stack you own) of providers
     or APIs. Requires an apis.io API key. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go;
-    included in Understanding and Influen
-- name: list_lists
+    included in Understanding and Influence. See apis://prices.
   note: MCP-only — Saved Workspace (Pro).
+- name: list_lists
   description: UNDERSTANDING — List the lists/shortlists you own. Priced B1 (single-entity synthesis)
     — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
-- name: get_list
   note: MCP-only — Saved Workspace (Pro).
+- name: get_list
   description: UNDERSTANDING — Get a list you own, with each member resolved to its current name, band,
     and score. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding
     and Influence. See apis://prices.
-- name: add_to_list
   note: MCP-only — Saved Workspace (Pro).
+- name: add_to_list
   description: UNDERSTANDING — Add providers/APIs (by slug or aid) to one of your lists. Priced B1 (single-entity
     synthesis) — $0.01 per call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
-- name: delete_list
   note: MCP-only — Saved Workspace (Pro).
+- name: delete_list
   description: UNDERSTANDING — Delete a list you own. Priced B1 (single-entity synthesis) — $0.01 per
     call under pay-as-you-go; included in Understanding and Influence. See apis://prices.
+  note: MCP-only — Saved Workspace (Pro).
 - name: find_openapis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listOpenapis
   description: OpenAPI specifications across the catalog. The REST contract. get_openapi returns one API's
     primary spec with optional inlined body. Filter by q / tags / providers; include=["content"] inlines
-    bodies. Use find_artifacts for cross-type searc
+    bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listOpenapis
 - name: find_asyncapis
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAsyncapis
   description: AsyncAPI (event-driven) specifications across the catalog. Event/streaming APIs. Filter
     by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listAsyncapis
 - name: find_channels
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listChannels
   description: AsyncAPI event channels across the catalog. Individual event channels (topics/streams).
     Filter by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type
     search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listChannels
 - name: find_graphql
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listGraphql
   description: GraphQL schemas across the catalog. GraphQL type systems. Filter by q / tags / providers;
     include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listGraphql
 - name: find_arazzo
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listArazzo
   description: Arazzo workflows across the catalog. Multi-step API workflows chaining operations. Filter
     by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listArazzo
 - name: find_mcp
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listMcpServers
   description: MCP servers across the catalog. Model Context Protocol servers a provider offers to agents.
     Filter by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type
     search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listMcpServers
 - name: find_skills
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSkills
   description: Agent Skills across the catalog. Packaged agent skills. Filter by q / tags / providers;
     include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSkills
 - name: find_rules
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRules
   description: Spectral governance rulesets across the catalog. API design/linting rulesets. Filter by
     q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRules
+- name: find_overlays
+  description: 'OpenAPI Overlays across the catalog. Documents applied on top of an API contract to add
+    or change what it says. meta says who wrote it (authorship: provider / derived / generated / unmarked),
+    whether the provider hosts it (provider_hosted — the only kind the Kin Score credits), what the actions
+    touch (purpose), the action counts and the contract it extends. Filter by q / tags / providers; include=["content"]
+    inlines bodies. Use find_artifacts for cross-type search.'
 - name: find_scopes
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listScopes
   description: OAuth scope catalogs across the catalog. The OAuth scopes an API defines. Understanding
     plan. Filter by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type
-    search. Priced B1 (single-entity synthesis)
+    search. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included in Understanding
+    and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listScopes
 - name: find_security
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSecurity
   description: Security artifacts across the catalog. Authentication, domain security, VDP, trust center.
     Understanding plan. Filter by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts
-    for cross-type search. Priced B1 (single-e
+    for cross-type search. Priced B1 (single-entity synthesis) — $0.01 per call under pay-as-you-go; included
+    in Understanding and Influence. See apis://prices.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listSecurity
 - name: find_plans
+  description: Pricing plans across the catalog. An API's pricing tiers. meta says who wrote the file
+    (method), when it was read (provenance_date), who the page prices for (audience), how (pricing_basis),
+    and whether a price is stale. Filter by q / tags / providers; include=["content"] inlines bodies.
+    Use find_artifacts for cross-type search.
   source_operation: openapi/_original/apis-io-v1-openapi.yml#listPlans
-  description: Pricing plans across the catalog. An API's pricing tiers. Filter by q / tags / providers;
-    include=["content"] inlines bodies. Use find_artifacts for cross-type search.
 - name: find_rate_limits
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRateLimits
-  description: Rate-limit policies across the catalog. Declared throttling policies. Filter by q / tags
-    / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
-- name: find_finops
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listFinops
-  description: FinOps / billing models across the catalog. How usage is metered and billed. Filter by
+  description: Rate-limit policies across the catalog. Declared throttling policies. meta carries method,
+    provenance_date, the exhaustion status and the response headers that signal limit state. Filter by
     q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listRateLimits
+- name: find_finops
+  description: 'FinOps / billing models across the catalog. How usage is metered and billed. meta carries
+    the billing model (pricing category), method, provenance_date, primary_unit (what the provider bills
+    by) and `template: true` on sweep output that restates the FinOps framework without a unit, meters
+    or a pricing category. Filter by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts
+    for cross-type search.'
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listFinops
 - name: find_collections
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listCollections
   description: Postman / Open collections across the catalog. Runnable request collections. Filter by
     q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listCollections
 - name: find_json_ld
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonLd
   description: JSON-LD contexts across the catalog. Linked-data vocabularies. Filter by q / tags / providers;
     include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonLd
 - name: find_json_schemas
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonSchemas
   description: JSON Schemas across the catalog. Standalone data schemas. Filter by q / tags / providers;
     include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonSchemas
 - name: find_json_structures
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonStructures
   description: JSON Structures across the catalog. Data structures behind an API. Filter by q / tags /
     providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listJsonStructures
 - name: find_examples
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listExamples
   description: Example payloads across the catalog. Real request/response examples. Filter by q / tags
     / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listExamples
 - name: find_postman
-  source_operation: openapi/_original/apis-io-v1-openapi.yml#listPostman
   description: Postman collections across the catalog. Postman-format collections (by reference). Filter
     by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  source_operation: openapi/_original/apis-io-v1-openapi.yml#listPostman
 - name: find_apis_json
-  note: MCP-only — no public REST operation for the apis.json artifact collection.
   description: APIs.json indexes across the catalog. The APIs.json discovery documents themselves. Filter
     by q / tags / providers; include=["content"] inlines bodies. Use find_artifacts for cross-type search.
+  note: MCP-only — no public REST operation for the apis.json artifact collection.
 - name: submit_feedback
   description: 'Report something wrong with a result: wrong data, a filter that did not filter, a ranking
     that put off-topic results first, a number you could not reproduce, or an answer that was useless
-    for your tas'
+    for your task. Free, and the fastest way to get a defect fixed — this is read by a human. Say what
+    you expected as well as what you got.'
   first_seen: '2026-09-11'
 - name: report_correction
   description: 'Report that the catalog has a provider WRONG — a wrong website, a wrong logo, APIs that
     are not theirs, a count that does not match what they ship, a score computed from any of those. Free,
-    always: co'
+    always: correcting our own error is never a paid feature. Read by a human. If you are the provider,
+    say so — it does not gate anything, it tells us how fast to move.'
   source_operation: openapi/_original/apis-io-v1-provider-control-openapi.yml#reportCorrection
   first_seen: '2026-09-11'
 x-evidence:
@@ -762,3 +1033,4 @@ tool_quality:
   scored: false
   note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
     from Glimind's agent-readiness audit.
+tools_count: 142
