@@ -733,3 +733,32 @@ deployment:
   source: live probe (POST initialize + tools/list)
 descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
   --descriptions, 2026-09-28
+tool_quality:
+  tool_count: 142
+  tokens_total: 57759
+  tokens_per_tool_median: 357
+  heavy_tools:
+  - name: find_providers
+    tokens: 2700
+  - name: find_apis
+    tokens: 1452
+  heavy_tool_count: 2
+  params_total: 744
+  params_undescribed: 0
+  params_described_pct: 100.0
+  tools_with_undescribed_params: 0
+  tools_annotated: 142
+  annotated_pct: 100.0
+  state_changing_unhinted: []
+  tools_missing_schema: 0
+  short_descriptions: 0
+  duplicate_descriptions: 0
+  duplicate_names: 0
+  nonportable_names: []
+  output_schema_count: 0
+  token_estimate: chars/3.6 of each compact tool definition
+  source: mcp/apis-io-mcp-tools.json
+  measured: '2026-10-20'
+  scored: false
+  note: Facts from the saved tools/list capture (mcp_tool_quality.py); recorded, not scored. Checks learned
+    from Glimind's agent-readiness audit.
