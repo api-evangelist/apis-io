@@ -1006,14 +1006,10 @@ descriptions_source: live tools/list (authorship probe or saved capture); filled
   --descriptions, 2026-09-28
 tool_quality:
   tool_count: 142
-  tokens_total: 57759
-  tokens_per_tool_median: 357
-  heavy_tools:
-  - name: find_providers
-    tokens: 2700
-  - name: find_apis
-    tokens: 1452
-  heavy_tool_count: 2
+  tokens_total: 45287
+  tokens_per_tool_median: 290
+  heavy_tools: []
+  heavy_tool_count: 0
   params_total: 744
   params_undescribed: 0
   params_described_pct: 100.0

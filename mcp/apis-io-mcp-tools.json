@@ -26,14 +26,14 @@
             },
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "match": {
               "type": "string",
@@ -42,7 +42,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "providers": {
               "type": "array",
@@ -56,39 +56,39 @@
               "items": {
                 "type": "string"
               },
-              "description": "Artifact types an API must carry, e.g. [\"OpenAPI\",\"AsyncAPI\",\"Postman\"]. Synonyms fold (MCPServer = MCP)."
+              "description": "Artifact types required, e.g. [\"OpenAPI\"]."
             },
             "band": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+              "description": "exemplar | strong | developing | thin | minimal."
             },
             "min_score": {
               "type": "number",
-              "description": "Only providers whose Kin Score composite is at or above this, 0-100, e.g. 60."
+              "description": "Minimum Kin Score composite (0-100), e.g. 60."
             },
             "industry": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Industry slugs, as find_industries returns them, e.g. [\"artificial-intelligence\"]."
+              "description": "Industry slugs, e.g. [\"fintech\"]."
             },
             "region": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Region slugs, as find_regions returns them, e.g. [\"north-america\"]."
+              "description": "Region slugs, e.g. [\"north-america\"]."
             },
             "area": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Area slugs, as find_areas returns them, e.g. [\"security\"]."
+              "description": "Area slugs, e.g. [\"security\"]."
             },
             "sort": {
               "type": "string",
@@ -101,7 +101,7 @@
                 "api_count",
                 "demand"
               ],
-              "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+              "description": "Default: relevance with `q`, else composite."
             },
             "limit": {
               "type": "integer",
@@ -112,7 +112,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -130,7 +130,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -173,7 +173,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -185,20 +185,20 @@
       },
       {
         "name": "find_apis",
-        "description": "Paginated, sortable list of APIs across providers — filter by tag, provider, artifact type, industry, region, or rating band. Matching is LEXICAL: `q` searches the API's own name and description. apis_io_search reports a larger API total for the same `q` because it also counts every API belonging to a provider whose NAME matched; pass include=[\"via_provider\"] here to get that same union, and `meta.query.via_provider` says how many rows it added. Use apis_io_search first for a cross-type overview.",
+        "description": "Paginated, sortable list of APIs across providers — filter by tag, provider, artifact type, industry, region, or rating band. `q` is lexical over the API's own name and description; include=[\"via_provider\"] adds APIs of providers whose name matched (the union apis_io_search counts). Use apis_io_search first for a cross-type overview. Parameter reference: apis://docs/tools/find_apis.",
         "inputSchema": {
           "type": "object",
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "match": {
               "type": "string",
@@ -207,7 +207,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "resolve": {
               "type": "string",
@@ -216,75 +216,75 @@
                 "off"
               ],
               "default": "on",
-              "description": "When `q` exactly names a tag, apis.io uses it: on PROVIDERS a resource tag (order, webhook, image) replaces the text search with the companies that classify themselves there — 2,182 text matches for \"order\" become the 92 that claim it; on APIS the tag's members are ADDED to the text matches, never swapped for them. Market tags (payments) and tags almost no company claims are reported and not applied. Set `off` for pure text. The resolution is always echoed as `resolved_tag`."
+              "description": "on (default) uses a tag `q` names; off = text only."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "artifact_types": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Artifact types an API must carry, e.g. [\"OpenAPI\",\"AsyncAPI\",\"Postman\"]. Synonyms fold (MCPServer = MCP)."
+              "description": "Artifact types required, e.g. [\"OpenAPI\"]."
             },
             "band": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+              "description": "exemplar | strong | developing | thin | minimal."
             },
             "min_score": {
               "type": "number",
-              "description": "Only providers whose Kin Score composite is at or above this, 0-100, e.g. 60."
+              "description": "Minimum Kin Score composite (0-100), e.g. 60."
             },
             "industry": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Industry slugs, as find_industries returns them, e.g. [\"artificial-intelligence\"]."
+              "description": "Industry slugs, e.g. [\"fintech\"]."
             },
             "region": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Region slugs, as find_regions returns them, e.g. [\"north-america\"]."
+              "description": "Region slugs, e.g. [\"north-america\"]."
             },
             "area": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Area slugs, as find_areas returns them, e.g. [\"security\"]."
+              "description": "Area slugs, e.g. [\"security\"]."
             },
             "pricing": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Access model — pricing: free, freemium, free-trial, paid, enterprise. (providers only)"
+              "description": "free | freemium | free-trial | paid | enterprise, e.g. [\"free\"]."
             },
             "onboarding": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Access model — how to start: open (no key), self-serve, approval. (providers only)"
+              "description": "open (no key) | self-serve | approval."
             },
             "try_now": {
               "type": "boolean",
-              "description": "Only providers a developer can start using at no cost right now (free/trial + self-serve/open). (providers only)"
+              "description": "Usable at no cost right now (free/trial + self-serve/open)."
             },
             "public": {
               "type": "boolean",
-              "description": "Only providers callable publicly with no signup (onboarding=open). (providers only)"
+              "description": "Callable with no signup (onboarding=open)."
             },
             "sort": {
               "type": "string",
@@ -297,7 +297,7 @@
                 "api_count",
                 "demand"
               ],
-              "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+              "description": "Default: relevance with `q`, else composite."
             },
             "view": {
               "type": "string",
@@ -306,20 +306,20 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "fields": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Return exactly these top-level keys (overrides view)."
+              "description": "Only these top-level keys, e.g. [\"slug\",\"score\"]."
             },
             "page": {
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -335,7 +335,7 @@
                   "via_provider"
                 ]
               },
-              "description": "via_provider — also return the APIs of providers whose name matched `q`, the union apis_io_search counts. Needs `q`; adds nothing without one."
+              "description": "via_provider: also return APIs of providers whose name matched `q`. Needs `q`."
             },
             "provenance": {
               "type": "string",
@@ -345,11 +345,11 @@
                 "published",
                 "documented"
               ],
-              "description": "modeled: real APIs behind a partner/contract gate whose shape API Evangelist drew (no public reference); unpublished: product areas with NO API behind them (listed for completeness, not counted); published: every real API, modeled included; documented: only entries with neither mark. Omit to list all; every marked row carries `provenance`."
+              "description": "modeled | unpublished | published | documented, e.g. \"documented\". Omit for all. Meanings: apis://docs/tools/find_apis."
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -395,7 +395,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -407,20 +407,20 @@
       },
       {
         "name": "find_providers",
-        "description": "Paginated, sortable list of providers — filter by text, tag, artifact type, industry, region, rating band, access model (pricing/onboarding/try_now/public), or DIRECTION (accepts_writes/min_acting — whether the surface takes a write or only emits). `tags` filters on what the COMPANY does (its own top-level classification), not on what its endpoints touch; for a resource-level term use find_apis?tags=, or api_tags= here to find companies whose APIs merely touch it. A row that is a third-party marketplace / app-store / directory LISTING rather than the provider (`x_source: marketplace-listing`) ranks after every provider; meta.query.marketplace_listings_demoted says how many. Name it in `providers` to read it where you put it. Use apis_io_search first for a cross-type overview.",
+        "description": "Paginated, sortable, filterable list of providers. Size filters need Understanding. Overview: apis_io_search. Reference: apis://docs/tools/find_providers.",
         "inputSchema": {
           "type": "object",
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "match": {
               "type": "string",
@@ -429,7 +429,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "resolve": {
               "type": "string",
@@ -438,75 +438,75 @@
                 "off"
               ],
               "default": "on",
-              "description": "When `q` exactly names a tag, apis.io uses it: on PROVIDERS a resource tag (order, webhook, image) replaces the text search with the companies that classify themselves there — 2,182 text matches for \"order\" become the 92 that claim it; on APIS the tag's members are ADDED to the text matches, never swapped for them. Market tags (payments) and tags almost no company claims are reported and not applied. Set `off` for pure text. The resolution is always echoed as `resolved_tag`."
+              "description": "on (default) uses a tag `q` names; off = text only."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "artifact_types": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Artifact types an API must carry, e.g. [\"OpenAPI\",\"AsyncAPI\",\"Postman\"]. Synonyms fold (MCPServer = MCP)."
+              "description": "Artifact types required, e.g. [\"OpenAPI\"]."
             },
             "band": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+              "description": "exemplar | strong | developing | thin | minimal."
             },
             "min_score": {
               "type": "number",
-              "description": "Only providers whose Kin Score composite is at or above this, 0-100, e.g. 60."
+              "description": "Minimum Kin Score composite (0-100), e.g. 60."
             },
             "industry": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Industry slugs, as find_industries returns them, e.g. [\"artificial-intelligence\"]."
+              "description": "Industry slugs, e.g. [\"fintech\"]."
             },
             "region": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Region slugs, as find_regions returns them, e.g. [\"north-america\"]."
+              "description": "Region slugs, e.g. [\"north-america\"]."
             },
             "area": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Area slugs, as find_areas returns them, e.g. [\"security\"]."
+              "description": "Area slugs, e.g. [\"security\"]."
             },
             "pricing": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Access model — pricing: free, freemium, free-trial, paid, enterprise. (providers only)"
+              "description": "free | freemium | free-trial | paid | enterprise, e.g. [\"free\"]."
             },
             "onboarding": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Access model — how to start: open (no key), self-serve, approval. (providers only)"
+              "description": "open (no key) | self-serve | approval."
             },
             "try_now": {
               "type": "boolean",
-              "description": "Only providers a developer can start using at no cost right now (free/trial + self-serve/open). (providers only)"
+              "description": "Usable at no cost right now (free/trial + self-serve/open)."
             },
             "public": {
               "type": "boolean",
-              "description": "Only providers callable publicly with no signup (onboarding=open). (providers only)"
+              "description": "Callable with no signup (onboarding=open)."
             },
             "sort": {
               "type": "string",
@@ -519,7 +519,7 @@
                 "api_count",
                 "demand"
               ],
-              "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+              "description": "Default: relevance with `q`, else composite."
             },
             "view": {
               "type": "string",
@@ -528,20 +528,20 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "fields": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Return exactly these top-level keys (overrides view)."
+              "description": "Only these top-level keys, e.g. [\"slug\",\"score\"]."
             },
             "page": {
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -555,84 +555,84 @@
               "items": {
                 "type": "string"
               },
-              "description": "Providers that publish an API, spec or OPERATION carrying these tags, without claiming it as their business. The complement of `tags`, and disjoint from it."
+              "description": "Tags on its APIs, e.g. [\"webhook\"]."
             },
             "include_narrower": {
               "type": "boolean",
-              "description": "With `tags`: also return the members of each tag's CURATED narrower tags (the `narrower` list on get_tag — Payments under Fintech), after the tag's own members. Each added row carries `via: <narrower-tag>`. Off by default, and provider_count on the tag stays the tag's own membership; provider_count_with_narrower is this total. On a tag with senses (payments, media, supply-chain), every row is routed into a sense: it carries `sense: <tag>:<id>`, meta.query.senses counts own and added members per sense, and `sense=<tag>:<id>` with include_narrower=true (REST) reads one routed sense."
+              "description": "With `tags`: add narrower-tag members."
             },
             "group": {
               "type": "string",
               "enum": [
                 "estate"
               ],
-              "description": "estate = rank each corporate estate ONCE: keep the best-ranked member of each estate root (Cvent, Oracle, Amazon) in the order applied, and nest the other members of that estate found in this result set under it as `estate_members`, with `estate_member_count`. Rows outside any estate are unaffected. meta.query.ungrouped_total is the flat count. Off by default; every row carries `estate` and `estate_root` either way."
+              "description": "estate: one row per estate."
             },
             "publishes_api": {
               "type": "boolean",
-              "description": "true = the provider publishes at least one API (api_count > 0), including partner-gated APIs whose shape API Evangelist modeled; false = it publishes none. Product areas marked as not an API (unpublished_api_count) are not counted, so a company whose every entry is one reads false."
+              "description": "true = publishes an API."
             },
             "accepts_writes": {
               "type": "boolean",
-              "description": "true = the provider has operations that ACT (create/update/send), so you can push something to it; false = measured and read-only. Use this when the question is \"where can I publish/send/post to\" — text search cannot tell direction, and without it a query about syndicating content returns RSS feeds and read-only APIs. Providers with no agentic-access reading are excluded either way: absent is unmeasured, not zero."
+              "description": "true = has write operations; false = read-only."
             },
             "min_acting": {
               "type": "integer",
-              "description": "Minimum number of acting (non-read) operations. Use to require real write depth rather than a single write endpoint."
+              "description": "Minimum write operations, e.g. 5."
             },
             "country": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Providers whose derived country membership includes these slugs (e.g. united-kingdom). Membership is partial — a count is a floor."
+              "description": "Country slugs, e.g. [\"united-kingdom\"]."
             },
             "platform": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Providers running on these platform vendors, by registry key or catalog slug (mintlify, readme, gitbook, redocly, apigee, kong, cloudflare, vercel…). \"Who are Mintlify's customers\" = platform=mintlify; \"who runs on a competitor\" = platform=readme. Each row carries `platforms` with the evidence. Detection covers ~1,240 providers — absent means not detected, not \"none\"."
+              "description": "Vendor slugs, e.g. [\"mintlify\"]."
             },
             "platform_area": {
               "type": "string",
-              "description": "Narrow `platform` (or all detected platforms) to one area: documentation, developer-portal, api-gateway, hosting, cdn, status-page, support, identity, mcp-hosting."
+              "description": "Platform area, e.g. hosting."
             },
             "max_score": {
               "type": "number",
-              "description": "Only providers at or below this composite. Pair with min_score for a band-free range."
+              "description": "Maximum composite, e.g. 60."
             },
             "trend": {
               "type": "string",
-              "description": "up | down | flat — direction of the composite since the previous scoring pass."
+              "description": "up | down | flat since last scoring."
             },
             "facet": {
               "type": "string",
-              "description": "Quality facet to threshold on: discoverability, contract_quality, governance, operational_transparency, developer_ergonomics, commercial_clarity. Needs min_facet."
+              "description": "Facet, e.g. governance; needs min_facet."
             },
             "min_facet": {
               "type": "number",
-              "description": "Minimum score on `facet`. Without `facet` this does nothing."
+              "description": "Minimum `facet` score, e.g. 70."
             },
             "employees_band": {
               "type": "string",
-              "description": "Company size band(s), comma-separated: 1-10 | 11-50 | 51-200 | 201-1000 | 1001-5000 | 5000+ | 1000+ (the last is the open-ended band the inferred rung emits when it can tell \"big\" but not how big). ESTIMATES from free public sources — Wikidata, SEC EDGAR, the provider's own About page, our own signals — never a headcount. Understanding plan."
+              "description": "Size band(s), e.g. \"1-10,11-50\"."
             },
             "revenue_band": {
               "type": "string",
-              "description": "Revenue band(s): <$1M | $1-10M | $10-100M | $100M-1B | $1B+. Estimates; filed where size_basis is sec-edgar or companies-house. Understanding plan."
+              "description": "Revenue band(s), e.g. \"$1-10M\"."
             },
             "size_basis": {
               "type": "string",
-              "description": "Which rung produced the band: sec-edgar | companies-house | wikidata | editorial | derived | inferred | unknown. Ask for the filed ones when you need a defensible number. Understanding plan."
+              "description": "Size source, e.g. sec-edgar."
             },
             "size_status": {
               "type": "string",
-              "description": "probed | unprobed. USE size_status=probed when filtering for small companies: without it, \"not enterprise\" sweeps in every provider we have not looked at yet and counts them as small. Absence of a band is not a measurement. Understanding plan."
+              "description": "probed | unprobed (use probed for small firms)."
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -662,7 +662,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "fields": {
               "type": "array",
@@ -678,7 +678,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -696,7 +696,7 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "sort": {
               "type": "string",
@@ -709,7 +709,7 @@
                 "api_count",
                 "demand"
               ],
-              "description": "Order results. Default: relevance with a query, composite (quality) when browsing. `demand` = Fortune-1000 adoption, scoped to the query."
+              "description": "Default: relevance with `q`, else composite."
             },
             "view": {
               "type": "string",
@@ -718,20 +718,20 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "fields": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Return exactly these top-level keys (overrides view)."
+              "description": "Only these top-level keys, e.g. [\"slug\",\"score\"]."
             },
             "page": {
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -755,7 +755,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -785,7 +785,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "limit": {
               "type": "integer",
@@ -801,7 +801,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -829,7 +829,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -840,7 +840,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -870,7 +870,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "limit": {
               "type": "integer",
@@ -886,7 +886,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -910,7 +910,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -921,7 +921,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -951,7 +951,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -976,7 +976,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1004,7 +1004,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1025,7 +1025,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1055,7 +1055,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "limit": {
               "type": "integer",
@@ -1071,7 +1071,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1099,7 +1099,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1120,7 +1120,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1150,7 +1150,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "limit": {
               "type": "integer",
@@ -1166,7 +1166,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1194,7 +1194,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1205,7 +1205,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1235,7 +1235,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "limit": {
               "type": "integer",
@@ -1251,7 +1251,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1287,7 +1287,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1298,7 +1298,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1323,7 +1323,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1351,7 +1351,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1362,7 +1362,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1392,7 +1392,7 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "include_next": {
               "type": "boolean",
@@ -1401,7 +1401,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1426,7 +1426,7 @@
             },
             "min_score": {
               "type": "number",
-              "description": "Only providers whose Kin Score composite is at or above this, 0-100, e.g. 60."
+              "description": "Minimum Kin Score composite (0-100), e.g. 60."
             },
             "trend": {
               "type": "string",
@@ -1478,7 +1478,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1489,7 +1489,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1514,7 +1514,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1560,7 +1560,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1570,7 +1570,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1607,7 +1607,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1645,7 +1645,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1655,7 +1655,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1696,7 +1696,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1721,7 +1721,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1731,7 +1731,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1768,7 +1768,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1805,7 +1805,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1815,7 +1815,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1852,7 +1852,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1862,7 +1862,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1910,7 +1910,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1921,7 +1921,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1941,7 +1941,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -1952,7 +1952,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -1989,7 +1989,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2028,7 +2028,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2039,7 +2039,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2081,7 +2081,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2111,7 +2111,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2169,7 +2169,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2179,7 +2179,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2212,7 +2212,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2222,7 +2222,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2251,7 +2251,7 @@
             },
             "page": {
               "type": "integer",
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2261,7 +2261,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2286,7 +2286,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2311,7 +2311,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2354,7 +2354,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2365,7 +2365,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2385,7 +2385,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2396,7 +2396,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2428,7 +2428,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2439,7 +2439,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2464,7 +2464,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2489,7 +2489,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2514,7 +2514,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2539,7 +2539,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2564,7 +2564,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2582,7 +2582,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2621,7 +2621,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "include": {
               "type": "array",
@@ -2636,7 +2636,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2647,7 +2647,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2675,7 +2675,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2707,7 +2707,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2739,7 +2739,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2771,7 +2771,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2799,7 +2799,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "match": {
               "type": "string",
@@ -2808,7 +2808,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "artifact_types": {
               "type": "array",
@@ -2831,13 +2831,13 @@
               "items": {
                 "type": "string"
               },
-              "description": "Return exactly these top-level keys (overrides view)."
+              "description": "Only these top-level keys, e.g. [\"slug\",\"score\"]."
             },
             "page": {
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -2848,7 +2848,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2877,7 +2877,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2915,7 +2915,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2949,7 +2949,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -2974,7 +2974,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3010,7 +3010,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3042,7 +3042,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3074,7 +3074,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3106,7 +3106,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3138,7 +3138,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3170,7 +3170,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3195,7 +3195,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3220,7 +3220,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3247,7 +3247,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3272,7 +3272,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3297,7 +3297,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3330,7 +3330,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3355,7 +3355,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3394,7 +3394,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3434,7 +3434,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3490,7 +3490,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3529,7 +3529,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3572,7 +3572,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3614,7 +3614,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3634,7 +3634,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3659,7 +3659,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3715,7 +3715,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3741,7 +3741,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3761,7 +3761,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -3772,7 +3772,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3814,7 +3814,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3861,7 +3861,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3880,7 +3880,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3917,7 +3917,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3946,7 +3946,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3978,7 +3978,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -3996,7 +3996,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4024,7 +4024,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4035,7 +4035,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4055,7 +4055,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4066,7 +4066,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4096,7 +4096,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4107,7 +4107,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4127,7 +4127,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4138,7 +4138,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4163,7 +4163,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4188,7 +4188,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4213,7 +4213,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4231,14 +4231,14 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "category": {
               "type": "string",
@@ -4258,7 +4258,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4269,7 +4269,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4299,11 +4299,11 @@
                 "full"
               ],
               "default": "summary",
-              "description": "summary (default) returns lean discovery records + *_count for dropped sections; full returns the whole record (use get_api / get_provider for one entity)."
+              "description": "summary (default, lean) or full."
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4343,7 +4343,7 @@
               "items": {
                 "type": "string"
               },
-              "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+              "description": "exemplar | strong | developing | thin | minimal."
             },
             "min_score": {
               "type": "number",
@@ -4362,7 +4362,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4373,7 +4373,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4398,7 +4398,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4423,7 +4423,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4455,7 +4455,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4480,49 +4480,49 @@
             },
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "band": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Rating bands: exemplar, strong, developing, thin, minimal."
+              "description": "exemplar | strong | developing | thin | minimal."
             },
             "industry": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Industry slugs, as find_industries returns them, e.g. [\"artificial-intelligence\"]."
+              "description": "Industry slugs, e.g. [\"fintech\"]."
             },
             "region": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Region slugs, as find_regions returns them, e.g. [\"north-america\"]."
+              "description": "Region slugs, e.g. [\"north-america\"]."
             },
             "area": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Area slugs, as find_areas returns them, e.g. [\"security\"]."
+              "description": "Area slugs, e.g. [\"security\"]."
             },
             "artifact_types": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Artifact types an API must carry, e.g. [\"OpenAPI\",\"AsyncAPI\",\"Postman\"]. Synonyms fold (MCPServer = MCP)."
+              "description": "Artifact types required, e.g. [\"OpenAPI\"]."
             },
             "match": {
               "type": "string",
@@ -4531,15 +4531,15 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "min_score": {
               "type": "number",
-              "description": "Only providers whose Kin Score composite is at or above this, 0-100, e.g. 60."
+              "description": "Minimum Kin Score composite (0-100), e.g. 60."
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4558,7 +4558,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4576,7 +4576,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4608,7 +4608,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4633,7 +4633,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4659,7 +4659,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4693,7 +4693,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4712,7 +4712,7 @@
           "properties": {
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4737,7 +4737,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4770,7 +4770,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4797,7 +4797,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4817,21 +4817,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -4840,7 +4840,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -4855,7 +4855,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4875,7 +4875,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4893,21 +4893,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -4916,7 +4916,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -4931,7 +4931,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -4959,7 +4959,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -4977,21 +4977,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5000,7 +5000,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5015,7 +5015,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5043,7 +5043,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5061,21 +5061,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5084,7 +5084,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5099,7 +5099,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5119,7 +5119,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5137,21 +5137,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5160,7 +5160,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5175,7 +5175,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5195,7 +5195,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5213,21 +5213,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5236,7 +5236,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5251,7 +5251,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5275,7 +5275,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5293,21 +5293,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5316,7 +5316,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5331,7 +5331,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5351,7 +5351,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5369,21 +5369,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5392,7 +5392,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5407,7 +5407,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5428,7 +5428,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5446,21 +5446,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5469,7 +5469,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5484,7 +5484,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5514,7 +5514,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5532,21 +5532,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5555,7 +5555,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5570,7 +5570,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5591,7 +5591,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5609,21 +5609,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5632,7 +5632,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5647,7 +5647,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5668,7 +5668,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5686,21 +5686,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5709,7 +5709,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5724,7 +5724,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5757,7 +5757,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5775,21 +5775,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5798,7 +5798,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5813,7 +5813,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5838,7 +5838,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5856,21 +5856,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5879,7 +5879,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5894,7 +5894,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5922,7 +5922,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -5940,21 +5940,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -5963,7 +5963,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -5978,7 +5978,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -5999,7 +5999,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6017,21 +6017,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6040,7 +6040,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6055,7 +6055,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6077,7 +6077,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6095,21 +6095,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6118,7 +6118,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6133,7 +6133,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6153,7 +6153,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6171,21 +6171,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6194,7 +6194,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6209,7 +6209,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6234,7 +6234,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6252,21 +6252,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6275,7 +6275,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6290,7 +6290,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6311,7 +6311,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6329,21 +6329,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6352,7 +6352,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6367,7 +6367,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6387,7 +6387,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6405,21 +6405,21 @@
           "properties": {
             "q": {
               "type": "string",
-              "description": "Free text over name + description."
+              "description": "Free text over name + description, e.g. \"sms\"."
             },
             "tags": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Tag slugs. On PROVIDERS this is identity — what the company says it does, from its own apis.yml. A resource or operation term (webhook, saml, order, oai-pmh) will correctly match no provider; use find_apis?tags= for those, or find_providers?api_tags= to reach companies whose APIs merely touch it."
+              "description": "Tag slugs, e.g. [\"payments\"]. On providers: what the company does (see api_tags)."
             },
             "providers": {
               "type": "array",
               "items": {
                 "type": "string"
               },
-              "description": "Provider slugs to restrict results to, e.g. [\"stripe\",\"adyen\"]."
+              "description": "Provider slugs, e.g. [\"stripe\"]."
             },
             "match": {
               "type": "string",
@@ -6428,7 +6428,7 @@
                 "all"
               ],
               "default": "any",
-              "description": "How multiple `tags` combine: \"any\" (default, at least one) or \"all\" (every tag)."
+              "description": "How `tags` combine: any (default) or all."
             },
             "include": {
               "type": "array",
@@ -6443,7 +6443,7 @@
               "type": "integer",
               "minimum": 1,
               "default": 1,
-              "description": "Page number, 1-based (default 1). Use with `limit` to walk a long list."
+              "description": "Page number, 1-based (default 1)."
             },
             "limit": {
               "type": "integer",
@@ -6463,7 +6463,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6509,7 +6509,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
@@ -6561,7 +6561,7 @@
             },
             "context": {
               "type": "string",
-              "description": "Optional: why you are asking. One sentence — the task you are trying to complete, or what you expect to get back. Never included in the answer and never used to rank; it is read only when a result turns out to be wrong, which is when knowing the intent is what makes the report actionable."
+              "description": "Optional: one sentence on why you are asking. Never used to rank; read only if a result is wrong."
             }
           }
         },
