@@ -461,6 +461,8 @@ servers:
 - url: https://apis.io/api/v1
   description: Production server.
 tags:
+- name: Goals
+  description: Goal plans and goal hypermedia across providers, grounded in the phrased catalog (Influence).
 - name: Providers
   description: Organizations publishing APIs on the network.
 - name: APIs
@@ -9068,6 +9070,131 @@ paths:
           $ref: '#/components/responses/UpgradeRequired'
         '404':
           $ref: '#/components/responses/NotFound'
+  /goals/plan:
+    post:
+      operationId: planGoal
+      x-tier: business
+      x-mcp-tool: plan_goal
+      tags:
+      - Goals
+      summary: Turn a goal into a grounded plan.
+      description: Splits a goal into the smallest sub-goals an API call could satisfy, maps it onto a market outcome
+        (Turbo EA value stream, stages and capabilities), and picks one real, phrased operation per sub-goal from the
+        catalog. A model splits the goal and chooses among a closed list of real candidates; it can never return an
+        operation that is not in the catalog. Coverage is reported per sub-goal as covered, unmatched, unphrased or
+        gap. The bundle's compose link feeds `/goals/compose`. Carries the Turbo EA CC BY 4.0 attribution.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - goal
+              properties:
+                goal:
+                  type: string
+                  maxLength: 500
+                  description: What the agent should accomplish, in plain language.
+                providers:
+                  type: array
+                  maxItems: 10
+                  items:
+                    type: string
+                  description: Optional provider slugs to stay within.
+                stream:
+                  type: string
+                  description: Optional value stream id or name to force, e.g. Order-to-Cash.
+            example:
+              goal: charge a customer and text them a receipt
+              providers:
+              - stripe
+              - twilio
+      responses:
+        '200':
+          description: The plan — sub-goals, outcome, prebuilt compositions and a bundle.
+          content:
+            application/vnd.apis-io.goal-plan+json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
+  /goals/compose:
+    post:
+      operationId: composeGoal
+      x-tier: business
+      x-mcp-tool: compose_goal
+      tags:
+      - Goals
+      summary: Hypermedia for a goal across providers.
+      description: Affordances with a full href, the HTTP method's safety and idempotence (RFC 9110), path parameters
+        marked ready or needed against the caller's state, the contract location for the full request schema, matching
+        Arazzo workflows with their next step, and each provider's rate limits, pricing, MCP server and terms. POST the
+        `replan` link back with `state.done` and `state.have` to get what is possible now.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - providers
+              properties:
+                providers:
+                  type: array
+                  maxItems: 10
+                  items:
+                    type: string
+                goal:
+                  type: string
+                  maxLength: 500
+                operations:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                  description: Operation ids from a plan bundle, e.g. "stripe:POST /v1/payment_intents".
+                state:
+                  type: object
+                  properties:
+                    done:
+                      type: array
+                      items:
+                        type: string
+                    have:
+                      type: object
+                      additionalProperties:
+                        type: string
+                limit:
+                  type: integer
+                  minimum: 1
+                  maximum: 20
+            example:
+              providers:
+              - stripe
+              - twilio
+              operations:
+              - stripe:POST /v1/payment_intents
+              - twilio:POST /Accounts/{AccountSid}/Messages.json
+              state:
+                done: []
+                have:
+                  AccountSid: AC123
+      responses:
+        '200':
+          description: The goal hypermedia document.
+          content:
+            application/vnd.apis-io.goal+json:
+              schema:
+                type: object
+                additionalProperties: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '402':
+          $ref: '#/components/responses/UpgradeRequired'
   /operations:
     get:
       operationId: findOperations
