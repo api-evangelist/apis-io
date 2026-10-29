@@ -1,4 +1,4 @@
-# APIs.io (apis-io)
+# APIs.io
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,161 +64,309 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-APIs.io is an open source API search engine and directory that uses APIs.json files to discover, index, and catalog APIs across the web. Built on the APIs.json specification, it provides a searchable entry point for developers to find public APIs by keyword, resource, action, persona, domain, and schema. The platform indexes 779 providers, 3,188 APIs, 587 capabilities, 36,602 schemas, 49 event specs, 2,078 vocabularies, and 450 rulesets. It is maintained by Kin Lane, Nicolas Grenier, and Steven Willmott and supports both API producers (submitting APIs) and API consumers (discovering APIs). APIs.io uses a Spectral-powered rating system to evaluate API documentation quality.
+APIs.io is an open-source API search engine and federated discovery network built on the APIs.json specification. It indexes API providers and their individual APIs across the public internet along with the machine-readable artifacts they publish — OpenAPI, AsyncAPI, GraphQL, Arazzo workflows, Postman collections, JSON Schema, JSON-LD contexts, Spectral rulesets, vocabularies, OAuth scopes, plans, rate limits and FinOps profiles — and lets developers and agents search that catalog by keyword, capability, tag, industry, region, artifact type and quality band. As of August 2026 the network published roughly 26,414 providers, 109,100 APIs and 120,595 schemas across 71 industries and 77 curated areas. Every provider is scored with the Kin Score, a 0–100 composite across six weighted facets plus a standalone agent-readiness score. The same read-only OpenAPI 3.1 contract powers three surfaces — a REST API at https://apis.io/api/v1, a Streamable-HTTP MCP server at https://apis.io/mcp, and a set of published Agent Skills — alongside an RFC 9727 api-catalog linkset, an llms.txt and an APIs.json self-description. It is maintained by API Evangelist and serves both API producers submitting profiles and API consumers discovering APIs.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/apis.yml)
+**Areas:** API Aggregation · API Directory · API Discovery · API Indexing · API Rating · API Search · APIs.json · Search Engines · API Catalog · Agent Discovery · MCP · Agent Skills
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+## APIs.io on APIs.io
 
-## Tags:
+Everything profiled for APIs.io is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/apis-io/](https://apis.io/providers/apis-io/)** — or go straight to one of the APIs or properties below.
 
- - API Aggregation, API Directory, API Discovery, API Indexing, API Rating, API Search, APIs.json, Search Engine
+### APIs (21)
 
-## Timestamps
+- [APIs.io Submit API](https://apis.io/apis/apis-io/apisio-submit-api/) — Discover a domain's machine-readable API surface and submit a provider for review — the Add-API door, documented first-party from the serving Lambda.
+- [APIs.io Areas API](https://apis.io/apis/apis-io/apis-io-areas-api/) — The API Evangelist areas taxonomy — curated topic collections (authentication, webhooks, payments, …), each a scored provider index with its own site. Pro.
+- [APIs.io Artifact Types API](https://apis.io/apis/apis-io/apis-io-artifact-types-api/) — First-class, per-type artifact collections (OpenAPI, AsyncAPI, Arazzo, Postman, JSON Schema, and more). Each path filters and normalizes one artifact type…
+- [APIs.io Industries API](https://apis.io/apis/apis-io/apis-io-industries-api/) — Industry verticals grouping providers across the catalog.
+- [APIs.io Insights API](https://apis.io/apis/apis-io/apis-io-insights-api/) — Demand-side intelligence — what 6,572 companies (Fortune 1000 + API providers) build, buy, and hire for around APIs, data, and AI, derived from job…
+- [APIs.io Providers API](https://apis.io/apis/apis-io/apis-io-providers-api/) — Organizations publishing APIs on the network.
+- [APIs.io Ratings API](https://apis.io/apis/apis-io/apis-io-ratings-api/) — The APIs.io API rating system — a 0–100 composite score, five bands, a trend marker, and six weighted facets measuring how complete, governed, and…
+- [APIs.io Regions API](https://apis.io/apis/apis-io/apis-io-regions-api/) — Geographic regions grouping providers across the catalog.
+- [APIs.io Search API](https://apis.io/apis/apis-io/apis-io-search-api/) — Search using a cloud search engine.
+- [APIs.io Synthesis API](https://apis.io/apis/apis-io/apis-io-synthesis-api/) — Decision-grade composites over the catalog — provider comparison, gap analysis, catalog change feed, and recommended-stack design. Pro.
+- [APIs.io Tags API](https://apis.io/apis/apis-io/apis-io-tags-api/) — The tag taxonomy, with network-wide ranking metadata.
+- [APIs.io Cohorts API](https://apis.io/apis/apis-io/apis-io-cohorts-api/) — Any scored population of providers — a tag, industry, region, area, or VC portfolio — with the distribution, rankings, facet scores, and capability matrix…
+- [APIs.io Editorial API](https://apis.io/apis/apis-io/apis-io-editorial-api/) — Story leads mined from catalog movement (owner tier). 1 operation of the APIs.io API, split out by tag so this surface is documented, rated, and governed on…
+- [APIs.io Export API](https://apis.io/apis/apis-io/apis-io-export-api/) — Bulk dataset pulls of the catalog — ratings and providers as one download (Business tier). 2 operations of the APIs.io API, split out by tag so this surface…
+- [APIs.io Resolve & Enrich API](https://apis.io/apis/apis-io/apis-io-resolve-enrich-api/) — Agent ergonomics — resolve any identifier (domain, URL, GitHub org) to a provider, and enrich a provider in one call by choosing field groups. 2 operations…
+- [APIs.io Saved Workspace API](https://apis.io/apis/apis-io/apis-io-saved-workspace-api/) — Saved searches and provider lists for a signed-in apis.io API key — save a query, re-run it, and watch what is net-new. 10 operations of the APIs.io API,…
+- [APIs.io Venture Capital API](https://apis.io/apis/apis-io/apis-io-venture-capital-api/) — Venture-capital firms as a first-class entity — fund identity plus a network-matched, rated portfolio graph, and the reverse edge from a provider to the VCs…
+- [APIs.io Provider Control API](https://apis.io/apis/apis-io/apis-io-provider-control-api/) — Claim, correct and improve your own listing. Most operations require the Influence plan; reporting that our data is wrong is free and always will be.
+- [APIs.io Watches API](https://apis.io/apis/apis-io/apis-io-watches-api/) — The Watches API from APIs.io — 0 operation(s) for watches.
+- [APIs.io APIs API](https://apis.io/apis/apis-io/apis-io-apis-api/) — Individual APIs, each owned by a provider and described by artifacts.
+- [APIs.io Prices API](https://apis.io/apis/apis-io/apis-io-prices-api/) — The per-call price map for metered resources, and the bands it is built from.
 
-- **Created:** 2026-03-26
-- **Modified:** 2026-04-19
+### Published properties
 
-## APIs
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### APIs.io Search API
-The APIs.io Search API allows developers to search for APIs across all indexed APIs.json files using keywords or phrases, and to submit new APIs to the index by providing a valid APIs.json document. The API supports pagination, filtering, and returns results with name, description, tags, score, and URLs. Authentication is handled via the separate Authentication API which converts GitHub Personal Access Tokens into API keys.
+#### Arazzo workflows (4)
 
-**Human URL:** [https://apis.io/developer/documentation/](https://apis.io/developer/documentation/)
+Multi-step workflows that chain operations into a business task.
 
-#### Tags:
+- [APIs.io Compare Keyword Coverage](https://apis.io/arazzos/apis-io/apis-io-compare-keyword-coverage-workflow/)
+- [APIs.io Paginate Search Results](https://apis.io/arazzos/apis-io/apis-io-paginate-search-results-workflow/)
+- [APIs.io Search APIs by Keyword](https://apis.io/arazzos/apis-io/apis-io-search-apis-workflow/)
+- [APIs.io Submit and Verify API](https://apis.io/arazzos/apis-io/apis-io-submit-and-verify-api-workflow/)
 
- - API Discovery, API Indexing, API Search, APIs.json
+#### AsyncAPI (1)
 
-#### Properties
+Event-driven and webhook contracts.
 
-- [Documentation](https://apis.io/developer/documentation/)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/openapi/apis-io-search-openapi.yaml)
-- [Postman Collection](https://www.postman.com/api-evangelist/apis-io-api-evangelist-engine/collection/hn8xpmd/apis-io-search-api)
-- [Authentication](https://apis.io/developer/authentication/)
-- [Rate Limits](https://apis.io/developer/plans/)
-- [Change Log](https://apis.io/developer/change-log/)
-- [Status Page](https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e)
-- [JSONSchema - Search Response Schema](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-search-schema.json)
-- [JSONSchema - APIs.json Schema](https://raw.githubusercontent.com/api-evangelist/apis-io/refs/heads/main/json-schema/apis-io-search-ap-is-json-schema.json)
+- [APIs.io Watch Events](https://apis.io/asyncapis/apis-io/apis-io-watch-events-asyncapi/)
 
-## Common Properties
+#### Event channels (1)
+
+Individual events and webhooks the provider emits.
+
+- [/](https://apis.io/channels/apis-io/watchdelivery/)
+
+#### MCP servers (2)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [APIs.io API catalog MCP server](https://apis.io/servers/apis-io/apis-io/)
+- [Moved to /providers/apis-io/](https://apis.io/servers/apis-io/mcp/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Apis Io Agentic Access](https://apis.io/agentic-access/apis-io/apis-io-agentic-access/)
+
+#### JSON Schema (13)
+
+The data models the API reads and writes.
+
+- [AddAPIsJSON](https://apis.io/schemas/apis-io/apis-io-search-add-ap-is-json/)
+- [APIs](https://apis.io/schemas/apis-io/apis-io-search-ap-is/)
+- [APIsJSON](https://apis.io/schemas/apis-io/apis-io-search-ap-is-json/)
+- [API](https://apis.io/schemas/apis-io/apis-io-search-api/)
+- [Contact](https://apis.io/schemas/apis-io/apis-io-search-contact/)
+- [Include](https://apis.io/schemas/apis-io/apis-io-search-include/)
+- [Link](https://apis.io/schemas/apis-io/apis-io-search-link/)
+- [Maintainer](https://apis.io/schemas/apis-io/apis-io-search-maintainer/)
+- [Meta](https://apis.io/schemas/apis-io/apis-io-search-meta/)
+- [metaInformation](https://apis.io/schemas/apis-io/apis-io-search-meta-information/)
+- [Property](https://apis.io/schemas/apis-io/apis-io-search-property/)
+- [Search](https://apis.io/schemas/apis-io/apis-io-search-search/)
+- [Tag](https://apis.io/schemas/apis-io/apis-io-search-tag/)
+
+#### JSON Structure (13)
+
+Data models expressed in JSON Structure.
+
+- [Apis Io Search Add Ap Is Json Structure](https://apis.io/json-structure/apis-io/apis-io-search-add-ap-is-json-structure/)
+- [Apis Io Search Ap Is Json Structure](https://apis.io/json-structure/apis-io/apis-io-search-ap-is-json-structure/)
+- [Apis Io Search Ap Is Structure](https://apis.io/json-structure/apis-io/apis-io-search-ap-is-structure/)
+- [Apis Io Search Api Structure](https://apis.io/json-structure/apis-io/apis-io-search-api-structure/)
+- [Apis Io Search Contact Structure](https://apis.io/json-structure/apis-io/apis-io-search-contact-structure/)
+- [Apis Io Search Include Structure](https://apis.io/json-structure/apis-io/apis-io-search-include-structure/)
+- [Apis Io Search Link Structure](https://apis.io/json-structure/apis-io/apis-io-search-link-structure/)
+- [Apis Io Search Maintainer Structure](https://apis.io/json-structure/apis-io/apis-io-search-maintainer-structure/)
+- [Apis Io Search Meta Information Structure](https://apis.io/json-structure/apis-io/apis-io-search-meta-information-structure/)
+- [Apis Io Search Meta Structure](https://apis.io/json-structure/apis-io/apis-io-search-meta-structure/)
+- [Apis Io Search Property Structure](https://apis.io/json-structure/apis-io/apis-io-search-property-structure/)
+- [Apis Io Search Search Structure](https://apis.io/json-structure/apis-io/apis-io-search-search-structure/)
+- [Apis Io Search Tag Structure](https://apis.io/json-structure/apis-io/apis-io-search-tag-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Apis Io Context](https://apis.io/jsonld/apis-io/apis-io-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Apis Io Vocabulary](https://apis.io/vocabularies/apis-io/apis-io-vocabulary/)
+
+#### Examples (13)
+
+Example requests and responses.
+
+- [Apis Io Search Add Ap Is Json Example](https://apis.io/examples/apis-io/apis-io-search-add-ap-is-json-example/)
+- [Apis Io Search Ap Is Example](https://apis.io/examples/apis-io/apis-io-search-ap-is-example/)
+- [Apis Io Search Ap Is Json Example](https://apis.io/examples/apis-io/apis-io-search-ap-is-json-example/)
+- [Apis Io Search Api Example](https://apis.io/examples/apis-io/apis-io-search-api-example/)
+- [Apis Io Search Contact Example](https://apis.io/examples/apis-io/apis-io-search-contact-example/)
+- [Apis Io Search Include Example](https://apis.io/examples/apis-io/apis-io-search-include-example/)
+- [Apis Io Search Link Example](https://apis.io/examples/apis-io/apis-io-search-link-example/)
+- [Apis Io Search Maintainer Example](https://apis.io/examples/apis-io/apis-io-search-maintainer-example/)
+- [Apis Io Search Meta Example](https://apis.io/examples/apis-io/apis-io-search-meta-example/)
+- [Apis Io Search Meta Information Example](https://apis.io/examples/apis-io/apis-io-search-meta-information-example/)
+- [Apis Io Search Property Example](https://apis.io/examples/apis-io/apis-io-search-property-example/)
+- [Apis Io Search Search Example](https://apis.io/examples/apis-io/apis-io-search-search-example/)
+- [Apis Io Search Tag Example](https://apis.io/examples/apis-io/apis-io-search-tag-example/)
+
+#### Collections (22)
+
+Postman and Open Collection request collections.
+
+- [.io Search APIs API](https://apis.io/collections/apis-io/open-apis-io-apis-api/)
+- [.io Search APIs Areas API](https://apis.io/collections/apis-io/open-apis-io-areas-api/)
+- [.io Search APIs Artifact Types API](https://apis.io/collections/apis-io/open-apis-io-artifact-types-api/)
+- [.io Search APIs Industries API](https://apis.io/collections/apis-io/open-apis-io-industries-api/)
+- [.io Search APIs Insights API](https://apis.io/collections/apis-io/open-apis-io-insights-api/)
+- [.io Search APIs Providers API](https://apis.io/collections/apis-io/open-apis-io-providers-api/)
+- [.io Search APIs Ratings API](https://apis.io/collections/apis-io/open-apis-io-ratings-api/)
+- [.io Search APIs Regions API](https://apis.io/collections/apis-io/open-apis-io-regions-api/)
+- [.io APIs Search API](https://apis.io/collections/apis-io/open-apis-io-search-api/)
+- [.io Search APIs Synthesis API](https://apis.io/collections/apis-io/open-apis-io-synthesis-api/)
+- [.io Search APIs Tags API](https://apis.io/collections/apis-io/open-apis-io-tags-api/)
+- [.io Search APIs API](https://apis.io/collections/apis-io/postman-apis-io-apis-api/)
+- [.io Search APIs Areas API](https://apis.io/collections/apis-io/postman-apis-io-areas-api/)
+- [.io Search APIs Artifact Types API](https://apis.io/collections/apis-io/postman-apis-io-artifact-types-api/)
+- [.io Search APIs Industries API](https://apis.io/collections/apis-io/postman-apis-io-industries-api/)
+- [.io Search APIs Insights API](https://apis.io/collections/apis-io/postman-apis-io-insights-api/)
+- [.io Search APIs Providers API](https://apis.io/collections/apis-io/postman-apis-io-providers-api/)
+- [.io Search APIs Ratings API](https://apis.io/collections/apis-io/postman-apis-io-ratings-api/)
+- [.io Search APIs Regions API](https://apis.io/collections/apis-io/postman-apis-io-regions-api/)
+- [.io APIs Search API](https://apis.io/collections/apis-io/postman-apis-io-search-api/)
+- [.io Search APIs Synthesis API](https://apis.io/collections/apis-io/postman-apis-io-synthesis-api/)
+- [.io Search APIs Tags API](https://apis.io/collections/apis-io/postman-apis-io-tags-api/)
+
+#### Overlays (32)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Apis Io Apis Api Overlay](https://apis.io/overlays/apis-io/apis-io-apis-api-overlay/)
+- [Apis Io Apis Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-apis-api-phrasing-overlay/)
+- [Apis Io Areas Api Overlay](https://apis.io/overlays/apis-io/apis-io-areas-api-overlay/)
+- [Apis Io Areas Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-areas-api-phrasing-overlay/)
+- [Apis Io Artifact Types Api Overlay](https://apis.io/overlays/apis-io/apis-io-artifact-types-api-overlay/)
+- [Apis Io Artifact Types Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-artifact-types-api-phrasing-overlay/)
+- [Apis Io Cohorts Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-cohorts-api-phrasing-overlay/)
+- [Apis Io Editorial Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-editorial-api-phrasing-overlay/)
+- [Apis Io Export Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-export-api-phrasing-overlay/)
+- [Apis Io Industries Api Overlay](https://apis.io/overlays/apis-io/apis-io-industries-api-overlay/)
+- [Apis Io Industries Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-industries-api-phrasing-overlay/)
+- [Apis Io Insights Api Overlay](https://apis.io/overlays/apis-io/apis-io-insights-api-overlay/)
+- [Apis Io Insights Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-insights-api-phrasing-overlay/)
+- [Apis Io Prices Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-prices-api-phrasing-overlay/)
+- [Apis Io Provider Control Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-provider-control-api-phrasing-overlay/)
+- [Apis Io Providers Api Overlay](https://apis.io/overlays/apis-io/apis-io-providers-api-overlay/)
+- [Apis Io Providers Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-providers-api-phrasing-overlay/)
+- [Apis Io Ratings Api Overlay](https://apis.io/overlays/apis-io/apis-io-ratings-api-overlay/)
+- [Apis Io Ratings Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-ratings-api-phrasing-overlay/)
+- [Apis Io Regions Api Overlay](https://apis.io/overlays/apis-io/apis-io-regions-api-overlay/)
+- [Apis Io Regions Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-regions-api-phrasing-overlay/)
+- [Apis Io Resolve Enrich Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-resolve-enrich-api-phrasing-overlay/)
+- [Apis Io Saved Workspace Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-saved-workspace-api-phrasing-overlay/)
+- [Apis Io Search Api Overlay](https://apis.io/overlays/apis-io/apis-io-search-api-overlay/)
+- [Apis Io Search Api Phrasing Overlay](https://apis.io/overlays/apis-io/apis-io-search-api-phrasing-overlay/)
+- …and 7 more published on APIs.io
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [APIs.io — jsonschema rules](https://apis.io/rules/apis-io/apis-io-jsonschema-spectral-rules/)
+- [APIs.io API Rules](https://apis.io/rules/apis-io/apis-io-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Apis Io Authentication](https://apis.io/security/apis-io/apis-io-authentication/)
+- [Apis Io Domain Security](https://apis.io/security/apis-io/apis-io-domain-security/)
+- [Apis Io Vulnerability Disclosure](https://apis.io/security/apis-io/apis-io-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Apis Io Scopes](https://apis.io/scopes/apis-io/apis-io-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Apis Io Plans Pricing](https://apis.io/plans/apis-io/apis-io-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Apis Io Rate Limits](https://apis.io/rate-limits/apis-io/apis-io-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Apis Io Finops](https://apis.io/finops/apis-io/apis-io-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://apis.io)
-- [About](https://apis.io/about/)
+- [Documentation](https://apis.io/developer/)
+- [Getting started](https://apis.io/developer/getting-started/)
+- [API reference](https://apis.io/developer/api/)
+- [Pricing](https://apis.io/developer/plans/)
+- [Sign up](https://apis.io/developer/account)
+- [Support](https://apis.io/support/)
+- [Changelog](https://apis.io/changelog/)
 - [Blog](https://apis.io/blog/)
-- [Developer Portal](https://apis.io/developer/)
-- [Developer Blog](https://apis.io/developer/blog/)
-- [Getting Started](https://apis.io/developer/getting-started/)
-- [Authentication](https://apis.io/developer/authentication/)
-- [Plans](https://apis.io/developer/plans/)
-- [Change Log](https://apis.io/developer/change-log/)
-- [Release Notes](https://apis.io/developer/change-log/)
-- [Versioning](https://apis.io/developer/versioning/)
-- [Support](https://apis.io/developer/support/)
-- [Terms of Service](https://apis.io/developer/terms-of-service/)
-- [Privacy Policy](https://apis.io/developer/privacy-policy/)
-- [GitHub Organization](https://github.com/api-search)
-- [GitHub Repository](https://github.com/apisio/apis.io)
-- [GitHub Repository - Search API](https://github.com/api-search/apis-io-search)
-- [GitHub Repository - Search Engine](https://github.com/api-search/apis-io-engine)
-- [GitHub Repository - Authentication API](https://github.com/api-search/apis-io-authentication)
-- [GitHub Repository - Ratings API](https://github.com/api-search/apis-io-ratings)
+- [Security](https://apis.io/developer/security)
+- [Terms of service](https://apis.io/terms/)
+- [Privacy policy](https://apis.io/privacy/)
+- [GitHub](https://github.com/api-search)
+- [Status](https://www.postman.com/api-evangelist/apis-io/monitor/APIs-io-Search---Status~1ef6bc29-9da9-4040-b98b-cef03be1155e)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| API Search | Full-text search across 3,000+ indexed APIs by keyword, resource, action, persona, domain, and schema using a cloud search engine. |
-| APIs.json Indexing | Automatically indexes APIs.json files submitted by API producers to build a comprehensive, machine-readable catalog of API operations. |
-| API Submission | API producers can submit their APIs to the index by providing a valid APIs.json document via the Search API POST endpoint or GitHub issues. |
-| Spectral API Ratings | Spectral-powered quality rating system that evaluates API documentation completeness and scores APIs to help consumers identify high-quality APIs. |
-| Microservice Architecture | Built as a set of microservices including Search, Engine, Authentication, Publishing, Tags, Rules, Properties, Maintainers, and Ratings APIs. |
-| Topic Search Nodes | Specialized search nodes for domain-specific API discovery including AI, Healthcare, Banking, Payments, Weather, CRM, Cloud, and many more topic areas. |
-| Open Source | The platform is open source, licensed under Apache-2.0, with all microservice APIs available on GitHub under the api-search organization. |
+**Kin Score 93.8** — exemplar · rubric 0.25.0 · scored 2026-10-23
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 88.3 |
+| Contract quality | 71.5 |
+| Contract governance | 84.8 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 95.2 |
+| Access clarity | 76.3 |
 
-| Name | Description |
-|------|-------------|
-| API Discovery | Developers can search for APIs relevant to their project by keyword, discovering APIs across thousands of providers without knowing where to look. |
-| API Submission | API producers can submit their APIs.json files to ensure their APIs are discoverable in the index and properly cataloged with metadata. |
-| Quality Assessment | Development teams use the Spectral ratings system to identify high-quality APIs and avoid poorly documented or unmaintained options. |
-| Catalog Building | Platform teams use APIs.io as a reference implementation for building their own internal API catalogs using the APIs.json format. |
-| Domain-Specific Search | Developers searching for APIs in specific domains (healthcare, finance, AI) can use topic-specific search nodes for more targeted discovery. |
+**Agent readiness 78.7** — agent-native
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | verified |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | yes |
+| Consent Identity | yes |
+| Agent Card | near-conformant (partial credit) |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
 
-| Name | Description |
-|------|-------------|
-| APIs.json | Core integration with the APIs.json specification for machine-readable API description and discovery across the web. |
-| OpenAPI | APIs indexed in APIs.io reference OpenAPI specifications as a key property, linking consumers to technical API contracts. |
-| Spectral | Spectral ruleset integration powers the APIs.io rating system, evaluating API documentation quality against standardized rules. |
-| GitHub | GitHub integration for API submission via issues, source of truth for indexed APIs.json files, and authentication via Personal Access Tokens. |
-| Postman | Postman public workspace integration for running and testing the APIs.io Search API via pre-built collections. |
-| AWS API Gateway | The APIs.io Search API is deployed and managed through AWS API Gateway for scalable, managed API access. |
+**Regulatory alignment 37.7** — Horizontal (data, software, accessibility, platform)
 
-## Artifacts
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/apis-io/](https://apis.io/providers/apis-io/).
 
-Machine-readable API specifications organized by format.
+## How this profile is made
 
-### OpenAPI
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- [APIs.io Search API](openapi/apis-io-search-openapi.yaml)
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for APIs.io: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-### JSON Schema
+## Open an issue
 
-- [Search Response Schema](json-schema/apis-io-search-search-schema.json)
-- [Meta Schema](json-schema/apis-io-search-meta-schema.json)
-- [Link Schema](json-schema/apis-io-search-link-schema.json)
-- [APIs.json Schema](json-schema/apis-io-search-ap-is-json-schema.json)
-- [API Schema](json-schema/apis-io-search-api-schema.json)
-- [Property Schema](json-schema/apis-io-search-property-schema.json)
-- [Contact Schema](json-schema/apis-io-search-contact-schema.json)
-- [Maintainer Schema](json-schema/apis-io-search-maintainer-schema.json)
-
-### JSON Structure
-
-- [Search Response Structure](json-structure/apis-io-search-search-structure.json)
-- [APIs.json Structure](json-structure/apis-io-search-ap-is-json-structure.json)
-- [API Structure](json-structure/apis-io-search-api-structure.json)
-- [Property Structure](json-structure/apis-io-search-property-structure.json)
-
-### JSON-LD
-
-- [APIs.io Context](json-ld/apis-io-context.jsonld)
-
-### Examples
-
-- [Search Response Example](examples/apis-io-search-search-example.json)
-- [APIs.json Example](examples/apis-io-search-ap-is-json-example.json)
-- [API Example](examples/apis-io-search-api-example.json)
-- [Property Example](examples/apis-io-search-property-example.json)
-
-## Capabilities
-
-Naftiko capabilities organized as shared per-API definitions composed into customer-facing workflows.
-
-### Shared Per-API Definitions
-
-- [APIs.io Search API](capabilities/shared/search-api.yaml) — 2 operations for API discovery and submission
-
-### Workflow Capabilities
-
-| Workflow | APIs Combined | Tools | Persona |
-|----------|--------------|-------|---------|
-| [API Discovery and Search](capabilities/api-discovery-search.yaml) | APIs.io Search API | 2 | API Developer, API Producer |
-
-## Vocabulary
-
-- [APIs.io Vocabulary](vocabulary/apis-io-vocabulary.yaml) — Unified taxonomy mapping 1 resource, 2 actions, 1 workflow, and 2 personas across operational (OpenAPI) and capability (Naftiko) dimensions
-
-## Rules
-
-- [APIs.io Spectral Rules](rules/apis-io-spectral-rules.yml) — 35 rules across 10 categories enforcing APIs.io API conventions
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** kin@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/apis-io/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
